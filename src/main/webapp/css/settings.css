@@ -1,0 +1,106 @@
+.settings,
+.edit-personal {
+  padding: 0 10px;
+}
+.settings h3,
+.edit-personal h3 {
+  margin-top: 0;
+  padding-top: 10px;
+}
+.settings label,
+.edit-personal label {
+  display: inline-block;
+  width: 160px;
+}
+.settings label.long,
+.edit-personal label.long {
+  width: 270px;
+}
+.settings .form-control,
+.edit-personal .form-control {
+  display: inline-block;
+  vertical-align: top;
+  width: 233px;
+  margin: 0 0 10px 0;
+}
+.settings .subs-group,
+.edit-personal .subs-group {
+  display: inline-block;
+  border-left: 1px solid #2b7dbc;
+  padding-left: 15px;
+}
+.settings .checkbox label,
+.edit-personal .checkbox label {
+  width: auto;
+}
+.settings input[type="text"],
+.edit-personal input[type="text"],
+.settings input[type="password"],
+.edit-personal input[type="password"],
+.settings input[type="email"],
+.edit-personal input[type="email"],
+.settings input[type="tel"],
+.edit-personal input[type="tel"] {
+  margin-bottom: 10px;
+  width: 233px;
+}
+.settings textarea,
+.edit-personal textarea {
+  width: 70%;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.settings input.short,
+.edit-personal input.short,
+.settings textarea.short,
+.edit-personal textarea.short,
+.settings select.short,
+.edit-personal select.short {
+  width: 150px;
+  height: 29px;
+}
+.settings select,
+.edit-personal select {
+  padding-left: 0;
+}
+.settings .settings-add-link,
+.edit-personal .settings-add-link {
+  padding-left: 162px;
+  padding-bottom: 20px;
+}
+.settings .remove-child,
+.edit-personal .remove-child {
+  font-size: 16px;
+  color: #f00;
+}
+.settings .remove-child:hover,
+.edit-personal .remove-child:hover {
+  text-decoration: none;
+}
+.no-width {
+  width: auto !important;
+}
+.create-topic-wrap,
+.edit-personal-wrap,
+.settings-wrap,
+.user-descr-wrap {
+  display: none;
+}
+#subscription>label {
+  text-align: right;
+  width: auto;
+  padding-right: 10px;
+  vertical-align: top;
+}
+.single-child,
+.single-pet,
+.settings-child-item,
+.settings-pet-item {
+  margin-left: 160px;
+}
+#ui-datepicker-div {
+  width: 233px;
+}
+input.ng-invalid.ng-dirty {
+  border: 1px solid #f00;
+}

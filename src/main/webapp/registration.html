@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Регистрация</title>
+        <link rel="shortcut icon" href="i/landing/vmesteonline.png">
+        <meta name="description" content="Регистарция Вместе Онлайн" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+        <link rel="stylesheet" href="css/style.css"/>
+        <script src="./js/lib/jquery-2.1.1.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            globalUserAuth = false;
+        </script>
+
+	</head>
+
+	<body class="reg-forum">
+        <div class="row clearfix">
+            <div class="col-sm-10 col-sm-offset-1 registration">
+                <header>
+                    <a href="/"><img src="i/logo3.png" alt="логотип"/></a>
+                </header>
+                <h2>Спасибо! Вы используете правильный код!</h2>
+                <h4>Проверьте свой адрес проживания и зарегистрируйтесь</h4>
+                <div class="col-md-6">
+                    <div class="reg-left">
+                        <div class="clearfix">
+
+                            <FORM action="https://oauth.vk.com/authorize" method="get">
+                                <input type="hidden" name="client_id" value="4429306">
+                                <input type="hidden" name="redirect_uri" value="https://1-dot-algebraic-depot-657.appspot.com/oauth">
+                                <input type="hidden" name="scope" value="4194305">
+                                <input type="hidden" name="display" value="popup">
+                                <input type="hidden" name="v" value="5.21">
+                                <input type="hidden" id="vk_state" name="state" value="vk">
+                                <INPUT type="submit" class="width-100 btn btn-sm no-border btn-primary" value="Вконтакте">
+                            </FORM>
+
+                            <h4 class="align-center">или</h4>
+                        </div>
+
+                        <form>
+                            <fieldset>
+                                <label class="block clearfix">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" id="ufirstname" class="form-control" placeholder="Имя" />
+                                        <!--<i class="icon-user"></i>-->
+                                    </span>
+                                </label>
+
+                                <label class="block clearfix">
+                                    <span class="block input-icon input-icon-right">
+                                        <input type="text" id="ulastname" class="form-control" placeholder="Фамилия" />
+                                        <!--<i class="icon-lock"></i>-->
+                                    </span>
+                                </label>
+
+                                <label class="block clearfix align-center">
+                                    <div class="radio">
+                                        <label>
+                                            <input name="sex" type="radio" class="ace">
+                                            <span class="lbl">Женщина</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input name="sex" type="radio" class="ace">
+                                            <span class="lbl">Мужчина</span>
+                                        </label>
+                                    </div>
+                                </label>
+
+                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="email" id="email" class="form-control" placeholder="Email" />
+                                                        <!--<i class="icon-lock"></i>-->
+                                                    </span>
+                                </label>
+
+                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input type="password" id="password" class="form-control" placeholder="Пароль" />
+                                                        <!--<i class="icon-lock"></i>-->
+                                                    </span>
+                                </label>
+
+                                <div class="error-info login-error"></div>
+
+                                <div class="clearfix">
+
+                                    <button type="button" class="width-100 btn btn-sm btn-primary no-border btn-reg">
+                                        Создать аккаунт
+                                    </button>
+                                </div>
+
+                            </fieldset>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="reg-right">
+                        <h4>Ваш адрес : <span class="address"></span></h4>
+                        <h4>Ваш район</h4>
+                        <img src="i/map.jpg" class="mapUrl" alt="карта"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer footer-bottom footer-login col-sm-10 col-sm-offset-1">
+            <div class="pull-left"><span class="copypast">&copy;</span> ВместеОнлайн 2014</div>
+            <div class="pull-right">
+                <ul>
+                    <li><a href="about">О сайте</a></li>
+                    <li><a href="blog">Блог</a></li>
+                    <li><a href="contacts">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- файлы thrift -->
+        <script src="js/thrift.js" type="text/javascript"></script>
+        <script src="gen-js/authservice_types.js" type="text/javascript"></script>
+        <script src="gen-js/AuthService.js" type="text/javascript"></script>
+
+        <script src="js/login.js"></script>
+
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function() {
+                    try {
+                        w.yaCounter25964365 = new Ya.Metrika({id:25964365,
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            trackHash:true,
+                            ut:"noindex"});
+                    } catch(e) { }
+                });
+
+                var n = d.getElementsByTagName("script")[0],
+                        s = d.createElement("script"),
+                        f = function () { n.parentNode.insertBefore(s, n); };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+                if (w.opera == "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else { f(); }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <noscript><div><img src="//mc.yandex.ru/watch/25964365?ut=noindex" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+        <!-- /Yandex.Metrika counter -->
+
+    </body>
+</html>

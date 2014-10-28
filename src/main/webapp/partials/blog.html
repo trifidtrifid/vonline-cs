@@ -1,0 +1,62 @@
+
+<div class="wallitem-message">
+
+    <div class="first-message clearfix" >
+        <a ui-sref="profile({userId: {{ blog.topic.userInfo.id }} })" class="user">
+            <div class="avatar" style="background-image: url({{blog.topic.userInfo.avatar}})"></div>
+        </a>
+
+        <div class="body" ng-switch on="blog.topic.metaType">
+
+            <div class="name">
+                <a ui-sref="profile({userId: {{ blog.topic.userInfo.id }} })">{{blog.topic.authorName}}</a>
+            </div>
+
+            <div class="text" ng-switch-when="message" ng-cloak>{{blog.topic.message.content}}</div>
+
+            <div class="lenta-item-bottom">
+                <span ng-cloak>{{blog.topic.message.createdEdit}}</span>
+                <a href="#" ng-click="blog.showAnswerInput($event,blog)">Комментировать</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="dialogs">
+        <div class="itemdiv dialogdiv" ng-repeat="blogMessage in blog.messages">
+            <a ui-sref="profile({userId: {{ blogMessage.userInfo.id }} })" class="user">
+                <div class="avatar short2" style="background-image: url({{blogMessage.userInfo.avatar}})"></div>
+            </a>
+
+            <div class="body">
+
+                <div class="name">
+                    <a ui-sref="profile({userId: {{ blogMessage.userInfo.id }} })">{{blogMessage.authorName}}</a>
+                </div>
+                <div class="text" ng-cloak>{{blogMessage.content}}</div>
+
+                <div class="lenta-item-bottom">
+                    <span ng-cloak>{{blogMessage.createdEdit}}</span>
+                    <a href="#" ng-click="blog.showAnswerInput($event,blog,blogMessage)">Ответить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <textarea name="answerInput{{blog.topic.id}}" id="name{{blog.topic.id}}" class="message-textarea no-resize" ng-model="blog.commentText"
+                  ng-hasfocus="blog.isFocus" ng-show="blog.answerShow" ng-keyup="base.messageChange($event,1)"
+                  onblur="if(this.value=='') this.value='Ваш ответ';"
+                  onfocus="if(this.value=='Ваш ответ') this.value='';" ></textarea>
+
+
+        <span class="input-group-btn" ng-show="blog.answerShow">
+            <button class="btn btn-sm btn-info no-radius no-border" type="button" ng-click="blog.createWallComment($event,blog)">
+                <i class="icon-share-alt"></i>
+                Отправить
+            </button>
+            <span class="error-info" ng-show="blog.isCreateCommentError">{{blog.createCommentErrorText}}</span>
+
+        </span>
+    </div>
+</div>

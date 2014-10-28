@@ -1,0 +1,56 @@
+<div class="input-group answer-block">
+    <textarea class="message-textarea no-resize" ng-model="ctrlMessage.commentText"
+              ng-hasfocus="ctrlMessage.isFocus" ng-show="ctrlMessage.answerShow" ng-keyup="base.messageChange($event,1)"
+              onblur="if(this.value=='') this.value='Ваш ответ';"
+              onfocus="if(this.value=='Ваш ответ') this.value='';" ng-setareaheight="true"></textarea>
+
+
+        <div class="attach-area" id="attach-area-edit-{{ctrlId}}">
+
+            <span class="attach-item" ng-repeat="image in ctrlMessage.images">
+                <a href="#" title="Не прикреплять" class="remove-attach-img" ng-click="base.removeAttach(ctrlMessage,$index,true)">×</a>
+                <img data-title="{{image.fileName}}" data-type="{{image.contentType}}" class="attached-img" style="background-image:url('{{image.URL}}')">
+            </span>
+
+            <div class="loading hidden">
+                <img ng-src="i/loading2.gif" alt="картинка"/>
+            </div>
+        </div>
+        <div class="attach-area attach-area-doc" id="attach-doc-area-edit-{{ctrlId}}">
+            <span class="attach-item" data-href="{{doc.URL}}" data-type="{{doc.contentType}}"  ng-repeat="doc in ctrlMessage.documents">
+                <a href="#" title="Не прикреплять" class="remove-attach-img" ng-click="base.removeAttach(ctrlMessage,$index,false)">×</a>
+                <span>{{doc.fileName}}</span>
+            </span>
+        </div>
+
+    <span class="input-group-btn" ng-show="ctrlMessage.answerShow">
+        <!--<button class="btn btn-sm btn-info no-radius no-border" type="button" ng-click="lenta.createWallComment($event,ctrlMessage)">-->
+        <!--
+         параметры
+
+         ctrlTopicId
+         ctrlParent
+         ctrlFirstMessage
+
+         используются только для создания сообщений НЕ первого уровня в обсуждении
+         -->
+        <div class="btn-group attach-dropdown pull-right">
+            <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border">
+                <span class="btn-group-text">Прикрепить</span>
+                <span class="icon-caret-down icon-on-right"></span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-blue">
+                <li><input id="attachImage-edit-{{ctrlId}}" type="file"/></li>
+                <li><input id="attachDoc-edit-{{ctrlId}}" type="file"/></li>
+            </ul>
+        </div>
+
+        <button class="btn btn-sm btn-info no-radius no-border" type="button" ng-click="createMessage($event,ctrlMessage,ctrlTopicId,ctrlParent)">
+            <i class="icon-share-alt"></i>
+            Отправить
+        </button>
+        <span class="error-info" ng-show="ctrlMessage.isCreateCommentError" ng-click>{{ctrlMessage.createCommentErrorText}}</span>
+
+    </span>
+</div>

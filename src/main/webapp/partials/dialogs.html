@@ -1,0 +1,32 @@
+
+<section class="private-messages page ng-cloak"> <!-- ng-show="base.privateMessagesIsActive" -->
+    <div class="page-title pull-left">{{ base.pageTitle}}</div>
+    <a class="btn btn-primary no-border btn-sm pull-right" ui-sref="neighbours">Написать сообщение</a>
+    <div class="clearfix"></div>
+
+    <!--<div class="private-messages">-->
+        <div class="dialogs-container">
+            <div ng-if="!dialogs.dialogsList || dialogs.dialogsList.length == 0" class="empty-messages">
+                <div ng-include="'/partials/empty/empty-dialogs.html'"></div>
+            </div>
+
+            <div class="dialog-item" ng-click="dialogs.goToSingleDialog(dialog.id)" ng-repeat="dialog in dialogs.dialogsList"> <!-- ui-sref="dialog-single( {dialogId : {{ dialog.id }} })" -->
+                <div class="private-message-left pull-left">
+                    <div class="private-message-ava pull-left">
+                        <div class="avatar middle" style="background-image: url({{dialog.anotherUser.avatar}})"></div>
+
+                        <div ng-if="dialog.anotherUser.groupType" class="user-ribbon" ng-class="base.getUserColor(dialog.anotherUser.groupType)"></div>
+                    </div>
+                    <div class="private-message-author">
+                        <div><a ui-sref="profile({ userId : {{ dialog.anotherUser.id }} })" ng-click="$event.stopPropagation()">{{dialog.anotherUser.firstName + " "+ dialog.anotherUser.lastName}}</a></div>
+                        <div>{{dialog.createDate*1000 | date:'dd.MM.yy'}}</div>
+                    </div>
+                </div>
+                <div class="private-message-right pull-right bold" ng-if="dialog.newMessagesCount > 0">
+                    +{{dialog.newMessagesCount}}
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+
+</section>

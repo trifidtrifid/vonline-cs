@@ -1,0 +1,29 @@
+
+<section class="set-info page" ng-class="base.mapsLoadStatus">
+
+<div>
+
+    <p>Для того, чтобы читать и создавать сообщения в группах "Подъезд" и "Этаж", следует указать их.</p>
+
+    <label>
+        <span>Подъезд</span>
+        <input type="text" ng-model="setInfo.staircase"/>
+    </label>
+    <label>
+        <span>Этаж</span>
+        <input type="text" ng-model="setInfo.floor"/>
+    </label>
+    <label>
+        <span>Квартира</span>
+        <input type="text" ng-model="setInfo.flat"/>
+    </label>
+
+    <p>Указывайте правильные данные, иначе Вы не сможете увидеть то, что пишут Ваши соседи, а Ваши соседи не увидят то, что пишите Вы.</p>
+
+    <button class="btn btn-sm no-border btn-primary set-info-save" ng-click="setInfo.save()">Сохранить</button>
+    <span ng-class="{'info-good': !setInfo.isError, 'error-info': setInfo.isError}" ng-show="setInfo.isSaveResult">{{ setInfo.info}}</span>
+
+</div>
+
+</section>
+

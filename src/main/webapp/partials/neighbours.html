@@ -1,0 +1,33 @@
+
+<section class="nextdoors page ng-cloak" ng-class="base.neighboursLoadStatus"> <!--  ng-show="base.nextdoorsIsActive" -->
+
+<div class="nextdoors">
+    <div class="nextdoors-amount pull-left">Зарегестрировано соседей: <span>{{neighbours.neighboors.length-1}}</span></div>
+
+
+    <form method="post" action="#" class="form-group has-info form-search">
+        <span class="block input-icon input-icon-right">
+            <input id="search-neighbours" type="text" class="form-control width-100" value="Поиск" onblur="if(this.value=='') this.value='Поиск';" onfocus="if(this.value=='Поиск') this.value='';"/>
+            <a href="#" class="icon-search icon-on-right bigger-110"></a>
+        </span>
+    </form>
+
+        <div class="nextdoor-single" ng-repeat="neighboor in neighbours.neighboors" ng-if="neighboor.id != base.me.id">
+
+            <a ui-sref="profile({ userId : neighboor.id})" class="nextdoor-left pull-left">
+            <span class="nextdoor-ava pull-left">
+                <div class="avatar short2" style="background-image: url({{neighboor.avatar}})"></div>
+                <div ng-if="neighboor.groupType" class="user-ribbon" ng-class="base.getUserColor(neighboor.groupType)"></div>
+            </span>
+                <span class="nextdoor-name">{{neighboor.firstName+" "+neighboor.lastName}}</span>
+            </a>
+            <div class="nextdoor-right pull-right">
+                <a href="#" ng-click="base.goToDialog(neighboor.id)" class="btn btn-sm btn-primary no-border">Написать</a>
+            </div>
+            <span class="nextdoor-address">{{neighboor.address}}</span>
+        </div>
+
+</div>
+
+</section>
+

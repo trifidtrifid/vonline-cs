@@ -1,0 +1,30 @@
+
+    <div id="dialog-message" class="hide">
+        <div class="loadAvatar-area">
+            <h2>Загрузите аватар</h2>
+
+            <!--<button class="btn btn-sm btn-primary no-border load-avatar">-->
+            <div class="btn btn-sm btn-primary no-border load-avatar">
+                <input type="file"/>
+            </div>
+            <!--</button>-->
+        </div>
+
+        <div class="crop-area hidden">
+            <div style="margin-bottom:10px;">
+                <h4>Панель предварительного просмотра:</h4>
+
+                <div class="load-avatar-error error-info hidden"></div>
+                <div><img src="../i/loading.gif" alt="подождите" class="loading"/></div>
+                <div class="preview-container hidden">
+                    <img id="preview" src="#"/>
+                </div>
+            </div>
+            <img src="#" alt="#" id="image-for-crop" class="hidden"/>
+
+            <button class="btn btn-sm no-border btn-primary btn-save-avatar" ng-click="changeAvatar.save()">Сохранить</button>
+            <button class="btn btn-sm no-border btn-primary btn-back" ng-click="changeAvatar.back()">Назад</button>
+        </div>
+
+    </div>
+

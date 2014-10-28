@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Закрытая социальная сеть для соседей">
+<title>ВместеОнлайн</title>
+
+<link href="css/landing/bootstrap.css" rel="stylesheet">
+
+<link href="css/landing/startup.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="js/landing/html5shiv.js"></script>
+  <script src="js/landing/respond.min.js"></script>
+<![endif]-->
+
+<script src="js/thrift.js" type="text/javascript"></script>
+<script src="gen-js/authservice_types.js" type="text/javascript"></script>
+<script src="gen-js/AuthService.js" type="text/javascript"></script>
+
+<script>
+	var href = document.location.href;
+
+	if (href.indexOf('https') == -1
+			&& (href.indexOf('127.0.0.1') == -1 && href.indexOf('localhost') == -1)
+			&& href.indexOf('appspot.com') == -1)
+		document.location.replace('https://www.vmesteonline.ru');
+
+	var transport = new Thrift.Transport("/thrift/AuthService");
+	var protocol = new Thrift.Protocol(transport);
+	var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(
+			protocol);
+
+	var isAuth = authClient.checkIfAuthorized();
+
+	if (isAuth) {
+		document.location.replace('/main');
+	}
+</script>
+
+<link rel="shortcut icon" href="i/landing/vmesteonline.png">
+<script src="js/landing/pace.js"></script>
+
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&subset=latin,cyrillic,cyrillic-ext' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+	<div class="preloader"></div>
+	<div class="container position-relative">
+		<a href="/login" class="btn btn-success btn-lg go-to-login">Войти</a>
+	</div>
+
+	<main id="top" class="masthead" role="main">
+
+	<div class="container">
+		<div class="logo">
+			<a href="/"><img src="i/logo.png" alt="startup-logo"></a>
+            <span>Соседи.Вместе.Онлайн.</span>
+		</div>
+		<h3 class="clear">
+			Зарегистрируйтесь, используя код приглашения.
+		</h3>
+
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-md-offset-3 subscribe">
+				<form class="form-horizontal" role="form" action="subscribe.php" id="subscribeForm" method="POST">
+					<div class="form-group">
+						<div class="col-md-7 col-sm-6 col-sm-offset-1 col-md-offset-0">
+							<input class="form-control input-lg" name="email" type="email" id="address" placeholder="Введите email" data-validate="validate(required, email)" required="required"> <input
+								class="form-control input-lg active" name="code" type="text" id="code" placeholder="Введите код приглашения" required="required"> <a href="/request.html" class="no-code-link">Нет кода?</a>
+						</div>
+						<div class="col-md-5 col-sm-4">
+							<button type="submit" class="btn btn-success btn-lg">Зарегистрироваться</button>
+						</div>
+					</div>
+				</form>
+				<span id="result" class="alertMsg"></span>
+			</div>
+		</div>
+	</div>
+	</main>
+
+
+	<div class="container" id="explore">
+
+		<!-- Features Section -->
+		<section class="row features" align="center">
+
+			<!-- Feature 04 -->
+
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="i/landing/flat-feature-icon-4.png" alt="analytics-icon">
+					<div class="caption">
+						<h3>Общение</h3>
+						<p>Соседи могут посоветовать хороший магазин или дать отзыв о детском саде рядом с домом.</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Feature 01 -->
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="i/landing/flat-feature-icon-1.png" alt="analytics-icon">
+					<div class="caption">
+						<h3>Обсуждения</h3>
+						<p>Принимайте участие в обсуждениях собственников жилья. Или хотя бы будьте в курсе.</p>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Feature 02 -->
+			<div class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<img src="i/landing/flat-feature-icon-2.png" alt="analytics-icon">
+					<div class="caption">
+						<h3>Узнать соседей</h3>
+						<p>Знакомство с соседями может быть полезным. И просто любопытно узнать, как можно называть Вашего соседа?</p>
+					</div>
+				</div>
+			</div>
+
+		</section>
+
+	</div>
+
+	<div class="container">
+
+		<!-- FAQ -->
+		<div class="section-title">
+			<h5>Подробнее о главном</h5>
+		</div>
+		<section class="row faq breath">
+			<div class="col-md-6">
+				<h6>Безопасность</h6>
+				<ul>
+					<li>Каждый Ваш сосед подтверждает свое местожительство.</li>
+					<li>Все данные передаются по зашифрованному протоколу https.</li>
+					<li>Вы сами выбираете тех, кто может видеть Ваши сообщения и контакную инофрмацию.</li>
+					<li>Зарегистрироваться возможно только по индивидуальному коду-приглашению.</li>
+				</ul>
+				<h6>Приватность</h6>
+				<ul>
+					<li>Вы сами определяете, какую информацию и новости будете получать в уведомлениях по электронной почте.</li>
+					<li>Ваши данные защищены от попадания в Google, Yandex или другие поисковые системы.</li>
+					<li>Вы сами выбираете, какую информацию о Вас видят остальные.</li>
+				</ul>
+
+			</div>
+			<div class="col-md-6">
+				<h6>Комфорт</h6>
+				<ul>
+					<li>Вы всегда будете знать, когда снова включат отопление и интернет.</li>
+					<li>Вы указываете только ту информацию о себе, какую захотите.</li>
+					<li>Здороваясь с соседями в лифте, Вы будете знать их имена.</li>
+				</ul>
+				<h6>Польза</h6>
+				<ul>
+					<li>Соседи могут посоветовать хорошее кафе рядом с домом.</li>
+					<li>Совместные с соседями оптовые покупки позволят выиграть в цене и качестве.</li>
+					<li>Инициативу отремонтировать детскую площадку или организовать парковку может поддержать больше людей, чем вы думаете.</li>
+				</ul>
+			</div>
+		</section>
+		<!-- // End FAQ -->
+
+	</div>
+
+
+	<!-- Grey Highlight Section -->
+	<div class="highlight testimonials">
+		<div class="container">
+
+			<!-- Testimonials -->
+			<div class="section-title">
+				<h5>Что о нас говорят?</h5>
+			</div>
+			<section class="row breath">
+				<div class="col-md-6">
+
+					<div class="testblock">Ого! Наконец-то все соседи на одном сайте :) Получается, что могу написать всем в подъезде, а могу и всем во дворе!</div>
+					<div class="clientblock">
+						<img src="i/landing/anna.jpg" alt=".">
+						<p>
+							<strong>Анна</strong>
+						</p>
+					</div>
+
+					<br />
+					<br />
+					<br />
+
+					<div class="testblock">Хорошая идея, теперь здесь будут все наши объявления, читайте!</div>
+					<div class="clientblock">
+						<img src="i/landing/customer-img-1.jpg" alt=".">
+						<p>
+							<strong>Управляющая компания</strong>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="testblock">Главное, что только для жильцов. Спам на публичных сайтах уже достал.</div>
+					<div class="clientblock">
+						<img src="i/landing/customer-img-2.jpg" alt=".">
+						<p>
+							<strong>Михаил</strong>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="testblock">Надеюсь, все подключатся. Вообще, эти постоянные объявления типа "воды не будет", "завтра чистка снега" и т.д. было бы конечно удобно получать в виде уведомлений</div>
+					<div class="clientblock">
+						<img src="i/landing/c4.jpg" alt=".">
+						<p>
+							<strong>Александр</strong>
+						</p>
+					</div>
+				</div>
+
+
+
+			</section>
+			<!-- // End Testimonials -->
+
+		</div>
+	</div>
+	<!-- // End Grey Highlight Section -->
+
+	<div class="highlight testimonials">
+		<div class="container">
+			<section class="row breath">
+
+				<div class="footer footer-bottom clearfix">
+					<div class="pull-left">
+						<span class="copypast">&copy;</span> ВместеОнлайн 2014
+					</div>
+					<div class="pull-right">
+						<ul>
+							<li><a href="about">О сайте</a></li>
+							<li><a href="blog">Блог</a></li>
+							<li><a href="contacts">Контакты</a></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+		</div>
+	</div>
+
+
+	<script src="js/landing/jquery.js"></script>
+	<script src="js/landing/bootstrap.js"></script>
+	<script src="js/landing/easing.js"></script>
+	<script src="js/landing/typer.js"></script>
+	<script src="js/landing/nicescroll.js"></script>
+	<script src="js/landing/ketchup.all.js"></script>
+
+	<!-- файлы thrift -->
+	<script src="js/thrift.js" type="text/javascript"></script>
+	<script src="gen-js/bedata_types.js" type="text/javascript"></script>
+	<script src="gen-js/authservice_types.js" type="text/javascript"></script>
+	<script src="gen-js/AuthService.js" type="text/javascript"></script>
+	<!-- -->
+
+
+	<script>
+		$(function() {
+			$('[data-typer-targets]').typer();
+		});
+	</script>
+
+
+	<script>
+		$(function() {
+			$('.scrollto, .gototop').bind('click', function(event) {
+				var $anchor = $(this);
+				$('html, body').stop().animate({
+					scrollTop : $($anchor.attr('href')).offset().top
+				}, 1500, 'easeInOutExpo');
+				event.preventDefault();
+			});
+		});
+	</script>
+
+
+	<!--============== SUBSCRIBE FORM =================-->
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							var transport = new Thrift.Transport(
+									"/thrift/AuthService");
+							var protocol = new Thrift.Protocol(transport);
+							var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(
+									protocol);
+
+							$('.no-code-link')
+									.click(
+											function(e) {
+												$(this).addClass('clicked');
+												var inputCode = document
+														.getElementById("code");
+												inputCode
+														.removeAttribute('required');
+												inputCode
+														.setAttribute('class',
+																'form-control input-lg passive');
+											});
+
+							$('#subscribeForm')
+									.ketchup()
+									.submit(
+											function() {
+												if ($(this).ketchup('isValid')) {
+													var action = $(this).attr(
+															'action');
+													var email = $('#address')
+															.val();
+													var code = $('#code').val();
+
+													if (email.indexOf('@') == -1) {
+														$('.alertMsg')
+																.text(
+																		'Вы указали некорректный email.')
+																.show();
+													} else {
+
+														$
+																.ajax({
+																	url : action,
+																	type : 'POST',
+																	data : {
+																		email : email,
+																		code : code,
+																		isOnlyAddUser : true
+																	},
+																	success : function(
+																			data) {
+																		//alert("111 "+data);
+
+																		if (data == 'Неверный код !'
+																				&& !$(
+																						'#code')
+																						.hasClass(
+																								'passive')) {
+																			$(
+																					'#result')
+																					.html(
+																							data);
+																		} else {
+
+																			try {
+																				var userLocation = authClient
+																						.checkInviteCode(code);
+																				var address = encodeURIComponent(userLocation.address);
+																				document.location
+																						.replace('registration.html#email='
+																								+ email
+																								+ ';mapUrl='
+																								+ userLocation.mapUrl
+																								+ ";address="
+																								+ address
+																								+ ";code="
+																								+ code);
+																			} catch (e) {
+																				$(
+																						'.alertMsg')
+																						.text(
+																								'Вы ввели некоректный код или этот код уже был активирован.')
+																						.show();
+																			}
+
+																		}
+
+																	},
+																	error : function() {
+																		$(
+																				'#result')
+																				.html(
+																						'Произошла ошибка.');
+																	}
+																});
+													}
+												}
+
+												return false;
+											});
+
+						});
+	</script>
+
+	<script>
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-51483969-1', 'vmesteonline.ru');
+		ga('send', 'pageview');
+	</script>
+
+	<!-- Yandex.Metrika counter -->
+	<script type="text/javascript">
+		(function(d, w, c) {
+			(w[c] = w[c] || []).push(function() {
+				try {
+					w.yaCounter25964365 = new Ya.Metrika({
+						id : 25964365,
+						clickmap : true,
+						trackLinks : true,
+						accurateTrackBounce : true,
+						trackHash : true,
+						ut : "noindex"
+					});
+				} catch (e) {
+				}
+			});
+
+			var n = d.getElementsByTagName("script")[0], s = d
+					.createElement("script"), f = function() {
+				n.parentNode.insertBefore(s, n);
+			};
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = (d.location.protocol == "https:" ? "https:" : "http:")
+					+ "//mc.yandex.ru/metrika/watch.js";
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else {
+				f();
+			}
+		})(document, window, "yandex_metrika_callbacks");
+	</script>
+	<noscript>
+		<div>
+			<img src="//mc.yandex.ru/watch/25964365?ut=noindex" style="position: absolute; left: -9999px;" alt="" />
+		</div>
+	</noscript>
+	<!-- /Yandex.Metrika counter -->
+
+
+
+</body>
+</html>

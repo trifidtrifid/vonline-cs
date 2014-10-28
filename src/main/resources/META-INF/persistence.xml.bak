@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+
+    <!-- JDO -->
+    <persistence-unit name="vmesteonline">
+        <class>com.vmesteonline.be.jdo2.VoBaseMessage</class>
+        <class>com.vmesteonline.be.jdo2.VoFileAccessRecord</class>
+        <class>com.vmesteonline.be.jdo2.VoGroup</class>
+        <class>com.vmesteonline.be.jdo2.VoInitKey</class>
+        <class>com.vmesteonline.be.jdo2.VoInviteCode</class>
+        <class>com.vmesteonline.be.jdo2.GeoLocation</class>
+        <class>com.vmesteonline.be.jdo2.VoMessage</class>
+        <class>com.vmesteonline.be.jdo2.VoPoll</class>
+        <class>com.vmesteonline.be.jdo2.VoRubric</class>
+        <class>com.vmesteonline.be.jdo2.VoSession</class>
+        <class>com.vmesteonline.be.jdo2.VoTopic</class>
+        <class>com.vmesteonline.be.jdo2.VoUser</class>
+        <class>com.vmesteonline.be.jdo2.VoUserGroup</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoBuilding</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoCountry</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoCity</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoStreet</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoGeocoder</class>
+        <class>com.vmesteonline.be.jdo2.dialog.VoDialog</class>
+        <class>com.vmesteonline.be.jdo2.dialog.VoDialogMessage</class>
+        <exclude-unlisted-classes/>
+        <properties>
+            <property name="javax.jdo.option.ConnectionURL" value="cassandra:"/>
+            <property name="javax.jdo.mapping.Schema" value="schema1"/>
+            <property name="datanucleus.schema.autoCreateAll" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

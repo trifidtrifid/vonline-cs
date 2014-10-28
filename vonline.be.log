@@ -1,0 +1,457 @@
+13:11:58,886 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+13:11:58,887 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+13:12:11,911 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+13:12:11,914 - New Cassandra host /127.0.0.1:9042 added
+13:30:14,182 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+13:30:14,185 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+13:30:37,236 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+13:30:37,238 - New Cassandra host /127.0.0.1:9042 added
+13:37:59,421 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+13:37:59,422 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+13:38:34,050 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+13:38:34,052 - New Cassandra host /127.0.0.1:9042 added
+13:40:42,491 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+13:40:42,492 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+13:40:54,529 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+13:40:54,531 - New Cassandra host /127.0.0.1:9042 added
+13:45:27,900 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+13:45:27,901 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+13:45:46,527 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+13:45:46,529 - New Cassandra host /127.0.0.1:9042 added
+14:18:17,694 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:18:17,695 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:18:31,754 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+14:18:31,756 - New Cassandra host /127.0.0.1:9042 added
+14:21:27,821 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:21:27,822 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:21:42,891 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+14:21:42,894 - New Cassandra host /127.0.0.1:9042 added
+14:24:16,744 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:24:16,745 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:29:12,116 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:29:12,117 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:42:54,702 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:42:54,703 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:42:54,910 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+14:42:54,913 - PWC5965: Parent class loader is: WebAppClassLoader=1968298538@7551da2a
+14:42:54,916 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:42:54,916 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:43:18,995 - PWC5965: Parent class loader is: WebAppClassLoader=1968298538@7551da2a
+14:43:18,996 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:43:18,996 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:43:18,998 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/] QueryString: [null] RequestParams: [ ]
+14:43:19,307 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java total=294 generate=43 validate=248
+14:43:19,318 - Unknown source VM 1.7 ignored.
+14:43:19,318 - Unknown target VM 1.7 ignored.
+14:43:19,677 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java 363ms
+14:43:20,303 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+14:43:20,305 - New Cassandra host /127.0.0.1:9042 added
+14:43:20,795 - PWC5965: Parent class loader is: WebAppClassLoader=1968298538@7551da2a
+14:43:20,796 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:43:20,796 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:43:20,797 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:20,980 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=182 generate=25 validate=157
+14:43:20,982 - Unknown source VM 1.7 ignored.
+14:43:20,982 - Unknown target VM 1.7 ignored.
+14:43:21,060 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 78ms
+14:43:26,587 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+14:43:26,587 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+14:43:26,678 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+14:43:26,679 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+14:43:26,680 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+14:43:26,680 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+14:43:27,711 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+14:43:27,724 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:27,772 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:27,779 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:27,797 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:27,805 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:27,893 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:27,900 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:43:30,199 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+14:43:30,206 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:44:48,982 - JspServlet.destroy()
+14:44:48,982 - JspServlet.destroy()
+14:44:48,983 - JspServlet.destroy()
+14:47:01,454 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:47:01,455 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:47:01,654 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+14:47:01,658 - PWC5965: Parent class loader is: WebAppClassLoader=2027837674@78de58ea
+14:47:01,661 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:47:01,661 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:48:16,779 - JspServlet.destroy()
+14:49:25,208 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+14:49:25,209 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+14:49:25,430 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+14:49:25,432 - PWC5965: Parent class loader is: WebAppClassLoader=70386506@432034a
+14:49:25,436 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:49:25,436 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:50:09,663 - PWC5965: Parent class loader is: WebAppClassLoader=70386506@432034a
+14:50:09,665 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:50:09,665 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:50:09,666 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:09,976 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=299 generate=39 validate=257
+14:50:09,983 - Unknown source VM 1.7 ignored.
+14:50:09,983 - Unknown target VM 1.7 ignored.
+14:50:10,276 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 296ms
+14:50:10,815 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+14:50:10,817 - New Cassandra host /127.0.0.1:9042 added
+14:50:11,489 - PWC5965: Parent class loader is: WebAppClassLoader=70386506@432034a
+14:50:11,489 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+14:50:11,489 - PWC5966: IMPORTANT: Do not modify the generated servlets
+14:50:11,491 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+14:50:11,491 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+14:50:11,491 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+14:50:11,492 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+14:50:11,492 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+14:50:11,492 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+14:50:11,615 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java total=121 generate=18 validate=103
+14:50:11,617 - Unknown source VM 1.7 ignored.
+14:50:11,617 - Unknown target VM 1.7 ignored.
+14:50:11,701 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java 83ms
+14:50:11,734 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+14:50:11,743 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,745 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,747 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,747 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,747 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,748 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,801 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:11,850 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+14:50:11,963 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+14:50:12,101 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+14:50:12,138 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:47,757 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/profile] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/profile] QueryString: [null] RequestParams: [ ]
+15:40:47,812 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:47,917 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+15:40:47,919 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+15:40:47,922 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:40:47,925 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+15:40:47,925 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+15:40:47,926 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+15:40:47,979 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+15:40:47,981 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:47,987 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:47,992 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:47,998 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:48,015 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:48,020 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:48,027 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:48,031 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:40:48,116 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:40:48,289 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+15:40:48,327 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,505 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,635 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+15:41:43,635 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+15:41:43,638 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:41:43,638 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+15:41:43,641 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+15:41:43,641 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+15:41:43,644 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+15:41:43,671 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,671 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,672 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,673 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,674 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,674 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,681 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,685 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:41:43,696 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:41:43,892 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+15:41:43,899 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,534 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,616 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+15:57:17,623 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+15:57:17,623 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:57:17,626 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+15:57:17,626 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+15:57:17,627 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+15:57:17,627 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+15:57:17,687 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,690 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,692 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,692 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,694 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,695 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,696 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:17,953 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+15:57:17,962 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:40,995 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,080 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+15:57:41,080 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+15:57:41,084 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:57:41,086 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+15:57:41,087 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+15:57:41,087 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+15:57:41,105 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+15:57:41,124 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,124 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,125 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,127 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,127 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,128 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,131 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,151 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+15:57:41,210 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:57:41,391 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+15:57:41,425 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+15:58:38,413 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/] QueryString: [null] RequestParams: [ ]
+15:58:59,620 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:00:10,428 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+16:03:30,652 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/index.html] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/index.html] QueryString: [null] RequestParams: [ ]
+16:04:46,914 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/] QueryString: [null] RequestParams: [ ]
+16:04:46,964 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,001 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+16:04:47,002 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+16:04:47,012 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+16:04:47,032 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+16:04:47,032 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+16:04:47,032 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+16:04:47,032 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+16:04:47,032 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+16:04:47,041 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,041 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+16:04:47,057 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,063 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,099 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,106 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,112 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,121 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,127 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:04:47,133 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,727 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/index.html] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/index.html] QueryString: [null] RequestParams: [ ]
+16:05:00,744 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,831 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+16:05:00,835 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+16:05:00,857 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+16:05:00,857 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+16:05:00,859 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+16:05:00,860 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+16:05:00,862 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,863 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+16:05:00,877 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,886 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,907 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,912 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,939 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,945 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:00,994 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/favicon.ico] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/favicon.ico] QueryString: [null] RequestParams: [ ]
+16:05:00,998 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/favicon.ico] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/favicon.ico] QueryString: [null] RequestParams: [ ]
+16:05:00,998 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:05:01,004 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:37:57,077 - JspServlet.destroy()
+16:37:57,077 - JspServlet.destroy()
+16:37:57,077 - JspServlet.destroy()
+16:38:14,162 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+16:38:14,163 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+16:38:14,412 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+16:38:14,416 - PWC5965: Parent class loader is: WebAppClassLoader=1675239551@63da207f
+16:38:14,420 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:38:14,420 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:38:34,307 - PWC5965: Parent class loader is: WebAppClassLoader=1675239551@63da207f
+16:38:34,308 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:38:34,308 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:38:34,309 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:34,683 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=360 generate=81 validate=276
+16:38:34,691 - Unknown source VM 1.7 ignored.
+16:38:34,691 - Unknown target VM 1.7 ignored.
+16:38:35,020 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 332ms
+16:38:35,452 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+16:38:35,453 - New Cassandra host /127.0.0.1:9042 added
+16:38:35,804 - PWC5965: Parent class loader is: WebAppClassLoader=1675239551@63da207f
+16:38:35,805 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:38:35,805 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:38:35,806 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/AuthService.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/AuthService.js] QueryString: [null] RequestParams: [ ]
+16:38:35,806 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/css/style.css] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/css/style.css] QueryString: [null] RequestParams: [ ]
+16:38:35,806 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/thrift.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/thrift.js] QueryString: [null] RequestParams: [ ]
+16:38:35,807 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/gen-js/authservice_types.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/gen-js/authservice_types.js] QueryString: [null] RequestParams: [ ]
+16:38:35,807 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/lib/jquery-2.1.1.min.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/lib/jquery-2.1.1.min.js] QueryString: [null] RequestParams: [ ]
+16:38:35,807 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+16:38:35,979 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java total=170 generate=22 validate=148
+16:38:35,981 - Unknown source VM 1.7 ignored.
+16:38:35,981 - Unknown target VM 1.7 ignored.
+16:38:36,068 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java 87ms
+16:38:36,089 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/js/login.js] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/js/login.js] QueryString: [null] RequestParams: [ ]
+16:38:36,101 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,145 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,156 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,185 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,197 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,214 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,226 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,231 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/logo.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/logo.png] QueryString: [null] RequestParams: [ ]
+16:38:36,320 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:38:36,473 - JspEngine --> [/main.jsp] ServletPath: [] PathInfo: [/i/landing/vmesteonline.png] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/i/landing/vmesteonline.png] QueryString: [null] RequestParams: [ ]
+16:38:36,481 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:41:53,446 - JspServlet.destroy()
+16:41:53,446 - JspServlet.destroy()
+16:41:53,446 - JspServlet.destroy()
+16:42:08,260 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+16:42:08,261 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+16:42:08,481 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+16:42:08,485 - PWC5965: Parent class loader is: WebAppClassLoader=2027837674@78de58ea
+16:42:08,490 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:42:08,490 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:42:11,457 - PWC5965: Parent class loader is: WebAppClassLoader=2027837674@78de58ea
+16:42:11,459 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:42:11,459 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:42:11,460 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:42:11,782 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=306 generate=48 validate=255
+16:42:11,788 - Unknown source VM 1.7 ignored.
+16:42:11,788 - Unknown target VM 1.7 ignored.
+16:42:12,112 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 326ms
+16:42:12,646 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+16:42:12,648 - New Cassandra host /127.0.0.1:9042 added
+16:45:20,549 - JspServlet.destroy()
+16:45:20,550 - JspServlet.destroy()
+16:49:54,169 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+16:49:54,170 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+16:49:54,445 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+16:49:54,449 - PWC5965: Parent class loader is: WebAppClassLoader=2027837674@78de58ea
+16:49:54,454 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:49:54,454 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:54:13,770 - JspServlet.destroy()
+16:55:25,902 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+16:55:25,903 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+16:55:26,125 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+16:55:26,129 - PWC5965: Parent class loader is: WebAppClassLoader=1675239551@63da207f
+16:55:26,134 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:55:26,134 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:55:32,976 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+16:55:32,979 - New Cassandra host /127.0.0.1:9042 added
+16:55:41,069 - PWC5965: Parent class loader is: WebAppClassLoader=1675239551@63da207f
+16:55:41,071 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:55:41,071 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:55:41,072 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:55:41,453 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=365 generate=30 validate=333
+16:55:41,461 - Unknown source VM 1.7 ignored.
+16:55:41,461 - Unknown target VM 1.7 ignored.
+16:55:41,757 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 298ms
+16:55:51,295 - try authentificate user a pass a
+16:55:51,986 - save session '1gv9g4n6a82n6yy1sm1vylv9h' userId 41
+16:57:06,201 - JspServlet.destroy()
+16:57:06,202 - JspServlet.destroy()
+16:57:21,070 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+16:57:21,072 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+16:57:21,374 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+16:57:21,377 - PWC5965: Parent class loader is: WebAppClassLoader=70386506@432034a
+16:57:21,381 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:57:21,381 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:57:25,787 - PWC5965: Parent class loader is: WebAppClassLoader=70386506@432034a
+16:57:25,788 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:57:25,788 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:57:25,789 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+16:57:26,145 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java total=345 generate=110 validate=232
+16:57:26,152 - Unknown source VM 1.7 ignored.
+16:57:26,152 - Unknown target VM 1.7 ignored.
+16:57:26,589 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java 439ms
+16:57:27,050 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+16:57:27,051 - New Cassandra host /127.0.0.1:9042 added
+16:57:27,245 - PWC5965: Parent class loader is: WebAppClassLoader=70386506@432034a
+16:57:27,245 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+16:57:27,245 - PWC5966: IMPORTANT: Do not modify the generated servlets
+16:57:27,246 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:57:27,440 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=192 generate=28 validate=164
+16:57:27,442 - Unknown source VM 1.7 ignored.
+16:57:27,442 - Unknown target VM 1.7 ignored.
+16:57:27,550 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 107ms
+16:57:35,118 - try authentificate user b pass b
+16:57:35,268 - save session '112roql0qajhc1ls7n0g7ted7q' userId 42
+16:57:35,383 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+16:57:35,395 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:57:59,779 - try authentificate user a pass a
+16:57:59,788 - save session '112roql0qajhc1ls7n0g7ted7q' userId 41
+16:57:59,851 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+16:57:59,860 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:58:07,556 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:58:17,930 - try authentificate user a pass a
+16:58:17,970 - save session '112roql0qajhc1ls7n0g7ted7q' userId 41
+16:58:17,995 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+16:58:18,026 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:59:17,802 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+16:59:17,813 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:59:32,756 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+16:59:39,874 - try authentificate user admin pass geoserver
+16:59:50,688 - try authentificate user b pass b
+16:59:50,944 - save session '112roql0qajhc1ls7n0g7ted7q' userId 42
+16:59:50,973 - JspEngine --> [/main.jsp] ServletPath: [/main] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/main] QueryString: [null] RequestParams: [ ]
+16:59:50,982 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+17:16:38,631 - JspServlet.destroy()
+17:16:38,631 - JspServlet.destroy()
+17:16:38,631 - JspServlet.destroy()
+17:16:55,395 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+17:16:55,396 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+17:16:55,621 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+17:16:55,625 - PWC5965: Parent class loader is: WebAppClassLoader=1156729376@44f24a20
+17:16:55,629 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+17:16:55,629 - PWC5966: IMPORTANT: Do not modify the generated servlets
+17:17:28,712 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+17:17:28,715 - New Cassandra host /127.0.0.1:9042 added
+17:17:33,008 - PWC5965: Parent class loader is: WebAppClassLoader=1156729376@44f24a20
+17:17:33,009 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+17:17:33,009 - PWC5966: IMPORTANT: Do not modify the generated servlets
+17:17:33,010 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+17:17:33,559 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=538 generate=196 validate=338
+17:17:33,566 - Unknown source VM 1.7 ignored.
+17:17:33,566 - Unknown target VM 1.7 ignored.
+17:17:34,052 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 488ms
+17:20:10,052 - try authentificate user b pass b
+17:20:38,661 - save session '1bxzdgsb7brh914anwxlhcph8e' userId 42
+17:25:02,525 - PWC5965: Parent class loader is: WebAppClassLoader=1156729376@44f24a20
+17:25:02,526 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+17:25:02,526 - PWC5966: IMPORTANT: Do not modify the generated servlets
+17:25:02,527 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+17:25:02,792 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java total=263 generate=88 validate=174
+17:25:02,794 - Unknown source VM 1.7 ignored.
+17:25:02,794 - Unknown target VM 1.7 ignored.
+17:25:02,892 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java 98ms
+17:29:58,638 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+17:29:58,640 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+17:29:58,893 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+17:29:58,899 - PWC5965: Parent class loader is: WebAppClassLoader=836581566@31dd38be
+17:29:58,903 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+17:29:58,903 - PWC5966: IMPORTANT: Do not modify the generated servlets
+17:30:04,302 - PWC5965: Parent class loader is: WebAppClassLoader=836581566@31dd38be
+17:30:04,303 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+17:30:04,303 - PWC5966: IMPORTANT: Do not modify the generated servlets
+17:30:04,304 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+17:30:05,057 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java total=736 generate=502 validate=230
+17:30:05,082 - Unknown source VM 1.7 ignored.
+17:30:05,083 - Unknown target VM 1.7 ignored.
+17:30:06,002 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\main_jsp.java 928ms
+17:30:15,495 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+17:30:18,777 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+17:30:18,779 - New Cassandra host /127.0.0.1:9042 added
+17:30:20,046 - PWC5965: Parent class loader is: WebAppClassLoader=836581566@31dd38be
+17:30:20,046 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+17:30:20,046 - PWC5966: IMPORTANT: Do not modify the generated servlets
+17:30:20,047 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+17:30:20,483 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=435 generate=43 validate=392
+17:30:20,484 - Unknown source VM 1.7 ignored.
+17:30:20,484 - Unknown target VM 1.7 ignored.
+17:30:20,580 - Compiled /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java 95ms
+17:30:42,177 - try authentificate user b pass b
+17:30:44,830 - save session 'b4xtc2rhekls1mfblzsf1gcvk' userId 42
+17:30:52,973 - JspEngine --> [/main.jsp] ServletPath: [/null] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\main.jsp] RequestURI: [/null] QueryString: [null] RequestParams: [ ]
+17:31:12,215 - find user email b name Bname
+17:31:12,285 - return group Мой этаж
+17:31:12,290 - return group Мой подъезд
+17:31:12,315 - return group Мой дом
+17:31:12,318 - return group Соседние дома
+17:31:12,808 - Got topic request type:WALL lastLoadedTopicId:0 length:10 groups count:1 Query filter:(visibleGroups==77) && (type=='WALL' || type=='BASE') Query Result:0 Result: 0
+19:37:04,168 - Cannot find Snappy class, you should make sure the Snappy library is in the classpath if you intend to use it. Snappy compression will not be available for the protocol.
+19:37:04,170 - Cannot find LZ4 class, you should make sure the LZ4 library is in the classpath if you intend to use it. LZ4 compression will not be available for the protocol.
+19:37:04,389 - Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+19:37:04,393 - PWC5965: Parent class loader is: WebAppClassLoader=234133198@df496ce
+19:37:04,396 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+19:37:04,396 - PWC5966: IMPORTANT: Do not modify the generated servlets
+19:37:05,513 - Using data-center name 'datacenter1' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+19:37:05,516 - New Cassandra host /127.0.0.1:9042 added
+19:37:55,424 - PWC5965: Parent class loader is: WebAppClassLoader=234133198@df496ce
+19:37:55,425 - PWC5964: Scratch dir for the JSP engine is: C:\work\workspace\idea\vonline-cs\target\tmp\jsp
+19:37:55,426 - PWC5966: IMPORTANT: Do not modify the generated servlets
+19:37:55,426 - JspEngine --> [/login.jsp] ServletPath: [/login] PathInfo: [null] RealPath: [C:\work\workspace\idea\vonline-cs\src\main\webapp\login.jsp] RequestURI: [/login] QueryString: [null] RequestParams: [ ]
+19:37:55,824 - Generated /C:/work/workspace/idea/vonline-cs/target/tmp/jsp//org/apache/jsp\login_jsp.java total=384 generate=116 validate=265
+19:37:55,832 - Unknown source VM 1.7 ignored.
+19:37:55,832 - Unknown target VM 1.7 ignored.

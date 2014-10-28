@@ -1,0 +1,20 @@
+@import 'lib/bootstrap.min.css';
+@import 'lib/font-awesome-original.css';
+@import 'lib/font-awesome.min.css';
+@import 'lib/ace-fonts.css';
+@import 'lib/ace.css';
+@import 'profile.css';
+@import 'settings.css';
+.error-info,
+.confirm-info {
+  color: #f00;
+  font-size: 14px;
+}
+.login-error {
+  text-align: center;
+  clear: right;
+}
+.info-good {
+  color: #62c462;
+  font-size: 14px;
+}

@@ -1,0 +1,143 @@
+.user-descr {
+  font-size: 14px;
+}
+.user-descr .ava-area {
+  float: left;
+  width: 200px;
+  padding: 10px 0 0 0;
+}
+.user-descr .ava-area img {
+  width: 100%;
+}
+.user-descr .ava-area .fa {
+  font-size: 24px;
+}
+.user-descr .ava-area .user-rating {
+  text-align: center;
+  margin: 10px 0 10px 0;
+}
+.user-descr .soc-accounts {
+  float: right;
+  width: 180px;
+  padding: 10px 0 0 0;
+}
+.user-descr .soc-accounts .fa {
+  font-size: 34px;
+  margin: 10px 5px 0 5px;
+}
+.user-descr .text-area .user-head h1 {
+  display: inline-block;
+  margin-bottom: 0;
+}
+.user-descr .text-area .user-head a {
+  color: #ccc;
+}
+.user-descr .text-area .user-head .confirm-alert {
+  float: right;
+  font-weight: bold;
+  margin: 17px 10px 0 0;
+}
+.user-descr .text-area .account-no-confirm {
+  margin-top: 20px;
+}
+.user-descr .text-area .account-no-confirm input[type="text"] {
+  width: 200px;
+  display: inline-block;
+}
+.user-descr .text-area .user-body {
+  margin: 15px 0 0 0;
+  line-height: 26px;
+}
+.user-descr .text-area .user-body .user-body-left .btn {
+  padding: 4px 8px;
+}
+.user-descr .text-area .user-body .profile-item {
+  border-bottom: 1px solid #cecece;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.user-descr .text-area .user-body .profile-item.last {
+  border-bottom: 0;
+}
+.user-descr .text-area .user-body h3 {
+  font-size: 20px;
+  margin-top: 0;
+}
+.user-descr .text-area .user-body h4 {
+  font-size: 16px;
+}
+.user-descr .text-area .user-body span {
+  display: inline-block;
+}
+.user-descr .text-area .user-body .user-addresses {
+  padding-bottom: 30px;
+}
+.user-descr .text-area .user-body .user-addresses span {
+  display: inline-block;
+  margin-right: 15px;
+  width: auto;
+  padding: 3px 0;
+}
+.user-descr .text-area .user-body .user-addresses a {
+  font-size: 12px;
+}
+.user-descr .text-area .user-body .user-addresses .add-user-address {
+  margin: 10px 0;
+}
+.user-descr .text-area .user-body .user-addresses .edit-user-addr {
+  vertical-align: middle;
+  display: inline-block;
+}
+.user-descr .text-area .user-body .user-addresses .remove-user-addr {
+  color: #f00;
+  vertical-align: middle;
+  margin-left: 5px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+}
+.user-descr .text-area .user-body .form-edit {
+  display: none;
+}
+.user-descr .text-area .user-body .form-edit .ui-helper-hidden-accessible {
+  display: none;
+}
+.user-descr .text-area .user-body .form-edit input {
+  margin-bottom: 10px;
+}
+/*.short.form-control
+  width 75px !important*/
+.datepicker-simple {
+  width: 470px !important;
+}
+.datepicker-simple th.next {
+  text-align: right !important;
+}
+.datepicker-simple th.dow {
+  text-align: center !important;
+}
+.datepicker-simple .year,
+.datepicker-simple .month {
+  margin: 0 5px;
+}
+.save-status {
+  color: #62c462;
+  display: none;
+  margin-left: 10px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+.save-status.active {
+  display: inline-block;
+}
+.loading {
+  width: 40px;
+}
+@media all and (max-width: 1024px) {
+  .user-descr .ava-area {
+    width: 120px;
+  }
+  .user-descr .ava-area .fa {
+    font-size: 20px;
+  }
+}

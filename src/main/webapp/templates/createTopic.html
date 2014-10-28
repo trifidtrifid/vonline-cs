@@ -1,0 +1,96 @@
+<div class="message-input clearfix">
+
+    <input type="text" class="width-100 talk-subject" value="Заголовок" ng-if="ctrl.isTalk"
+           onblur="if(this.value=='') this.value='Заголовок';"
+           onfocus="if(this.value=='Заголовок') this.value='';" ng-model="ctrl.subject" />
+
+    <textarea ng-model="ctrl.message.content" class="topic-textarea no-resize" ng-keyup="base.messageChange($event,1)"
+              ng-blur="base.textareaBlur(ctrl.message.content,ctrl.message.default,ctrl,true)" ng-focus="base.textareaFocus(ctrl.message.content,ctrl.message.default,ctrl,true)"
+              ></textarea>
+
+    <div class="create-poll" ng-show="ctrl.isPollShow">
+        <a class="poll-cancel pull-right" title="отмена опроса" href="#" ng-click="ctrl.isPollShow = false;ctrl.isPollAvailable = true;">&times;</a>
+        <h5>Тема опроса:</h5>
+        <input type="text" ng-model="ctrl.pollSubject"/>
+        <h5>Варианты ответов:</h5>
+        <div ng-repeat="input in ctrl.pollInputs">
+            <input ng-model="input.name" type="text"/>
+        </div>
+        <input type="text" class="poll-readonly" readonly value="Добавить ответ" ng-click="base.addPollInput($event,ctrl)" ng-focus="base.addPollInput($event,ctrl,true)"/>
+    </div>
+
+    <div ng-switch="ctrl.isEdit">
+        <div ng-swith-when="true">
+
+            <div class="attach-area" id="attach-area-edit-{{ctrl.id}}">
+
+                <span class="attach-item" ng-repeat="image in ctrl.message.images">
+                    <a href="#" title="Не прикреплять" class="remove-attach-img" ng-click="base.removeAttach(ctrl.message,$index,true)">×</a>
+                    <img data-title="{{image.fileName}}" data-type="{{image.contentType}}" class="attached-img" style="background-image:url('{{image.URL}}')">
+                </span>
+
+                <div class="loading hidden">
+                    <img ng-src="i/loading2.gif" alt="картинка"/>
+                </div>
+            </div>
+
+            <div class="attach-area attach-area-doc" id="attach-doc-area-edit-{{ctrl.id}}">
+                <span class="attach-item" data-href="{{doc.URL}}" data-type="{{doc.contentType}}"  ng-repeat="doc in ctrl.message.documents">
+                    <a href="#" title="Не прикреплять" class="remove-attach-img" ng-click="base.removeAttach(ctrl.message,$index,false)">×</a>
+                    <span>{{doc.fileName}}</span>
+                </span>
+            </div>
+
+        </div>
+        <div ng-swith-default>
+            <div class="attach-area" id="attach-area-{{ctrl.attachId}}">
+                <div class="loading hidden">
+                    <img ng-src="i/loading2.gif" alt="картинка"/>
+                </div>
+            </div>
+            <div class="attach-area attach-area-doc" id="attach-doc-area-{{ctrl.attachId}}"></div>
+        </div>
+    </div>
+
+    <div class="message-input-bottom">
+
+        <div class="btn-group attach-dropdown pull-right">
+            <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+                <span class="btn-group-text">Прикрепить</span>
+                <span class="icon-caret-down icon-on-right"></span>
+            </button>
+
+                    <ul class="dropdown-menu dropdown-blue" ng-show="ctrl.isEdit">
+                        <li><input id="attachImage-edit-{{ctrl.id}}" type="file"/></li>
+                        <li><input id="attachDoc-edit-{{ctrl.id}}" type="file"/></li>
+                        <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
+                    </ul>
+
+                    <ul class="dropdown-menu dropdown-blue" ng-hide="ctrl.isEdit">
+                        <li><input id="attachImage-{{ctrl.attachId}}" type="file"/></li>
+                        <li><input id="attachDoc-{{ctrl.attachId}}" type="file"/></li>
+                        <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
+                    </ul>
+
+        </div>
+        <a class="btn btn-sm no-border btn-primary pull-left" href="#" ng-click="createTopic($event,ctrl)">Отправить</a>
+
+        <div class="hashtag pull-left">
+            <span>группа</span>
+            <div class="btn-group hashtag-dropdown">
+                <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border">
+                    <span class="btn-group-text"># {{base.bufferSelectedGroup.visibleName}}</span>
+                    <span class="icon-caret-down icon-on-right"></span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-blue">
+                    <li ng-repeat="group in base.groups" ng-hide="group.type < 4 && ctrl.isAdvert"><a href="#" ng-click="base.selectGroupInDropdown(group.id,ctrl)"># {{group.visibleName}}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <span class="error-info" ng-show="ctrl.isCreateMessageError">{{ctrl.createMessageErrorText}}</span>
+
+    </div>
+
+</div>

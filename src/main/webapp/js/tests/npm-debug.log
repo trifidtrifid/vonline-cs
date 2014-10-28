@@ -1,0 +1,20 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\workspace\\env\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\workspace\\env\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'test' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 verbose node symlink C:\workspace\env\nodejs\\node.exe
+5 error Error: ENOENT, open 'C:\workspace\projects\vmesteonline\vonline_be\war\js\forum\tests\package.json'
+6 error If you need help, you may report this *entire* log,
+6 error including the npm and node versions, at:
+6 error     <http://github.com/npm/npm/issues>
+7 error System Windows_NT 6.2.9200
+8 error command "C:\\workspace\\env\\nodejs\\\\node.exe" "C:\\workspace\\env\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "test"
+9 error cwd C:\workspace\projects\vmesteonline\vonline_be\war\js\forum\tests
+10 error node -v v0.10.28
+11 error npm -v 1.4.9
+12 error path C:\workspace\projects\vmesteonline\vonline_be\war\js\forum\tests\package.json
+13 error code ENOENT
+14 error errno 34
+15 verbose exit [ 34, true ]

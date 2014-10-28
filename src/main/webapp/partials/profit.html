@@ -1,0 +1,44 @@
+
+    <section class="profit page ng-cloak" ng-show="base.advertsIsActive">
+
+        <section class="create-topic" ng-hide="base.createTopicIsHide">
+            <div ng-include="'templates/createTopic.html'" onload="ctrl = adverts; initCreateTopic(adverts);"></div>
+        </section>
+
+        <section class="talks-title-block">
+            <!--<div ng-if="!adverts.topics || adverts.topics.length == 0" class="empty-messages">{{base.emptyMessage}}</div>-->
+
+            <div ng-if="!adverts.topics || adverts.topics.length == 0" class="empty-messages">
+                <div ng-include="'/partials/empty/empty-profit.html'"></div>
+            </div>
+
+            <div class="talks-title" ng-repeat="advert in adverts.topics" id="{{advert.id}}">
+
+                <div class="talks-title-right">
+                    <span class="label label-lg arrowed lenta-item-hashtag pull-right"
+                          ng-class="advert.tagColor">{{advert.label}}</span>
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="talks-title-left load-talk">
+                    <a ui-sref="profile({ userId : {{advert.userInfo.id}} })" class="avatar short2 pull-left" style="background-image: url('{{ advert.userInfo.avatar }}')"></a>
+
+                    <div class="user-ribbon pull-left short2" ng-class="base.getUserColor(advert.userInfo.groupType)"></div>
+
+                    <div class="talks-title-links">
+                        <a ui-sref="profit-single({ advertId : {{advert.id}} })">{{advert.subject}}</a>
+                        <a ui-sref="profile({ userId : {{advert.userInfo.id}} })">{{advert.userInfo.firstName + " "+advert.userInfo.lastName}}</a>
+                    </div>
+
+                </div>
+
+                <div class="last-update pull-right">
+                    <div class="adverts-comments"><span>{{advert.messageNum}} комментариев</span>  Создано: {{advert.message.created*1000 | date:'dd.MM.yy HH:mm'}}</div>
+                </div>
+            </div>
+
+        </section>
+
+    </section>
+
