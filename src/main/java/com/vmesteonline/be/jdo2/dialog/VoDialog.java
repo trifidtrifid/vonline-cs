@@ -15,14 +15,12 @@ import com.vmesteonline.be.utils.StorageHelper.FileSource;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.io.IOException;
 import java.util.*;
 
 @PersistenceCapable
+@Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"users","lastMessageDate"})
 public class VoDialog {
 	
 	public Dialog getDialog( PersistenceManager pm ) throws InvalidOperation {

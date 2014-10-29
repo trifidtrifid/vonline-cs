@@ -31,14 +31,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/thrift/UserService</url-pattern>
     </servlet-mapping>
 
-    <!--servlet>
+    <servlet>
         <servlet-name>UtilityServiceServlet</servlet-name>
-        <servlet-class>com.vmesteonline.be.thrift.utilityservices.UtilityServicesServlet</servlet-class>
+        <servlet-class>com.vmesteonline.be.utilityservices.UtilityServicesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UtilityServiceServlet</servlet-name>
         <url-pattern>/thrift/UtilityService</url-pattern>
-    </servlet-mapping-->
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>MessageServiceServlet</servlet-name>
@@ -133,6 +133,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Main</servlet-name>
         <url-pattern>/null</url-pattern>
         <url-pattern>/main</url-pattern>
+        <!-- Так как написано ниже работать не будет ;) см. http://www.roguewave.com/portals/0/products/hydraexpress/docs/3.5.0/html/rwsfservletug/4-3.html-->
+        <url-pattern>/talks*</url-pattern>
+        <url-pattern>/profile*</url-pattern>
+        <url-pattern>/dialog*</url-pattern>
     </servlet-mapping>
 
     <servlet>

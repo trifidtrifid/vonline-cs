@@ -9,6 +9,7 @@ import javax.jdo.annotations.*;
 import java.util.List;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
+@Index(name="name",members = {"name"})
 public class VoCountry {
 	
 	public static VoCountry createVoCountry(String name, PersistenceManager pm) throws InvalidOperation {

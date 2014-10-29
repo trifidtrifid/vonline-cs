@@ -2,15 +2,14 @@ package com.vmesteonline.be.jdo2;
 
 import com.vmesteonline.be.thrift.authservice.CurrentAttributeType;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.util.HashMap;
 import java.util.Map;
 
 //extends GeoLocation
 
 @PersistenceCapable
+@Indices({@Index(name="usd_idx",members = {"userId"})})
 public class VoSession {
 
 	public VoSession(String sessId, VoUser user) {
@@ -76,21 +75,17 @@ public class VoSession {
 	private int lastActivityTs; //дата последнего действия пользователя
 
 	@Persistent
-	
 	private int lastUpdateTs; //дата последнего запроса обновления 
 
 	@Persistent
-	
 	private Map<Integer, Long> curAttrMap;
 
 	/**
 	 * Map that contains quantity of mew messages in dialogs that are not opened by user recently
 	 */
 	@Persistent
-	
 	private Map<Long, Integer> newDialogMessages;
-	
-	
+
 	public int getLastUpdateTs() {
 		return lastUpdateTs;
 	}

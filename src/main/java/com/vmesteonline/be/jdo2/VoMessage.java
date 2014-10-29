@@ -8,6 +8,7 @@ import com.vmesteonline.be.thrift.messageservice.MessageType;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
+import javax.jdo.annotations.Index;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.List;
  * Created by brozer on 1/12/14.
  */
 @PersistenceCapable
+@Index(name="VOMSG_TOPIC_IDX", members = {"topicId"})
 public class VoMessage extends VoBaseMessage {
 
 	// private static final Logger logger = Logger.getLogger(VoMessage.class);
@@ -105,15 +107,17 @@ public class VoMessage extends VoBaseMessage {
 	public Message getMessage(long userId, PersistenceManager pm) {
 
 		List<Attach> imgs = new ArrayList<Attach>();
-		for (Long farId : images) {
-			VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, farId);
-			imgs.add(att.getAttach());
-		}
+        if( null!=images )
+            for (Long farId : images) {
+                VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, farId);
+                imgs.add(att.getAttach());
+            }
 		List<Attach> docs = new ArrayList<Attach>();
-		for (Long farId : documents) {
-			VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, farId);
-			docs.add(att.getAttach());
-		}
+        if( null!=documents )
+            for (Long farId : documents) {
+                VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, farId);
+                docs.add(att.getAttach());
+            }
 
 		if (authorId == 0)
 			return new Message(id, getParentId(), type, topicId, 0L, 0, createdAt, editedAt, getContent(), getLikes(), 0, links, null, null,

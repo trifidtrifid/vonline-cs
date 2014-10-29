@@ -1,10 +1,7 @@
 package com.vmesteonline.be.jdo2;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.util.List;
 
 @PersistenceCapable

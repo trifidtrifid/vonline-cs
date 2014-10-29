@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
+@Unique(name="STREET_FN", members = {"streetId","fullNo"})
+@Index(name="STREET_ID", members = {"streetId"})
 public class VoBuilding  {
 
 	private VoBuilding(String zip, VoStreet vs, String fullNo, BigDecimal longitude, BigDecimal latitude) throws InvalidOperation {
@@ -40,14 +42,12 @@ public class VoBuilding  {
 	private long id;
 
 	@Persistent
-	
 	private String addressString; 
 
 	@Persistent
 	private String fullNo; // no with letter or other extension if any
 
 	@Persistent
-	
 	private String zipCode; 
 	
 	@Persistent
@@ -95,15 +95,14 @@ public class VoBuilding  {
 			throws InvalidOperation {
 		
 		Query q = pm.newQuery(VoBuilding.class);
-        q.setFilter("streetId=="+vs.getId()+" && fullNo == fn");
+        q.setFilter("streetId=="+vs.getId() +" && fullNo == fn");
         q.declareParameters("String fn");
-		List<VoBuilding> bgsl = (List<VoBuilding>)q.execute(fullNo);
-		
+        List<VoBuilding> bgsl = (List<VoBuilding>) q.execute(fullNo);
+
 		if( 1==bgsl.size() ){
 			return bgsl.get(0);
 			
-		} else if( 2==bgsl.size() ){
-			
+		} else if( 2<=bgsl.size() ){
 			throw new InvalidOperation(VoError.GeneralError, "There is two the same building: "+bgsl.get(0));
 		}
 		
@@ -145,11 +144,9 @@ public class VoBuilding  {
 	}
 
 	@Persistent
-	
 	String longitude;
 
 	@Persistent
-	
 	String latitude;
 
 	public BigDecimal getLongitude() {

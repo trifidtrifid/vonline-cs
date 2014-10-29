@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+@Index(name="locIdx", members={"longitude","latitude"})
 public abstract class GeoLocation {
 
 	public GeoLocation() {
@@ -39,7 +40,7 @@ public abstract class GeoLocation {
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;
 
-	@Persistent
+    @Persistent
 	protected String longitude;
 
 	@Persistent

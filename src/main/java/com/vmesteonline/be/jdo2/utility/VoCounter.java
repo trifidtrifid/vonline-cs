@@ -3,10 +3,7 @@ package com.vmesteonline.be.jdo2.utility;
 import com.vmesteonline.be.thrift.utilityservice.Counter;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -14,6 +11,7 @@ import java.util.TreeMap;
 
 
 @PersistenceCapable
+@Index(name = "paid_idx", members = {"postalAddressId"})
 public class VoCounter {
 	
 	public VoCounter(CounterType type, String location, String number, long postalAddressId) {
@@ -24,7 +22,6 @@ public class VoCounter {
 		this.postalAddressId = postalAddressId;
 		this.values = new HashMap<Integer, Double>();
 	}
-
 	
 	public void setValues(Map<Integer, Double> values) {
 		this.values = values;

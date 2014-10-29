@@ -44,7 +44,6 @@ public class VoGroup implements Comparable<VoGroup> {
 
 	private String visibleName;
 
-
 	private int radius;
 
 

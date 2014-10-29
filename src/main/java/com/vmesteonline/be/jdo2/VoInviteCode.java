@@ -6,13 +6,11 @@ import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.util.List;
 
 @PersistenceCapable
+@Unique(name="IC_ID_IDX", members = {"code"})
 public class VoInviteCode {
 
 	public VoInviteCode(String code, long postalAddressId) {

@@ -5,15 +5,13 @@ import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.thrift.ShortUserInfo;
 import com.vmesteonline.be.thrift.*;
 import com.vmesteonline.be.thrift.userservice.FullAddressCatalogue;
+import com.vmesteonline.be.thrift.userservice.GroupLocation;
 import com.vmesteonline.be.thrift.userservice.UserService;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.Pair;
 import com.vmesteonline.be.utils.VoHelper;
-import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import javax.jdo.Extent;
@@ -23,6 +21,8 @@ import javax.jdo.Query;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
@@ -52,19 +52,21 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	public static String emailreg = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-	public static String phonereg = "[0-9-.()+ ]{7,21}";
+	public static String phonereg = "[[0-9]-.()+ ]{7,21}";
 
 	// TODO this method is forbidden should be removed. use getShortProfile
 	// instead
 	@Override
 	public ShortUserInfo getShortUserInfo() throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
-		return getShortUserInfo( null, getCurrentUserId(), pm);
-
+		VoUser voUser = getCurrentUser();
+		ShortUserInfo sui = voUser.getShortUserInfo( null, pm);
+		
+		return sui;
 	}
 
 	@Override
-	public ShortProfile getShortProfile() throws TException {
+	public ShortProfile getShortProfile() throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser voUser = getCurrentUser(pm);
 		ShortProfile sp = new ShortProfile(voUser.getId(), voUser.getName(), voUser.getLastName(), 0, voUser.getAvatarMessage(), "", "");
@@ -88,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			return voUser.getShortUserInfo( cuser, pm);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.warn("request short user info for absent user " + userId);
+			logger.warning("request short user info for absent user " + userId);
 		} 
 		return null;
 	}
@@ -114,10 +116,10 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 			List<Long> uGroups = user.getGroups();
 			if (uGroups == null) {
-				logger.warn("user with id " + Long.toString(userId) + " has no any groups");
+				logger.warning("user with id " + Long.toString(userId) + " has no any groups");
 				throw new InvalidOperation(VoError.GeneralError, "can't find user bu id");
 			}
-			List<Group> groups = new ArrayList<>();
+			List<Group> groups = new ArrayList<Group>();
 			for (Long group : uGroups) {
 				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, group);
 				logger.info("return group " + ug.getName());
@@ -147,27 +149,28 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			throw new InvalidOperation(VoError.GeneralError, "can't find any location codes");
 		}
 
-		List<String> locations = new ArrayList<>();
+		List<String> locations = new ArrayList<String>();
 		for (VoPostalAddress pa : postalAddresses) {
 			pm.retrieve(pa);
 			String code = "" + pa.getAddressCode();
 			pm.makePersistent(new VoInviteCode(code, pa.getId()));
-            locations.add(code);
+			;
+			locations.add(code);
 		}
 		return locations;
 	}
 
 	@Override
-	public void deleteUserAddress(PostalAddress newAddress) throws TException {
+	public void deleteUserAddress(PostalAddress newAddress) throws InvalidOperation, TException {
 
 	}
 
 	@Override
-	public List<Country> getCounties() throws TException {
+	public List<Country> getCounties() throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			Extent<VoCountry> vocs = pm.getExtent(VoCountry.class);
-			List<Country> cl = new ArrayList<>();
+			List<Country> cl = new ArrayList<Country>();
 			for (VoCountry voc : vocs) {
 				cl.add(voc.getCountry());
 			}
@@ -288,7 +291,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	@Override
-	public UserContacts getUserContacts() throws TException {
+	public UserContacts getUserContacts() throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser u = getCurrentUser(pm);
 		UserContacts uc = new UserContacts();
@@ -303,7 +306,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	@Override
-	public void changePassword(String oldPwd, String newPwd) throws TException {
+	public void changePassword(String oldPwd, String newPwd) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser cu = getCurrentUser(pm);
 		if (!cu.getPassword().equals(oldPwd))
@@ -316,7 +319,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	@Override
-	public void updatePrivacy(UserPrivacy privacy) throws TException {
+	public void updatePrivacy(UserPrivacy privacy) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser cu = getCurrentUser(pm);
 		cu.setPrivacy(privacy);
@@ -402,7 +405,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 
-			List<City> cl = new ArrayList<>();
+			List<City> cl = new ArrayList<City>();
 			Query q = pm.newQuery(VoCity.class);
 			q.setFilter("countryId == " + countryId);
 			List<VoCity> cs = (List<VoCity>) q.execute();
@@ -422,7 +425,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public List<Street> getStreets(long cityId) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		try {
-			List<Street> cl = new ArrayList<>();
+			List<Street> cl = new ArrayList<Street>();
 			Query q = pm.newQuery(VoStreet.class, "cityId=="+cityId);
 			List<VoStreet> cs = (List<VoStreet>) q.execute();
 			for (VoStreet c : cs) {
@@ -442,7 +445,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public List<Building> getBuildings(long streetId) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		try {
-			List<Building> cl = new ArrayList<>();
+			List<Building> cl = new ArrayList<Building>();
 			Query q = pm.newQuery(VoBuilding.class, "streetId=="+streetId);
 			List<VoBuilding> cs = (List<VoBuilding>) q.execute();
 			for (VoBuilding c : cs) {
@@ -475,25 +478,25 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 
 			Extent<VoCountry> vocs = pm.getExtent(VoCountry.class);
-			Set<Country> cl = new TreeSet<>();
+			Set<Country> cl = new TreeSet<Country>();
 			for (VoCountry voc : vocs) {
 				cl.add(voc.getCountry());
 			}
 
 			Extent<VoCity> vocis = pm.getExtent(VoCity.class);
-			List<City> cil = new ArrayList<>();
+			List<City> cil = new ArrayList<City>();
 			for (VoCity voc : vocis) {
 				cil.add(voc.getCity());
 			}
 
 			Extent<VoStreet> voss = pm.getExtent(VoStreet.class);
-			List<Street> sl = new ArrayList<>();
+			List<Street> sl = new ArrayList<Street>();
 			for (VoStreet voc : voss) {
 				sl.add(voc.getStreet());
 			}
 
 			Extent<VoBuilding> vobs = pm.getExtent(VoBuilding.class);
-			List<Building> bl = new ArrayList<>();
+			List<Building> bl = new ArrayList<Building>();
 			for (VoBuilding voc : vobs) {
 				bl.add(voc.getBuilding());
 			}
@@ -576,8 +579,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			// TODO check that there is no building with the same name
 			VoStreet vs = pm.getObjectById(VoStreet.class, streetId);
-			Query q = pm.newQuery(VoBuilding.class);
-			q.setFilter("streetId == " + streetId + " &&  fullNo == '" + fullNo + "'");
+			Query q = pm.newQuery("SELECT * FROM vobuilding WHERE streetId == " + streetId + " &&  fullNo == '" + fullNo + "' ALLOW FILTERING");
 			List<VoBuilding> buildings = (List<VoBuilding>) q.execute();
 			if (buildings.size() > 0) {
 				logger.info("VoBuilding was NOT created. The same VoBuilding was registered. Return an old one: " + buildings.get(0));
@@ -631,7 +633,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	// ======================================================================================================================
 
-	private static final Set<String> publicMethods = new HashSet<>(Arrays.asList(new String[] {
+	private static final Set<String> publicMethods = new HashSet<String>(Arrays.asList(new String[] {
 
 	"allMethods are public"
 
@@ -650,27 +652,34 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	@Override
-	public List<ShortUserInfo> getNeighbours() throws TException {
+	public List<ShortUserInfo> getNeighbours() throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser currentUser = getCurrentUser();
-		
 		List<VoUser> users = getUsersByLocation(currentUser.getGroup(GroupType.BUILDING, pm), pm);
-		return VoHelper.convertMutableSet(users, new ArrayList<ShortUserInfo>(), new ShortUserInfo());
+		return shortInfoForGroup(GroupType.BUILDING, users, pm);
 	}
+	
+	private ArrayList<ShortUserInfo> shortInfoForGroup(GroupType gt, List<VoUser> users, PersistenceManager pm){
+		ArrayList<ShortUserInfo> ul = new ArrayList<ShortUserInfo>();
+		for( VoUser user: users ){
+			ShortUserInfo shortUserInfo = user.getShortUserInfo(null);
+			shortUserInfo.setAddress( user.getAddressString( gt, pm));
+			ul.add( shortUserInfo );
+		}
+		return ul;
+	} 
 	
 	public static CachableObject< ArrayList<ShortUserInfo> > usersByGroup = new CachableObject();
 	@Override
-	public List<ShortUserInfo> getNeighboursByGroup(long groupId) throws TException {
+	public List<ShortUserInfo> getNeighboursByGroup(long groupId) throws InvalidOperation, TException {
 		return usersByGroup.create(this, "getNeighborsByGroupDo", new Object[]{ groupId });
 	}
 
 	public ArrayList<ShortUserInfo> getNeighborsByGroupDo(Long groupId) throws InvalidOperation {
-		ArrayList<ShortUserInfo> sug = new ArrayList<>();
 		PersistenceManager pm = PMF.getPm();
-		List<VoUser> users = getUsersByLocation( pm.getObjectById(VoUserGroup.class,groupId), pm);
-		for (VoUser voUser : users) {
-			sug.add( voUser.getShortUserInfo(pm));
-		}
+		VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
+		List<VoUser> users = getUsersByLocation( ug, pm);
+		ArrayList<ShortUserInfo> sug = shortInfoForGroup( GroupType.findByValue(ug.getGroupType()), users, pm);
 		Collections.sort( sug, new Comparator<ShortUserInfo>(){
 			@Override
 			public int compare(ShortUserInfo o1, ShortUserInfo o2) {
@@ -688,20 +697,20 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		
 	public static List<VoUser> getUsersByLocation(VoUserGroup group, PersistenceManager pm) {
 
-		Set<VoUser> users = new TreeSet<>(uIdCOmp);
+		Set<VoUser> users = new TreeSet<VoUser>(uIdCOmp);
 		if( null!= group ){
 			for( Long g : group.getVisibleGroups(pm)) {
-				String filter = "groups.contains("+g +") && emailConfirmed==true";
+				String filter = "groups.contains(" + g +") && emailConfirmed==true";
 				users.addAll( (List<VoUser>)pm.newQuery(VoUser.class, filter).execute());
 			}
 		}
-		List<VoUser> ul = new ArrayList<>();
+		List<VoUser> ul = new ArrayList<VoUser>();
 		ul.addAll(users);
 		return ul;
 	}
 
 	@Override
-	public void updateNotifications(Notifications notifications) throws TException {
+	public void updateNotifications(Notifications notifications) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser currentUser = getCurrentUser();
@@ -713,12 +722,12 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	@Override
-	public String getGroupMap(long groupId, String color) throws TException {
+	public String getGroupMap(long groupId, String color) throws InvalidOperation, TException {
 		if (null == color || 0 == color.length()) {
 			color = "8822DDC0";
 		}
 		String mapKey = "yandex.group.map." + groupId + "." + color;
-		String url = (String)ServiceImpl.getObjectFromCache(mapKey);
+		String url = ServiceImpl.getObjectFromCache(mapKey);
 		if (null != url)
 			if (url instanceof String) {
 				return (String) url;
@@ -773,16 +782,84 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	private static List<Rubric> tmpRubrics = Arrays.asList( new Rubric[]{ new Rubric(0L,"","","")});
 	
 	@Override
-	public List<Rubric> getUserRubrics() throws TException {
+	public List<Rubric> getUserRubrics() throws InvalidOperation, TException {
 		return tmpRubrics;
 	}
 
 //	public static CachableObject<GroupType> usersRelation = new CachableObject<GroupType>();
 	
 	public static GroupType getRelations(VoUser askedUser, VoUser voUser, PersistenceManager pm) {
-		Query nq = pm.newQuery( VoUserGroup.class, "visibleGroups=="+askedUser.getRootGroup()+" && visibleGroups=="+voUser.getRootGroup());
-		nq.setOrdering( "groupType");
+		Query nq = pm.newQuery( VoUserGroup.class, "visibleGroups.contains("+askedUser.getRootGroup()+") && visibleGroups.contains("+voUser.getRootGroup()+")");
+		nq.setOrdering("groupType");
 		List<VoUserGroup> gtl = (List<VoUserGroup>) nq.execute();
 		return gtl.size() > 0  ? GroupType.findByValue( gtl.get(0).getGroupType()) : GroupType.NEIGHBORS;  //it should not be called elsewhere
+	}
+
+	@Override
+	public GroupLocation getGroupView(long groupId) throws InvalidOperation, TException {
+		if( 0==groupId) return null;
+		PersistenceManager pm = PMF.getPm();
+		VoUserGroup userGroup = pm.getObjectById(VoUserGroup.class, groupId);
+		return new GroupLocation(userGroup.getLongitude().toPlainString(), userGroup.getLatitude().toPlainString(), 
+				userGroup.getRadius(), GroupType.findByValue(userGroup.getGroupType()));
+	}
+
+	@Override
+	public void updateUserAddress(int staircase, int floor, int flatNo) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser currentUser = getCurrentUser(pm);
+		VoPostalAddress oldAddress = pm.getObjectById(VoPostalAddress.class,currentUser.getAddress());
+		long oldBuilding = oldAddress.getBuilding();
+		boolean stairChanged, floorChanged, flatChanged;
+		String query = "buildingId=="+oldBuilding;
+		query += " && staircase==" + (( stairChanged = (0 != staircase && staircase!=oldAddress.getStaircase())) ?  staircase : oldAddress.getStaircase()) ;
+		query += " && floor==" + ( (floorChanged = 0 != floor && floor!=oldAddress.getFloor()) ? floor : oldAddress.getFloor());
+		query += " && flatNo==" + ( (flatChanged = 0 != flatNo && floor!=oldAddress.getFlatNo()) ? flatNo : oldAddress.getFlatNo());
+		
+		if( stairChanged || floorChanged || flatChanged ){
+			List<VoPostalAddress> newAddresses = (List<VoPostalAddress>) pm.newQuery( VoPostalAddress.class, query).execute();
+			VoPostalAddress newAddr;
+			if( newAddresses.size() == 0 ){
+				newAddr = VoPostalAddress.createVoPostalAddress(
+						pm.getObjectById(VoBuilding.class, oldBuilding), (byte)staircase, (byte)floor, flatNo, "", pm );
+				logger.warning("No address found by query '"+query+"' new one created");
+			} else {
+				newAddr = newAddresses.get(0);
+			}
+			currentUser.setAddress(newAddr.getId());
+			if( stairChanged || floorChanged){
+				int pos=0;
+				for( Long ugId : currentUser.getGroups()){
+					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, ugId);
+					if( stairChanged && GroupType.STAIRCASE.getValue() == ug.getGroupType() || 
+							floorChanged && GroupType.FLOOR.getValue() == ug.getGroupType() ){
+						
+						VoUserGroup newGroup = VoUserGroup.createVoUserGroup(ug.getLongitude(), ug.getLatitude(), ug.getRadius(), 
+								newAddr.getStaircase(), newAddr.getFloor(), ug.getName(), ug.getImportantScore(), ug.getGroupType(), pm);
+						currentUser.getGroups().set(pos, newGroup.getId());
+					}
+					pos++;
+				}
+				currentUser.resetRootGroup();
+			}
+			pm.makePersistent(currentUser);
+				
+		} else {
+			logger.warning("Address of user does not changed.");
+		}
+	}
+
+	@Override
+	public void updateUserServices(Map<ServiceType, Boolean> newServiceStauses) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser currentUser = getCurrentUser(pm);
+		Set<ServiceType> us = currentUser.getServices();
+		if( null == us) us = new HashSet<ServiceType>();
+		for (Entry<ServiceType, Boolean> nss : newServiceStauses.entrySet()) {
+			if( us.contains( nss.getKey()) && !nss.getValue() ) us.remove(nss.getKey());
+			else if( !us.contains( nss.getKey()) && nss.getValue() ) us.add(nss.getKey());
+		}
+		currentUser.setServices( us );
+		pm.makePersistent(currentUser);
 	}
 }

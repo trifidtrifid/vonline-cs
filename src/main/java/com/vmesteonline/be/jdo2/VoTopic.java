@@ -8,6 +8,8 @@ import com.vmesteonline.be.thrift.messageservice.Message;
 import com.vmesteonline.be.thrift.messageservice.Topic;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.annotations.Index;
+import javax.jdo.annotations.Indices;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import java.io.IOException;
@@ -15,6 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PersistenceCapable
+@Indices({
+        @Index(name="lastUp_IDX", members={"lastUpdate"}),
+        @Index(name="userGroupId_IDX", members={"userGroupId"}),
+        @Index(name="type_vg_idx", members={"visibleGroups", "type"}),
+        @Index(name="type_vg_idx", members={"visibleGroups", "type", "isImportant", "lastUpdate"})
+})
 public class VoTopic extends VoBaseMessage {
 	// id, message, messageNum, viewers, usersNum, lastUpdate, likes, unlikes,
 	// rubricId
@@ -145,23 +153,18 @@ public class VoTopic extends VoBaseMessage {
 
 
 	@Persistent
-	
 	private int messageNum;
 
 	@Persistent
-	
 	private int viewers;
 
 	@Persistent
-	
 	private int usersNum;
 	
 	@Persistent
-	
 	private int createDate;
 
 	@Persistent
-	
 	private Long rubricId;
 
 	@Persistent
@@ -169,17 +172,13 @@ public class VoTopic extends VoBaseMessage {
 	
 	@Persistent
 	private List<Long> visibleGroups;
-	
 
 	@Persistent
-	
 	private long pollId;
 
 	@Persistent
-	
 	protected String subject;
 	
 	@Persistent
 	private boolean isImportant;
-
 }

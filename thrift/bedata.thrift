@@ -42,6 +42,7 @@ struct UserLocation{
 }
 
 enum GroupType { NOBODY=0, FLAT=1, FLOOR=2, STAIRCASE=3, BUILDING=4, NEIGHBORS=5, BLOCK=6, DISTRICT=7, TOWN=8 }
+enum ServiceType { CountersEnabled=10, CountersConfirmed=11, CountersNotification=12 }
 
 struct ShortUserInfo{
 	1: i64 id,
@@ -51,6 +52,8 @@ struct ShortUserInfo{
 	5: string avatar,
 	6: GroupType groupType,
 	7: optional set<i64> moderationGroups,
+	8: optional string address,
+	9: set<ServiceType> services,
 }
 
 struct ShortProfile{

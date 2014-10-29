@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PersistenceCapable
+@Indices({
+        @Index(name="did_cd_idx",members = {"dialogId","createDate"}),
+        @Index(name="did_idx",members = {"dialogId"}),
+})
 public class VoDialogMessage {
 	
 
@@ -38,11 +42,9 @@ public class VoDialogMessage {
 	protected long id;
 	
 	@Persistent
-    @Index
 	protected long dialogId;
 	
 	@Persistent
-    @Index
 	protected long authorId;
 	
 	@Persistent

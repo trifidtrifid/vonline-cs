@@ -20,7 +20,7 @@ public class MessagesTree {
 
 		Query q = pm.newQuery(VoMessage.class);
 		q.setFilter("topicId == " + topicId);
-		List<VoMessage> voMsgs = (List<VoMessage>) q.execute();
+		List<VoMessage> voMsgs = new ArrayList<>((List<VoMessage>) q.execute());
 		Collections.sort(voMsgs, voMessageAgeComparator);
 		MessagesTree tree = new MessagesTree(voMsgs);
 		return tree;

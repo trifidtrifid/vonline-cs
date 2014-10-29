@@ -5,22 +5,22 @@ import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
+import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
 import com.vmesteonline.be.thrift.*;
 import com.vmesteonline.be.utils.Defaults;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @PersistenceCapable
+@Indices({
+        @Index(name="VOUSER_EML_IDX", members={"email"}),
+        @Index(name="VOUSER_registered_IDX", members={"registered"}),
+        @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
+
 public class VoUser /* extends GeoLocation */{
 
 	public static int BASE_USER_SCORE = 100;
@@ -67,6 +67,7 @@ public class VoUser /* extends GeoLocation */{
 		this.popularuty = BASE_USER_SCORE;
 		this.lastNotified = this.registered = (int) (System.currentTimeMillis() / 1000L);
 		this.rootGroup = 0L;
+		
 	}
 
 	public UserProfile getUserProfile() {
@@ -104,15 +105,15 @@ public class VoUser /* extends GeoLocation */{
 
 	public ShortUserInfo getShortUserInfo( PersistenceManager pm) {
 		
-		return new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null);
+		return new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null, null==services ? new HashSet<ServiceType>() : services);
 	}
 
 	public ShortUserInfo getShortUserInfo( VoUser askedUser, PersistenceManager pm) {
 		
-		ShortUserInfo shortUserInfo = new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null);
+		ShortUserInfo shortUserInfo = new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null, null==services ? new HashSet<ServiceType>() : services);
 		if( null!=askedUser )
 			if( askedUser != this)
-				shortUserInfo.setGroupType( UserServiceImpl.getRelations(askedUser, this, pm));
+				shortUserInfo.setGroupType( UserServiceImpl.getRelations( askedUser, this, pm ));
 			else 
 				shortUserInfo.setGroupType( GroupType.FLAT );
 		
@@ -184,6 +185,10 @@ public class VoUser /* extends GeoLocation */{
 	public long getAddress() {
 		return address;
 	}
+	
+	public void setAddress( long addr) {
+		address = addr;
+	}
 
 	public long getConfirmCode() {
 		return 0 == confirmCode ? confirmCode = System.currentTimeMillis() % 98765 : confirmCode;
@@ -237,9 +242,9 @@ public class VoUser /* extends GeoLocation */{
 				e.printStackTrace();
 			}
 		}
-		this.address = userAddress.getId();
 
-		groups = new ArrayList<Long>();
+        setAddress(userAddress.getId());
+        ArrayList<Long> groups = new ArrayList<Long>();
 		for (VoGroup group : Defaults.defaultGroups) {
 			VoUserGroup ug = VoUserGroup.createVoUserGroup(building.getLongitude(), building.getLatitude(), 
 					group.getRadius(), userAddress.getStaircase(), userAddress.getFloor(),
@@ -248,7 +253,8 @@ public class VoUser /* extends GeoLocation */{
 			UserServiceImpl.usersByGroup.forget( new Object[]{ ug.getId() });
 			groups.add(ug.getId());
 		}
-		if( groups.size() > 0 ) rootGroup = groups.get(0);
+        setGroups(groups);
+		resetRootGroup();
 
 		pm.makePersistent(this);
 	}
@@ -272,9 +278,49 @@ public class VoUser /* extends GeoLocation */{
 	public long getId() {
 		return id;
 	}
-
+	
 	public long getRootGroup() {
 		return rootGroup;
+	}
+	
+	public void resetRootGroup() {
+		if( 0<groups.size() )
+			rootGroup = groups.get(0);
+	}
+	
+	public String getAddressString( GroupType gt, PersistenceManager pm){
+		boolean needUpdate = false;
+		if( null == addressStringsByGroupType){
+			addressStringsByGroupType = new HashMap<Integer,String>();
+		}
+		int gtValue = gt.getValue();
+		String as = addressStringsByGroupType.get(gtValue);
+		if( needUpdate = null==as ){
+			VoPostalAddress userAddress = pm.getObjectById( VoPostalAddress.class, getAddress());
+			switch( gt ){
+			case NEIGHBORS:
+			{
+				VoBuilding b = pm.getObjectById(VoBuilding.class,userAddress.getBuilding());
+				VoStreet s = pm.getObjectById(VoStreet.class, b.getStreetId());
+				as = s.getName() + " " + b.getFullNo();
+				break;
+			}
+			case BUILDING:
+				as = userAddress.getStaircase() == 0 ? "" : (userAddress.getStaircase() + " подъезд");
+				break;
+			case STAIRCASE:
+				as = userAddress.getFloor() == 0 ? "" : (userAddress.getFloor() + " этаж");
+				break;
+			case FLOOR:
+				as = userAddress.getFlatNo() == 0 ? "" : (userAddress.getFlatNo() + " квартира");
+				break;
+			}
+			if( null!=as )
+				addressStringsByGroupType.put(gtValue, as);
+		}
+		if( needUpdate && null!=as )
+			pm.makePersistent(this);
+		return as;
 	}
 
 	@PrimaryKey
@@ -285,7 +331,6 @@ public class VoUser /* extends GeoLocation */{
 	private Long address;
 
 	@Persistent
-	
 	private int birthday;
 
 	@Persistent
@@ -295,111 +340,123 @@ public class VoUser /* extends GeoLocation */{
 	private int registered;
 
 	@Persistent
-	
 	private String name;
 
 	@Persistent
-	
 	private String lastName;
 
 	@Persistent
-	
 	private int gender;
 
 	@Persistent
 	private String email;
 
 	@Persistent
-	
 	private String password;
 
 	@Persistent
-	
 	private int messagesNum;
 
 	@Persistent
-	
 	private int topicsNum;
 
 	@Persistent
-	
 	private int likesNum;
 
 	@Persistent
-	
 	private int unlikesNum;
 
 	@Persistent
-	
 	private long confirmCode;
 
 	@Persistent
 	private boolean emailConfirmed;
 
 	@Persistent
-	
 	private String avatarMessage;
 
 	@Persistent
-	
 	private String avatarTopic;
 
 	@Persistent
-	
 	private String avatarProfile;
 
 	@Persistent
-	
 	private String avatarProfileShort;
 
 	@Persistent
-	
 	private String interests;
 
 	@Persistent
-	
 	private String job;
 
 	@Persistent(serialized = "true")
-	
 	private UserFamily userFamily;
 
 	@Persistent
-	
 	private String mobilePhone;
 
 	@Persistent
-	
 	private RelationsType relations;
 
 	@Persistent(serialized = "true")
-	
 	private UserPrivacy privacy;
 
 	@Persistent
 	private int notificationsFreq;
 
 	@Persistent
-	
 	private int importancy;
 
 	@Persistent
-	
 	private int popularuty;
 
 	@Persistent
-	
 	private int lastNotified;
 
 	@Persistent
-	
 	private Set<Long> moderationGroups;
 	
 	@Persistent
-	
 	private long rootGroup;
 	
+	@Persistent
+	private Set<ServiceType> services;
 	
+	@Persistent
+	private Map<Integer, String> addressStringsByGroupType;
+	
+	//map that stores last event date that was shown to user by category
+
+	@Persistent
+	private int lastMulticastShown;
+	
+	@Persistent
+	private int lastImportantShown;
+	
+	public Set<ServiceType> getServices() {
+		return services;
+	}
+
+	public void setServices(Set<ServiceType> services) {
+		this.services = services;
+	}
+
+	public int getLastMulticastShown() {
+		return lastMulticastShown;
+	}
+
+	public void setLastMulticastShown(int lastMulticastShown) {
+		this.lastMulticastShown = lastMulticastShown;
+	}
+
+	public int getLastImportantShown() {
+		return lastImportantShown;
+	}
+
+	public void setLastImportantShown(int lastImportantShown) {
+		this.lastImportantShown = lastImportantShown;
+	}
 
 	public UserPrivacy getPrivacy() {
 		return null == privacy ? new UserPrivacy(0L, GroupType.BUILDING, GroupType.STAIRCASE) : privacy;

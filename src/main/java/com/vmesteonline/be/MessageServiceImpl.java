@@ -73,7 +73,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
 
-				tpc.userInfo = UserServiceImpl.getShortUserInfo(null/*user*/, voTopic.getAuthorId(), pm);
+				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 
 				MessageListPart mlp = getMessagesAsList(tpc.id, MessageType.BASE, 0, false, 10000);
 				if (mlp.totalSize > 0)
@@ -205,38 +205,50 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		List<VoTopic> allTopics = null;
 		List<VoTopic> topics = new ArrayList<VoTopic>();
 		Exception e = null;
-		try {
 
-			Query tQuery = pm.newQuery(VoTopic.class);
+        try {
 
-			if (type != MessageType.BLOG) {
+            if( type == MessageType.BLOG ) {
+                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, "type=="+type.getValue()).execute();
 
-				filter += "(";
-				for (Long group : groups) {
-					filter += "visibleGroups==" + group + " || ";
-				}
-				filter = filter.substring(0, filter.length() - 4) + ")";
+            } else {
+                filter += "visibleGroups.contains(";
 
-				if (importantOnly) {
-					int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
-																																															// only
-																																															// last
-																																															// week
-																																															// important
-					filter = " isImportant == true && lastUpdate > " + minimumCreateDate + " && " + filter;
-				}
+                for (Long group : groups) {
+                    filter += group + ",";
+                }
+                filter = filter.substring(0, filter.length() - 1) + ")";
 
-				filter += " && ";
-			}
-			if (type == MessageType.WALL)
-				filter += "(type=='WALL' || type=='BASE')";
-			else
-				filter += "type=='" + type + "'";
+                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, filter).execute();
 
-			tQuery.setFilter(filter);
-			tQuery.setOrdering("lastUpdate DESC");
+                if (importantOnly) {
+                    int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
+                    filter = " isImportant == true && lastUpdate > " + minimumCreateDate;
+                    allTopics = (List<VoTopic>) pm.newQuery( VoTopic.class, allTopics, filter ).execute();
+                }
 
-			allTopics = (List<VoTopic>) tQuery.execute();
+                /*@TODO Fix it
+                if (type == MessageType.WALL)
+                    filter += "type==" + MessageType.WALL.getValue() + " || type==" + MessageType.BASE.getValue();
+                else
+                    filter += "type=='" + type + "'";
+                    (List<VoTopic>) pm.newQuery( VoTopic.class, allTopics, filter ).execute();
+                    */
+
+                List<VoTopic> filteredByType = new ArrayList( );
+                for( VoTopic tpc : allTopics ){
+                    if( type == MessageType.WALL && ( tpc.getType() == MessageType.WALL || tpc.getType() == MessageType.BASE) ||
+                            type == tpc.getType())
+                        filteredByType.add(tpc);
+                }
+                allTopics = filteredByType;
+                allTopics.sort( new Comparator<VoTopic>(){
+                    @Override
+                    public int compare(VoTopic o1, VoTopic o2) {
+                        return -Integer.compare(o1.getLastUpdate(), o2.getLastUpdate());
+                    }
+                });
+            }
 
 			boolean addTopic = 0 == lastLoadedTopicId ? true : false;
 			for (VoTopic topic : allTopics) {
@@ -307,7 +319,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
-				tpc.userInfo = UserServiceImpl.getShortUserInfo(null/* user */, voTopic.getAuthorId(), pm);
+				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				tpc.setMessageNum(voTopic.getMessageNum());
 				mlp.addToTopics(tpc);
 			}
@@ -468,20 +480,12 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			logger.warn("try to create MessagePartList from null object");
 			return mlp;
 		}
-		// VoUser user = 0 == userId ? null : pm.getObjectById(VoUser.class, userId
-		// );
+		VoUser user = 0 == userId ? null : pm.getObjectById(VoUser.class, userId);
 		mlp.totalSize = lst.size();
 		for (VoMessage voMessage : lst) {
 			Message msg = voMessage.getMessage(userId, pm);
 			if (voMessage.getAuthorId() != null)
-				msg.userInfo = UserServiceImpl.getShortUserInfo(null/* user */, voMessage.getAuthorId(), pm); // dont
-																																																							// use
-																																																							// USER
-																																																							// to
-																																																							// dont
-																																																							// calculate
-																																																							// users
-																																																							// relation
+				msg.userInfo = UserServiceImpl.getShortUserInfo(user, voMessage.getAuthorId(), pm);
 			mlp.addToMessages(msg);
 		}
 		return mlp;
@@ -776,15 +780,16 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	// ======================================================================================================================
 
 	private void deleteAttachments(PersistenceManager pm, List<Long> imgs) {
-		for (Long attachId : imgs) {
-			try {
-				VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, attachId);
-				StorageHelper.deleteImage(att.getFullFileName());
-				pm.deletePersistent(att);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        if(null!=imgs)
+            for (Long attachId : imgs) {
+                try {
+                    VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, attachId);
+                    StorageHelper.deleteImage(att.getFullFileName());
+                    pm.deletePersistent(att);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 	}
 
 	// ======================================================================================================================

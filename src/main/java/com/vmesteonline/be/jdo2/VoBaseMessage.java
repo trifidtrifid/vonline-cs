@@ -17,6 +17,11 @@ import java.util.*;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+@Indices({
+        @Index(name="typeIdx", members = {"type"}),
+        @Index(name="lastUpdateIdx", members = {"lastUpdate"}),
+        @Index(name="importantScoreIdx", members = {"importantScore"})
+})
 public abstract class VoBaseMessage /*extends GeoLocation*/ {
 
 	public static final Charset STRING_CHARSET=Charset.forName("UTF-8");
@@ -63,8 +68,8 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 			}
 			msg.documents = savedDocs;
 		}
-
-	}
+        content = msg.getContent().getBytes(STRING_CHARSET);
+    }
 	
 	public int getLastUpdate() {
 		return lastUpdate;
@@ -108,6 +113,7 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	 * public void setId(Key key) { this.id = key; }
 	 */
 	public String getContent() {
+        if( null==content) return "";
 		return new String( content, STRING_CHARSET);
 	}
 
@@ -272,7 +278,6 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	protected Map<MessageType, Long> links;
 
 	@Persistent
-    @Index
 	protected MessageType type;
 
 	@Persistent
@@ -316,6 +321,4 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	public List<Long> getDocuments() {
 		return documents;
 	}
-	
-	
 }

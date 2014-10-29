@@ -1,14 +1,14 @@
 package com.vmesteonline.be.utils;
 
 import com.vmesteonline.be.AuthServiceImpl;
-import com.vmesteonline.be.thrift.GroupType;
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.thrift.GroupType;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.VoError;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -128,7 +128,7 @@ public class Defaults {
 	// ======================================================================================================================
 	private static void deletePersistentAll(PersistenceManager pm, Class pc) {
 		while(true){
-			Query newQuery = pm.newQuery(pc,"");
+            Query newQuery = pm.newQuery(pc,"");
 			newQuery.setRange(0, 200);
 			List list = (List) newQuery.execute();
 			if( 0==list.size())

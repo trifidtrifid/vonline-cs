@@ -10,13 +10,16 @@ import com.vmesteonline.be.jdo2.VoUserGroup;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.util.List;
 
 @PersistenceCapable
+@Indices({
+        @Index(name="fullpa_idx",members = {"buildingId","staircase","floor", "flatNo"}),
+        @Index(name="shortpa_idx",members = {"buildingId", "flatNo"}),
+        @Index(name="bid_idx",members = {"buildingId"}),
+        @Index(name="ug_idx",members = {"userGroup"}),
+})
 public class VoPostalAddress implements Comparable<VoPostalAddress> {
 
 	private VoPostalAddress(VoBuilding voBuilding, byte staircase, byte floor, int flatNo, String comment, PersistenceManager pm) throws InvalidOperation {

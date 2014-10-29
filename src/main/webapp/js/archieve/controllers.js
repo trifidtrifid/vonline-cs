@@ -3487,7 +3487,7 @@ var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(pr
 
 transport = new Thrift.Transport("/thrift/UtilityService");
 protocol = new Thrift.Protocol(transport);
-var utilityClient = new com.vmesteonline.be.thrift.userservice.UtilityServiceClient(protocol);
+var utilityClient = new com.vmesteonline.be.thrift.utilityservice.UtilityServiceClient(protocol);
 
 transport = new Thrift.Transport("/thrift/fs");
 protocol = new Thrift.Protocol(transport);

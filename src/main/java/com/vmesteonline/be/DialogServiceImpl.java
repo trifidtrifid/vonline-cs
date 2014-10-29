@@ -40,7 +40,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 
 		String filterStr = "";
 		for (Long userId : usersaSorted) {
-			filterStr += " && users==" + userId;
+			filterStr += " && users.contains(" + userId + ")";
 		}
 		Query dlgQuery = pm.newQuery(VoDialog.class, "lastMessageDate>" + after + filterStr);
 		dlgQuery.setOrdering("lastMessageDate");
@@ -61,10 +61,12 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 	public List<Dialog> getDialogs(int after) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		long currentUserId = getCurrentUserId();
-		Query dlgQuery = pm.newQuery(VoDialog.class, "users==" + currentUserId + " && lastMessageDate>" + after);
-		dlgQuery.setOrdering("lastMessageDate");
-		List<VoDialog> oldDialogs = (List<VoDialog>) dlgQuery.execute();
-
+		List<VoDialog> oldDialogs = (List<VoDialog>) pm.newQuery(VoDialog.class, "users.contains(" + currentUserId+")").execute();
+		if( oldDialogs.size() > 0 ) {
+            Query dlgQuery = pm.newQuery(VoDialog.class, oldDialogs, "lastMessageDate > "+after);
+            dlgQuery.setOrdering("lastMessageDate");
+            oldDialogs = (List<VoDialog>) dlgQuery.execute();
+        }
 		return VoHelper.convertMutableSet(oldDialogs, new ArrayList<Dialog>(), new Dialog(), pm);
 	}
 

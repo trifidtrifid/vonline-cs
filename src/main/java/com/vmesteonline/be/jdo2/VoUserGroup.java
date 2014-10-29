@@ -7,6 +7,8 @@ import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.utils.VoHelper;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.annotations.Index;
+import javax.jdo.annotations.Indices;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import java.math.BigDecimal;
@@ -14,6 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PersistenceCapable
+@Indices({
+        @Index(name="GT_IDX", members = {"groupType"}),
+        @Index(name="VG_IDX", members = {"visibleGroups"}),
+        @Index(name="VG_LLGTSF_IDX", members = {"longitude","latitude", "groupType", "staircase","floor"}),
+        @Index(name="VG_LLGTS_IDX", members = {"longitude","latitude", "groupType", "staircase"}),
+        @Index(name="VG_LLGT_IDX", members = {"longitude","latitude", "groupType"})})
 public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> {
 
 	public static VoUserGroup createVoUserGroup(BigDecimal longitude, BigDecimal latitude, int radius, byte staircase, byte floor, String name, int impScore, int gType,
@@ -244,19 +252,15 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	}
 
 	@Persistent
-	
 	private String description;
 
 	@Persistent
-	
 	private String name;
 
 	@Persistent
-	
 	private int radius;
 	
 	@Persistent
-	
 	private int importantScore;
 	
 	@Persistent
@@ -272,7 +276,6 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	private int groupType;
 	
 	@Persistent
-	
 	private List<Long> upperLevelGroups;
 	
 	
