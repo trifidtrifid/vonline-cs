@@ -783,9 +783,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
         if(null!=imgs)
             for (Long attachId : imgs) {
                 try {
-                    VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, attachId);
-                    StorageHelper.deleteImage(att.getFullFileName());
-                    pm.deletePersistent(att);
+                    pm.deletePersistent(pm.getObjectById(VoFileAccessRecord.class, attachId));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

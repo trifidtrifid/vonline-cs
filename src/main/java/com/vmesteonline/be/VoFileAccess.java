@@ -14,7 +14,6 @@ import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -132,7 +131,7 @@ public class VoFileAccess extends HttpServlet {
 		
       if( null!=fileData ){
       	resp.getOutputStream().write(
-						StorageHelper.saveImage(fname, contentType, currentUserId, isPublic, new ByteArrayInputStream(fileData), pm).getBytes());
+						StorageHelper.saveImage(fname, contentType, currentUserId, isPublic, fileData, pm).getBytes());
       } else if (extURL != null ){
       	resp.getOutputStream().write(StorageHelper.saveImage(extURL, currentUserId, isPublic, pm).getBytes());
       } else {

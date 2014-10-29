@@ -21,235 +21,249 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.ByteBuffer;
 import java.util.Base64;
 import java.util.Map;
 
 public class StorageHelper {
-	
-	public static final String DEFAULT_CONTENT_TYPE = "binary/stream";
+
+    public static final String DEFAULT_CONTENT_TYPE = "binary/stream";
     private static final Base64.Decoder Base64Decoder = Base64.getDecoder();
     private static final Base64.Encoder Base64Encoder = Base64.getEncoder();
 
-	public static class FileSource {
-		
-		public FileSource(String fname2, String contentType2, InputStream is2) {
-			this.fname = fname2;
-			this.contentType = contentType2;
-			this.is = is2;
-		}
-		public String fname;
-		public String contentType;
-		public InputStream is;
-	}
+    public static class FileSource {
 
-	private static class FileObject implements Serializable {
-		byte[] data;
-		String fileName;
-		String contentType;
-		public FileObject(byte[] data, String fileName, String contentType) {
-			super();
-			this.data = data;
-			this.fileName = fileName;
-			this.contentType = contentType;
-		}
-	}
-	private static Logger logger = Logger.getLogger(StorageHelper.class.getCanonicalName());
+        public FileSource(String fname2, String contentType2, InputStream is2) {
+            this.fname = fname2;
+            this.contentType = contentType2;
+            this.is = is2;
+        }
 
-	/**
-	 * Used below to determine the size of chucks to read in. Should be > 1kb and < 10MB
-	 */
-	private static final int BUFFER_SIZE = 2 * 1024 * 1024;
+        public String fname;
+        public String contentType;
+        public InputStream is;
+    }
 
-	/**
-	 * This is where backoff parameters are configured. Here it is aggressively retrying with backoff, up to 10 times but taking no more that 15 seconds
-	 * total to do so.
-	 */
-	public StorageHelper() {
-	}
+    private static class FileObject implements Serializable {
+        byte[] data;
+        String fileName;
+        String contentType;
 
-	/**
-	 * MEthod saves image that provided as an http URL or as a JPEG data and returns URL the image is accessible from
-	 * 
-	 * @param urlOrContent
-	 *          - http URL or content of a JPEG coded image
-	 * @return
-	 */
-	public static String saveImage(byte[] urlOrContent, long ownerId, boolean isPublic, PersistenceManager _pm) throws IOException {
-		return saveImage(urlOrContent, null, ownerId, isPublic, _pm, null);
-		
-	}
-	//===================================================================================================================
+        public FileObject(byte[] data, String fileName, String contentType) {
+            super();
+            this.data = data;
+            this.fileName = fileName;
+            this.contentType = contentType;
+        }
+    }
 
-	public static String saveImage(byte[] urlOrContent, String _contentType, long ownerId, boolean isPublic, PersistenceManager _pm, String fileName) throws IOException {
+    private static Logger logger = Logger.getLogger(StorageHelper.class.getCanonicalName());
 
-		FileSource fs = createFileSource( urlOrContent, _contentType, fileName);
-		if( null == fs ) 
-			return new String(urlOrContent); //local URL found in urlOrContent
-		else
-			return saveImage(fs.fname, fs.contentType, ownerId, isPublic, fs.is, _pm);
-	}
+    /**
+     * Used below to determine the size of chucks to read in. Should be > 1kb and < 10MB
+     */
+    private static final int BUFFER_SIZE = 2 * 1024 * 1024;
 
-	// ===================================================================================================================
+    /**
+     * This is where backoff parameters are configured. Here it is aggressively retrying with backoff, up to 10 times but taking no more that 15 seconds
+     * total to do so.
+     */
+    public StorageHelper() {
+    }
 
-	public static VoFileAccessRecord createFileAccessRecord(long userId, boolean isPublic, String fileName, String contentType) {
-		return new VoFileAccessRecord(userId, isPublic, fileName, contentType);
-	}
+    /**
+     * MEthod saves image that provided as an http URL or as a JPEG data and returns URL the image is accessible from
+     *
+     * @param urlOrContent - http URL or content of a JPEG coded image
+     * @return
+     */
+    public static String saveImage(byte[] urlOrContent, long ownerId, boolean isPublic, PersistenceManager _pm) throws IOException {
+        return saveImage(urlOrContent, null, ownerId, isPublic, _pm, null);
 
-	// ===================================================================================================================
+    }
+    //===================================================================================================================
 
-	public static String saveImage(String urlOrContent, long onerId, boolean isPublic, PersistenceManager _pm) throws IOException {
-		return saveImage(urlOrContent.getBytes(), onerId, isPublic, _pm);
-	}
+    public static String saveImage(byte[] urlOrContent, String _contentType, long ownerId, boolean isPublic, PersistenceManager _pm, String fileName) throws IOException {
 
-	// ===================================================================================================================
+        FileSource fs = createFileSource(urlOrContent, _contentType, fileName);
+        if (null == fs)
+            return new String(urlOrContent); //local URL found in urlOrContent
+        else
+            return saveImage(fs.fname, fs.contentType, ownerId, isPublic, loadDataFromStream(fs.is).toByteArray(), _pm);
+    }
 
-	public static String replaceImage(String urlOrContent, String oldURL, long userId, Boolean isPublic, PersistenceManager _pm) throws IOException {
-		
-		if(  urlOrContent.equals( oldURL ) ) return oldURL;
-		
-		PersistenceManager pm = _pm == null ? PMF.getPm() : _pm;
-		String contentType = "image/jpeg";
-		String fname = "img.jpeg";
+    // ===================================================================================================================
 
-		if( null != oldURL ){
-		long oldFileId = getFileId(oldURL);
-		
-			try {
-				VoFileAccessRecord oldFile = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
-				contentType = oldFile.getContentType();
-				fname = oldFile.getFileName();
-				
-				if (0 == userId)
-					userId = oldFile.getUserId();
-				if (null == isPublic)
-					isPublic = oldFile.isPublic();
-				deleteImage(oldFile.getFullFileName());
-			} catch (JDOObjectNotFoundException onfe) {
-			}
-		}
-		return saveImage(urlOrContent.getBytes(), contentType, userId, isPublic, pm, fname);
+    public static VoFileAccessRecord createFileAccessRecord(long userId, boolean isPublic, String fileName, String contentType) {
+        return new VoFileAccessRecord(userId, isPublic, fileName, contentType);
+    }
 
-	}
+    // ===================================================================================================================
 
-	// ===================================================================================================================
-	/**
-	 * Transfer the data from the inputStream to the outputStream. Then close both streams.
-	 */
-	private static void streamCopy(InputStream input, OutputStream output) throws IOException {
-		try {
-			byte[] buffer = new byte[BUFFER_SIZE];
-			int bytesRead = input.read(buffer);
-			while (bytesRead != -1) {
-				output.write(buffer, 0, bytesRead);
-				bytesRead = input.read(buffer);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			output.close();
-			input.close();
-		}
-	}
+    public static String saveImage(String urlOrContent, long onerId, boolean isPublic, PersistenceManager _pm) throws IOException {
+        return saveImage(urlOrContent.getBytes(), onerId, isPublic, _pm);
+    }
 
-	// ===================================================================================================================
-	public static boolean getFile(String url, OutputStream os, Map<String, String[]> params) throws IOException {
-		long oldFileId = getFileId(url);
-		PersistenceManager pm = PMF.getPm();
+    // ===================================================================================================================
 
-		try {
-			VoFileAccessRecord vfar = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
-			VoFileAccessRecord version = vfar.getVersion( params, pm );
-			getFile( (version == null ? vfar : version).getFullFileName(), os);
-			return true;
-		} catch (JDOObjectNotFoundException onfe) {
-			return false;
-		}
-	}
+    public static String replaceImage(String urlOrContent, String oldURL, long userId, Boolean isPublic, PersistenceManager _pm) throws IOException {
 
-	// ===================================================================================================================
-	public static void sendFileResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String queryString = req.getRequestURI()+(req.getQueryString() == null ? "" : "?"+req.getQueryString());
-		logger.debug("Got request: URL:"+queryString);
-		
-		byte[] fileData = null;
-		
-		//req.getParameter("useCache")
-		Object response = null != queryString ? 
-				ServiceImpl.getObjectFromCache(queryString) : null;
+        if (urlOrContent.equals(oldURL)) return oldURL;
 
-		if( null!=response && (response instanceof byte[] || response instanceof FileObject)) { 
-			
-			if ( response instanceof byte[] ){
-				fileData = (byte[])response;
-				logger.debug("Get '"+queryString+"' from cache.");
-				
-			} else if(  response instanceof FileObject ){
-				FileObject fo = (FileObject)response;
-				fileData = fo.data;
-				resp.setContentType(fo.contentType);
-				resp.addHeader( "Content-Disposition", "attachment; filename="+fo.fileName);
-			} else {
-				logger.warn("Cahce stotores Object:"+response +" of class "+response.getClass()+" would be removed.");
-				ServiceImpl.removeObjectFromCache(queryString);
-			}
-			
-		} else {
-			long oldFileId = getFileId(req.getRequestURI());
-			PersistenceManager pm = PMF.getPm();
+        PersistenceManager pm = _pm == null ? PMF.getPm() : _pm;
+        String contentType = "image/jpeg";
+        String fname = "img.jpeg";
 
-			try {
-				VoFileAccessRecord vfar = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
-				resp.setStatus(HttpServletResponse.SC_OK);
-				String fileName = URLEncoder.encode( vfar.getFileName(),"UTF-8");
-				resp.setContentType(vfar.getContentType()+"; filename="+fileName);
-				resp.addHeader( "Content-Disposition", "attachment; filename="+fileName);
-				VoFileAccessRecord theVersion = vfar.getVersion( queryString );
-				if( null == theVersion ){
-					theVersion = vfar.getVersion( req.getParameterMap(), pm );
-					vfar.setVersion(queryString, theVersion);
-				}
-				
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				getFile( theVersion.getFullFileName(), baos);
-				baos.close();
-				fileData = baos.toByteArray();
-				if( null != queryString)
-					ServiceImpl.putObjectToCache(queryString, new FileObject(fileData, fileName, vfar.getContentType()+"; filename="+fileName));
-				
-			} catch (JDOObjectNotFoundException onfe) {
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not Found");
-				return;
-			}
+        if (null != oldURL) {
+            long oldFileId = getFileId(oldURL);
 
-		}
-		resp.getOutputStream().write(fileData);
-	}
+            try {
+                VoFileAccessRecord oldFile = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
+                contentType = oldFile.getContentType();
+                fname = oldFile.getFileName();
 
-	// ===================================================================================================================
+                if (0 == userId)
+                    userId = oldFile.getUserId();
+                if (null == isPublic)
+                    isPublic = oldFile.isPublic();
+                deleteImage(oldURL, pm);
+            } catch (JDOObjectNotFoundException onfe) {
+            }
+        }
+        return saveImage(urlOrContent.getBytes(), contentType, userId, isPublic, pm, fname);
+    }
 
-	public static void getFile(String fileName, OutputStream outputStream ) throws IOException {
-		StorageHelper.streamCopy(new FileInputStream(fileName), outputStream);
-	}
+    // ===================================================================================================================
 
-	// ===================================================================================================================
+    /**
+     * Transfer the data from the inputStream to the outputStream. Then close both streams.
+     */
+    private static void streamCopy(InputStream input, OutputStream output) throws IOException {
+        try {
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead = input.read(buffer);
+            while (bytesRead != -1) {
+                output.write(buffer, 0, bytesRead);
+                bytesRead = input.read(buffer);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            output.close();
+            input.close();
+        }
+    }
 
-	public static String saveImage(String fileName, String contentType, long userId, boolean isPublic, InputStream is, PersistenceManager _pm)
-			throws IOException {
-			VoFileAccessRecord vfar = saveAttach(fileName, contentType, userId, isPublic, is, _pm);
-			return createFullFileName(fileName, contentType, vfar);
-		
-	}
-	
-//===================================================================================================================
-	
-	public static VoFileAccessRecord saveAttach(String fileName, String contentType, long userId, boolean isPublic, InputStream is, PersistenceManager _pm)
+    // ===================================================================================================================
+    public static boolean getFile(String url, OutputStream os, Map<String, String[]> params) throws IOException {
+        long oldFileId = getFileId(url);
+        PersistenceManager pm = PMF.getPm();
+        try {
+            VoFileAccessRecord vfar = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
+            VoFileAccessRecord version = vfar.getVersion(params, pm);
+            os.write((version == null ? vfar : version).getData().array());
+            return true;
+        } catch (JDOObjectNotFoundException onfe) {
+            return false;
+        }
+    }
+
+    // ===================================================================================================================
+    public static void sendFileResponse(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String queryString = req.getRequestURI() + (req.getQueryString() == null ? "" : "?" + req.getQueryString());
+        logger.debug("Got request: URL:" + queryString);
+
+        byte[] fileData = null;
+
+        //req.getParameter("useCache")
+        Object response = null != queryString ?
+                ServiceImpl.getObjectFromCache(queryString) : null;
+
+        if (null != response && (response instanceof byte[] || response instanceof FileObject)) {
+
+            if (response instanceof byte[]) {
+                fileData = (byte[]) response;
+                logger.debug("Get '" + queryString + "' from cache.");
+
+            } else if (response instanceof FileObject) {
+                FileObject fo = (FileObject) response;
+                fileData = fo.data;
+                resp.setContentType(fo.contentType);
+                resp.addHeader("Content-Disposition", "attachment; filename=" + fo.fileName);
+            } else {
+                logger.warn("Cahce stotores Object:" + response + " of class " + response.getClass() + " would be removed.");
+                ServiceImpl.removeObjectFromCache(queryString);
+            }
+
+        } else {
+            long oldFileId = getFileId(req.getRequestURI());
+            PersistenceManager pm = PMF.getPm();
+
+            try {
+                VoFileAccessRecord vfar = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
+                resp.setStatus(HttpServletResponse.SC_OK);
+                String fileName = URLEncoder.encode(vfar.getFileName(), "UTF-8");
+                resp.setContentType(vfar.getContentType() + "; filename=" + fileName);
+                resp.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+                VoFileAccessRecord theVersion = vfar.getVersion(queryString);
+                if (null == theVersion) {
+                    theVersion = vfar.getVersion(req.getParameterMap(), pm);
+                    vfar.setVersion(queryString, theVersion);
+                }
+
+                if (null != queryString)
+                    ServiceImpl.putObjectToCache(queryString, new FileObject(fileData, fileName, theVersion.getData().array() + "; filename=" + fileName));
+                fileData = theVersion.getData().array();
+
+            } catch (JDOObjectNotFoundException onfe) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not Found");
+                return;
+            }
+
+        }
+        resp.getOutputStream().write(fileData);
+    }
+
+    // ===================================================================================================================
+    public static String saveImage(String fileName, String contentType, long userId, boolean isPublic, byte[] data, PersistenceManager _pm)
+            throws IOException {
+        VoFileAccessRecord vfar = saveAttach(fileName, contentType, userId, isPublic, data, _pm);
+        return createFullFileName(fileName, contentType, vfar);
+
+    }
+
+    //===================================================================================================================
+    public static VoFileAccessRecord saveAttach(String fileName, String contentType, long userId, boolean isPublic, InputStream input, PersistenceManager _pm)
+            throws IOException {
+        ByteArrayOutputStream output = loadDataFromStream(input);
+        return saveAttach( fileName,  contentType,  userId,  isPublic, output.toByteArray(), _pm);
+    }
+
+    private static ByteArrayOutputStream loadDataFromStream(InputStream input) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        try {
+
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int bytesRead = input.read(buffer);
+            while (bytesRead != -1) {
+                output.write(buffer, 0, bytesRead);
+                bytesRead = input.read(buffer);
+            }
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    public static VoFileAccessRecord saveAttach(String fileName, String contentType, long userId, boolean isPublic, byte[] data, PersistenceManager _pm)
 			throws IOException {
 		VoFileAccessRecord vfar = createFileAccessRecord(userId, isPublic, fileName, contentType);
 		PersistenceManager pm = null == _pm ? PMF.getPm() : _pm;
 		vfar = pm.makePersistent(vfar);
 
 		try {
-			saveFileData(is, vfar);
+			saveFileData(data, vfar);
 			
 			return vfar;
 		} catch (Exception e) {
@@ -282,8 +296,9 @@ public class StorageHelper {
 		return url;
 	}
 
-	public static void saveFileData(InputStream is, VoFileAccessRecord vfar) throws IOException {
-		streamCopy(is, new FileOutputStream(vfar.getFullFileName()));
+	public static void saveFileData(byte[] data, VoFileAccessRecord vfar) throws IOException {
+        vfar.setData(ByteBuffer.wrap(data));
+		//streamCopy(is, new FileOutputStream( vfar.getFullFileName() ));
 	}
 
 	// =====================================================================================================================
@@ -291,10 +306,8 @@ public class StorageHelper {
 	public static boolean deleteImage(String url, PersistenceManager _pm) throws IOException {
 		long oldFileId = getFileId(url);
 		PersistenceManager pm = null == _pm ? PMF.getPm() : _pm;
-
 		try {
-			VoFileAccessRecord oldFile = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
-			deleteImage(oldFile.getFullFileName());
+			pm.deletePersistent(pm.getObjectById(VoFileAccessRecord.class, oldFileId));
 			return true;
 		} catch (JDOObjectNotFoundException onfe) {
 			return false;
@@ -303,9 +316,6 @@ public class StorageHelper {
 
 	// ===================================================================================================================
 
-	public static boolean deleteImage(String fullFileName) throws IOException {
-		return new File(fullFileName).delete();
-	}
 
 	// ===================================================================================================================
 	public static String getURL(long id, String ext) {
@@ -475,8 +485,8 @@ public class StorageHelper {
 			if( fs == null ){
 				cfar = pm.getObjectById(VoFileAccessRecord.class, getFileId(attach.getURL()));
 				cfar.updateContentParams(attach.contentType, attach.fileName);
-			}	else {	
-				cfar = saveAttach( fs.fname, fs.contentType, userId, true, fs.is, pm);
+			}	else {
+                cfar = saveAttach( fs.fname, fs.contentType, userId, true, fs.is, pm);
 			}
 			
 		} catch (IOException e) {

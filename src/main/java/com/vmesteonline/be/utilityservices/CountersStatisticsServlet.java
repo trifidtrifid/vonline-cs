@@ -1,23 +1,14 @@
 package com.vmesteonline.be.utilityservices;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.jdo2.utility.VoCounter;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.utilityservice.CounterType;
+import com.vmesteonline.be.utils.CSVHelper;
+import com.vmesteonline.be.utils.Defaults;
+import com.vmesteonline.be.utils.StorageHelper;
+import com.vmesteonline.be.utils.VoHelper;
 
 import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
@@ -25,22 +16,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.postaladdress.AddressInfo;
-import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
-import com.vmesteonline.be.jdo2.postaladdress.VoCity;
-import com.vmesteonline.be.jdo2.postaladdress.VoCountry;
-import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
-import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
-import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
-import com.vmesteonline.be.jdo2.utility.VoCounter;
-import com.vmesteonline.be.thrift.utilityservice.CounterType;
-import com.vmesteonline.be.utils.CSVHelper;
-import com.vmesteonline.be.utils.Defaults;
-import com.vmesteonline.be.utils.StorageHelper;
-import com.vmesteonline.be.utils.VoHelper;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.util.*;
 
 @SuppressWarnings("serial")
 public class CountersStatisticsServlet extends HttpServlet {

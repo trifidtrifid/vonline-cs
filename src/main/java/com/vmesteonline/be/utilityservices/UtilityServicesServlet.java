@@ -1,13 +1,12 @@
 package com.vmesteonline.be.utilityservices;
 
+import com.vmesteonline.be.VoServlet;
+import com.vmesteonline.be.access.VoServiceMapAccessValidator;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.utilityservice.UtilityService;
 import org.apache.thrift.TBaseProcessor;
 import org.apache.thrift.protocol.TJSONProtocol;
 import org.apache.thrift.protocol.TProtocolFactory;
-
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.VoServlet;
-import com.vmesteonline.be.access.VoServiceMapAccessValidator;
-import com.vmesteonline.be.thrift.utilityservice.UtilityService;
 
 public class UtilityServicesServlet extends VoServlet {
 

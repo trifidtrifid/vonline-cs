@@ -9,6 +9,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.mail.internet.ContentType;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class VoFileAccessRecord {
 		this.publicFileName=fileName;
 		this.bucket = ".";
 		this.contentType = contentType;
-		this.createdAt = (int)(System.currentTimeMillis() / 1000L); 
+		this.createdAt = (int)(System.currentTimeMillis() / 1000L );
 		if( null != parent ) parent.setVersion(versionKey, this);
 	}
 	
@@ -87,13 +88,23 @@ public class VoFileAccessRecord {
 	
 	@Persistent
 	private String url;
-	
+
+    @Persistent(serialized = "true")
+    ByteBuffer data;
 
 	@Persistent(dependentElement = "true")
 	Map<String,VoFileAccessRecord> versions;
-	
 
-	public VoFileAccessRecord getVersion(Map<String, String[]> params, PersistenceManager p) {
+    public void setData(ByteBuffer data) {
+        this.data = data;
+    }
+
+    public ByteBuffer getData() {
+        if( data == null ) data = ByteBuffer.allocate(0);
+        return data;
+    }
+
+    public VoFileAccessRecord getVersion(Map<String, String[]> params, PersistenceManager p) {
 		return getVersion(params,p,true);
 	}
 	

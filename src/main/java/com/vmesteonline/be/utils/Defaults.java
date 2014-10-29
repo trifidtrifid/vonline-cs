@@ -112,10 +112,8 @@ public class Defaults {
 		if (null != ext)
 			for (VoFileAccessRecord far : ext) {
 				try {
-					StorageHelper.deleteImage(far.getFullFileName());
 					pm.deletePersistent(far);
 				} catch (Exception rte) {
-					// e.printStackTrace();
 				}
 			}
 

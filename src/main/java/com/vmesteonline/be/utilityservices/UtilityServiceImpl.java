@@ -1,30 +1,20 @@
 package com.vmesteonline.be.utilityservices;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import javax.jdo.PersistenceManager;
-
-import org.apache.thrift.TException;
-
-import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.ServiceImpl;
-import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.utility.VoCounter;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.utilityservice.Counter;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
-import com.vmesteonline.be.thrift.utilityservice.UtilityService.Iface;
+import com.vmesteonline.be.thrift.utilityservice.UtilityService;
+import org.apache.thrift.TException;
 
-public class UtilityServiceImpl extends ServiceImpl implements Iface {
+import javax.jdo.PersistenceManager;
+import java.util.*;
+
+public class UtilityServiceImpl extends ServiceImpl implements UtilityService.Iface {
 
 	@Override
 	public long registerCounter(Counter newCounter) throws InvalidOperation, TException {
