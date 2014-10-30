@@ -854,12 +854,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		VoUser currentUser = getCurrentUser(pm);
 		Set<ServiceType> us = currentUser.getServices();
-		if( null == us) us = new HashSet<ServiceType>();
+		if( null == us) {
+            us = new HashSet<>();
+            currentUser.setServices( us );
+        }
 		for (Entry<ServiceType, Boolean> nss : newServiceStauses.entrySet()) {
 			if( us.contains( nss.getKey()) && !nss.getValue() ) us.remove(nss.getKey());
 			else if( !us.contains( nss.getKey()) && nss.getValue() ) us.add(nss.getKey());
 		}
-		currentUser.setServices( us );
 		pm.makePersistent(currentUser);
 	}
 }

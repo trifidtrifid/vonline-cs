@@ -56,7 +56,11 @@ public class ImageConverterVersionCreator implements VersionCreator {
                     ((OpImage) image.getRendering()).setTileCache(null);
 
                     RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                    RenderedOp resizedImage = JAI.create("SubsampleAverage", image, (double)scale.x / (double)image.getWidth(), (double)scale.y / (double)image.getHeight(), qualityHints);
+                    double scalex = (double) scale.x / (double) image.getWidth();
+                    double scaley = (double) scale.y / (double) image.getHeight();
+
+                    double minScale =  Math.max(scalex, scaley);
+                    RenderedOp resizedImage = JAI.create("SubsampleAverage", image, minScale, minScale, qualityHints);
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     JAI.create("encode", resizedImage, baos, "PNG", null);

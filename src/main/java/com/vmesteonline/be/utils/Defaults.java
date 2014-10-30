@@ -8,15 +8,13 @@ import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.VoError;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class Defaults {
@@ -191,14 +189,20 @@ public class Defaults {
 		AuthServiceImpl asi = new AuthServiceImpl();
 		ArrayList<Long> uids = new ArrayList<Long>();
 		int counter = 0;
-		
-			for (String uname : unames) {
+
+        Set<ServiceType> services = new HashSet<ServiceType>();
+        services.add(ServiceType.CountersEnabled);
+
+        for (String uname : unames) {
 				try {
 					long uid = asi.registerNewUser(uname, ulastnames[counter], uPasses[counter], uEmails[counter], locCodes.get(counter++), 0);
 					VoUser user = pm.getObjectById(VoUser.class, uid);
 					user.setEmailConfirmed(true);
+                    if( counter < 3 ) {
+                        user.setServices( services );
+                    }
 
-					if (counter == 1)
+                    if (counter == 1)
 						for (Long ug : user.getGroups())
 							// the first user would moderate all of groups
 							user.setGroupModerator(ug, true);
@@ -248,6 +252,7 @@ public class Defaults {
 					VoPostalAddress.createVoPostalAddress(resp6, (byte) 1, (byte) 2, 25, "", pm) };
 
 			String invCodes[] = { "1", "2", "3", "4", "5" };
+
 
 			for (int i = 0; i < addresses.length; i++) {
 

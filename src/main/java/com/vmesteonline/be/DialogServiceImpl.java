@@ -95,12 +95,11 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 
 	@Override
 	public DialogMessage postMessage(long dialogId, String content, List<Attach> attachs) throws InvalidOperation {
-		if (0 == dialogId)
-			throw new InvalidOperation(VoError.IncorrectParametrs, "dialogId should be set to a non ZERO value.");
-		if ((null == content || 0 == content.trim().length()) && (null == attachs || 0 == attachs.size()))
-			throw new InvalidOperation(VoError.IncorrectParametrs, "Message content should be not empty.");
 
-		PersistenceManager pm = PMF.getPm();
+        if ((null == content || 0 == content.trim().length()) && (null == attachs || 0 == attachs.size()))
+            throw new InvalidOperation(VoError.IncorrectParametrs, "Message content should be not empty.");
+
+        PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser currentUser = getCurrentUser();
 			VoDialog vdlg = pm.getObjectById(VoDialog.class, dialogId);

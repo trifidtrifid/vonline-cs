@@ -26,6 +26,7 @@
         <class>com.vmesteonline.be.jdo2.postaladdress.VoGeocoder</class>
         <class>com.vmesteonline.be.jdo2.dialog.VoDialog</class>
         <class>com.vmesteonline.be.jdo2.dialog.VoDialogMessage</class>
+        <class>com.vmesteonline.be.jdo2.utility.VoCounter</class>
         <exclude-unlisted-classes/>
         <properties>
             <property name="javax.jdo.option.ConnectionURL" value="cassandra:"/>

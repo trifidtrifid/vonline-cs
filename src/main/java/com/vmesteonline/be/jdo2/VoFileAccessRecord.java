@@ -4,10 +4,7 @@ import com.vmesteonline.be.thrift.messageservice.Attach;
 import com.vmesteonline.be.utils.StorageHelper;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import javax.mail.internet.ContentType;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -89,14 +86,14 @@ public class VoFileAccessRecord {
 	@Persistent
 	private String url;
 
-    @Persistent(serialized = "true")
+    @Persistent
     ByteBuffer data;
 
 	@Persistent(dependentElement = "true")
 	Map<String,VoFileAccessRecord> versions;
 
     public void setData(ByteBuffer data) {
-        this.data = data;
+        this.data = data.duplicate();
     }
 
     public ByteBuffer getData() {
