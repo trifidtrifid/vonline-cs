@@ -39,14 +39,14 @@
 <head>
     <meta charset="utf-8" />
     <title>Контакты</title>
-    <link rel="shortcut icon" href="i/landing/vmesteonline.png">
-    <link rel="stylesheet" href="css/lib/jquery-ui-1.10.3.full.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/lib/fancybox/jquery.fancybox.css"/>
-    <link rel="stylesheet" href="css/lib/jquery.Jcrop.css"/>
-    <link rel="stylesheet" href="js/bower_components/select2/select2.css"/>
+    <link rel="shortcut icon" href="static/i/landing/vmesteonline.png">
+    <link rel="stylesheet" href="static/css/lib/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="static/css/style.css" />
+    <link rel="stylesheet" href="static/css/lib/fancybox/jquery.fancybox.css"/>
+    <link rel="stylesheet" href="static/css/lib/jquery.Jcrop.css"/>
+    <link rel="stylesheet" href="static/js/bower_components/select2/select2.css"/>
 
-    <script src="js/lib/jquery-2.0.3.js"></script>
+    <script src="static/js/lib/jquery-2.0.3.js"></script>
     <!--[if lt IE 9]>
     <script>
         document.createElement('header');
@@ -64,7 +64,7 @@
     <div class="navbar-container coming-soon" id="navbar-container">
         <div class="navbar-header pull-left">
             <a href="/" class="navbar-brand">
-                <img src="i/logo.png" alt="логотип"/>
+                <img src="static/i/logo.png" alt="логотип"/>
             </a>
         </div>
     </div>
@@ -132,7 +132,7 @@
 
 
 <!-- файлы thrift -->
-<script src="js/thrift.js" type="text/javascript"></script>
+<script src="static/js/thrift.js" type="text/javascript"></script>
 <script src="gen-js/bedata_types.js" type="text/javascript"></script>
 <script src="gen-js/messageservice_types.js" type="text/javascript"></script>
 <script src="gen-js/MessageService.js" type="text/javascript"></script>

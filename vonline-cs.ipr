@@ -82,13 +82,14 @@
       <module name="vonline-cs" target="1.8" />
     </bytecodeTargetLevel>
   </component>
-  <component name="CopyrightManager" default="" />
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
   <component name="DataNucleusConfiguration">
-    <option name="api" value="JDO" />
     <option name="enabledModules">
-      <set>
+      <list>
         <option value="vonline-cs" />
-      </set>
+      </list>
     </option>
   </component>
   <component name="DependencyValidationManager">
@@ -304,6 +305,7 @@
                 <option name="path" value="modules\jmx-remote.mod" />
               </JettyConfigFile>
               <JettyConfigFile>
+                <option name="active" value="true" />
                 <option name="path" value="modules\jmx.mod" />
               </JettyConfigFile>
               <JettyConfigFile>

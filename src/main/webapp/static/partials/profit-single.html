@@ -1,0 +1,283 @@
+
+<section class="talks-block adverts-block ng-cloak">
+
+    <section class="forum adverts-single" infinite-scroll="adverts.addMoreItems()" ng-if="adverts.fullTalkTopic.id">
+
+        <div class="dd dd-draghandle">
+            <ol class="dd-list">
+
+                <li class="dd-item dd2-item topic-item">
+                    <div class="dd2-content widget-box topic-descr">
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="topic-left">
+                                    <a ui-sref="profile({ userId : {{ adverts.fullTalkTopic.userInfo.id }} })">
+                                        <div class="avatar" style="background-image: url({{adverts.fullTalkTopic.userInfo.avatar}})"></div>
+                                        <div ng-if="adverts.fullTalkTopic.userInfo.groupType" class="user-ribbon" ng-class="base.getUserColor(adverts.fullTalkTopic.userInfo.groupType)"></div>
+                                    </a>
+                                    <div class="topic-author">
+                                    </div>
+                                </div>
+                                <div class="topic-right text-container">
+
+                                    <div class="message-tools pull-right" ng-show="adverts.fullTalkTopic.userInfo.id == base.me.id">
+                                        <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(adverts.fullTalkTopic,adverts.topics,true,false)">&times;</a>
+                                        <a href="#" title="Редактировать" ng-click="base.setEdit($event,adverts.fullTalkTopic)" class="fa fa-pencil pull-right"></a>
+                                    </div>
+
+                                    <a ui-sref="profit" class="label label-lg arrowed lenta-item-hashtag pull-right"
+                                      ng-class="adverts.fullTalkTopic.tagColor">{{adverts.fullTalkTopic.label}}</a>
+
+                                    <div ng-hide="adverts.fullTalkTopic.isEdit">
+                                        <h2>
+                                            <span>{{adverts.fullTalkTopic.subject}}</span>
+                                        </h2>
+
+                                        <div>
+
+                                            <div ng-if="adverts.fullTalkTopic.message.content.length < base.contentLength">
+
+                                                <div class="text" ng-bind-html="adverts.fullTalkTopic.message.content"></div>
+                                            </div>
+                                            <div ng-if="adverts.fullTalkTopic.message.content.length >= base.contentLength">
+                                                <div class="text" ng-hide="adverts.fullTalkTopic.message.isFullText">
+                                                    <div ng-bind-html="adverts.fullTalkTopic.message.content.slice(0,base.contentLength-1)"></div>
+                                                    <div><a href="#" ng-click="base.toggleFullText(adverts.fullTalkTopic.message)">читать далее...</a></div>
+                                                </div>
+                                                <div class="text" ng-show="adverts.fullTalkTopic.message.isFullText">
+                                                    <div ng-bind-html="adverts.fullTalkTopic.message.content"></div>
+
+                                                    <div><a href="#" ng-click="base.toggleFullText(adverts.fullTalkTopic.message)">свернуть</a></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    <div class="attached">
+                                        <a href="{{image.URL}}" ng-click="$event.preventDefault()" class="fancybox" rel="attached-group-{{adverts.fullTalkTopic.id}}" ng-repeat="image in adverts.fullTalkTopic.message.images">
+                                            <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
+                                        </a>
+                                        <div class="docs">
+                                            <div ng-repeat="document in adverts.fullTalkTopic.message.documents"><a ng-href="{{document.URL}}" class="doc-item">{{document.fileName}}</a></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="poll" ng-if="adverts.fullTalkTopic.metaType == 'poll'"  ng-switch on="adverts.fullTalkTopic.poll.alreadyPoll" ng-cloak>
+
+                                        <h5>{{adverts.fullTalkTopic.poll.subject}}</h5>
+
+                                        <div class="poll-do" ng-switch-when="false">
+
+                                            <div class="radio" ng-repeat="variant in adverts.fullTalkTopic.poll.editNames">
+                                                <label>
+                                                    <input name="poll-variant-{{adverts.fullTalkTopic.id}}" ng-model="variant.value" value="1" type="radio" class="ace">
+                                                    <span class="lbl">{{variant.name}}</span>
+                                                </label>
+                                            </div>
+
+                                            <button class="btn btn-sm btn-primary no-border" ng-click="base.doPoll($event,adverts.fullTalkTopic.poll)">Голосовать</button>
+
+                                        </div>
+
+                                        <!-- -->
+
+                                        <div class="poll-results" ng-switch-when="true">
+
+                                            <div class="poll-result-item"  ng-repeat="variant in adverts.fullTalkTopic.poll.editNames">
+                                                <div class="poll-result-variant">{{variant.name}}</div>
+                                                <div class="poll-row">
+                                                    <div class="poll-row-line">
+                                                        <div class="poll-line-percent" ng-style="{width: variant.votersPercent}"></div>
+                                                        <div class="poll-line-number" style="width: 100%">{{variant.votersNum}}</div>
+                                                    </div>
+                                                    <div class="poll-row-percent">{{variant.votersPercent}}</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="poll-result-amount">Проголосовало <span>{{adverts.fullTalkTopic.poll.amount}}</span> человек</div>
+
+                                        </div>
+
+                                    </div>
+
+                                    </div>
+
+                                    <div class="edit-message" ng-show="adverts.fullTalkTopic.isEdit">
+                                        <div ng-include="'static/templates/createTopic.html'" onload="ctrl = adverts.fullTalkTopic; initCreateTopic(adverts.fullTalkTopic);"></div>
+                                    </div>
+
+                                        <div class="message-bottom">
+                                            <span class="topic-header-date">{{adverts.fullTalkTopic.message.createdEdit}}</span>
+                                            <a class="answer-link" href="#" ng-click="adverts.showTopicAnswerInput($event,adverts.fullTalkTopic)">Ответить</a>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="answer-input" ng-show="adverts.fullTalkTopic.answerInputIsShow">
+                                <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=adverts; ctrlId = adverts.fullTalkTopic.id; initCreateMessage(ctrlId);"></div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <ol class="dd-list">
+
+                        <li class="dd-item dd2-item topic-item" ng-repeat="firstMessage in adverts.fullTalkFirstMessages" id="{{firstMessage.id}}">
+                            <div class="dd2-content widget-box topic-descr">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div class="topic-left">
+                                            <a ui-sref="profile({userId: {{ firstMessage.userInfo.id }} })">
+                                                <div class="avatar short2" style="background-image: url({{firstMessage.userInfo.avatar}})"></div>
+                                                <div ng-if="firstMessage.userInfo.groupType" class="user-ribbon" ng-class="base.getUserColor(firstMessage.userInfo.groupType)"></div>
+                                            </a>
+                                            <div class="topic-author" ng-show="firstMessage.childCount && firstMessage.childCount != 0">
+                                                <a class="fa plus-minus" href="#" ng-class="{ 'fa-plus' : !firstMessage.isTreeOpen,'fa-minus' : firstMessage.isTreeOpen}"
+                                                   ng-click="adverts.toggleTreeFirstMessage($event,firstMessage)"></a>
+                                            </div>
+                                        </div>
+                                        <div class="topic-right text-container">
+
+                                            <div class="message-tools pull-right" ng-show="firstMessage.userInfo.id == base.me.id">
+                                                <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(firstMessage,adverts.fullTalkFirstMessages,false,false)">&times;</a>
+                                                <a href="#" title="Редактировать" ng-click="base.setEdit($event,firstMessage,true)" class="fa fa-pencil pull-right"></a>
+                                            </div>
+
+                                            <h2><a ui-sref="profile({userId: {{ firstMessage.userInfo.id }} })">{{ firstMessage.userInfo.firstName +" "+ firstMessage.userInfo.lastName}}</a></h2>
+
+                                            <div ng-hide="firstMessage.isEdit">
+
+                                                <div ng-if="firstMessage.content.length < base.contentLength">
+
+                                                    <div class="text" ng-bind-html="firstMessage.content"></div>
+                                                </div>
+                                                <div ng-if="firstMessage.content.length >= base.contentLength">
+                                                    <div class="text" ng-hide="firstMessage.isFullText">
+                                                        <div ng-bind-html="firstMessage.content.slice(0,base.contentLength-1)"></div>
+                                                        <div><a href="#" ng-click="base.toggleFullText(firstMessage)">читать далее...</a></div>
+                                                    </div>
+                                                    <div class="text" ng-show="firstMessage.isFullText">
+                                                        <div ng-bind-html="firstMessage.content"></div>
+
+                                                        <div><a href="#" ng-click="base.toggleFullText(firstMessage)">свернуть</a></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="attached">
+                                                    <a href="{{image.URL}}" ng-click="$event.preventDefault()" class="fancybox" rel="attached-group-{{adverts.fullTalkTopic.id+'-'+firstMessage.id}}" ng-repeat="image in firstMessage.images">
+                                                        <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
+                                                    </a>
+                                                    <div class="docs">
+                                                        <div ng-repeat="document in firstMessage.documents"><a ng-href="{{document.URL}}" class="doc-item">{{document.fileName}}</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="edit-message" ng-show="firstMessage.isEdit">
+                                                <div ng-include="'static/templates/editMessage.html'" onload="ctrlMessage=firstMessage; ctrlId = adverts.fullTalkTopic.id+'-'+firstMessage.id; initCreateMessage(ctrlId,true);"></div>
+
+
+                                            </div>
+
+                                            <div class="message-bottom">
+                                                <span class="topic-header-date">{{firstMessage.createdEdit}}</span>
+                                                <a class="answer-link" href="#" ng-click="adverts.showMessageAnswerInput($event,adverts.fullTalkTopic,firstMessage)">Ответить</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="answer-input" ng-show="firstMessage.answerInputIsShow">
+                                        <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=firstMessage; ctrlTopicId = adverts.fullTalkTopic.id;
+                                         ctrlParent=adverts;ctrlId = adverts.fullTalkTopic.id+'-'+firstMessage.id; initCreateMessage(ctrlId);"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <ol class="dd-list" ng-show="firstMessage.isTreeOpen">
+
+                                <li class="dd-item dd2-item topic-item" ng-repeat="message in adverts.fullTalkMessages[firstMessage.id]"
+                                    ng-style="{'margin-left': {{message.offset*30-30}}}" ng-show="message.isOpen && message.isParentOpen">
+                                    <div class="dd2-content widget-box topic-descr">
+                                        <div class="widget-body">
+                                            <div class="widget-main">
+                                                <div class="topic-left">
+                                                    <a ui-sref="profile({ userId : {{ message.userInfo.id }} })">
+                                                        <div class="avatar short2" style="background-image: url({{message.userInfo.avatar}})"></div>
+                                                        <div ng-if="message.userInfo.groupType" class="user-ribbon" ng-class="base.getUserColor(message.userInfo.groupType)"></div>
+                                                    </a>
+                                                    <div class="topic-author" ng-show="message.childCount && message.childCount != 0">
+                                                        <a class="fa plus-minus" href="#" ng-class="{ 'fa-plus' : !message.isTreeOpen,'fa-minus' : message.isTreeOpen}"
+                                                           ng-click="adverts.toggleTree($event,message,firstMessage)"></a>
+                                                    </div>
+                                                </div>
+                                                <div class="topic-right text-container">
+                                                    <div class="message-tools pull-right" ng-show="message.userInfo.id == base.me.id">
+                                                        <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(message,adverts.fullTalkMessages[firstMessage.id],false,false)">&times;</a>
+                                                        <a href="#" title="Редактировать" ng-click="base.setEdit($event,message,true)" class="fa fa-pencil pull-right"></a>
+                                                    </div>
+
+                                                    <h2><a ui-sref="profile({ userId : {{ message.userInfo.id }} })">{{message.userInfo.firstName+" "+message.userInfo.lastName}}</a></h2>
+
+                                                    <div ng-hide="message.isEdit">
+
+                                                        <div ng-if="message.content.length < base.contentLength">
+
+                                                            <div class="text" ng-bind-html="message.content"></div>
+                                                        </div>
+                                                        <div ng-if="message.content.length >= base.contentLength">
+                                                            <div class="text" ng-hide="message.isFullText">
+                                                                <div ng-bind-html="message.content.slice(0,base.contentLength-1)"></div>
+                                                                <div><a href="#" ng-click="base.toggleFullText(message)">читать далее...</a></div>
+                                                            </div>
+                                                            <div class="text" ng-show="message.isFullText">
+                                                                <div ng-bind-html="message.content"></div>
+
+                                                                <div><a href="#" ng-click="base.toggleFullText(message)">свернуть</a></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="attached">
+                                                            <a href="{{image.URL}}" ng-click="$event.preventDefault()" class="fancybox" rel="attached-group-{{adverts.fullTalkTopic.id+'-'+message.id}}" ng-repeat="image in message.images">
+                                                                <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
+                                                            </a>
+                                                            <div class="docs">
+                                                                <div ng-repeat="document in message.documents"><a ng-href="{{document.URL}}" class="doc-item">{{document.fileName}}</a></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="edit-message" ng-show="message.isEdit">
+                                                        <div ng-include="'static/templates/editMessage.html'" onload="ctrlMessage=message; ctrlId = adverts.fullTalkTopic.id+'-'+message.id;
+                                                        ctrlTopicId = adverts.fullTalkTopic.id;ctrlParent=adverts; initCreateMessage(ctrlId,true);"></div>
+
+
+                                                    </div>
+
+                                                    <div class="message-bottom">
+                                                        <span class="topic-header-date">{{message.createdEdit}}</span>
+                                                        <a class="answer-link" href="#" ng-click="adverts.showMessageAnswerInput($event,adverts.fullTalkTopic,firstMessage,message)">Ответить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="answer-input" ng-show="message.answerInputIsShow">
+                                                <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=message; ctrlTopicId = adverts.fullTalkTopic.id;
+                                         ctrlParent=adverts;ctrlId = adverts.fullTalkTopic.id+'-'+message.id;
+                                         ctrlFirstMessage=firstMessage; initCreateMessage(ctrlId);"></div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+
+                    </ol>
+                </li>
+            </ol>
+        </div>
+
+    </section>
+
+</section>

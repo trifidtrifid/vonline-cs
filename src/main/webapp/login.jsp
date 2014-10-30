@@ -24,13 +24,13 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Логин</title>
-        <link rel="shortcut icon" href="i/landing/vmesteonline.png">
+        <link rel="shortcut icon" href="statis/i/landing/vmesteonline.png">
 		<meta name="description" content="Вход вместе онлайн" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="static/css/style.css"/>
 
-        <script src="./js/lib/jquery-2.1.1.min.js" type="text/javascript"></script>
+        <script src="./static/js/lib/jquery-2.1.1.min.js" type="text/javascript"></script>
         <script type="text/javascript">
             globalUserAuth = false;
         </script>
@@ -49,7 +49,7 @@
                         <% pageContext.removeAttribute("MESSAGE_TO_SHOW"); %>
 
                         <div class="login-left col-md-5 ">
-                            <a href="/"><img src="i/logo.png" alt="логотип"/></a>
+                            <a href="/"><img src="static/i/logo.png" alt="логотип"/></a>
                             <h1>Закрытая социальная сеть<br>только для соседей</h1>
                         </div>
                         <div class="col-md-2"></div>
@@ -172,11 +172,11 @@
 
 
         <!-- файлы thrift -->
-        <script src="js/thrift.js" type="text/javascript"></script>
+        <script src="static/js/thrift.js" type="text/javascript"></script>
         <script src="gen-js/authservice_types.js" type="text/javascript"></script>
         <script src="gen-js/AuthService.js" type="text/javascript"></script>        <!-- -->
 
-        <script src="js/login.js"></script>
+        <script src="static/js/login.js"></script>
 
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript">
