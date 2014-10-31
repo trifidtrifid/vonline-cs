@@ -104,7 +104,7 @@
                                     </div>
 
                                     <div class="edit-message" ng-show="adverts.fullTalkTopic.isEdit">
-                                        <div ng-include="'static/templates/createTopic.html'" onload="ctrl = adverts.fullTalkTopic; initCreateTopic(adverts.fullTalkTopic);"></div>
+                                        <div ng-include="'/static/templates/createTopic.html'" onload="ctrl = adverts.fullTalkTopic; initCreateTopic(adverts.fullTalkTopic);"></div>
                                     </div>
 
                                         <div class="message-bottom">
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="answer-input" ng-show="adverts.fullTalkTopic.answerInputIsShow">
-                                <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=adverts; ctrlId = adverts.fullTalkTopic.id; initCreateMessage(ctrlId);"></div>
+                                <div ng-include="'/static/templates/createMessage.html'" onload="ctrlMessage=adverts; ctrlId = adverts.fullTalkTopic.id; initCreateMessage(ctrlId);"></div>
 
 
                             </div>
@@ -174,7 +174,7 @@
                                             </div>
 
                                             <div class="edit-message" ng-show="firstMessage.isEdit">
-                                                <div ng-include="'static/templates/editMessage.html'" onload="ctrlMessage=firstMessage; ctrlId = adverts.fullTalkTopic.id+'-'+firstMessage.id; initCreateMessage(ctrlId,true);"></div>
+                                                <div ng-include="'/static/templates/editMessage.html'" onload="ctrlMessage=firstMessage; ctrlId = adverts.fullTalkTopic.id+'-'+firstMessage.id; initCreateMessage(ctrlId,true);"></div>
 
 
                                             </div>
@@ -187,7 +187,7 @@
                                     </div>
 
                                     <div class="answer-input" ng-show="firstMessage.answerInputIsShow">
-                                        <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=firstMessage; ctrlTopicId = adverts.fullTalkTopic.id;
+                                        <div ng-include="'/static/templates/createMessage.html'" onload="ctrlMessage=firstMessage; ctrlTopicId = adverts.fullTalkTopic.id;
                                          ctrlParent=adverts;ctrlId = adverts.fullTalkTopic.id+'-'+firstMessage.id; initCreateMessage(ctrlId);"></div>
 
                                     </div>
@@ -247,7 +247,7 @@
                                                     </div>
 
                                                     <div class="edit-message" ng-show="message.isEdit">
-                                                        <div ng-include="'static/templates/editMessage.html'" onload="ctrlMessage=message; ctrlId = adverts.fullTalkTopic.id+'-'+message.id;
+                                                        <div ng-include="'/static/templates/editMessage.html'" onload="ctrlMessage=message; ctrlId = adverts.fullTalkTopic.id+'-'+message.id;
                                                         ctrlTopicId = adverts.fullTalkTopic.id;ctrlParent=adverts; initCreateMessage(ctrlId,true);"></div>
 
 
@@ -261,7 +261,7 @@
                                             </div>
 
                                             <div class="answer-input" ng-show="message.answerInputIsShow">
-                                                <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=message; ctrlTopicId = adverts.fullTalkTopic.id;
+                                                <div ng-include="'/static/templates/createMessage.html'" onload="ctrlMessage=message; ctrlTopicId = adverts.fullTalkTopic.id;
                                          ctrlParent=adverts;ctrlId = adverts.fullTalkTopic.id+'-'+message.id;
                                          ctrlFirstMessage=firstMessage; initCreateMessage(ctrlId);"></div>
 

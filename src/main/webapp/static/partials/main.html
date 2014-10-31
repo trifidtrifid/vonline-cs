@@ -1,11 +1,11 @@
 
         <section class="forum page ng-cloak" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()" ng-cloak>
 
-        <div ng-include="'static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"></div>
+        <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"></div>
 
             <div class="lenta">
                 <div ng-if="!lenta.wallItems || lenta.wallItems.length == 0" class="empty-messages">
-                    <div ng-include="'static/partials/empty/empty-main.html'"></div>
+                    <div ng-include="'/static/partials/empty/empty-main.html'"></div>
                 </div>
                 <div class="lenta-item" ng-repeat="wallItem in lenta.wallItems"
                         ng-switch on="wallItem.topic.message.type">
@@ -100,7 +100,7 @@
 
                                 <div class="edit-message" ng-show="wallItem.topic.isEdit">
 
-                                    <div ng-include="'static/templates/createTopic.html'" onload="ctrl=wallItem.topic; initCreateTopic(wallItem.topic);"></div>
+                                    <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=wallItem.topic; initCreateTopic(wallItem.topic);"></div>
 
                                 </div>
 
@@ -170,7 +170,7 @@
 
                                     <div class="edit-message" ng-show="wallMessage.isEdit">
 
-                                        <div ng-include="'static/templates/editMessage.html'" onload="ctrlMessage=wallMessage; ctrlId = wallMessage.id; initCreateMessage(ctrlId,true);"></div>
+                                        <div ng-include="'/static/templates/editMessage.html'" onload="ctrlMessage=wallMessage; ctrlId = wallMessage.id; initCreateMessage(ctrlId,true);"></div>
                                     </div>
 
                                     <div class="lenta-item-bottom">
@@ -181,7 +181,7 @@
                             </div>
                         </div>
 
-                        <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=wallItem; ctrlId = wallItem.topic.id;initCreateMessage(ctrlId);"></div>
+                        <div ng-include="'/static/templates/createMessage.html'" onload="ctrlMessage=wallItem; ctrlId = wallItem.topic.id;initCreateMessage(ctrlId);"></div>
 
                     </div>
 

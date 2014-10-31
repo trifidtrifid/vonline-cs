@@ -2,660 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2978c21-e7c2-488e-b73a-9100a144c81c" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\common.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\common.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\editPersonal.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\editPersonal.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\landing\bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\landing\bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\landing\startup.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\ace-fonts.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\ace.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\fancybox\fancybox_loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\fancybox\fancybox_overlay.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\fancybox\fancybox_sprite.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\fancybox\jquery.fancybox.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\flexslider.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\font-awesome-original.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\font-awesome.min.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\jquery-ui-1.10.3.full.min.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\lib\jquery.Jcrop.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\login.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\login.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\profile.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\profile.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\settings.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\settings.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\shop.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\shop.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\style.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\css\style.styl" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\FontAwesome.otf" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\OpenSans\OpenSans-Regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\OpenSans\OpenSans-Regular.otf" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\OpenSans\OpenSans-Regular.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\OpenSans\OpenSans-Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\OpenSans\OpenSans-Regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\awesome-original\FontAwesome.otf" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\awesome-original\fontawesome-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\awesome-original\fontawesome-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\awesome-original\fontawesome-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\awesome-original\fontawesome-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\fontawesome-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\fontawesome-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\fontawesome-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\font\fontawesome-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\avatar.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\avatar1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\avatar2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\avatar3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\avatar4.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\avatar5.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\clint.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\profile-pic.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\avatars\user.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\bg_direction_nav.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\empty-important.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\home.ico" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\home1.ico" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\home2.ico" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\anna.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\c4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\client-logos.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\customer-img-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\customer-img-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\da.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\flat-feature-icon-1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\flat-feature-icon-2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\flat-feature-icon-3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\flat-feature-icon-4.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\flat-mockup-template.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\footer_color_2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\footer_color_3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\footer_img.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\header_bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\header_bg_gradient.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\header_color_2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\header_color_3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\ico\favicon.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\scroll_down.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\startup-template-logo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\vmesteonline.logo.500.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\vmesteonline.logo.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\vmesteonline.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\landing\vote.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\loading2.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\loading4.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\login-bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\logo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\logo2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\logo3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\map.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\map_home.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\no-photo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\i\scope.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\anna.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\c4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\client-logos.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\customer-img-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\customer-img-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\da.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\flat-feature-icon-1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\flat-feature-icon-2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\flat-feature-icon-3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\flat-feature-icon-4.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\flat-mockup-template.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\footer_color_2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\footer_color_3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\footer_img.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\header_bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\header_bg_gradient.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\header_color_2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\header_color_3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\ico\favicon.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\scroll_down.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\startup-template-logo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\vmesteonline.logo.500.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\vmesteonline.logo.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\vmesteonline.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\images\vote.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\index.jsp" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\ace-elements.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular-csp.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular-route.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular-ui-router.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular-ui-router.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular.min.js.gzip" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\angular.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\linky-custom.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\ng-infinite-scroll.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\sanitize.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\ui-bootstrap-tpls-0.11.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\angular\ya-map-2.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\app.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\archieve\controllers.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\archieve\createTopic.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\archieve\main-old.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\archieve\main.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bootbox.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-loader\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-loader\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-loader\angular-loader.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-loader\angular-loader.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-loader\angular-loader.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-loader\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-mocks\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-mocks\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-mocks\angular-mocks.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-mocks\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-route\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-route\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-route\angular-route.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-route\angular-route.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-route\angular-route.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-route\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\.bowerrc" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\.jshintrc" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\Gruntfile.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\docs\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\docs\styles.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\src\select2.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\test\karma.conf.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular-ui-select2\test\select2Spec.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\angular-csp.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\angular.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\angular.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\angular.min.js.gzip" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\angular.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\angular\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\.gitattributes" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\.htaccess" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\404.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\CHANGELOG.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\LICENSE.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\apple-touch-icon-precomposed.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\crossdomain.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\css\main.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\css\normalize.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\TOC.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\crossdomain.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\css.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\extend.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\faq.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\html.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\js.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\misc.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\doc\usage.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\humans.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\img\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\js\main.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\js\plugins.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\js\vendor\jquery-1.10.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\js\vendor\modernizr-2.6.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\html5-boilerplate\robots.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\component.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\composer.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\release.sh" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2-bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2-spinner.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2.jquery.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ar.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_bg.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ca.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_cs.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_da.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_de.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_el.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_en.js.template" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_es.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_et.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_eu.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_fa.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_fi.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_fr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_gl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_he.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_hr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_hu.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_id.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_is.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_it.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ja.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ka.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ko.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_lt.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_lv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_mk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ms.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_nl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_no.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_pl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_pt-BR.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_pt-PT.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ro.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_rs.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_ru.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_sk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_sv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_th.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_tr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_uk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_vi.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_zh-CN.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2_locale_zh-TW.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\bower_components\select2\select2x2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\common.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\AdvertsController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\AdvertsSingleController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\CountersController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\CountersHistoryController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\LentaController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\MapsController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\ModalInstanceCtrl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\ProfileController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\SetInfoController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\SettingsController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\TalksController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\TalksSingleController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\WallSingleController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\baseController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\changeAvatarController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\dialogController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\dialogsController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\importantController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\leftbarController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\mainContentTopController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\navbarController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\controllers\neighboursController.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\directives.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\filters.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular-csp.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular-route.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular-ui-router.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular-ui-router.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular.min.js.gzip" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\angular.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\linky-custom.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\ng-infinite-scroll.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\angular\sanitize.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\app.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\archieve\createTopic.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\archieve\main-old.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\archieve\main.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-loader\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-loader\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-loader\angular-loader.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-loader\angular-loader.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-loader\angular-loader.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-loader\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-mocks\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-mocks\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-mocks\angular-mocks.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-mocks\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-route\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-route\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-route\angular-route.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-route\angular-route.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-route\angular-route.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-route\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\.bowerrc" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\.jshintrc" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\Gruntfile.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\docs\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\docs\styles.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\src\select2.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\test\karma.conf.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular-ui-select2\test\select2Spec.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\angular-csp.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\angular.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\angular.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\angular.min.js.gzip" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\angular.min.js.map" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\angular\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\.gitattributes" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\.htaccess" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\404.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\CHANGELOG.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\LICENSE.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\apple-touch-icon-precomposed.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\crossdomain.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\css\main.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\css\normalize.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\TOC.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\crossdomain.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\css.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\extend.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\faq.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\html.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\js.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\misc.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\doc\usage.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\humans.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\img\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\js\main.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\js\plugins.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\js\vendor\jquery-1.10.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\js\vendor\modernizr-2.6.2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\html5-boilerplate\robots.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\.bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\bower.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\component.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\composer.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\package.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\release.sh" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2-bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2-spinner.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2.jquery.json" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ar.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_bg.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ca.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_cs.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_da.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_de.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_el.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_en.js.template" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_es.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_et.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_eu.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_fa.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_fi.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_fr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_gl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_he.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_hr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_hu.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_id.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_is.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_it.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ja.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ka.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ko.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_lt.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_lv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_mk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ms.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_nl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_no.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_pl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_pt-BR.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_pt-PT.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ro.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_rs.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_ru.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_sk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_sv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_th.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_tr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_uk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_vi.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_zh-CN.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2_locale_zh-TW.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\bower_components\select2\select2x2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\controllers.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\directives.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\filters.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\contact_form.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\easing.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\html5shiv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\ketchup.all.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\nicescroll.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\pace.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\respond.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\landing\typer.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\login.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\services.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\tests\e2e\scenarios.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\tests\karma.conf.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\tests\npm-debug.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\tests\protractor-conf.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\forum\tests\unit\controllersSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\contact_form.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\easing.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\html5shiv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\ketchup.all.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\nicescroll.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\pace.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\respond.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\landing\typer.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\ace-elements.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\ace-extra.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\ace.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\bootstrap-wysiwyg.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\bootstrap-datepicker-backoffice.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\bootstrap-datepicker-simple.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\bootstrap-datepicker.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\bootstrap-datepicker.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\bootstrap-timepicker.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\daterangepicker.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.bg.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.ca.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.cs.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.da.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.de.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.el.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.es.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.fi.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.fr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.he.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.hr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.hu.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.id.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.is.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.it.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.ja.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.kr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.lt.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.lv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.ms.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.nb.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.nl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.pl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.pt-BR.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.pt.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.ro.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.rs-latin.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.rs.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.ru.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.sk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.sl.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.sv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.sw.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.th.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.tr.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.uk.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.zh-CN.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\locales\bootstrap-datepicker.zh-TW.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\date-time\moment.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\fuelux\data\fuelux.tree-sampledata.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\fuelux\fuelux.spinner.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\fuelux\fuelux.spinner.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\fuelux\fuelux.tree.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\fuelux\fuelux.wizard.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery-2.0.3.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery-2.1.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery-ui-1.10.3.custom.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery-ui-1.10.3.full.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.Jcrop.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.Jcrop.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.fancybox.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.fancybox.pack.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.flexslider-min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.hotkeys.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.inputlimiter.1.3.1.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.multiselect.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.nestable.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.scrollTo.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\jquery.ui.datepicker-ru.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\markdown\bootstrap-markdown.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\markdown\markdown.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\markdown\to-markdown.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\lib\select2.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\login.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\services.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\settings.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\tests\e2e\scenarios.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\tests\karma.conf.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\tests\npm-debug.log" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\tests\protractor-conf.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\tests\unit\controllersSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\js\thrift.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\css\bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\css\bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\css\startup.css" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\client-logos.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\customer-img-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\customer-img-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\da.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\flat-feature-icon-1.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\flat-feature-icon-2.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\flat-feature-icon-3.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\flat-feature-icon-4.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\flat-mockup-template.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\footer_color_2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\footer_color_3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\footer_img.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\header_bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\header_bg_gradient.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\header_color_2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\header_color_3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\ico\favicon.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\scroll_down.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\startup-template-logo.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\vmesteonline.logo.500.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\vmesteonline.logo.gif" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\images\vote.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\index.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\contact_form.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\easing.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\html5shiv.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\ketchup.all.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\nicescroll.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\pace.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\respond.min.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\js\typer.js" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\landmain\subscribe.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\mailTemplates\changePasswordConfirm.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\mailTemplates\mail_example.htm" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\mailTemplates\mail_example\Thumbs.db" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\mailTemplates\mail_example\logo.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\blog.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\counters-history.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\counters.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\dialog-single.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\dialogs.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\empty\empty-counters.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\empty\empty-dialogs.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\empty\empty-important.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\empty\empty-main.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\empty\empty-profit.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\empty\empty-talks.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\important.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\main.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\maps.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\neighbours.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\profile.changeAvatar.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\profile.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\profit-single.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\profit.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\set-info.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\settings.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\talks-single.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\talks.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\partials\wall-single.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\templates\createMessage.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\templates\createTopic.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\templates\editMessage.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/about.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/about.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/blog.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/blog.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/coming-soon.html" afterPath="$PROJECT_DIR$/src/main/webapp/coming-soon.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/contacts.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/contacts.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/counters.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/counters.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/templates/createMessage.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/templates/createMessage.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datanucleus.log" afterPath="$PROJECT_DIR$/datanucleus.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/main.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/registration.html" afterPath="$PROJECT_DIR$/src/main/webapp/registration.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/remember_passw.html" afterPath="$PROJECT_DIR$/src/main/webapp/remember_passw.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/request.html" afterPath="$PROJECT_DIR$/src/main/webapp/request.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="$PROJECT_DIR$/vonline-cs.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.ipr" afterPath="$PROJECT_DIR$/vonline-cs.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/templates/editMessage.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/templates/editMessage.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/profit-single.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/profit-single.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/profit.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/profit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/talks-single.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/talks-single.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/talks.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/talks.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/wall-single.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/wall-single.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/webdefault.xml" afterPath="$PROJECT_DIR$/src/main/resources/webdefault.xml" />
     </list>
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -719,37 +82,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="358" column="46" selection-start="17489" selection-end="17493" vertical-scroll-proportion="-3.7058823" vertical-offset="5897" max-vertical-offset="6375">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.changeAvatar.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profile.changeAvatar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="59" selection-start="518" selection-end="518" vertical-scroll-proportion="0.56666666" vertical-offset="51" max-vertical-offset="612">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/login.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="92" selection-start="5549" selection-end="5554" vertical-scroll-proportion="-1.9019607" vertical-offset="1739" max-vertical-offset="3672">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="58" selection-start="183" selection-end="183" vertical-scroll-proportion="-1.0" vertical-offset="0" max-vertical-offset="3910">
+            <state line="183" column="43" selection-start="12977" selection-end="12977" vertical-scroll-proportion="-4.0384617" vertical-offset="3006" max-vertical-offset="3910">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="createMessage.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/createMessage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="41" selection-start="597" selection-end="597" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="850">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="editMessage.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/editMessage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="37" selection-start="911" selection-end="912" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="1037">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="69" column="10" selection-start="2427" selection-end="2427" vertical-scroll-proportion="-1.320635" vertical-offset="1589" max-vertical-offset="1955">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="148" column="51" selection-start="5109" selection-end="5109" vertical-scroll-proportion="0.0" vertical-offset="2299" max-vertical-offset="4097">
               <folding />
             </state>
           </provider>
@@ -758,7 +130,7 @@
       <file leaf-file-name="dialog-single.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="22" selection-start="800" selection-end="800" vertical-scroll-proportion="-3.7843137" vertical-offset="45" max-vertical-offset="1343">
+            <state line="64" column="47" selection-start="4061" selection-end="4061" vertical-scroll-proportion="0.0" vertical-offset="991" max-vertical-offset="1343">
               <folding />
             </state>
           </provider>
@@ -779,18 +151,7 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/webapp/css/landing/bootstrap.css" />
         <option value="$PROJECT_DIR$/src/main/resources/webdefault.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/counters.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profit-single.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profit.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/talks-single.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/talks.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/wall-single.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/coming-soon.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/contacts.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/registration.html" />
@@ -802,7 +163,22 @@
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/login.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/main.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profile.changeAvatar.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/counters.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profit-single.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profit.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/talks-single.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/talks.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/wall-single.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/templates/createMessage.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/templates/editMessage.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
       </list>
     </option>
   </component>
@@ -898,6 +274,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -960,6 +337,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -990,7 +393,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="partials" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1037,7 +440,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1387,15 +789,17 @@
       <workItem from="1414694011783" duration="4154000" />
       <workItem from="1414700193418" duration="5529000" />
       <workItem from="1414706213376" duration="1684000" />
-      <workItem from="1414707974360" duration="3761000" />
+      <workItem from="1414707974360" duration="4393000" />
+      <workItem from="1414776037020" duration="1900000" />
+      <workItem from="1414777991526" duration="2418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16803000" />
+    <option name="totallyTimeSpent" value="21753000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="1" width="1366" height="726" extended-state="1" />
+    <frame x="0" y="1" width="1366" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1403,7 +807,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3274648" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274648" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1420,7 +824,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25764525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3996479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3996479" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1448,6 +852,13 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="22" selection-start="800" selection-end="800" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1343">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="335" column="0" selection-start="16697" selection-end="16697" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6375">
@@ -1464,9 +875,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="48" selection-start="3231" selection-end="3231" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1853">
-          <folding />
-        </state>
+        <state line="91" column="48" selection-start="3231" selection-end="3231" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1853" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
@@ -1506,9 +915,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="10" selection-start="2134" selection-end="2134" vertical-scroll-proportion="0.0" vertical-offset="979" max-vertical-offset="2023">
-          <folding />
-        </state>
+        <state line="64" column="10" selection-start="2134" selection-end="2134" vertical-scroll-proportion="0.0" vertical-offset="979" max-vertical-offset="2023" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
@@ -1549,13 +956,6 @@
         <state line="2998" column="0" selection-start="145937" selection-end="145937" vertical-scroll-proportion="-0.93194705" vertical-offset="50966" max-vertical-offset="547655" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="25" selection-start="4322" selection-end="4322" vertical-scroll-proportion="3.9833949" vertical-offset="0" max-vertical-offset="4114">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/webdefault.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="195" column="32" selection-start="8522" selection-end="8522" vertical-scroll-proportion="0.38007382" vertical-offset="3109" max-vertical-offset="9486">
@@ -1565,119 +965,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1035" column="50" selection-start="38906" selection-end="38906" vertical-scroll-proportion="0.29787233" vertical-offset="17441" max-vertical-offset="17986">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="60" selection-start="2005" selection-end="2005" vertical-scroll-proportion="0.23616236" vertical-offset="858" max-vertical-offset="1938">
-          <folding />
-        </state>
+        <state line="1035" column="50" selection-start="38906" selection-end="38906" vertical-scroll-proportion="0.29787233" vertical-offset="17441" max-vertical-offset="17986" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/dialogsController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="55" selection-start="453" selection-end="453" vertical-scroll-proportion="0.31365314" vertical-offset="0" max-vertical-offset="1139">
-          <folding />
-        </state>
+        <state line="10" column="55" selection-start="453" selection-end="453" vertical-scroll-proportion="0.31365314" vertical-offset="0" max-vertical-offset="1139" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/neighbours.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="62" selection-start="63" selection-end="63" vertical-scroll-proportion="0.033797216" vertical-offset="0" max-vertical-offset="663">
-          <folding />
-        </state>
+        <state line="1" column="62" selection-start="63" selection-end="63" vertical-scroll-proportion="0.033797216" vertical-offset="0" max-vertical-offset="663" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/dialogController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="489" selection-end="489" vertical-scroll-proportion="-0.6420664" vertical-offset="586" max-vertical-offset="1309">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/counters.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="32" selection-start="111" selection-end="111" vertical-scroll-proportion="-1.8769716" vertical-offset="663" max-vertical-offset="1785">
-          <folding>
-            <marker date="1414710055072" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="80" selection-start="987" selection-end="987" vertical-scroll-proportion="0.8044164" vertical-offset="0" max-vertical-offset="629">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="49" selection-start="12842" selection-end="12842" vertical-scroll-proportion="0.6232877" vertical-offset="2895" max-vertical-offset="3876">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profit-single.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="71" selection-start="7196" selection-end="7202" vertical-scroll-proportion="0.3321918" vertical-offset="1705" max-vertical-offset="4896">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/wall-single.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="49" selection-start="10418" selection-end="10418" vertical-scroll-proportion="0.3321918" vertical-offset="2283" max-vertical-offset="2737">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/talks.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="41" selection-start="462" selection-end="462" vertical-scroll-proportion="0.5362776" vertical-offset="0" max-vertical-offset="799">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/talks-single.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="73" selection-start="7161" selection-end="7169" vertical-scroll-proportion="0.3321918" vertical-offset="1671" max-vertical-offset="4981">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="37" selection-start="185" selection-end="185" vertical-scroll-proportion="0.21451104" vertical-offset="0" max-vertical-offset="850">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/createMessage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850">
-          <folding />
-        </state>
+        <state line="14" column="13" selection-start="489" selection-end="489" vertical-scroll-proportion="-0.6420664" vertical-offset="586" max-vertical-offset="1309" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/coming-soon.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="13" selection-start="519" selection-end="524" vertical-scroll-proportion="0.33333334" vertical-offset="149" max-vertical-offset="1887">
-          <folding>
-            <marker date="1414710639745" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/contacts.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="53" column="41" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.6516854" vertical-offset="727" max-vertical-offset="4335">
-          <folding>
-            <marker date="1414710700877" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1705,35 +1021,20 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/about.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="98" column="56" selection-start="3823" selection-end="3823" vertical-scroll-proportion="0.33333334" vertical-offset="1577" max-vertical-offset="2720">
-          <folding>
-            <marker date="1414710965167" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="83" column="8" selection-start="3078" selection-end="3078" vertical-scroll-proportion="0.49211356" vertical-offset="1255" max-vertical-offset="2159">
-          <folding>
-            <marker date="1414710993159" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/blog.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="153" column="31" selection-start="5354" selection-end="5354" vertical-scroll-proportion="0.46067417" vertical-offset="2478" max-vertical-offset="8245">
-          <folding>
-            <marker date="1414711033698" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1414711033698" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1414711033698" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="58" selection-start="183" selection-end="183" vertical-scroll-proportion="-1.0" vertical-offset="0" max-vertical-offset="3910">
           <folding />
         </state>
       </provider>
@@ -1747,35 +1048,127 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="194" column="0" selection-start="6533" selection-end="6533" vertical-scroll-proportion="0.56150794" vertical-offset="3015" max-vertical-offset="3519">
-          <folding />
-        </state>
+        <state line="194" column="0" selection-start="6533" selection-end="6533" vertical-scroll-proportion="0.56150794" vertical-offset="3015" max-vertical-offset="3519" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="92" selection-start="5549" selection-end="5554" vertical-scroll-proportion="-1.9019607" vertical-offset="1739" max-vertical-offset="3672">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="22" selection-start="800" selection-end="800" vertical-scroll-proportion="-3.7843137" vertical-offset="45" max-vertical-offset="1343">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="358" column="46" selection-start="17489" selection-end="17493" vertical-scroll-proportion="-3.7058823" vertical-offset="5897" max-vertical-offset="6375">
+        <state line="108" column="92" selection-start="5549" selection-end="5554" vertical-scroll-proportion="0.0" vertical-offset="1739" max-vertical-offset="3672">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profile.changeAvatar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="59" selection-start="518" selection-end="518" vertical-scroll-proportion="0.56666666" vertical-offset="51" max-vertical-offset="612">
+        <state line="13" column="45" selection-start="458" selection-end="458" vertical-scroll-proportion="0.4117647" vertical-offset="102" max-vertical-offset="612" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="358" column="46" selection-start="17489" selection-end="17493" vertical-scroll-proportion="-7.269231" vertical-offset="5897" max-vertical-offset="6375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="47" selection-start="4061" selection-end="4061" vertical-scroll-proportion="0.0" vertical-offset="991" max-vertical-offset="1343">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="34" selection-start="520" selection-end="520" vertical-scroll-proportion="-4.3846154" vertical-offset="39" max-vertical-offset="629" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="181" column="42" selection-start="12838" selection-end="12838" vertical-scroll-proportion="-4.0384617" vertical-offset="2972" max-vertical-offset="3876" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/wall-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="143" column="0" selection-start="10594" selection-end="10594" vertical-scroll-proportion="2.2263513" vertical-offset="1772" max-vertical-offset="2737" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/talks.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="34" selection-start="456" selection-end="456" vertical-scroll-proportion="0.3310811" vertical-offset="72" max-vertical-offset="799" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/counters.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="26" selection-start="105" selection-end="105" vertical-scroll-proportion="0.13518886" vertical-offset="0" max-vertical-offset="1785" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/talks-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="269" column="66" selection-start="21230" selection-end="21230" vertical-scroll-proportion="0.19483101" vertical-offset="4475" max-vertical-offset="4981" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="34" selection-start="596" selection-end="596" vertical-scroll-proportion="0.19483101" vertical-offset="89" max-vertical-offset="850" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profit-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="263" column="66" selection-start="20460" selection-end="20460" vertical-scroll-proportion="0.20874752" vertical-offset="4366" max-vertical-offset="4896" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/createMessage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="41" selection-start="597" selection-end="597" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="850">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="41" selection-start="2633" selection-end="2633" vertical-scroll-proportion="-2.235294" vertical-offset="685" max-vertical-offset="1717">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/editMessage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="37" selection-start="911" selection-end="912" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="1037">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/importantController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="44" selection-start="1213" selection-end="1213" vertical-scroll-proportion="0.35892513" vertical-offset="357" max-vertical-offset="3145">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="183" column="43" selection-start="12977" selection-end="12977" vertical-scroll-proportion="-4.0384617" vertical-offset="3006" max-vertical-offset="3910">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="23" selection-start="3053" selection-end="3053" vertical-scroll-proportion="0.25396827" vertical-offset="2014" max-vertical-offset="3298">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="148" column="51" selection-start="5109" selection-end="5109" vertical-scroll-proportion="0.0" vertical-offset="2299" max-vertical-offset="4097">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="10" selection-start="2427" selection-end="2427" vertical-scroll-proportion="-1.320635" vertical-offset="1589" max-vertical-offset="1955">
           <folding />
         </state>
       </provider>

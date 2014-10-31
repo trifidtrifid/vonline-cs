@@ -148,9 +148,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/profit</url-pattern>
         <url-pattern>/profit-single/*</url-pattern>
         <url-pattern>/dialogs</url-pattern>
-        <url-pattern>/dialogs-single/*</url-pattern>
+        <url-pattern>/dialog-single/*</url-pattern>
         <url-pattern>/neighbours</url-pattern>
-        <url-pattern>/profile</url-pattern>
         <url-pattern>/profile.change-avatar</url-pattern>
         <url-pattern>/settings</url-pattern>
         <url-pattern>/maps</url-pattern>

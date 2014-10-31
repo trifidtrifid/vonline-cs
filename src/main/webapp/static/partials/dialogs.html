@@ -7,7 +7,7 @@
     <!--<div class="private-messages">-->
         <div class="dialogs-container">
             <div ng-if="!dialogs.dialogsList || dialogs.dialogsList.length == 0" class="empty-messages">
-                <div ng-include="'static/partials/empty/empty-dialogs.html'"></div>
+                <div ng-include="'/static/partials/empty/empty-dialogs.html'"></div>
             </div>
 
             <div class="dialog-item" ng-click="dialogs.goToSingleDialog(dialog.id)" ng-repeat="dialog in dialogs.dialogsList"> <!-- ui-sref="dialog-single( {dialogId : {{ dialog.id }} })" -->

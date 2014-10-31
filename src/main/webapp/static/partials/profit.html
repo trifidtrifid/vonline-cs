@@ -2,14 +2,14 @@
     <section class="profit page ng-cloak" ng-show="base.advertsIsActive">
 
         <section class="create-topic" ng-hide="base.createTopicIsHide">
-            <div ng-include="'static/templates/createTopic.html'" onload="ctrl = adverts; initCreateTopic(adverts);"></div>
+            <div ng-include="'/static/templates/createTopic.html'" onload="ctrl = adverts; initCreateTopic(adverts);"></div>
         </section>
 
         <section class="talks-title-block">
             <!--<div ng-if="!adverts.topics || adverts.topics.length == 0" class="empty-messages">{{base.emptyMessage}}</div>-->
 
             <div ng-if="!adverts.topics || adverts.topics.length == 0" class="empty-messages">
-                <div ng-include="'static/partials/empty/empty-profit.html'"></div>
+                <div ng-include="'/static/partials/empty/empty-profit.html'"></div>
             </div>
 
             <div class="talks-title" ng-repeat="advert in adverts.topics" id="{{advert.id}}">

@@ -77,7 +77,7 @@
                                 </div>
 
                                 <div class="edit-message" ng-show="wallSingle.wallItem.topic.isEdit">
-                                    <div ng-include="'static/templates/createTopic.html'" onload="ctrl=wallSingle.wallItem.topic; initCreateTopic(wallSingle.wallItem.topic);"></div>
+                                    <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=wallSingle.wallItem.topic; initCreateTopic(wallSingle.wallItem.topic);"></div>
 
                                 </div>
 
@@ -127,7 +127,7 @@
 
                                     <div class="edit-message" ng-show="wallMessage.isEdit">
 
-                                        <div ng-include="'static/templates/editMessage.html'" onload="ctrlMessage=wallMessage; ctrlId = wallMessage.id; initCreateMessage(ctrlId,true);"></div>
+                                        <div ng-include="'/static/templates/editMessage.html'" onload="ctrlMessage=wallMessage; ctrlId = wallMessage.id; initCreateMessage(ctrlId,true);"></div>
                                     </div>
 
                                     <div class="lenta-item-bottom">
@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                        <div ng-include="'static/templates/createMessage.html'" onload="ctrlMessage=wallSingle.wallItem; ctrlId = wallSingle.wallItem.topic.id;initCreateMessage(ctrlId);"></div>
+                        <div ng-include="'/static/templates/createMessage.html'" onload="ctrlMessage=wallSingle.wallItem; ctrlId = wallSingle.wallItem.topic.id;initCreateMessage(ctrlId);"></div>
 
                     </div>
 

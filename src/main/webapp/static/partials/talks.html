@@ -2,13 +2,13 @@
     <section class="talks page ng-cloak" ng-show="base.talksIsActive">
 
         <section class="create-topic" ng-hide="base.createTopicIsHide">
-            <div ng-include="'static/templates/createTopic.html'" onload="ctrl = talks; initCreateTopic(talks);"></div>
+            <div ng-include="'/static/templates/createTopic.html'" onload="ctrl = talks; initCreateTopic(talks);"></div>
         </section>
 
         <section class="talks-title-block">
 
             <div ng-if="!talks.topics || talks.topics.length == 0" class="empty-messages">
-                <div ng-include="'static/partials/empty/empty-talks.html'"></div>
+                <div ng-include="'/static/partials/empty/empty-talks.html'"></div>
             </div>
 
             <div class="talks-title" ng-repeat="talk in talks.topics" id="{{talk.id}}">
