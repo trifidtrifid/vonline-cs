@@ -1,2 +1,3 @@
-datanucleus.log
-target
+/datanucleus.log
+/target
+/vonine-cs.iws
