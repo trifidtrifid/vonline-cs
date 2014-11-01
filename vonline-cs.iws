@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="all functions are implemented&#10;encoding issue is not fixed yet">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes/log4j.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/classes/META-INF/persistence.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/thrift/messageservice.thrift" afterPath="$PROJECT_DIR$/thrift/messageservice.thrift" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="$PROJECT_DIR$/vonline-cs.iml" />
-    </list>
+    <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="" />
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -971,7 +964,7 @@
       <workItem from="1414441938275" duration="9270000" />
       <workItem from="1414489771823" duration="11668000" />
       <workItem from="1414504240038" duration="87706000" />
-      <workItem from="1414757790323" duration="32874000" />
+      <workItem from="1414757790323" duration="33009000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -997,11 +990,15 @@
       <created>1414877821706</created>
       <updated>1414877821706</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="all functions are implemented&#10;encoding issue is not fixed yet">
+      <created>1414878895059</created>
+      <updated>1414878895059</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173899000" />
+    <option name="totallyTimeSpent" value="174034000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
