@@ -45,7 +45,6 @@
             <element id="library" level="project" name="Maven: ant:ant:1.6.5" />
             <element id="library" level="project" name="Maven: log4j:log4j:1.2.14" />
             <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.5.8" />
-            <element id="library" level="project" name="Maven: com.google.collections:google-collections:1.0-rc2" />
           </element>
         </element>
       </root>
@@ -239,8 +238,7 @@
     <output url="file://$PROJECT_DIR$/target/classes" />
   </component>
   <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="vonline" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
-      <option name="START_JAVASCRIPT_DEBUGGER" value="true" />
+    <configuration default="false" name="vonline" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="$PROJECT_DIR$/../../../env/java/jdk1.8u05" show_console_on_std_err="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="vonline-cs:war exploded">
@@ -458,6 +456,13 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="JPA 2.0">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/target/vonline-cs/WEB-INF/lib/datanucleus-api-jdo-4.0.3.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="Maven: ant:ant:1.6.5">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/ant/ant/1.6.5/ant-1.6.5.jar!/" />
@@ -467,17 +472,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/ant/ant/1.6.5/ant-1.6.5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.google.collections:google-collections:1.0-rc2">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/collections/google-collections/1.0-rc2/google-collections-1.0-rc2.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/collections/google-collections/1.0-rc2/google-collections-1.0-rc2-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/google/collections/google-collections/1.0-rc2/google-collections-1.0-rc2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.liferay.org.apache.commons.fileupload:com.liferay.org.apache.commons.fileupload:6.2.0.1">

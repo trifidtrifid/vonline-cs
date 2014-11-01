@@ -101,6 +101,7 @@
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jsp-2.1</artifactId>
             <version>6.0.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -112,11 +113,11 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.8</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0-rc2</version>
-        </dependency>
+        </dependency-->
     </dependencies>
     <build>
 
@@ -129,7 +130,6 @@
                     <webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>
                     <webApp>
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
-                        <defaultsDescriptor>${project.basedir}/src/main/resources/webdefault.xml</defaultsDescriptor>
                         <contextPath>/</contextPath>
                     </webApp>
                     <stopPort>12345</stopPort>
@@ -160,7 +160,6 @@
                     <verbose>true</verbose>
                     <schemaName>vonline</schemaName>
                     <metadataDirectory>${project.build.outputDirectory}/com/vmesteonline/be/jdo2</metadataDirectory>
-                    <!--props>${project.basedir}/src/main/resources/datanucleus.properties</props-->
                     <persistenceUnitName>vmesteonline</persistenceUnitName>
                     <log4jConfiguration>src/main/resources/log4j.properties</log4jConfiguration>
                     <verbose>true</verbose>

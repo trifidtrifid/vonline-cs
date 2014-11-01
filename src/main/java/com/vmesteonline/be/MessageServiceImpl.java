@@ -2,8 +2,11 @@ package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.notifications.Notification;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.PostalAddress;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.messageservice.*;
 import com.vmesteonline.be.thrift.messageservice.MessageService.Iface;
@@ -125,32 +128,74 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	// ====================================================================================================================
+    public MessageListPart getMessagesAsList(long topicId, MessageType messageType, long lastLoadedId, boolean archived, int length)
+            throws InvalidOperation {
+        long userId = 0;
+        if (messageType != MessageType.BLOG)
+            userId = getCurrentUserId();
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public MessageListPart getMessagesAsList(long topicId, MessageType messageType, long lastLoadedId, boolean archived, int length)
-			throws InvalidOperation {
-		long userId = 0;
-		if (messageType != MessageType.BLOG)
-			userId = getCurrentUserId();
+        PersistenceManager pm = PMF.getPm();
 
-		PersistenceManager pm = PMF.getPm();
+        Query q = pm.newQuery(VoMessage.class);
+        q.setFilter("topicId == " + topicId);
+        List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
+        Collections.sort(voMsgs, new VoMessage.ComparatorByCreateDate());
 
-		Query q = pm.newQuery(VoMessage.class);
-		q.setFilter("topicId == " + topicId);
-		List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
-		Collections.sort(voMsgs, new VoMessage.ComparatorByCreateDate());
+        if (lastLoadedId != 0) {
+            List<VoMessage> subLst = null;
+            for (int i = 0; i < voMsgs.size() - 1; i++) {
+                if (voMsgs.get(i).getId() == lastLoadedId)
+                    subLst = voMsgs.subList(i + 1, voMsgs.size());
+            }
+            voMsgs = (subLst == null) ? new ArrayList<VoMessage>() : subLst;
+        }
+        return createMlp(voMsgs, userId, pm, length);
+    }
 
-		if (lastLoadedId != 0) {
-			List<VoMessage> subLst = null;
-			for (int i = 0; i < voMsgs.size() - 1; i++) {
-				if (voMsgs.get(i).getId() == lastLoadedId)
-					subLst = voMsgs.subList(i + 1, voMsgs.size());
-			}
-			voMsgs = (subLst == null) ? new ArrayList<VoMessage>() : subLst;
-		}
-		return createMlp(voMsgs, userId, pm, length);
-	}
+    public List<MessageListPart> getMessagesAsList(final List<Topic> topicIds, MessageType messageType, long lastLoadedId, boolean archived, int length)
+            throws InvalidOperation {
+        long userId = 0;
+        if (messageType != MessageType.BLOG)
+            userId = getCurrentUserId();
+
+        String query = "";
+        List<List<VoMessage>> msgsm = new ArrayList<List<VoMessage>>();
+        Map<Long, Integer> idPos = new TreeMap<Long, Integer>();
+        for (Topic tid : topicIds) {
+            query += "|| topicId == "+tid.getId();
+            idPos.put(tid.getId(), msgsm.size());
+            msgsm.add( new ArrayList<VoMessage>());
+
+        }
+        PersistenceManager pm = PMF.getPm();
+
+        Query q = pm.newQuery(VoMessage.class);
+        q.setFilter( query.substring(2) );
+        List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
+
+
+        for (VoMessage voMessage : voMsgs) {
+            List<VoMessage> ml;
+            ml = msgsm.get(idPos.get( voMessage.getTopicId()));
+            ml.add(voMessage);
+        }
+        List<MessageListPart> rslt = new ArrayList<MessageListPart>();
+        for ( List<VoMessage> ml: msgsm) {
+
+            Collections.sort(ml, new VoMessage.ComparatorByCreateDate());
+
+            if (lastLoadedId != 0) {
+                List<VoMessage> subLst = null;
+                for (int i = 0; i < ml.size() - 1; i++) {
+                    if (ml.get(i).getId() == lastLoadedId)
+                        subLst = ml.subList(i + 1, ml.size());
+                }
+                ml = (subLst == null) ? new ArrayList<VoMessage>() : subLst;
+            }
+            rslt.add( createMlp(ml, userId, pm, length));
+        }
+        return rslt;
+    }
 
 	@Override
 	public MessageListPart getFirstLevelMessages(long topicId, long groupId, MessageType messageType, long lastLoadedId, boolean archived, int length)
@@ -837,4 +882,152 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		return getCurrentSession(pm).getDialogUpdates();
 	}
+
+    @Override
+    public String getNextMulticastMessage() throws InvalidOperation, TException {
+        PersistenceManager pm = PMF.getPm();
+        VoSession currentSession = getCurrentSession();
+        VoUser cu = pm.getObjectById(VoUser.class, currentSession.getUserId());
+        int now = (int) (System.currentTimeMillis() / 1000L);
+        VoMulticastMessage message = getCurrentMessage(pm, cu);
+        if (currentSession.isNewBroadcastMessage() && (message == null || !message.hasNext)) {
+            currentSession.setNewBroadcastMessage(false);
+            pm.makePersistent(currentSession);
+        }
+        cu.setLastMulticastShown(null == message ? now : message.getStartAfter() + 1);
+        pm.makePersistent(cu);
+        return message == null ? null : message.getMessage();
+    }
+
+    @Override
+    public String getMulticastMessage() throws InvalidOperation, TException {
+        PersistenceManager pm = PMF.getPm();
+        VoSession currentSession = getCurrentSession();
+        VoUser cu = pm.getObjectById(VoUser.class, currentSession.getUserId());
+        VoMulticastMessage message = getCurrentMessage(pm, cu);
+		/*
+		 * if(currentSession.isNewBroadcastMessage() && (message == null ||
+		 * !message.hasNext )){ currentSession.setNewBroadcastMessage(false);
+		 * pm.makePersistent(currentSession); }
+		 */
+        return message == null ? null : message.getMessage();
+    }
+
+    private VoMulticastMessage getCurrentMessage(PersistenceManager pm, VoUser cu) {
+        int lastShownTimestamp = cu.getLastMulticastShown();
+        int now = (int) (System.currentTimeMillis() / 1000L);
+        Query q = pm.newQuery(VoMulticastMessage.class, "visibleGroups==" + cu.getRootGroup() + " && startAfter>=" + lastShownTimestamp);
+        q.setOrdering("startAfter");
+        List<VoMulticastMessage> newML = (List<VoMulticastMessage>) q.execute();
+        VoMulticastMessage curMessage = null;
+        if (newML.size() != 0) {
+            for (VoMulticastMessage voMulticastMessage : newML) {
+                if (0 == voMulticastMessage.getEndBefore() || voMulticastMessage.getEndBefore() < now) {
+                    if (null == curMessage) {
+                        curMessage = voMulticastMessage;
+                        curMessage.hasNext = false;
+                    } else {
+                        curMessage.hasNext = true;
+                    }
+                } else {
+                    cu.setLastMulticastShown(voMulticastMessage.getStartAfter() + 1);
+                }
+            }
+        }
+        return curMessage;
+    }
+
+    // =========================================================================================================================
+    @Override
+    public void sendGroupMulticastMessage(List<Long> visibleGroups, String message, int startDate, int expireDate) throws InvalidOperation, TException {
+        // get floor's group as a root of all other groups
+        PersistenceManager pm = PMF.getPm();
+        Set<Long> vgs = null;
+        if (null != visibleGroups) {
+            vgs = new HashSet<Long>();
+            for (int i = 0; i * 20 < visibleGroups.size(); i++) {
+                String glist = "";
+                for (int j = 0; j < 20 && i * 20 + j < visibleGroups.size(); j++)
+                    glist += "," + visibleGroups.get(i * 20 + j);
+
+                List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery(VoUserGroup.class,
+                        "groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups IN (" + glist.substring(1) + ")").execute();
+                for (VoUserGroup voUserGroup : groups) {
+                    vgs.add(voUserGroup.getId());
+                }
+            }
+        }
+        sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
+    }
+
+    // =========================================================================================================================
+    private void sendFloorGroupMulticastMessage(Set<Long> vgs, String message, int startDate, int expireDate, PersistenceManager pm) {
+        Collection<VoSession> sessionsToNotify;
+        int weekAgo = (int) (System.currentTimeMillis() / 1000L - 86400 * 7);
+
+        if (null != vgs) {
+            Set<VoUser> usersToUpdate = VoHelper.getAllOfSet(vgs, VoUser.class, null, "groups", pm);
+            if (null != usersToUpdate && usersToUpdate.size() > 0) {
+                Set<Long> vuis = new HashSet<>();
+                for (VoUser voUser : usersToUpdate) {
+                    vuis.add(voUser.getId());
+                }
+                List<Long> vgsList = new ArrayList<>(vgs);
+                VoMulticastMessage vmcm = new VoMulticastMessage(vgsList, startDate, expireDate, message);
+                pm.makePersistent(vmcm);
+                sessionsToNotify = VoHelper.getAllOfSet(vuis, VoSession.class, "lastActivityTs > " + weekAgo, "userId", pm);
+            } else {
+                sessionsToNotify = (List<VoSession>) pm.newQuery(VoSession.class, "lastActivityTs > " + weekAgo).execute();
+            }
+
+            for (VoSession voSession : sessionsToNotify) {
+                voSession.setNewBroadcastMessage(true);
+            }
+            pm.makePersistentAll(sessionsToNotify);
+        }
+    }
+
+    // =========================================================================================================================
+    @Override
+    public void sendAddressMulticastMessage(List<PostalAddress> addresses, String message, int startDate, int expireDate) throws InvalidOperation,
+            TException {
+        PersistenceManager pm = PMF.getPm();
+        Set<Long> vgs = null;
+
+        if (addresses != null && addresses.size() > 0) {
+            for (PostalAddress pa : addresses) {
+                if (null != pa.getBuilding() && 0 != pa.getBuilding().getId()) {
+                    VoBuilding building = pm.getObjectById(VoBuilding.class, pa.getBuilding().getId());
+                    String query = "groupType==" + GroupType.FLOOR.getValue() + " && longitude=='" + building.getLongitude().toPlainString()
+                            + "' && latitude=='" + building.getLatitude().toPlainString() + "'" + (0 == pa.staircase ? "" : " && staircase==" + pa.getStaircase())
+                            + (0 == pa.floor ? "" : " && floor==" + pa.getFloor());
+                    List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery(VoUserGroup.class, query).execute();
+                    vgs = new HashSet<Long>();
+                    for (VoUserGroup voUserGroup : groups) {
+                        vgs.add(voUserGroup.getId());
+                    }
+                }
+            }
+        }
+        sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
+    }
+
+    @Override
+    public List<WallItem> getImportantNews(long groupId, long rubricId, int commmunityId, int length) throws InvalidOperation {
+        TopicListPart topics = getTopics(groupId, rubricId, commmunityId, 0, 1000, MessageType.WALL, true);
+
+        List<WallItem> wallItems = new ArrayList<>();
+        List<Topic> ttop = topics.getTopics();
+        if( null!=topics  && null!=(ttop = topics.getTopics()) &&  ttop.size() > 0 ){
+            List<MessageListPart> mlpl = getMessagesAsList( ttop, MessageType.WALL, 0, false, 10000);
+            int i = 0;
+            for( Topic tpc : ttop){
+                MessageListPart mlp = mlpl.get(i++);
+                WallItem wi = new WallItem(mlp.messages, tpc);
+                wallItems.add(wi);
+            }
+        }
+        return wallItems;
+    }
+
 }

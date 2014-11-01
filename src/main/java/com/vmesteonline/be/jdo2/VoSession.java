@@ -5,161 +5,176 @@ import com.vmesteonline.be.thrift.authservice.CurrentAttributeType;
 import javax.jdo.annotations.*;
 import java.util.HashMap;
 import java.util.Map;
-
 //extends GeoLocation
 
 @PersistenceCapable
 @Indices({@Index(name="usd_idx",members = {"userId"})})
 public class VoSession {
 
-	public VoSession(String sessId, VoUser user) {
+    public VoSession(String sessId, VoUser user) {
 
-		// this.id = KeyFactory.createKey(VoSession.class.getSimpleName(), sessId);
-		id = sessId;
-		setUser(user);
-		curAttrMap = new HashMap<Integer, Long>();
-	}
+        // this.id = KeyFactory.createKey(VoSession.class.getSimpleName(), sessId);
+        id = sessId;
+        setUser(user);
+        curAttrMap = new HashMap<Integer, Long>();
+    }
 
-	public void setUser(VoUser user) {
-		if (null != user) {
-			setName(user.getName());
-			setLastName(user.getLastName());
-			setUserId(user.getId());
-		} else {
-			setName("");
-			setLastName("Гость");
-			setName("");
-		}
-	}
+    public void setUser(VoUser user) {
+        if (null != user) {
+            setName(user.getName());
+            setLastName(user.getLastName());
+            setUserId(user.getId());
+        } else {
+            setName("");
+            setLastName("Гость");
+            setName("");
+        }
+    }
 
-	public void setId(String s) {
-		id = s;
-	}
+    public void setId(String s) {
+        id = s;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	@PrimaryKey
-	@Persistent
-	protected String id;
+    @PrimaryKey
+    @Persistent
+    protected String id;
 
-	@Persistent
-	
-	private String name;
+    @Persistent
+    private String name;
 
-	@Persistent
-	
-	private String lastName;
+    @Persistent
+    private String lastName;
 
-	@Persistent
-	private long userId;
+    @Persistent
+    private long userId;
 
-	@Persistent
-	private int lastActivityTs; //дата последнего действия пользователя
+    @Persistent
+    private int lastActivityTs; //дата последнего действия пользователя
 
-	@Persistent
-	private int lastUpdateTs; //дата последнего запроса обновления 
+    @Persistent
+    private int lastUpdateTs; //дата последнего запроса обновления
 
-	@Persistent
+    @Persistent
     @Serialized
-	private Map<Integer, Long> curAttrMap;
+    private Map<Integer, Long> curAttrMap;
 
-	/**
-	 * Map that contains quantity of mew messages in dialogs that are not opened by user recently
-	 */
-	@Persistent
+    @Persistent
+    private boolean newBroadcastMessage;
+
+    @Persistent
+    private int newImportantMessages;
+    /**
+     * Map that contains quantity of mew messages in dialogs that are not opened by user recently
+     */
+    @Persistent
     @Serialized
-	private Map<Long, Integer> newDialogMessages;
+    private Map<Long, Integer> newDialogMessages;
 
-	public int getLastUpdateTs() {
-		return lastUpdateTs;
-	}
+    public int getNewImportantMessages() {
+        return newImportantMessages;
+    }
 
-	public void setLastUpdateTs(int lastUpdateTs) {
-		this.lastUpdateTs = lastUpdateTs;
-	}
+    public void setNewImportantMessages(int newImportantMessages) {
+        this.newImportantMessages = newImportantMessages;
+    }
 
-	public int getLastActivityTs() {
-		return lastActivityTs;
-	}
+    public boolean isNewBroadcastMessage() {
+        return newBroadcastMessage;
+    }
 
-	public void setLastActivityTs(int lastActivityTs) {
-		this.lastActivityTs = lastActivityTs;
-	}
+    public void setNewBroadcastMessage(boolean newBroadcastMessage) {
+        this.newBroadcastMessage = newBroadcastMessage;
+    }
 
-	public long getUserId() {
-		return userId;
-	}
+    public int getLastUpdateTs() {
+        return lastUpdateTs;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = null == userId ? 0 : userId;
-	}
+    public void setLastUpdateTs(int lastUpdateTs) {
+        this.lastUpdateTs = lastUpdateTs;
+    }
 
-	public long getSessionAttribute(CurrentAttributeType type) {
-		Long val = curAttrMap.get(type.getValue());
-		return val == null ? 0 : val;
-	}
+    public int getLastActivityTs() {
+        return lastActivityTs;
+    }
 
-	public void setSessionAttribute(int key, long value) {
-		if (null == curAttrMap)
-			curAttrMap = new HashMap<Integer, Long>();
-		curAttrMap.put(key, value);
-	}
+    public void setLastActivityTs(int lastActivityTs) {
+        this.lastActivityTs = lastActivityTs;
+    }
 
-	public void setSessionAttributes(Map<Integer, Long> newAttrMap) {
-		curAttrMap.putAll(newAttrMap);
-	}
+    public long getUserId() {
+        return userId;
+    }
 
-	public Map<Integer, Long> getSessionAttributes() {
-		return curAttrMap;
-	}
+    public void setUserId(Long userId) {
+        this.userId = null == userId ? 0 : userId;
+    }
 
-	@Override
-	public String toString() {
-		return "VoSession [id=" + id + ", name=" + name + ", lastName=" + lastName + ", userId=" + userId + ", lastActivityTs=" + lastActivityTs
-				+ ", lastUpdateTs=" + lastUpdateTs + "]";
-	}
-	
-	public void postNewDialogMessage( long dialogId ){
-		if( null==newDialogMessages )
-			newDialogMessages = new HashMap<Long, Integer>();
-		Integer newVal = newDialogMessages.get(dialogId);
-		newDialogMessages.put(dialogId, null == newVal ? 1 : ++newVal);
-		setLastUpdateTs((int) (System.currentTimeMillis() / 1000L));
-	}
+    public long getSessionAttribute(CurrentAttributeType type) {
+        Long val = curAttrMap.get(type.getValue());
+        return val == null ? 0 : val;
+    }
 
-	public void dialogMarkDialogRead( long dialogId ){
-		if( null!=newDialogMessages ){
-			newDialogMessages.remove(dialogId);
-		}
-	}
-	
-	public boolean newDialogUpdates( ){
-		return null!=newDialogMessages && newDialogMessages.size() > 0;
-	} 
-	
-	public Map<Long, Integer> getDialogUpdates(){
-		return null==newDialogMessages ?
-				newDialogMessages = new HashMap<Long, Integer>():newDialogMessages;
-	}
-	
+    public void setSessionAttribute(int key, long value) {
+        if (null == curAttrMap)
+            curAttrMap = new HashMap<Integer, Long>();
+        curAttrMap.put(key, value);
+    }
+
+    public void setSessionAttributes(Map<Integer, Long> newAttrMap) {
+        curAttrMap.putAll(newAttrMap);
+    }
+
+    public Map<Integer, Long> getSessionAttributes() {
+        return curAttrMap;
+    }
+
+    @Override
+    public String toString() {
+        return "VoSession [id=" + id + ", name=" + name + ", lastName=" + lastName + ", userId=" + userId + ", lastActivityTs=" + lastActivityTs
+                + ", lastUpdateTs=" + lastUpdateTs + "]";
+    }
+
+    public void postNewDialogMessage( long dialogId ){
+        if( null==newDialogMessages )
+            newDialogMessages = new HashMap<Long, Integer>();
+        Integer newVal = newDialogMessages.get(dialogId);
+        newDialogMessages.put(dialogId, null == newVal ? 1 : ++newVal);
+        setLastUpdateTs((int) (System.currentTimeMillis() / 1000L));
+    }
+
+    public void dialogMarkDialogRead( long dialogId ){
+        if( null!=newDialogMessages ){
+            newDialogMessages.remove(dialogId);
+        }
+    }
+
+    public boolean newDialogUpdates( ){
+        return null!=newDialogMessages && newDialogMessages.size() > 0;
+    }
+
+    public Map<Long, Integer> getDialogUpdates(){
+        return null==newDialogMessages ?
+                newDialogMessages = new HashMap<Long, Integer>():newDialogMessages;
+    }
 }
-
-// ", longitude=" + getLongitude()+ ", latitude=" + getLatitude() + 

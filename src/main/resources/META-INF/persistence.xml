@@ -27,6 +27,7 @@
         <class>com.vmesteonline.be.jdo2.dialog.VoDialog</class>
         <class>com.vmesteonline.be.jdo2.dialog.VoDialogMessage</class>
         <class>com.vmesteonline.be.jdo2.utility.VoCounter</class>
+        <class>com.vmesteonline.be.jdo2.VoMulticastMessage</class>
         <exclude-unlisted-classes/>
         <properties>
             <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://127.0.0.1/vonline?useServerPrepStmts=false"/>
@@ -35,7 +36,6 @@
             <property name="javax.jdo.option.ConnectionPassword" value="vonline"/>
             <property name="javax.jdo.option.Mapping" value="mysql"/>
             <property name="datanucleus.schema.autoCreateAll" value="true"/>
-            <property name="datanucleus.schema.autoDeleteAll" value="true"/>
-        </properties>
+       </properties>
     </persistence-unit>
 </persistence>

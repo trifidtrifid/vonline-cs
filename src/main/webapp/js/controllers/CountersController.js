@@ -45,7 +45,7 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
         };
 
         counters.addCounter = function(){
-            var counter = new com.vmesteonline.be.thrift.userservice.Counter();
+            var counter = new com.vmesteonline.be.thrift.utilityservice.Counter();
             counter.id = utilityClient.registerCounter(counter);
             counter.isEdit = true;
             counters.counters.push(counter);
@@ -59,7 +59,7 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
                 alert(counter[p]+" "+p);
             }*/
 
-            var correctCounter = new com.vmesteonline.be.thrift.userservice.Counter();
+            var correctCounter = new com.vmesteonline.be.thrift.utilityservice.Counter();
             correctCounter.id = counter.id;
             correctCounter.location = counter.location;
             correctCounter.type = counter.type;
