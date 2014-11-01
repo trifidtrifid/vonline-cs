@@ -52,8 +52,10 @@ public class VoDialogMessage {
 	
 	@Persistent
 	private int createDate;
-	
-	@Persistent
+
+    @Persistent(table = "dialogMessageAttach")
+    @Join(column = "id")
+    @Element(column = "attach")
 	private List<Long> attachs;
 
 	public List<Long> getAttachs() {

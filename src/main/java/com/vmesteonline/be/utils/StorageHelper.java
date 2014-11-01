@@ -1,11 +1,11 @@
 package com.vmesteonline.be.utils;
 
-import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.ServiceImpl;
-import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoFileAccessRecord;
 import com.vmesteonline.be.jdo2.VoFileAccessRecord.VersionCreator;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.messageservice.Attach;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.ByteBuffer;
 import java.util.Base64;
 import java.util.Map;
 
@@ -161,7 +160,7 @@ public class StorageHelper {
         try {
             VoFileAccessRecord vfar = pm.getObjectById(VoFileAccessRecord.class, oldFileId);
             VoFileAccessRecord version = vfar.getVersion(params, pm);
-            os.write((version == null ? vfar : version).getData().array());
+            os.write((version == null ? vfar : version).getData());
             return true;
         } catch (JDOObjectNotFoundException onfe) {
             return false;
@@ -212,8 +211,8 @@ public class StorageHelper {
                 }
 
                 if (null != queryString)
-                    ServiceImpl.putObjectToCache(queryString, new FileObject(fileData, fileName, theVersion.getData().array() + "; filename=" + fileName));
-                fileData = theVersion.getData().array();
+                    ServiceImpl.putObjectToCache(queryString, new FileObject(fileData, fileName, theVersion.getData() + "; filename=" + fileName));
+                fileData = theVersion.getData();
 
             } catch (JDOObjectNotFoundException onfe) {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not Found");
@@ -297,7 +296,7 @@ public class StorageHelper {
 	}
 
 	public static void saveFileData(byte[] data, VoFileAccessRecord vfar) throws IOException {
-        vfar.setData(ByteBuffer.wrap(data));
+        vfar.setData(data);
 		//streamCopy(is, new FileOutputStream( vfar.getFullFileName() ));
 	}
 

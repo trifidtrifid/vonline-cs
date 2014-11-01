@@ -121,8 +121,11 @@ public class VoServlet extends HttpServlet {
 
 			writerSniffer.close();
 			readerSniffer.close();
-			System.out.println("THRIFT Got request: '" + readBaos.toString() + "'");
-			System.out.println("THRIFT Sent a response: '" + writeBaos.toString() + "'");
+            String req = readBaos.toString();
+            if( !req.matches(disabledThriftLoggingPatterns)) {
+                System.out.println("THRIFT Got request: '" + req + "'");
+                System.out.println("THRIFT Sent a response: '" + writeBaos.toString() + "'");
+            }
 
 			out.flush();
 		} catch (TException te) {
@@ -158,4 +161,6 @@ public class VoServlet extends HttpServlet {
 		this.customHeaders.clear();
 		this.customHeaders.addAll(headers);
 	}
+    //REgular expression that would be checked before write Thrift log. If matches request would not being logged
+    private static final String disabledThriftLoggingPatterns = ".*checkUpdates.*";
 }

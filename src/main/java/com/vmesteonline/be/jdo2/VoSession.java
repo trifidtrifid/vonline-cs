@@ -78,12 +78,14 @@ public class VoSession {
 	private int lastUpdateTs; //дата последнего запроса обновления 
 
 	@Persistent
+    @Serialized
 	private Map<Integer, Long> curAttrMap;
 
 	/**
 	 * Map that contains quantity of mew messages in dialogs that are not opened by user recently
 	 */
 	@Persistent
+    @Serialized
 	private Map<Long, Integer> newDialogMessages;
 
 	public int getLastUpdateTs() {

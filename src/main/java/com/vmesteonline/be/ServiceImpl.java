@@ -155,16 +155,20 @@ public class ServiceImpl {
 		if (null == sessionStorage)
 			throw new InvalidOperation(VoError.GeneralError, "Failed to process request. No session set.");
 
-		try {
-			VoSession sess = pm.getObjectById(VoSession.class, sessionStorage.getId());
-			sess.setLastActivityTs( (int)(System.currentTimeMillis()/1000L) );
-			return sess;
-		} catch (JDOObjectNotFoundException e) {
-			VoSession vs = new VoSession(sessionStorage.getId(), null);
-			vs.setLastActivityTs( (int)(System.currentTimeMillis()/1000L) );
-			pm.makePersistent(vs);
-			return vs;
-		}
+        String id = sessionStorage.getId();
+        if(null!=id) {
+            try {
+                VoSession sess = pm.getObjectById(VoSession.class, id);
+                sess.setLastActivityTs((int) (System.currentTimeMillis() / 1000L));
+                return sess;
+            } catch (JDOObjectNotFoundException e) {
+                VoSession vs = new VoSession(id, null);
+                vs.setLastActivityTs((int) (System.currentTimeMillis() / 1000L));
+                pm.makePersistent(vs);
+                return vs;
+            }
+        } else
+            throw new InvalidOperation(VoError.GeneralError, "Failed to process request. No session ID is set");
 	}
 
 	static class SessionIdStorage {
@@ -176,7 +180,7 @@ public class ServiceImpl {
 
 		public String getId() {
 			return sessId;
-		};
+		}
 	}
 
 	public void setCurrentAttribute(int key, long value) throws InvalidOperation {

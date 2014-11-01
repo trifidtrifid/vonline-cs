@@ -29,7 +29,6 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	public VoBaseMessage(Message msg, PersistenceManager pm) throws IOException, InvalidOperation {
 		// super(msg.getLikesNum(), msg.getUnlikesNum());
 		setContent(msg.getContent());
-		links = msg.getLinkedMessages();
 		type = msg.getType();
 		authorId = msg.getAuthorId();
 		createdAt = msg.getCreated();
@@ -114,11 +113,11 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	 */
 	public String getContent() {
         if( null==content) return "";
-		return new String( content, STRING_CHARSET);
+		return new String( content );
 	}
 
 	public void setContent(String content) {
-		this.content = content.getBytes(STRING_CHARSET);
+        this.content = content.getBytes(STRING_CHARSET);
 	}
 
 	public int getCreatedAt() {
@@ -275,15 +274,14 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	protected byte[] content;
 
 	@Persistent
-	protected Map<MessageType, Long> links;
-
-	@Persistent
 	protected MessageType type;
 
-	@Persistent
+    @Persistent
+    @Serialized
 	protected List<Long> images;
 
-	@Persistent
+    @Persistent
+    @Serialized
 	protected List<Long> documents;
 
 	@Persistent
@@ -298,11 +296,14 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	protected int childMessageNum;
 	
 	@Persistent
+    @Serialized
 	protected Set<Long> likes;
 	
 	@Persistent
+    @Serialized
 	protected Set<Long> important;
 	@Persistent
+    @Serialized
 	protected Set<Long> unimportant;
 	
 	@Persistent

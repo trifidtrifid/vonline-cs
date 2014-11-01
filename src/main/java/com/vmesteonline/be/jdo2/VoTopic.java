@@ -8,10 +8,7 @@ import com.vmesteonline.be.thrift.messageservice.Message;
 import com.vmesteonline.be.thrift.messageservice.Topic;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.annotations.Index;
-import javax.jdo.annotations.Indices;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +17,8 @@ import java.util.List;
 @Indices({
         @Index(name="lastUp_IDX", members={"lastUpdate"}),
         @Index(name="userGroupId_IDX", members={"userGroupId"}),
-        @Index(name="type_vg_idx", members={"visibleGroups", "type"}),
-        @Index(name="type_vg_idx", members={"visibleGroups", "type", "isImportant", "lastUpdate"})
+        @Index(name="type_vg_idx", members={"type"}),
+        @Index(name="type_vg_idx", members={"type", "isImportant", "lastUpdate"})
 })
 public class VoTopic extends VoBaseMessage {
 	// id, message, messageNum, viewers, usersNum, lastUpdate, likes, unlikes,
@@ -55,7 +52,7 @@ public class VoTopic extends VoBaseMessage {
 			}
 
 		Message msg = new Message(id, 0L, type, getId(), userGroupId, authorId, createdAt, editedAt, getContent(), getLikes(), 0,
-				links, null, null, 0, null, imgs, docs, null, 
+				null, null, null, 0, null, imgs, docs, null,
 					isImportant ? Mark.POSITIVE : isImportant(userId), isLiked(userId),getChildMessageNum());
 
 
@@ -169,8 +166,10 @@ public class VoTopic extends VoBaseMessage {
 
 	@Persistent
 	private Long userGroupId;
-	
-	@Persistent
+
+    @Persistent(table = "topicvisiblegroups")
+    @Join(column = "id")
+    @Element(column = "visibleGroup")
 	private List<Long> visibleGroups;
 
 	@Persistent

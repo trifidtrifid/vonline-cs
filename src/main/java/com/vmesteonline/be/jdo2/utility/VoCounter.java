@@ -83,7 +83,7 @@ public class VoCounter {
 	@Persistent
 	private long postalAddressId;
 	
-	@Persistent
+	@Persistent(serialized = "true")
 	private Map<Integer,Double> values;
 
 	public Counter getCounter() {

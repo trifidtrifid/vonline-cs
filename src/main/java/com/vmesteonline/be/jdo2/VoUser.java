@@ -333,7 +333,9 @@ public class VoUser /* extends GeoLocation */{
 	@Persistent
 	private int birthday;
 
-	@Persistent
+    @Persistent(table = "usergroups")
+    @Join(column = "id")
+    @Element(column = "group")
 	private List<Long> groups;
 
 	@Persistent
@@ -421,9 +423,11 @@ public class VoUser /* extends GeoLocation */{
 	private long rootGroup;
 	
 	@Persistent
+    @Serialized
 	private Set<ServiceType> services;
 	
 	@Persistent
+    @Serialized
 	private Map<Integer, String> addressStringsByGroupType;
 	
 	//map that stores last event date that was shown to user by category

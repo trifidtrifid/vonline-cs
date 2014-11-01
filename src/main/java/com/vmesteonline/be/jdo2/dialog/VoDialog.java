@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 @PersistenceCapable
-@Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"users","lastMessageDate"})
+@Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"lastMessageDate"})
 public class VoDialog {
 	
 	public Dialog getDialog( PersistenceManager pm ) throws InvalidOperation {
@@ -62,8 +62,10 @@ public Dialog getDialog( VoUser cuser, PersistenceManager pm ) throws InvalidOpe
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;
-	
-	@Persistent
+
+    @Persistent(table = "dialog_userIds")
+    @Join(column = "id")
+    @Element(column = "user")
 	private List<Long> users;
 	
 	@Persistent

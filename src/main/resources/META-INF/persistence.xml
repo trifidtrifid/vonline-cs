@@ -29,10 +29,13 @@
         <class>com.vmesteonline.be.jdo2.utility.VoCounter</class>
         <exclude-unlisted-classes/>
         <properties>
-            <property name="javax.jdo.option.ConnectionURL" value="cassandra:"/>
-            <property name="javax.jdo.mapping.Schema" value="vonline"/>
+            <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://127.0.0.1/vonline?useServerPrepStmts=false"/>
+            <property name="javax.jdo.option.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.jdo.option.ConnectionUserName" value="vonline"/>
+            <property name="javax.jdo.option.ConnectionPassword" value="vonline"/>
+            <property name="javax.jdo.option.Mapping" value="mysql"/>
             <property name="datanucleus.schema.autoCreateAll" value="true"/>
-            <property name="datanucleus.query.jdoql.allowAll" value="true"/>
+            <property name="datanucleus.schema.autoDeleteAll" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

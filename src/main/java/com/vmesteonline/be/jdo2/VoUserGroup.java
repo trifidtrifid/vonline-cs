@@ -7,10 +7,7 @@ import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.utils.VoHelper;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.annotations.Index;
-import javax.jdo.annotations.Indices;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.List;
 @PersistenceCapable
 @Indices({
         @Index(name="GT_IDX", members = {"groupType"}),
-        @Index(name="VG_IDX", members = {"visibleGroups"}),
         @Index(name="VG_LLGTSF_IDX", members = {"longitude","latitude", "groupType", "staircase","floor"}),
         @Index(name="VG_LLGTS_IDX", members = {"longitude","latitude", "groupType", "staircase"}),
         @Index(name="VG_LLGT_IDX", members = {"longitude","latitude", "groupType"})})
@@ -219,10 +215,6 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		return upperGroups;
 	}
 	
-	public VisibleGroup getVisibleGroup(){
-		return new VisibleGroup( id, groupType); 
-	}
-	
 	public int getRadius() {
 		return radius;
 	}
@@ -269,7 +261,9 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	@Persistent
 	private byte floor;
 	
-	@Persistent
+	@Persistent(table = "ugvisiblegroups")
+    @Join(column = "id")
+    @Element(column = "visibleGroup")
 	private List<Long> visibleGroups;
 	
 	@Persistent

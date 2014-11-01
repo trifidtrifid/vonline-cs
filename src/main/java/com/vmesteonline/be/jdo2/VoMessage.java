@@ -120,11 +120,11 @@ public class VoMessage extends VoBaseMessage {
             }
 
 		if (authorId == 0)
-			return new Message(id, getParentId(), type, topicId, 0L, 0, createdAt, editedAt, getContent(), getLikes(), 0, links, null, null,
+			return new Message(id, getParentId(), type, topicId, 0L, 0, createdAt, editedAt, getContent(), getLikes(), 0, null, null, null,
 					visibleOffset, null, imgs, docs, userNameForBlog, isImportant(userId), isLiked(userId), childMessageNum);
 		else
 			return new Message(id, getParentId(), type, topicId, 0L, authorId, createdAt, editedAt, getContent(), getLikes(), 0,
-					links, null, null, visibleOffset, null, imgs, docs, userNameForBlog, isImportant(userId), isLiked(userId),childMessageNum);
+					null, null, null, visibleOffset, null, imgs, docs, userNameForBlog, isImportant(userId), isLiked(userId),childMessageNum);
 	}
 
 	public long getRecipient() {
@@ -137,9 +137,6 @@ public class VoMessage extends VoBaseMessage {
 
 	@Persistent
 	protected long recipient;
-
-	@Persistent
-	protected int score;
 
 	@Persistent
 	protected long topicId;

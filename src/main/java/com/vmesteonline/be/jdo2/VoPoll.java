@@ -4,10 +4,7 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.messageservice.Poll;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -103,12 +100,15 @@ public class VoPoll {
 	private String subject;
 
 	@Persistent
+    @Serialized
 	private List<String> names;
 
 	@Persistent
+    @Serialized
 	private List<Integer> values;
 
 	@Persistent
+    @Serialized
 	private Set<Long> alreadyPoll;
 
 }

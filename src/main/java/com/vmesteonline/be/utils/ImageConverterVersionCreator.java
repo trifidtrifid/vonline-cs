@@ -46,7 +46,7 @@ public class ImageConverterVersionCreator implements VersionCreator {
         VoFileAccessRecord version = original.getVersion(versionKey);
 
         if (version == null && createIfNotExists) {
-            byte[] result = original.getData().array();
+            byte[] result = original.getData();
             try {
 
                 if (scale != null) {

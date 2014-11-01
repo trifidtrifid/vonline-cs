@@ -6,7 +6,6 @@ import com.vmesteonline.be.utils.StorageHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
 import javax.mail.internet.ContentType;
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,17 +86,20 @@ public class VoFileAccessRecord {
 	private String url;
 
     @Persistent
-    ByteBuffer data;
+    byte[] data;
 
-	@Persistent(dependentElement = "true")
+	@Persistent(table="fileaccessrecordversions")
+    @Key(types = String.class)
+    @Value(types=VoFileAccessRecord.class, dependent="true")
+    @Join(column = "query")
+    @Element(column = "version")
 	Map<String,VoFileAccessRecord> versions;
 
-    public void setData(ByteBuffer data) {
-        this.data = data.duplicate();
+    public void setData(byte[] data) {
+        this.data = data;
     }
 
-    public ByteBuffer getData() {
-        if( data == null ) data = ByteBuffer.allocate(0);
+    public byte[] getData() {
         return data;
     }
 
