@@ -1,6 +1,6 @@
 /datanucleus.log
 /target
-vonline-cs.iml
-vonline-cs.ipr
-vonline-cs.iws
+/vonline-cs.iml
+/vonline-cs.ipr
+/vonline-cs.iws
 /src/main/java/com/vmesteonline/be/thrift
