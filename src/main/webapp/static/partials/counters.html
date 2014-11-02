@@ -1,0 +1,99 @@
+
+<section class="counters page">
+
+    <div ng-if="!base.me.countersConfirmed">
+        <div ng-include="'/static/partials/empty/empty-counters.html'"></div>
+    </div>
+
+    <div ng-if="base.me.countersConfirmed">
+        <h3>{{base.pageTitle}}</h3>
+
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-body">
+                <div>Вы действительно хотите удалить счетчик ? Вместе с ним удалится вся его история.</div>
+                <p></p>
+                <button class="btn btn-sm no-border btn-primary" ng-click="ok()">Удалить</button>
+                <button class="btn btn-sm no-border btn-default" ng-click="cancel()">Отмена</button>
+            </div>
+        </script>
+
+        <table class="counters-table">
+            <thead>
+            <tr>
+                <td>Тип</td>
+                <td class="align-center">Место установки</td>
+                <td class="align-center">Номер</td>
+                <td>Предыдущее</td>
+                <td>Показание</td>
+                <td class="align-center">Расход</td>
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tr ng-repeat="counter in counters.counters" id="{{counter.id}}">
+                <td width="20%">
+                    <div ng-show="!counter.isEdit && counter.type === null" class="gray-text">
+                        не указан
+                    </div>
+                    <div ng-show="!counter.isEdit && counter.type !== null">
+                        {{counter.typeString}}
+                    </div>
+                    <select ng-show="counter.isEdit" ng-model="counter.type">
+                        <option ng-repeat="item in counters.typesArray" value="{{item.type}}" ng-selected="counter.type == item.type">{{item.typeString}}</option>
+                    </select>
+                </td>
+                <td class="align-center align-middle">
+                    <span ng-show="!counter.isEdit && !counter.location" class="gray-text">не указано</span>
+                    <span ng-show="!counter.isEdit && counter.location">{{ counter.location }}</span>
+                    <select ng-model="counter.location" ng-show="counter.isEdit">
+                        <option value="Кухня" ng-selected="counter.location=='Кухня'">Кухня</option>
+                        <option value="Ванная" ng-selected="counter.location=='Ванная'">Ванная</option>
+                        <option value="Другое" ng-selected="counter.location=='Другое'">Другое</option>
+                    </select>
+                </td>
+                <td width="15%" class="align-middle align-center">
+                    <span ng-hide="counter.isEdit">
+                        <span ng-show="!counter.number" class="gray-text">не указан</span>
+                        <span ng-hide="!counter.number">{{counter.number}}</span>
+                    </span>
+                    <input ng-show="counter.isEdit" type="text" ng-model="counter.number"/>
+                </td>
+                <td class="align-center align-middle">
+                    <div ng-show="counter.lastValue > 0">{{counter.lastValue}}</div>
+                    <div ng-show="counter.lastValue == 0"> - </div>
+                </td>
+                <td>
+                    <input type="text" ng-change="counter.wasEdit = true" class="counter-input" ng-model="counter.currentValue" ng-keypress="counters"/>
+                    <a ui-sref="counters-history({ counterId : counter.id })" title="история показаний"><i class="fa fa-clock-o"></i></a>
+                </td>
+                <td class="align-center align-middle">
+                    <div ng-show="counter.currentValue > 0">
+                        {{counter.currentValue - counter.lastValue}}
+                    </div>
+                    <div ng-show="counter.currentValue == ''"> - </div>
+                </td>
+                <td width="6%" class="align-center align-middle">
+                    <a href="#" title="редактировать" ng-click="counters.editCounter(counter)" ng-hide="counter.isEdit"><i class="fa fa-pencil"></i></a>
+                    <a href="#" title="сохранить" ng-click="counters.saveEditedCounter(counter)" ng-show="counter.isEdit">Сохр.</a>
+                </td>
+                <td><a href="#" title="удалить" class="remove-counter" ng-click="counters.removeCounter(counter)">&times;</a></td>
+            </tr>
+        </table>
+
+        <div class="clearfix">
+            <a href="#" class="pull-right add-counter" ng-click="counters.addCounter()">Добавить счетчик</a>
+            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.save()">Отправить</button>
+        </div>
+        <br/>
+
+        <div>
+            <label ng-click="counters.toggleNotification()">
+                <input type="checkbox" ng-model="base.me.countersNotification"/>
+                <span>Напоминать о сдаче показаний</span>
+            </label>
+        </div>
+
+    </div>
+
+</section>
+

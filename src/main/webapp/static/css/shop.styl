@@ -1,0 +1,1894 @@
+//@import 'common.css'
+@import 'lib/flexslider.css'
+@import 'login.css' // with common.css
+
+main-radius = 2px
+second-radius = 1px
+
+html
+   height 100%
+
+body
+  background #fff
+  height 100%
+  //cursor progress
+  //cursor url(/static/i/wait1.png),wait
+  //cursor: url(images/sniper.cur), pointer;
+  //cursor url("/static/i/wait1.png")
+
+.wait
+  background red
+  cursor url(/static/i/wait1.png),wait
+
+a
+  outline none !important
+
+.clear
+  clear:both
+
+footer
+  text-align center
+  position absolute
+  background #fff
+  width 100%
+  bottom 0
+  border-top 1px solid #ccc
+  .container
+    padding 10px 0
+  .footer-menu
+    ul
+      margin-left 0
+    li
+      list-style none
+      margin 0 10px
+      display inline-block
+  &.short-footer .container
+    margin-right 470px
+
+transform()
+  -moz-transform rotate(arguments); /* Для Firefox */
+  -ms-transform rotate(arguments); /* Для IE */
+  -webkit-transform rotate(arguments); /* Для Safari, Chrome, iOS */
+  -o-transform rotate(arguments); /* Для Opera */
+  transform rotate(arguments);
+
+.btn-primary
+.header-color-blue2
+  background-color #438eb9 !important
+
+.wrap
+  min-height 100%
+  padding-bottom 70px
+  position relative
+
+.container
+  padding 0
+  max-width 1440px
+  //min-height 100%
+ /* &.main
+    padding-bottom 70px*/
+
+//.wrap
+//.container
+.main-container
+.main-container > .main-container-inner
+.main-content
+.shop-products
+  height 100%
+
+.navbar
+  position fixed
+  left 0
+  width 100%
+  &.over-rightbar
+    z-index 1031
+  a.navbar-brand
+    padding 0
+    display inline-block
+    float none
+  a.about-shop-link
+    display inline-block
+    color #fff
+    &:hover
+      text-decoration none
+  img
+    height 45px
+
+.ace-nav>li
+  vertical-align top
+  a
+    padding 11px 12px 0 12px
+    line-height 1.428571429
+    font-size 16px
+    border none
+    border-bottom 3px solid rgb(111, 179, 224)
+  &.active
+    a
+      border-bottom-color #2b7dbc
+
+.ace-nav>.user-short
+  line-height 30px
+  .user-info
+    vertical-align middle
+    max-width 300px !important
+  a
+    border none
+    padding 3px 8px
+    font-size 14px
+    i
+      vertical-align bottom
+
+.ace-nav>.user-short>a
+  line-height inherit
+  padding 0 8px
+  font-size 16px
+
+/*.user-short .no-login+.user-menu
+  display none*/
+
+.user-menu li
+  text-align left
+
+.nav-list > li > a
+  padding 8px 10px 10px 16px
+  height auto
+  line-height 20px
+  position relative
+  span
+    display inline-block
+    vertical-align middle
+    width 134px
+  b
+    display inline-block
+    vertical-align middle
+
+.nav-list > li > a,
+.nav-list > li.active > a,
+.nav-list > li.active:hover a
+  font-size 15px
+
+.btn
+  border-radius main-radius !important
+
+.sidebar
+  padding-top 20px
+  vertical-align top
+
+.shop
+  border-left 1px solid #ccc
+  border-right 1px solid #ccc
+  margin-top 45px
+
+.main-content
+  margin-right 480px
+  margin-left 0
+  padding 10px
+
+.shop-products
+  height 100%
+  position relative
+
+
+.show-right
+  display none
+
+.shop-right
+  position fixed
+  height 100%
+  width 470px
+  right 0
+  //margin-top -45px
+  z-index 1030
+  //width 30%
+  border 0
+  border-left 1px solid #ccc
+  padding-bottom 20px
+  &:before
+    border 0
+    border-left 1px solid #ccc
+  .hide-right
+    display none
+  .tabs-days
+    margin-top 76px
+    text-align center
+    .nav span
+      display block
+    .tab-content
+      padding 0
+      padding-bottom 10px
+      background #fff
+      position static
+    .basket-head
+      padding 12px 0 12px 15px
+      text-align left
+      overflow auto
+      font-size 16px
+      .amount
+        float right
+        margin-right 15px
+      .weight
+        float left
+    .basket-bottom
+      .btn
+        float right
+        margin 1px 10px 0 0
+      .refresh
+        float left
+        cursor pointer
+        margin 10px 0 0 5px
+  .catalog-order
+    max-height 320px
+    overflow-y auto
+    margin-left 0
+    border-top 1px solid #ccc
+    li
+      padding 8px 5px 5px 5px
+      display block
+      background #f9f9f9
+      overflow auto
+      list-style none
+      font-size 12px
+      border-bottom 1px solid #ccc
+      line-height 32px;
+      text-align left
+      table
+        width 220px
+        float right
+        text-align center
+        line-height 16px
+        thead td
+          background #f2f2f2
+        tr
+          .td-summa
+            width 60px
+          .td-close
+            width 19px
+      .product-link
+        display inline-block
+        vertical-align middle
+        line-height 16px
+        max-width 160px
+        span
+          display none
+      .product-right-descr
+        display inline-block
+        vertical-align middle
+        margin-bottom 5px
+        font-size 12px
+        line-height 16px
+      .delete-product
+        font-size 24px
+        color #ff0000
+        &:hover
+          text-decoration none
+      .flexslider
+        li
+          padding 0
+          border 0
+          background 0
+      .unit-name
+        display none
+  .btn-grey
+    margin-left 186px
+    margin-right 10px
+  .basket-backdrop
+    display none
+    opacity .5
+
+.tabs-right > .nav-tabs > li > a
+  min-width 40px
+  margin-right 0 !important
+  padding 8px 5px
+
+.datepicker
+  padding 0 2px 5px 2px
+  width 350px
+  z-index 11 !important
+  margin-left -84px
+  table
+    width 100%
+  .switch
+    text-align center
+  td
+    min-width 22px !important
+    padding 0 !important
+    text-align center
+    cursor pointer
+    &.active
+      color #fff
+
+th.prev
+th.next
+.input-group-addon
+  cursor pointer
+
+.order-day
+  background-color #bfa6c4
+  &:after
+    content "День с заказом"
+    margin-left -100px
+.free-day
+  background-color #62c462
+  &:after
+    content "Свободный день"
+    margin-left -120px
+.day-with-order
+  background-color #eee827
+  &:after
+    content "Свободный день с заказом"
+    margin-left -150px
+.special-day
+  background-color #5bc0de
+  &:after
+    content "Специальная цена"
+    margin-left -130px
+.closed-day
+  background-color #9baab3
+  &:after
+    content "Закрытый день"
+    margin-left -60px
+.order-day:after
+.free-day:after
+.day-with-order:after
+.special-day:after
+.closed-day:after
+  position absolute
+  background-color rgba(0,0,0,.5)
+  border-radius main-radius
+  padding 2px 5px
+  color #fff
+  display none
+.order-day:hover:after
+.free-day:hover:after
+.day-with-order:hover:after
+.special-day:hover:after
+.closed-day:hover:after
+  display block
+
+.day-menu
+  position absolute
+  width 150px
+  a
+    display block
+    padding 5px 10px
+    background #9baab3
+
+.ui-menu-item
+.ui-autocomplete-category
+  list-style none
+.ui-helper-hidden-accessible
+  display none
+.icon-search:hover
+  text-decoration none
+.ui-menu-item a:hover
+  text-decoration none
+
+.form-search
+  margin-bottom 10px
+  margin-right 190px
+
+.producer-dropdown
+  float right
+  button
+    width 184px
+    padding 5px 9px
+    .btn-group-text
+      width 148px
+      overflow hidden
+     .icon-caret-down
+        position relative
+        top 2px
+    .icon-caret-down
+    .btn-group-text
+      display inline-block
+      vertical-align middle
+  .dropdown-menu
+    margin-left -70px
+
+.shop-menu
+  overflow auto
+  min-height 55px
+  ul
+    margin-left 0
+    li
+      list-style none
+      float left
+      margin-bottom 10px
+      display inline-block
+      margin-left 1px
+      width 100px
+      height 55px
+      text-align center
+      line-height 14px
+      font-size 11px
+      &.active
+        a
+          color #2a6496
+      a
+        display block
+        font-size 20px
+        line-height 28px !important
+        height 50px
+        width 100px !important
+        padding 8px 5px !important
+        border 1px solid #438eb9
+        white-space normal
+        &:hover
+          text-decoration none
+        span
+          font-size 12px
+          line-height 16px
+          display inline-block
+          vertical-align middle
+        .fa
+          display none
+        &.shopmenu-back
+          border 0
+          line-height 10px !important
+          font-size 26px
+          .fa
+            display block
+.catalog-head
+  table
+    background #f9f9f9
+    font-style italic
+    width: 100%;
+    td
+      text-align center
+      &:first-child
+        width 40%
+        text-align left
+      &.td-basket
+        padding-right 50px
+      &.td-producer
+        width 22%
+      &.product-price
+        width 10%
+      &.td-spinner
+        width 18%
+      &.orderLine-amount
+        width 10%
+      &.td-unit
+        width 5%
+
+.catalog
+  overflow auto
+  width 100%
+  table
+    width 100%
+    /*thead
+      tr
+        td
+          background #f9f9f9
+          font-style italic*/
+    tr
+      &:first-child
+        td
+          border-top 1px solid #ccc
+      &.added
+        background-color #e7ffc5
+        .added-text
+          display block
+          font-weight bold
+        .ace-spinner
+        .fa-shopping-cart
+        .prepack-item
+        .prepack-list
+          display none
+        .fa-check
+          display block
+          font-size 24px
+          cursor default
+          margin 0
+        /*.modal-with-prepack
+          height 268px !important*/
+      td
+        vertical-align middle
+        border-bottom 1px solid #ccc
+        padding 5px 0
+        text-align center
+        &:first-child
+          text-align left
+          width 40%
+          padding-left 5px
+        &.td-basket
+          width 35px
+        &.td-producer
+          width 22%
+        &.product-price
+          width 10%
+        &.td-spinner
+          width 18%
+        &.orderLine-amount
+          width 10%
+        &.td-unit
+          width 5%
+        .product-pic
+          width 40px
+          height 40px
+          text-align center
+          float left
+          img
+            max-width 40px
+            max-height 40px
+        .fa
+          font-size 24px
+          color #428bca
+          cursor pointer
+          &:hover
+            color #2a6496
+            text-decoration none
+        .product-link
+          margin-left 0
+          line-height 40px
+          span
+            display inline-block
+            width 70%
+            vertical-align middle
+            line-height 14px
+            span
+              display none
+        span
+          margin-left 10px
+          margin-right 10px
+          span
+            margin 0
+        .unit-name
+        .ace-spinner
+          margin 0
+        .added-text
+        .fa-check
+          display none
+.shop-orders
+  display none
+  margin-right -10px
+  h1
+    margin-top 10px
+  .back-to-shop
+    float right
+    margin-top 13px
+  .order-item
+    margin-bottom 20px
+    overflow auto
+    .plus-minus
+      font-size 24px
+      text-decoration none
+    .order-products
+      margin 10px 10px 0 0
+      display none
+      .catalog
+        position static
+    .order-edit
+    .order-confirm
+      font-size 12px
+  .btn-primary
+    margin 2px
+    float right
+    //display inline-block
+  .more-orders
+    text-align center
+    margin 20px 0 0 0
+    a
+      font-size 16px
+
+.order-bottom
+  margin-top 5px
+  .order-delivery
+    font-size 16px
+    margin-right 210px
+    height 34px
+    line-height 34px
+    span
+      display inline-block
+      vertical-align middle
+      line-height 16px
+  .delete-order-from-history
+    float right
+    margin 0 5px
+    font-size 24px
+    color #ff0000
+    &:hover
+      text-decoration none
+
+.ace-spinner
+  display inline-block
+  vertical-align middle
+  i
+    font-size 14px
+    position relative
+    top: -2px
+
+.orders-tbl
+  width 100%
+  tr
+    width 100%
+    min-width 715px
+  td
+    text-align center
+    font-size 16px
+    border 1px solid #ccc
+    padding 5px 0
+  .td1
+    width 4%
+  .td2
+    width 28%
+  .td3
+    width 12%
+  .td4
+    width 22%
+  .td6
+    width 12%
+  .td8
+    width 9%
+  .td9
+    width 12%
+
+
+.orders-tbl-wrap
+  //margin-right 240px
+  margin-bottom 10px
+  background #f2f2f2
+  table
+    width 100%
+    border 0
+    td
+      text-align center
+      font-size 16px
+      border 1px solid #ccc
+      padding 5px 0
+  .td1
+    width 4%
+  .td2
+    width 28%
+  .td3
+    width 12%
+  .td4
+    width 22%
+  .td6
+    width 12%
+  .td8
+    width 9%
+  .td9
+    width 12%
+
+.ace-spinner
+  width 90px !important
+  .input-mini.spinner-input.spinner1.form-control
+    width 40px !important
+    padding 5px 2px
+  .spinner-down:hover
+  .spinner-up:hover
+    background-color rgb(111, 179, 224) !important
+
+.empty-basket
+  font-size 24px
+  text-align center
+  color #ccc
+
+.modal
+  width 660px
+  left 50%
+  margin-left -330px
+  background #fff
+  top 10%
+  //height 388px
+  height 250px
+  overflow-y auto
+  &.modal-with-prepack
+    height 265px
+  &.withoutFullDescr
+    height 205px
+  &.modal-with-prepack.withoutFullDescr
+    height 215px
+  .close
+    outline none
+  .product-slider
+    float left
+    .flexslider
+      width 200px
+      margin-bottom 0
+      box-shadow none
+      overflow hidden
+      .flex-direction-nav a
+        background url(/static/i/bg_direction_nav.png) no-repeat 0 0
+      .flex-direction-nav .flex-next
+        background-position 100% 0
+      .slides li
+        text-align center
+        line-height 180px
+      img
+        width auto
+        float none
+        display inline-block
+    .slider
+      >li
+        height 192px
+        line-height 192px
+      img
+        max-width 192px
+        max-height  172px
+        vertical-align top
+    .carousel
+      img
+        max-width 60px
+        max-height 60px
+      li
+        cursor pointer
+        line-height 60px !important
+  .product-descr
+     margin-left 210px
+    h3
+      margin-top 0
+    .product-text
+      //height 90px
+      //overflow auto
+      text-align left
+    .product-options
+      font-size 12px
+      line-height 18px
+      color #656565
+      margin-bottom 10px
+    .modal-body
+      padding 10px
+      position static
+    .modal-footer
+      position absolute
+      overflow auto
+      min-height 55px
+      //height 60px
+      //top 125px
+      margin-top 0
+      right 10px
+      bottom 10px
+      width 430px
+      background #fff
+      text-align left
+      padding 0
+      padding-top 15px
+      .fa-shopping-cart
+        float right
+        font-size 24px
+        &:hover
+          text-decoration none
+      span
+      .ace-spinner
+      .fa
+        display inline-block
+        //vertical-align middle
+        margin 0 17px
+      span
+        font-size 20px
+      >span
+        margin 0 !important
+        width 130px
+      .prepack-item
+        display inline-block
+        vertical-align middle
+        line-height 16px
+        font-size 12px
+        span
+          font-size 12px
+          margin-left 0
+        .fa-plus
+          font-size 20px
+          position relative
+          left -8px
+          top -8px
+        .fa-plus:hover
+          text-decoration none
+      &.with-prepack
+        span
+        .ace-spinner
+        .fa
+          margin 0 8px
+        .fa-shopping-cart
+          margin-top 5px
+        .prepack-item
+          span
+            display block
+            text-align center
+      .full-descr
+        margin-top 15px
+        margin-bottom 10px
+    .product-fullDescr
+      //display none
+      max-height 320px;
+      overflow auto
+      line-height 22px
+      font-size 12px
+    .prepack-list
+      float right
+      margin-right 59px
+      .prepack-line
+        margin-top 5px
+      .remove-prepack-line
+        color #a44451
+        opacity .5
+        position relative
+        top: -10px
+        font-size 21px
+        font-weight bold
+        &:hover
+          opacity 1
+          text-decoration none
+  .error-prepack
+    float right
+    font-size 10px
+    line-height 10px
+    width 190px
+    margin-top 16px
+/*position absolute
+bottom -50px
+right 5px
+width 119px
+height 50px
+*/
+.modal-order-end
+  height 360px
+  .modal-body-list
+    max-height 200px
+    display block
+    overflow auto
+    width 100%
+    tbody
+      width 100%
+      tr
+        width 100%
+        td:first-child
+          padding-right 0
+          width 60%
+        td
+          padding 5px
+          width 10%
+  .modal-footer
+    bottom 0
+    border 0
+    padding 0
+    margin 0
+    margin-bottom 5px
+    text-align right
+    width auto
+    padding-right 10px
+    font-size 20px
+    top 280px
+    .btn
+      float right
+      margin 5px
+    .modal-itogo
+      border 0
+      padding 0
+      margin 0
+      span
+        margin 0
+        vertical-align baseline
+  .delivery-in-modal
+    position absolute
+    bottom 50px
+    left 10px
+    font-size 16px
+
+.modal.bootbox
+  height 125px
+  width 460px
+  margin-left -230px
+  .modal-dialog
+    padding 0
+    width 460px
+    .modal-content
+      border 0
+      padding 0
+      .modal-body
+        padding 20px
+      .modal-footer
+        position static
+        height auto
+        width auto
+        margin 0
+        padding 0 5px 0 0
+        .btn
+          float right
+          margin 15px 10px 0 0
+  .close
+    margin -15px -10px 0 0 !important
+
+.sidebar#sidebar
+  height 100%
+  left 0
+  top 0
+  bottom 0
+  position absolute
+  z-index 2
+  .show-left
+    display none
+
+@media all and (max-width: 1170px)
+  .catalog-head table td.td-basket
+    padding-right 40px
+  .catalog table tr td .product-link span
+    width 70%
+
+@media all and (max-width: 1024px)
+  .catalog-head table td.td-basket
+    padding-right 30px
+
+@media all and (max-width: 990px)
+  .show-right
+    display block
+    position fixed
+    z-index 11
+    top: 40%
+    right -31px
+    border-radius 5px 5px 0 0
+    cursor pointer
+    font-size 16px
+    letter-spacing 1px
+    border 1px solid #ccc
+    background #ccc
+    padding 4px 15px
+    transform -90deg;
+  .shop-right
+    margin-top -45px
+    height 100%
+    right -470px
+    display none
+    z-index 10
+    padding 0 0 20px 0
+    padding-top 65px
+    border-bottom 1px solid #ccc
+    overflow auto
+    &:before
+      display none
+    .hide-right
+      display block;
+      position absolute
+      top 50px
+      font-size 30px
+      right 10px
+      cursor pointer
+  .main-content
+    margin-right 0
+  .catalog table tr td:first-child
+  .catalog-head table td:first-child
+    width 450px
+  .catalog-head table td.td-basket
+    width 35px
+    padding-right 0
+  footer.short-footer .container
+    margin-right 0
+  .close
+    font-size 30px
+
+@media all and (max-width: 768px),screen and (device-width: 320px)
+  .sidebar#sidebar
+    margin-left -190px
+    .show-left
+      display block
+      position fixed
+      top: 40%
+      left -22px
+      border-radius 5px 5px 0 0
+      cursor pointer
+      font-size 16px
+      letter-spacing 1px
+      border 1px solid #ccc
+      background #ccc
+      padding 0 10px
+      transform 90deg;
+  .container
+    //width 758px
+    width 100%
+    .main-content
+      margin-left 0
+
+@media all and (max-width: 660px)
+  .product .modal
+    width 100%
+    left 0
+    margin-left 0
+    .modal-footer
+      width 100%
+      right 0
+      text-align center
+      >span
+        float left
+      .full-descr
+        clear both
+        margin-left -130px
+    .product-slider .slider img
+      max-width 120px
+      max-height 120px
+
+@media all and (max-width: 460px)
+  .ace-nav>li.user-short
+    float none !important
+  .navbar .navbar-header.pull-right
+    float right !important
+  .navbar-header:after
+    clear none !important
+
+@media only screen and (max-width: 320px)
+  .ace-nav>li a
+    padding-top 10px !important
+  .ace-nav>li.user-short a
+    padding-top 3px !important
+
+@media screen and (device-width: 320px)
+   .container
+      width 100%
+
+/* блоки при нелогине */
+.nologin-user-short
+  a
+    cursor default !important
+    border-bottom 0 !important
+    span
+      color #fff
+      display inline-block
+      line-height 18px
+      &:hover
+        border-bottom 1px solid #fff
+        cursor pointer
+.moe-nologin
+  max-height 420px
+  .moe-nologin-add
+    text-align left;
+    padding-left 10px
+    margin-bottom 10px
+    h3
+      font-size 18px
+    label
+      width 58px
+    .moe-nologin-item
+      display inline-block
+      text-align left
+      vertical-align middle
+      margin 0 10px
+.modal-login
+  width 400px
+  margin-left -205px
+  border-radius main-radius
+  text-align center
+  max-height 270px
+  .fa
+    font-size 40px
+    margin 0 10px 20px 0
+    &:hover
+      text-decoration none
+  input
+    margin-bottom 10px
+  label
+    width 65px
+  .btn
+    width 150px
+    display block
+    margin 5px auto 0
+
+/* popup логина */
+.modal-auth
+  width 375px
+  overflow hidden
+  height 100%
+  margin-left -187px
+  background none
+  top 5%
+  .login-forms
+    margin 0
+    form
+      background #fff
+      height 270px
+  .close
+    margin-right -5px
+
+/* оформление заказа */
+.confirm-order
+  font-size 16px
+  .order-date
+    padding 15px 0 15px 10px
+    font-weight bold
+  .catalog-confirm
+    >li
+      list-style-type none
+      border-bottom 1px solid #ccc
+      overflow auto
+      padding 10px 0 10px 10px
+      &:first-child
+        border-top 1px solid #ccc
+      table
+        float right
+        width 60%
+        height 40px
+        td
+          width 25%
+          text-align center
+          .ace-spinner
+            vertical-align middle
+          .unit-name
+            display inline-block
+            vertical-align middle
+            margin-left 15px
+          .delete-product
+            font-size 24px
+            color #ff0000
+            &:hover
+              text-decoration none
+          &.td-spinner
+            text-align left
+      .product-link
+        span
+          display inline-block
+          vertical-align middle
+          width 40px
+          text-align center
+        img
+         max-width 40px
+         max-height 40px
+        .product-right-descr
+          display inline-block
+          vertical-align middle
+          margin-left 40px
+  .refresh
+    float right
+    cursor pointer
+    margin 10px 10px 0 0
+    clear right
+    font-size 14px
+  .itogo-right
+  .weight-right
+    float right
+    clear right
+    padding-right 10px
+    padding-top 15px
+    font-size 16px
+    span
+      font-weight bold
+  .additionally-order
+    padding 0 10px
+  .delivery-right
+    margin-top 40px
+    h3
+      font-size 16px
+    #phone-delivery
+      width 250px
+    .input-delivery
+      .lbl
+        font-size 16px
+        display block
+        margin-bottom 5px
+      input
+        width 175px
+        margin-bottom 10px
+        &.short
+          width 175px
+          display inline-block
+          &.first
+            margin-right 5px
+      #delivery-addr
+        margin-left 0
+      .delivery-dropdown
+        float right
+        margin-top -5px
+        display none
+        .dropdown-menu
+          left -233px
+          width 360px
+          li a
+            white-space normal
+      .address-input
+        //width 360px
+        margin 10px 0
+        display none
+        .btn
+          margin-bottom 10px
+    .alert-delivery
+      color #ff0000
+      display none
+      font-size 14px
+  .additionally-order
+    .add-address
+      margin-left 10px
+      margin-top 7px
+    .btn-order
+    .btn-cancel
+      float right
+      margin-left 10px
+      margin-bottom 10px
+  textarea
+    margin 10px 0
+    width 100%
+    display block
+    height 80px
+    font-family Tahoma,Arial
+    font-size 14px
+    color rgb(133, 133, 133)
+
+/* order End */
+.order-end
+  padding 0 20px
+  text-align center
+  .to-main-link
+    float left
+    margin 10px 0
+  .order-end-in
+    min-width 768px
+    width 80%
+    margin 0 auto
+    margin-bottom 25px
+    h3
+      text-align left
+      margin-top 0
+      padding-top 15px
+      margin-bottom 20px
+      clear left
+    .bill-wrap
+      border 1px solid #438eb9
+      text-align left
+      padding 20px
+      .catalog
+        position static
+        top 0
+        bottom 0
+      .bill-title
+        padding 5px 10px
+        margin -35px 0 0 0
+        background #fff
+        position absolute
+      .order-end-head
+        .bill-item
+          font-size 14px
+          line-height 26px
+          span
+            line-height 16px
+        .bill-amount
+          font-weight bold
+          font-size 18px
+          margin-bottom 10px
+        .order-end-head-left
+          float left
+          margin-bottom 30px
+          width 45%
+        .order-end-head-right
+          float right
+          width 45%
+          .order-end-logo
+            float left
+            width 100px
+            img
+              width 100%
+          .order-end-shop-info
+            margin-left 120px
+      .order-end-info
+        margin-top 20px
+        .product-link
+          color #000000
+          cursor default
+        h2
+          clear both
+          font-size 20px
+        .bill-comment
+          clear right
+          float right
+          margin 10px 0 20px 0
+          width 60%
+          h4
+            float left
+            font-size 16px
+            margin 0
+          div
+            margin-left 130px
+        .bill-delivery
+          float right
+          font-weight bold
+          margin 10px 0 15px 0
+          font-size 14px
+        .order-end-amount
+          text-align right
+          font-weight bold
+          font-size 14px
+          margin-top 10px
+          &.all-amount
+            font-size 16px
+            clear right
+            padding 15px 10px 0 0
+            margin-top 15px
+            border-top 1px solid #438eb9
+
+/* page-about-shop*/
+
+.page-about-shop
+  .page
+    display none
+  .shop-about
+    display block
+
+/* error */
+.modal-error
+  height 130px
+  font-size 14px
+  padding-top 10px
+  border 3px solid #ff0000
+  .close
+    margin-top -15px
+  .error-info
+    clear right
+    text-align right
+    float right
+    font-size 12px
+    height 54px
+  .error-details-link
+    float right
+
+/* backoffice */
+.backoffice .main-content
+  margin-left 200px
+  margin-right 0
+  margin-top 45px
+
+.main-container.backoffice
+  margin-top 45px
+
+.backoffice
+  .plus-minus
+    font-size 24px
+    &:hover
+      text-decoration none
+  .order-item
+    margin-bottom 15px
+    .order-bottom
+      margin-top 0
+      .order-delivery
+        margin-right 0
+    .delete-order
+      font-size 20px
+      color #ff0000
+      display block
+      padding 0 3px
+      &:hover
+        text-decoration none
+      &.passive
+        cursor default
+        color #ccc
+  .order-products
+    display none
+    .product-link
+      text-decoration none
+      color #000000
+      cursor default
+    .catalog
+      position static
+  .back-orders-top
+    .form-group
+      margin-right 565px
+    .btn-group
+    .input-group
+    .reset-filters
+      float right
+      margin-left 10px
+    .input-group
+      display inline-block
+    .dropdown-toggle
+      height 34px
+.import
+  .form-import
+    margin 10px 0
+    display inline-block
+    margin-left 20px
+    input[type="submit"]
+      //margin-top 10px
+      margin-left 10px
+  .products-checklist
+  .categories-checklist
+  .producers-checklist
+    display none
+  .import-show
+    display none
+    position relative
+    .import-btn-top
+      float right
+      margin-top -5px
+      .import-btn
+        margin-bottom 0
+    .import-btn
+      margin-bottom 10px
+    .import-field-dropdown
+      display block
+      width 100%
+      background #6fb3e0
+      .btn
+        padding 5px
+        border 0
+        font-size 12px
+        float none
+    .import-table
+      /*overflow-x auto
+      overflow-y visible*/
+      margin-bottom 10px
+      &.y-overflow-hidden
+        overflow-y hidden
+      .btn-group
+        position static !important
+    table
+      min-width 100%
+      td
+        text-align center
+        //position relative
+        border 1px solid #000
+  #import-data
+    display inline-block
+    vertical-align middle
+.export
+  .input-group
+    display inline-block
+    vertical-align middle
+  .report-link
+    line-height 34px
+    display inline-block
+    vertical-align middle
+    a
+      display inline-block
+      margin 0 0 0 10px
+      vertical-align middle
+  .export-orders-checklist
+  .export-orderLine-checklist
+  .export-products-checklist
+  .export-packs-checklist
+    display inline-block
+    //width 49%
+    vertical-align top
+  .export-table
+    .export-single-table
+      overflow-y auto
+    table
+      min-width 100%
+      margin 20px 0 0 0
+      thead td
+        background #6fb3e0
+        color #fff
+      td
+        border 1px solid #000
+        text-align center
+  .export-btn-line
+    margin-top 15px
+.bo-settings
+  fieldset
+    input
+    textarea
+      margin-bottom 5px
+    .file-label
+      margin-top -40px !important
+      &.selected
+        margin-right 10px
+      .file-name
+        text-align left !important
+    .remove
+      margin-right 10px
+  h5
+    margin-top 20px
+  .radio
+    margin-top 20px
+  .logo-container
+    position relative
+    width 200px
+    height 200px
+    line-height 200px
+    text-align center
+    img
+      //margin-left 10px
+      max-width 200px
+      max-height 200px
+      display inline-block
+      vertical-align middle //
+    .settings-logo
+      position absolute
+      top 0
+      bottom 0
+      .file-label
+        background rgba(255,255,255,0.1)
+        width 200px
+        height 200px
+        &:before
+          background rgba(0,0,0,0.4)
+          color #fff
+          width 100%
+          font-weight normal
+          position absolute
+          bottom 0
+          height 30px
+          line-height 30px
+          top auto
+          margin 0
+        .file-name
+          height 100%
+          text-align center !important
+          line-height 200px
+          padding-left 0
+          &:after
+            height 30px
+            line-height 30px
+  #settings-delivery
+    .delivery-price-type
+      padding-left 30px
+      input
+        display inline-block
+      &.delivery-weight
+        padding-left 50px //
+      span
+        display inline-block
+        margin-left 5px
+        margin-right 15px
+      .add-delivery-interval
+        display inline-block
+        font-size 30px
+        position relative
+        top 6px
+        &:hover
+          text-decoration none
+    .delivery-area
+      margin-top 10px
+      span
+        display inline-block
+        font-size 14px 
+    input[type=checkbox].ace+.lbl::before, input[type=radio].ace+.lbl::before
+      vertical-align top
+      margin-right 5px
+    .new-interval
+      display none
+    .remove-interval
+      color #ff0000
+      font-size 30px
+  #settings-shedule
+    .shedule-date
+    .shedule-confirm
+      display inline-block
+    .shedule-confirm
+      margin-left 10px
+      margin-top 10px
+      position relative
+      top 4px
+      input
+        width 50px //
+        display inline-block
+        margin 0 10px
+    .datepicker
+      margin-left 0
+      background #D6F7F7
+      width 450px
+      td
+        padding 3px 0 !important
+        &.selected
+          background #ffbabf
+          position relative
+          .remove-date
+            position absolute
+            color #ff0000
+            font-size 16px//
+            top -12px
+            right -5px
+            z-index 100
+            &:hover
+              text-decoration none
+.bo-edit
+  .table-add //
+    display none
+  .table-overflow
+    width 100%
+    overflow-x scroll
+    margin-bottom 10px
+  .table-add-product
+    position relative
+    .categories-dropdown
+    .producers-dropdown
+      position static !important
+    .dropdown-menu
+      top 0
+  .products-table
+    overflow-y hidden
+    tbody td
+      border-bottom 1px solid #ccc
+  table
+    width 100%
+    margin 15px 0 10px 0 //
+    td
+      min-width 100px //
+      textarea
+        width 100%
+    thead td
+      text-align left
+      background #EFF3F8
+      padding 3px
+    .product-
+      &name
+      &shortDescr
+      &fullDescr
+        min-width 200px
+      &imageURL
+        min-width 100px
+        height 100px
+        text-align center
+        position relative //
+        img
+          max-width 100px
+          max-height 100px
+        .ace-file-input
+          position absolute
+          top 0
+          bottom 0
+          input
+            height 0
+          .file-label
+            height 100px
+            opacity 0 //
+            line-height 100px
+            border none
+          .file-name
+            display inline-block
+            vertical-align middle //
+            &:after
+              display none
+      &imagesSet
+        min-width 200px
+        position relative
+        img
+          max-width 50px
+          max-height 50px
+        .images-set
+          position relative
+        .image-item
+          position relative
+        .ace-file-input
+          input
+            height 0
+          .file-label
+            height 30px
+            line-height 20px
+            border 0
+            width 70%
+            margin 0 auto
+            &:before
+              font-size 14px
+              margin 0
+              color #428bca
+              font-weight normal
+          .file-name
+            display inline-block
+            vertical-align middle //
+            &:after
+              display none
+          .remove
+            z-index 100
+            width 16px
+            height 16px
+            border-width 2px
+            i
+              display block
+              font-size 10px //
+        .ace-file-input.added
+          display inline-block
+          width 60px
+          height 60px
+          margin-bottom 0
+          .file-label
+            height auto
+            width 100% //
+      &categories
+        min-width 150px
+        .categories-dropdown
+          width 100%
+      &weight
+      &price
+      &pack
+      &unitName
+        min-width 100px
+      &prepack
+        min-width 30px //
+      &options
+        td
+          border 0 //
+        td.td-remove-options
+          min-width 30px //
+          .remove-item
+            font-size 16px
+      &producer
+        >span
+          display block
+      &remove
+        min-width 30px
+        text-align center
+    .removing
+      background #ffe3db
+    .map-item
+      position relative
+      display inline-block
+      padding 5px //
+      border-radius 4px
+      background #eff3f8
+      margin 0 2px
+      margin-bottom 7px
+      .remove-item
+        font-size 16px
+        position absolute
+        top -10px
+        right -5px
+    input
+      width 100%
+    .remove-item
+      display inline-block
+      font-size 20px
+      color #ff0000
+      &:hover
+        text-decoration none
+  #edit-category
+    td
+      vertical-align top //
+      width 36%
+      padding 10px
+    .category-parent
+      width 20%
+      text-align center //
+    .category-remove
+      width 4%
+      text-align center
+    .dropdown-menu
+      margin-left -50px
+  #edit-producer
+    td
+      width 48%
+      padding 10px
+      textarea
+        min-height 100px
+    .producer-remove
+      width 4%
+      text-align center
+/* админка */
+.adminka
+  table
+    width 100%
+    margin-top 20px
+    td
+      border 1px solid #ccc
+      padding 10px
+      line-height 16px
+      width 24%
+      &.td-icon
+        width 4%
+    .td-icon //
+      text-align center
+      padding-left 0
+      width 5%
+    .fa:hover
+    .remove-item:hover
+      text-decoration none
+    .fa
+      display inline-block
+      font-size 20px
+    .update-admins-link
+      font-size 20px
+      &:hover
+        text-decoration none
+    .remove-item
+      color #ff0000
+      font-size 30px
+    .update-owner-line
+    .update-admins-line
+      display none
+      margin-top 10px
+      input
+        width 200px
+        margin-right 15px
+        margin-bottom 10px
+        height 34px
+        position relative
+        top 2px
+    .update-owner-link
+      font-size 14px
+    .admin-item
+      padding 5px
+      position relative
+      display inline-block
+      margin 0 3px 5px 3px
+      background #eff3f8
+      .remove-admin-item
+        position absolute
+        top -8px
+        font-size 16px
+        right -5px
+        color #ff0000
+        &:hover
+          text-decoration none
+
+
+.adminka-users
+  display none
+
+
+.full-text
+  display none
+  position absolute
+  z-index 2
+  text-align justify
+  width 400px
+  background #fff
+  padding 10px
+  border 1px solid #000
+  border-radius 3px
+  .close
+    float right
+    position relative
+    opacity .8
+    font-size 16px
+    margin -13px -10px 0 0
+
+.confirm-info
+  display inline-block
+  margin-left 10px
+
+.import
+.export
+.bo-settings
+.bo-edit
+  display none
+
+#doublescroll { overflow: auto; overflow-y: hidden; }
+
+/* вырезка из плагина для multiselect */
+.ui-multiselect
+  text-align left
+  .ui-icon
+    color #fff
+    top 7px
+
+.ui-multiselect span.ui-icon { float:right }
+.ui-multiselect-single .ui-multiselect-checkboxes input { position:absolute !important; top: auto !important; left:-9999px; }
+.ui-multiselect-single .ui-multiselect-checkboxes label { padding:5px !important }
+
+.ui-multiselect-header { margin-bottom:3px; padding:3px 0 3px 4px }
+.ui-multiselect-header ul { font-size:0.9em }
+.ui-multiselect-header ul li { float:left; padding:0 10px 0 0; list-style: none; margin-bottom 5px }
+.ui-multiselect-header a { text-decoration:none }
+.ui-multiselect-header a:hover { text-decoration:underline }
+.ui-multiselect-header span.ui-icon { float:left }
+.ui-multiselect-header li.ui-multiselect-close { float:right; text-align:right; padding-right:0 }
+
+.ui-multiselect-menu { display:none; background #fff; box-shadow: 0 0 5px #ccc; padding:3px; position:absolute; z-index:10000; text-align: left }
+.ui-multiselect-close{display:none}
+.ui-multiselect-checkboxes { position:relative /* fixes bug in IE6/7 */; overflow-y:scroll ; clear:left; margin-left 0;}
+.ui-multiselect-checkboxes label {  cursor:pointer; margin-bottom : 2px; display:block; border:1px solid transparent; }
+.ui-multiselect-checkboxes label input { position:relative; top:1px; margin-right 5px }
+.ui-multiselect-checkboxes li { clear:both; font-size:0.9em; padding-right:3px; }
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label { text-align:center; font-weight:bold; border-bottom:1px solid #428bca;border-top:1px solid #428bca }
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a { display:block; padding:3px; margin:1px 0; text-decoration:none }
+
+
+
+/* remove label borders in IE6 because IE6 does not support transparency */
+* html .ui-multiselect-checkboxes label { border:none; }
+/* --------------------------------- */
+
+.loading
+  background rgba(0, 0, 0, .4)
+  //opacity .1
+  position fixed
+  z-index 2
+  width 100%
+  height 100%
+  top 0
+  left 0
+  bottom 0
+  right 0
+  display none
+  color #fff
+  text-align center
+  .loading-inside
+    position absolute
+    left 50%
+    top 50%
+    width 213px
+    margin-left - 105px
+  img
+  span
+    display block
+    margin 0 auto
+    width 30px
+  span
+    font-size 16px
+    width auto
+    padding-top 15px

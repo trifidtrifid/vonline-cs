@@ -1,0 +1,45 @@
+<div class="input-group answer-block">
+
+    <textarea class="message-textarea no-resize" ng-model="ctrlMessage.commentText"
+              ng-hasfocus="ctrlMessage.isFocus" ng-show="ctrlMessage.answerShow" ng-keyup="base.messageChange($event,1)"
+              ng-blur="base.textareaBlur(ctrlMessage.commentText,ctrlMessage.default,ctrlMessage)" ng-focus="base.textareaFocus(ctrlMessage.commentText,ctrlMessage.default,ctrlMessage)"></textarea>
+
+
+            <div id="attach-area-{{ctrlId}}" class="attach-area">
+                <div class="loading hidden">
+                    <img ng-src="/static/i/loading2.gif" alt="картинка"/>
+                </div>
+            </div>
+            <div id="attach-doc-area-{{ctrlId}}" class="attach-area attach-area-doc"></div>
+
+
+    <span class="input-group-btn" ng-show="ctrlMessage.answerShow">
+        <!--
+         параметры
+
+         ctrlTopicId
+         ctrlParent
+         ctrlFirstMessage
+
+         используются только для создания сообщений НЕ первого уровня в обсуждении
+         -->
+        <div class="btn-group attach-dropdown pull-right">
+            <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+                <span class="btn-group-text">Прикрепить</span>
+                <span class="icon-caret-down icon-on-right"></span>
+            </button>
+
+            <ul class="dropdown-menu dropdown-blue">
+                <li><input id="attachImage-{{ctrlId}}" type="file"/></li>
+                <li><input id="attachDoc-{{ctrlId}}" type="file"/></li>
+            </ul>
+        </div>
+
+        <button class="btn btn-sm btn-info no-radius no-border" type="button" ng-click="createMessage($event,ctrlMessage,ctrlTopicId,ctrlParent,ctrlFirstMessage)">
+            <i class="icon-share-alt"></i>
+            Отправить
+        </button>
+        <span class="error-info" ng-show="ctrlMessage.isCreateCommentError" ng-click>{{ctrlMessage.createCommentErrorText}}</span>
+
+    </span>
+</div>

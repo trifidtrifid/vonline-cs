@@ -121,14 +121,38 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/about</url-pattern>
     </servlet-mapping>
 
+    <!--<servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/*</url-pattern>
+        <url-pattern>/*.html</url-pattern>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>-->
+
     <servlet>
         <servlet-name>Main</servlet-name>
         <jsp-file>/main.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
-        <url-pattern>/main</url-pattern>
+        <!--<url-pattern>/*</url-pattern>-->
         <url-pattern>/null</url-pattern>
+        <url-pattern>/profile*</url-pattern>
+        <url-pattern>/main</url-pattern>
+        <url-pattern>/wall-single/*</url-pattern>
+        <url-pattern>/talks</url-pattern>
+        <url-pattern>/talks-single/*</url-pattern>
+        <url-pattern>/profit</url-pattern>
+        <url-pattern>/profit-single/*</url-pattern>
+        <url-pattern>/dialogs</url-pattern>
+        <url-pattern>/dialog-single/*</url-pattern>
+        <url-pattern>/neighbours</url-pattern>
+        <url-pattern>/profile.change-avatar</url-pattern>
+        <url-pattern>/settings</url-pattern>
+        <url-pattern>/maps</url-pattern>
+        <url-pattern>/set-info</url-pattern>
+        <url-pattern>/counters</url-pattern>
+        <url-pattern>/counters-history/*</url-pattern>
+        <url-pattern>/important</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -199,6 +223,5 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/thrift/*</url-pattern>
         <url-pattern>/about/*</url-pattern>
         <url-pattern>/count</url-pattern>
-        <url-pattern>/</url-pattern>
     </filter-mapping>
 </web-app>

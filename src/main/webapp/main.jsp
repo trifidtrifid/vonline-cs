@@ -35,21 +35,21 @@
 <head>
 <meta charset="utf-8" />
 <title>Главная</title>
-    <link rel="icon" href="i/landing/vmesteonline.png" type="image/x-icon" />
-    <link rel="shortcut icon" href="i/landing/vmesteonline.png" type="image/x-icon" />
+    <link rel="icon" href="/static/i/landing/vmesteonline.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="/static/i/landing/vmesteonline.png" type="image/x-icon" />
 
-    <link rel="stylesheet" href="css/lib/jquery-ui-1.10.3.full.min.css" />
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/lib/fancybox/jquery.fancybox.css"/>
-<link rel="stylesheet" href="css/lib/jquery.Jcrop.css"/>
-<link rel="stylesheet" href="js/bower_components/select2/select2.css"/>
+    <link rel="stylesheet" href="/static/css/lib/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
+<link rel="stylesheet" href="/static/css/lib/jquery.Jcrop.css"/>
+<link rel="stylesheet" href="/static/js/bower_components/select2/select2.css"/>
 
-<%--<script src="js/lib/jquery-2.1.1.min.js"></script>--%>
+<%--<script src="/static/js/lib/jquery-2.1.1.min.js"></script>--%>
     <script type="text/javascript" src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru_RU&coordorder=longlat"></script>
 
 
-    <script src="js/lib/jquery-2.0.3.js"></script>
-    <script src="js/angular/angular.js"></script>
+    <script src="/static/js/lib/jquery-2.0.3.js"></script>
+    <script src="/static/js/angular/angular.js"></script>
 <!--[if lt IE 9]>
     <script>
         document.createElement('header');
@@ -60,10 +60,10 @@
     </script>
     <![endif]-->
 
-    <script src="js/lib/jquery.Jcrop.min.js"></script>
-    <script src="js/bower_components/select2/select2.min.js"></script>
-    <script src="js/bower_components/angular-ui-select2/src/select2.js"></script>
-    <script src="js/angular/ng-infinite-scroll.js"></script>
+    <script src="/static/js/lib/jquery.Jcrop.min.js"></script>
+    <script src="/static/js/bower_components/select2/select2.min.js"></script>
+    <script src="/static/js/bower_components/angular-ui-select2/src/select2.js"></script>
+    <script src="/static/js/angular/ng-infinite-scroll.js"></script>
 
 </head>
 <body ng-controller="baseController as base" ng-cloak ng-class="{'height100': !base.isFooterBottom}"> <!--  -->
@@ -78,7 +78,7 @@
     <div class="navbar-container ng-cloak" id="navbar-container" ng-controller="navbarController as navbar">
         <div class="navbar-header pull-left">
             <a href="/" class="navbar-brand">
-                <img src="i/logo.png" alt="логотип"/>
+                <img src="/static/i/logo.png" alt="логотип"/>
             </a>
         </div>
 
@@ -258,81 +258,81 @@
 
 	<!-- общие библиотеки -->
 
-	<script src="js/lib/bootstrap.min.js"></script>
-    <script src="js/lib/jquery-ui-1.10.3.full.min.js"></script>
-    <script src="js/lib/jquery.ui.datepicker-ru.js"></script>
-	<script src="js/lib/ace-extra.min.js"></script>
-	<%--<script src="js/lib/ace-elements.min.js"></script>--%>
-	<script src="js/ace-elements.js"></script>
+	<script src="/static/js/lib/bootstrap.min.js"></script>
+    <script src="/static/js/lib/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="/static/js/lib/jquery.ui.datepicker-ru.js"></script>
+	<script src="/static/js/lib/ace-extra.min.js"></script>
+	<%--<script src="/static/js/lib/ace-elements.min.js"></script>--%>
+	<script src="/static/js/ace-elements.js"></script>
 
-    <script src="js/lib/jquery.fancybox.js"></script>
+    <script src="/static/js/lib/jquery.fancybox.js"></script>
 
 	<!-- конкретные плагины -->
 
 	<!-- библиотеки для wysiwig редактора  -->
-	<script src="js/lib/markdown/markdown.min.js"></script>
-	<script src="js/lib/markdown/bootstrap-markdown.min.js"></script>
-	<script src="js/lib/jquery.hotkeys.min.js"></script>
-	<script src="js/lib/bootstrap-wysiwyg.min.js"></script>
-	<script src="js/bootbox.min.js"></script>
+	<script src="/static/js/lib/markdown/markdown.min.js"></script>
+	<script src="/static/js/lib/markdown/bootstrap-markdown.min.js"></script>
+	<script src="/static/js/lib/jquery.hotkeys.min.js"></script>
+	<script src="/static/js/lib/bootstrap-wysiwyg.min.js"></script>
+	<script src="/static/js/bootbox.min.js"></script>
 	<!-- -->
-	<script src="js/lib/jquery.scrollTo.min.js"></script>
-    <script src="js/lib/ace.min.js"></script>
+	<script src="/static/js/lib/jquery.scrollTo.min.js"></script>
+    <script src="/static/js/lib/ace.min.js"></script>
 
 	<!-- -->
 	<!-- файлы thrift -->
-	<script src="js/thrift.js" type="text/javascript"></script>
-	<script src="gen-js/bedata_types.js" type="text/javascript"></script>
-	<script src="gen-js/messageservice_types.js" type="text/javascript"></script>
-	<script src="gen-js/MessageService.js" type="text/javascript"></script>
-	<script src="gen-js/DialogService.js" type="text/javascript"></script>
-	<script src="gen-js/userservice_types.js" type="text/javascript"></script>
-	<script src="gen-js/UserService.js" type="text/javascript"></script>
-	<script src="gen-js/authservice_types.js" type="text/javascript"></script>
-	<script src="gen-js/AuthService.js" type="text/javascript"></script>
-    <script src="gen-js/utilityservces_types.js" type="text/javascript"></script>
-    <script src="gen-js/UtilityService.js" type="text/javascript"></script>
-    <script src="gen-js/fileutils_types.js" type="text/javascript"></script>
-    <script src="gen-js/FileService.js" type="text/javascript"></script>
+	<script src="/static/js/thrift.js" type="text/javascript"></script>
+	<script src="/gen-js/bedata_types.js" type="text/javascript"></script>
+	<script src="/gen-js/messageservice_types.js" type="text/javascript"></script>
+	<script src="/gen-js/MessageService.js" type="text/javascript"></script>
+	<script src="/gen-js/DialogService.js" type="text/javascript"></script>
+	<script src="/gen-js/userservice_types.js" type="text/javascript"></script>
+	<script src="/gen-js/UserService.js" type="text/javascript"></script>
+	<script src="/gen-js/authservice_types.js" type="text/javascript"></script>
+	<script src="/gen-js/AuthService.js" type="text/javascript"></script>
+    <script src="/gen-js/utilityservces_types.js" type="text/javascript"></script>
+    <script src="/gen-js/UtilityService.js" type="text/javascript"></script>
+    <script src="/gen-js/fileutils_types.js" type="text/javascript"></script>
+    <script src="/gen-js/FileService.js" type="text/javascript"></script>
 	<!-- -->
 
 	<!-- собственные скрипты  -->
-<script src="js/common.js"></script>
-<script src="js/directives.js"></script>
-<script src="js/services.js"></script>
-<%--<script src="js/controllers.js"></script>--%>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/directives.js"></script>
+<script src="/static/js/services.js"></script>
+<%--<script src="/static/js/controllers.js"></script>--%>
 
-<script src="js/controllers/baseController.js"></script>
-<script src="js/controllers/mainContentTopController.js"></script>
-<script src="js/controllers/leftbarController.js"></script>
-<script src="js/controllers/navbarController.js"></script>
-<script src="js/controllers/LentaController.js"></script>
-<script src="js/controllers/WallSingleController.js"></script>
-<script src="js/controllers/TalksController.js"></script>
-<script src="js/controllers/TalksSingleController.js"></script>
-<script src="js/controllers/AdvertsController.js"></script>
-<script src="js/controllers/AdvertsSingleController.js"></script>
-<script src="js/controllers/neighboursController.js"></script>
-<script src="js/controllers/ProfileController.js"></script>
-<script src="js/controllers/SettingsController.js"></script>
-<script src="js/controllers/dialogsController.js"></script>
-<script src="js/controllers/dialogController.js"></script>
-<script src="js/controllers/changeAvatarController.js"></script>
-<script src="js/controllers/MapsController.js"></script>
-<script src="js/controllers/SetInfoController.js"></script>
-<script src="js/controllers/CountersController.js"></script>
-<script src="js/controllers/ModalInstanceCtrl.js"></script>
-<script src="js/controllers/CountersHistoryController.js"></script>
-<script src="js/controllers/importantController.js"></script>
+<script src="/static/js/controllers/baseController.js"></script>
+<script src="/static/js/controllers/mainContentTopController.js"></script>
+<script src="/static/js/controllers/leftbarController.js"></script>
+<script src="/static/js/controllers/navbarController.js"></script>
+<script src="/static/js/controllers/LentaController.js"></script>
+<script src="/static/js/controllers/WallSingleController.js"></script>
+<script src="/static/js/controllers/TalksController.js"></script>
+<script src="/static/js/controllers/TalksSingleController.js"></script>
+<script src="/static/js/controllers/AdvertsController.js"></script>
+<script src="/static/js/controllers/AdvertsSingleController.js"></script>
+<script src="/static/js/controllers/neighboursController.js"></script>
+<script src="/static/js/controllers/ProfileController.js"></script>
+<script src="/static/js/controllers/SettingsController.js"></script>
+<script src="/static/js/controllers/dialogsController.js"></script>
+<script src="/static/js/controllers/dialogController.js"></script>
+<script src="/static/js/controllers/changeAvatarController.js"></script>
+<script src="/static/js/controllers/MapsController.js"></script>
+<script src="/static/js/controllers/SetInfoController.js"></script>
+<script src="/static/js/controllers/CountersController.js"></script>
+<script src="/static/js/controllers/ModalInstanceCtrl.js"></script>
+<script src="/static/js/controllers/CountersHistoryController.js"></script>
+<script src="/static/js/controllers/importantController.js"></script>
 
-<script src="js/angular/angular-ui-router.js"></script>
-<script src="js/angular/sanitize.js"></script>
-<script src="js/angular/linky-custom.js"></script>
-<script src="js/angular/ui-bootstrap-tpls-0.11.2.min.js"></script>
+<script src="/static/js/angular/angular-ui-router.js"></script>
+<script src="/static/js/angular/sanitize.js"></script>
+<script src="/static/js/angular/linky-custom.js"></script>
+<script src="/static/js/angular/ui-bootstrap-tpls-0.11.2.min.js"></script>
 
-	<script src="js/app.js"></script>
+	<script src="/static/js/app.js"></script>
 
-<script src="js/angular/ya-map-2.1.min.js" type="text/javascript"></script>
+<script src="/static/js/angular/ya-map-2.1.min.js" type="text/javascript"></script>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

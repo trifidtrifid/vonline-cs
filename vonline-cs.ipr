@@ -81,7 +81,6 @@
   </component>
   <component name="CopyrightManager" default="" />
   <component name="DataNucleusConfiguration">
-    <option name="api" value="JDO" />
     <option name="enabledModules">
       <set>
         <option value="vonline-cs" />
@@ -300,6 +299,7 @@
                 <option name="path" value="modules\jmx-remote.mod" />
               </JettyConfigFile>
               <JettyConfigFile>
+                <option name="active" value="true" />
                 <option name="path" value="modules\jmx.mod" />
               </JettyConfigFile>
               <JettyConfigFile>
