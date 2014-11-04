@@ -1733,4 +1733,7 @@ h1 {
 .empty h2 {
   text-align: center;
   margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
 }
