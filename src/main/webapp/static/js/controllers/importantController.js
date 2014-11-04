@@ -4,6 +4,7 @@ forumControllers.controller('importantController',function($rootScope) {
         $rootScope.setTab(4);
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;
+        $rootScope.base.pageTitle = "Важно";
 
         var important = this,
             lastLoadedId = 0,

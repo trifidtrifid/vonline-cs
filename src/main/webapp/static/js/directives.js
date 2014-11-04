@@ -5,10 +5,15 @@
 angular.module('forum.directives', []).
   directive('ngHasfocus', function() {
         return function(scope, element, attrs) {
+
             scope.$watch(attrs.ngHasfocus, function (nVal, oVal) {
-                if (nVal && scope.wallItem) {
+                if (nVal) {
                     element[0].focus();
-                    setCaretToPos(element[0],scope.wallItem.commentText.length);
+                    if(scope.wallItem) {
+                        setCaretToPos(element[0], scope.wallItem.commentText.length);
+                    }else if(scope.ctrl){
+                        scope.base.textareaFocus(scope.ctrl.message.content,scope.ctrl.message.default,scope.ctrl,true);
+                    }
                 }
             });
 

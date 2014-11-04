@@ -176,35 +176,6 @@
                         </ul>
                     </div>
 				</aside>
-                <%--<aside class="sidebar-right ng-cloak" ng-controller="rightBarController as rightbar">
-                    <div class="importantly-top">
-                        Важно
-                    </div>
-                    <div class="importantly-middle" ng-show="importantTopics.topics == null || importantTopics.topics.length == 0">{{base.emptyMessage}}</div>
-                    <ul>
-                        <li ng-repeat="importantTopic in importantTopics.topics" class="clearfix">
-                            <div class="importantly-left">
-                                <div class="avatar short" style="background-image: url({{importantTopic.userInfo.avatar}})"></div>
-                            </div>
-                            <div class="importantly-right">
-                                <h3>{{importantTopic.userInfo.firstName}}</h3>
-                                <p ng-show="importantTopic.message.content.length <= 50">{{ importantTopic.message.content }}</p>
-                                <p ng-hide="importantTopic.message.content.length <= 50">{{ importantTopic.message.content.slice(0,50)+"..." }}</p>
-
-                                <div ng-switch on="importantTopic.message.type" >
-
-                                    <a ui-sref="wall-single({ topicId :{{ importantTopic.id }} })" ng-switch-when="5">Перейти к записи</a>
-                                    <a ui-sref="talks-single({ talkId :{{ importantTopic.id }} })" ng-switch-when="1">Перейти к записи</a>
-
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="importantly-bottom" ng-hide="importantTopics.topics == null || importantTopics.topics.length == 0">
-                        Больше важных сообщений нет
-                    </div>
-
-                </aside>--%>
 
 				<div class="main-content dynamic ng-cloak">
 
@@ -219,7 +190,7 @@
                          ng-class="{'top-overflow-auto' : base.pageTitle.length}" ng-cloak>
 
                         <div class="ng-cloak">
-                        <div class="page-title pull-left" ng-show="base.pageTitle.length">{{base.pageTitle}}</div>
+                            <div class="page-title pull-left" ng-show="base.pageTitle.length">{{base.pageTitle}}</div>
                         </div>
 
                         <nav class="submenu pull-right clearfix">

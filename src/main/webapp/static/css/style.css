@@ -1154,14 +1154,14 @@ h1 {
 .dialog-send .dialog-send-center .dialog-send-bottom {
   margin-top: 10px;
 }
+.page-title.top-overflow-auto {
+  height: 66px;
+  margin: -10px -10px 0 -10px;
+  padding-right: 10px;
+}
 .dialog,
 .private-messages {
   padding: 10px;
-  padding-top: 15px;
-}
-.dialog .page-title,
-.private-messages .page-title {
-  padding: 0;
 }
 .dialog .dialogs-container,
 .private-messages .dialogs-container {

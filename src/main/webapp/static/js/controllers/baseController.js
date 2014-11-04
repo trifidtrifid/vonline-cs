@@ -28,6 +28,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             }else{
                 if(message == "") ctrl.commentText = defaultText;
             }
+            base.isLentaFocus = false;
         };
 
         base.textareaFocus = function(message, defaultText,ctrl,isTopic){
@@ -1042,6 +1043,8 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
                 $rootScope.currentGroup = getDefaultGroup(base.groups);
             }
         }
+
+        base.isLentaFocus = false;
 
         $rootScope.base = base;
         //base.checkUpdates();

@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/static.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/watcherTasks.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/directives.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/directives.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/importantController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/importantController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/main.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
@@ -76,10 +78,53 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="profile.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profile.html">
+      <file leaf-file-name="main.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="955" selection-end="955" vertical-scroll-proportion="-8.5" vertical-offset="51" max-vertical-offset="1955">
+            <state line="188" column="20" selection-start="8578" selection-end="8578" vertical-scroll-proportion="-1.3846154" vertical-offset="3160" max-vertical-offset="5882">
+              <folding>
+                <marker date="1415129367523" expanded="true" signature="1985:2206" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="important.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="216" column="10" selection-start="13639" selection-end="13639" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="323">
+              <folding>
+                <element signature="tag#div#1;tag#section#0" expanded="false" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="empty-dialogs.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="40" selection-start="272" selection-end="272" vertical-scroll-proportion="-2.8846154" vertical-offset="44" max-vertical-offset="357">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="empty-important.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="56" selection-start="486" selection-end="486" vertical-scroll-proportion="0.35036495" vertical-offset="57" max-vertical-offset="357">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dialogs.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="26" selection-start="124" selection-end="142" vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="663">
               <folding />
             </state>
           </provider>
@@ -88,34 +133,16 @@
       <file leaf-file-name="empty-main.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="109" selection-start="402" selection-end="402" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="357">
+            <state line="10" column="62" selection-start="355" selection-end="372" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="357">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="empty-talks.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-talks.html">
+      <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="476">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="important.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="69" selection-start="543" selection-end="543" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="3876">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dialogs.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="40" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6421471" vertical-offset="0" max-vertical-offset="629">
+            <state line="3" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="3910">
               <folding />
             </state>
           </provider>
@@ -134,11 +161,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoFileAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/forum/app.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/forum/archieve/main.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/forum/controllers.js" />
-        <option value="$PROJECT_DIR$/vonline-cs.iws" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/NewNeigboursNotification.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/NewTopicsNotification.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/Notification.java" />
@@ -181,10 +203,15 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profile.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-profit.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/main.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" />
       </list>
     </option>
   </component>
@@ -275,7 +302,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -352,6 +379,32 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="webapp">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="static">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="partials">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="vonline-cs">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src/main">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -370,7 +423,103 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="vonline-cs" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -850,7 +999,7 @@
       <workItem from="1414757790323" duration="33844000" />
       <workItem from="1414879875103" duration="3922000" />
       <workItem from="1414932103609" duration="171000" />
-      <workItem from="1415102736679" duration="3390000" />
+      <workItem from="1415102736679" duration="9093000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -884,7 +1033,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="182352000" />
+    <option name="totallyTimeSpent" value="188055000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -930,8 +1079,8 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.094801225" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27599388" sideWeight="0.7583082" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.403169" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.7583082" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.403169" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -974,25 +1123,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="782">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3808">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/GeoLocation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar!/com/mysql/jdbc/Util.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
@@ -1115,7 +1245,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1030#1031#0" expanded="false" />
+            <element signature="e#1045#1046#0" expanded="false" />
+            <element signature="e#2205#2215#0" expanded="false" />
+            <element signature="e#2348#2354#0" expanded="false" />
+            <element signature="e#4872#4883#0" expanded="false" />
+            <element signature="e#5794#5811#0" expanded="false" />
+            <element signature="e#5861#5876#0" expanded="false" />
+            <element signature="e#6264#6275#0" expanded="false" />
+            <element signature="e#6542#6559#0" expanded="false" />
+            <element signature="e#9629#9638#0" expanded="false" />
+            <element signature="e#11364#11614#0" expanded="false" />
+            <element signature="e#11595#11596#0" expanded="false" />
+            <element signature="e#13863#13869#0" expanded="false" />
+            <element signature="e#23232#23238#0" expanded="false" />
+            <element signature="e#24973#24981#0" expanded="false" />
+            <element signature="e#25079#25085#0" expanded="false" />
+            <element signature="e#26139#26140#0" expanded="false" />
+            <element signature="e#26191#26192#0" expanded="false" />
+            <element signature="e#26355#26356#0" expanded="false" />
+            <element signature="e#26407#26408#0" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/utility/VoCounter.java">
@@ -1213,23 +1367,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="116" selection-start="766" selection-end="766" vertical-scroll-proportion="-7.1923075" vertical-offset="0" max-vertical-offset="357">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-talks.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="476">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="109" selection-start="402" selection-end="402" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="357">
           <folding />
         </state>
       </provider>
@@ -1241,20 +1381,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="452" selection-end="452" vertical-scroll-proportion="-9.153846" vertical-offset="0" max-vertical-offset="357">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="69" selection-start="543" selection-end="543" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="3876">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-profit.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="65" selection-start="346" selection-end="346" vertical-scroll-proportion="0.23658052" vertical-offset="0" max-vertical-offset="503">
@@ -1262,9 +1388,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="62" selection-start="355" selection-end="372" vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="285" selection-end="285" vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="1717">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="3910">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="188" column="20" selection-start="8578" selection-end="8578" vertical-scroll-proportion="-1.3846154" vertical-offset="3160" max-vertical-offset="5882">
+          <folding>
+            <marker date="1415129367523" expanded="true" signature="1985:2206" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="40" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6421471" vertical-offset="0" max-vertical-offset="629">
+        <state line="2" column="26" selection-start="124" selection-end="142" vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="216" column="10" selection-start="13639" selection-end="13639" vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="323">
+          <folding>
+            <element signature="tag#div#1;tag#section#0" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="40" selection-start="272" selection-end="272" vertical-scroll-proportion="-2.8846154" vertical-offset="44" max-vertical-offset="357">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="56" selection-start="486" selection-end="486" vertical-scroll-proportion="0.35036495" vertical-offset="57" max-vertical-offset="357">
           <folding />
         </state>
       </provider>
