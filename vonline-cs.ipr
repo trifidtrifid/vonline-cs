@@ -79,12 +79,14 @@
       <module name="vonline-cs" target="1.8" />
     </bytecodeTargetLevel>
   </component>
-  <component name="CopyrightManager" default="" />
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
   <component name="DataNucleusConfiguration">
     <option name="enabledModules">
-      <set>
+      <list>
         <option value="vonline-cs" />
-      </set>
+      </list>
     </option>
   </component>
   <component name="DependencyValidationManager">
@@ -237,7 +239,7 @@
     <output url="file://$PROJECT_DIR$/target/classes" />
   </component>
   <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="vonline" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="$PROJECT_DIR$/../../../env/java/jdk1.8u05" show_console_on_std_err="true">
+    <configuration default="false" name="vonline" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="C:/env/java/jdk1.8u05" show_console_on_std_err="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="vonline-cs:war exploded">

@@ -136,7 +136,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <servlet-name>Main</servlet-name>
         <!--<url-pattern>/*</url-pattern>-->
         <url-pattern>/null</url-pattern>
-        <url-pattern>/profile*</url-pattern>
+        <url-pattern>/profile/*</url-pattern>
         <url-pattern>/main</url-pattern>
         <url-pattern>/wall-single/*</url-pattern>
         <url-pattern>/talks</url-pattern>
