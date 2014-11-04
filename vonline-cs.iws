@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-profit.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-profit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/profile.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="$PROJECT_DIR$/vonline-cs.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/scopes/scope_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/static.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/watcherTasks.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/static/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
@@ -113,7 +115,7 @@
       <file leaf-file-name="dialogs.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="41" selection-start="340" selection-end="340" vertical-scroll-proportion="0.2027833" vertical-offset="0" max-vertical-offset="629">
+            <state line="19" column="40" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6421471" vertical-offset="0" max-vertical-offset="629">
               <folding />
             </state>
           </provider>
@@ -848,7 +850,7 @@
       <workItem from="1414757790323" duration="33844000" />
       <workItem from="1414879875103" duration="3922000" />
       <workItem from="1414932103609" duration="171000" />
-      <workItem from="1415102736679" duration="2753000" />
+      <workItem from="1415102736679" duration="3390000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -882,7 +884,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="181715000" />
+    <option name="totallyTimeSpent" value="182352000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1262,7 +1264,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="41" selection-start="340" selection-end="340" vertical-scroll-proportion="0.2027833" vertical-offset="0" max-vertical-offset="629">
+        <state line="19" column="40" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.6421471" vertical-offset="0" max-vertical-offset="629">
           <folding />
         </state>
       </provider>
