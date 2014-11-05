@@ -36,12 +36,6 @@
             <version>1.1.3</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet.jsp.jstl</groupId>
-            <artifactId>jstl-api</artifactId>
-            <version>1.2-rev-1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-rdbms</artifactId>
             <version>4.0.4</version>
@@ -86,13 +80,21 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jsp-2.1</artifactId>
             <version>6.0.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>jstl-api</artifactId>
+            <version>1.2-rev-1</version>
+            <scope>jar</scope>
+        </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -116,6 +118,7 @@
                     <webApp>
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
                         <contextPath>/</contextPath>
+                        <jettyXml>jetty-web.xml</jettyXml>
                     </webApp>
                     <stopPort>12345</stopPort>
                     <stopKey>12345</stopKey>
@@ -192,6 +195,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>root</finalName>
+        <finalName>vonline-demo</finalName>
     </build>
 </project>
