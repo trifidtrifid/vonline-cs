@@ -59,7 +59,7 @@
     </div>
 </div>
 
-	<div class="container coming-soon">
+	<div class="container coming-soon backoffice">
 
 		<div class="main-container" id="main-container">
 			<div class="main-container-inner">
@@ -68,6 +68,17 @@
                 <input placeholder="Ссылка на пост" class="post-url" type="text"/>
 
                 <button class="btn no-border btn-sm btn-primary send-post">Отправить</button>
+
+                <div class="broadcast">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div><input class="broadcast-code" type="text" placeholder="Код группы"/></div>
+                    <p></p>
+                    <div><textarea class="broadcast-message">Сообщение</textarea></div>
+                    <p></p>
+                    <button class="btn btn-sm no-border btn-primary send-broadcast">Разместить</button>
+                </div>
 			</div>
 		</div>
 
@@ -110,6 +121,13 @@
             newTopic.id = 0;
 
             messageClient.postTopic(newTopic);
+        });
+
+        $('.send-broadcast').click(function(){
+           var message = $('.broadcast-message').val(),
+               code = $('.broadcast-code').val();
+
+            messageClient.sendGroupMulticastMessage(code,message);
         });
 
     });

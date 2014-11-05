@@ -1737,3 +1737,10 @@ h1 {
   font-size: 18px;
   font-weight: bold;
 }
+/* backoffice */
+.backoffice {
+  text-align: left;
+}
+.backoffice .broadcast textarea {
+  width: 100%;
+}
