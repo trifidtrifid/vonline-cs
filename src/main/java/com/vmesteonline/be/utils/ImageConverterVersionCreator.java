@@ -59,7 +59,7 @@ public class ImageConverterVersionCreator implements VersionCreator {
                     double scalex = (double) scale.x / (double) image.getWidth();
                     double scaley = (double) scale.y / (double) image.getHeight();
 
-                    double minScale =  Math.max(scalex, scaley);
+                    double minScale =  Math.min(1.0D, Math.max(scalex, scaley));
                     RenderedOp resizedImage = JAI.create("SubsampleAverage", image, minScale, minScale, qualityHints);
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();

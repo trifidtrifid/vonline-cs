@@ -276,13 +276,15 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	@Persistent
 	protected MessageType type;
 
-    @Persistent
-    @Serialized
+    @Persistent(table="vomsgimages")
+    @Join(column = "msgid")
+    @Element(column = "imageid")
 	protected List<Long> images;
 
-    @Persistent
-    @Serialized
-	protected List<Long> documents;
+    @Persistent(table="vomsgdocuments")
+    @Join(column = "msgid")
+    @Element(column = "documentid")
+    protected List<Long> documents;
 
 	@Persistent
 	protected long authorId;

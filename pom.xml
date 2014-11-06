@@ -118,8 +118,8 @@
                     <webApp>
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
                         <contextPath>/</contextPath>
-                        <jettyXml>jetty-web.xml</jettyXml>
                     </webApp>
+                    <jettyXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-web.xml</jettyXml>
                     <stopPort>12345</stopPort>
                     <stopKey>12345</stopKey>
                 </configuration>
