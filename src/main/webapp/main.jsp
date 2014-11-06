@@ -39,8 +39,8 @@
     <link rel="shortcut icon" href="/static/i/landing/vmesteonline.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="/static/css/lib/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
 <link rel="stylesheet" href="/static/css/style.css" />
-<link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
 <link rel="stylesheet" href="/static/css/lib/jquery.Jcrop.css"/>
 <link rel="stylesheet" href="/static/js/bower_components/select2/select2.css"/>
 
@@ -194,8 +194,11 @@
                         </div>
 
                         <nav class="submenu pull-right clearfix">
-                            <button class="btn btn-sm btn-info no-border pull-right" ng-repeat="group in groups"
-                            id="{{group.id}}" ng-class="{active : currentGroup.id == group.id && group.id != 0}" ng-click="selectGroup(group)" ng-show="group.isShow">{{group.visibleName}}</button> <!-- {active : group.selected} -->
+                            <button class="btn btn-sm btn-info no-border pull-right" ng-repeat="group in groups" id="{{group.id}}"
+                            ng-class="{active : currentGroup.id == group.id && group.id != 0,
+                            'border-pink' : $index == 0, 'border-success': $index == 1, 'border-yellow': $index == 2, 'border-purple': $index == 3}"
+                            ng-click="selectGroup(group)" ng-show="group.isShow"
+                                    >{{group.visibleName}}</button> <!-- {active : group.selected} -->
                         </nav>
 
                         <div class="create-topic-btn pull-right ng-cloak" ng-show="base.talksIsActive || base.advertsIsActive">

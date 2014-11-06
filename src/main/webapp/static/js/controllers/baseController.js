@@ -958,7 +958,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
         var timeStamp = 0;
         base.checkUpdates = function(){
-            //timeStamp = messageClient.checkUpdates(timeStamp);
+            timeStamp = messageClient.checkUpdates(timeStamp);
 
             var updateMap,
                 old = 0;
@@ -1008,7 +1008,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
                 $rootScope.newMessages = [];
                 $rootScope.newImportantCount = timeStamp;
 
-                //$rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
+                $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
 
             }else{
                 $rootScope.newMessages = [];

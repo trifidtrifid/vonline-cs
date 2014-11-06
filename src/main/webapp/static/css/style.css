@@ -1,5 +1,8 @@
 @import 'login.css';
 @import 'profile.css';
+.fancybox-lock body {
+  overflow: visible !important;
+}
 html {
   height: 100%;
 }
@@ -269,14 +272,46 @@ h1 {
 }
 .submenu .btn {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 1px;
   border: 0;
   border-top: 3px solid #6fb3e0;
   height: 35px;
   padding-bottom: 7px;
+  padding: 2px 5px !important;
+  color: #000 !important;
+  background-color: transparent !important;
+  border-top-width: 0 !important;
+  border-bottom: 2px solid transparent !important;
 }
-.submenu .btn:hover {
+.submenu .border-pink {
+  border-color: #d6487e !important;
+}
+.submenu .border-success {
+  border-color: #82af6f !important;
+}
+.submenu .border-yellow {
+  border-color: #fee188 !important;
+}
+.submenu .border-purple {
+  border-color: #9585bf !important;
+}
+.submenu .btn.no-border.active {
+  background-color: transparent !important;
+}
+.submenu .active.border-pink {
+  border-top-width: 2px !important;
+}
+.submenu .active.border-success {
+  border-top-width: 2px !important;
+}
+.submenu .active.border-yellow {
+  border-top-width: 2px !important;
+}
+.submenu .active.border-purple {
+  border-top-width: 2px !important;
+}
+.submenu:hover {
   border-color: #4f99c6;
 }
 .btn-group>.btn {
@@ -679,10 +714,6 @@ h1 {
 }
 .btn.active:after {
   border-bottom: 0;
-}
-.btn-info.no-border.active {
-  background: #4184af !important;
-  border-color: #4184af !important;
 }
 .no-resize {
   resize: none;

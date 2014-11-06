@@ -125,9 +125,15 @@
 
         $('.send-broadcast').click(function(){
            var message = $('.broadcast-message').val(),
-               code = $('.broadcast-code').val();
+               code = [],
+               startDate = Date.parse(new Date())/1000,
+               expireDate = startDate+7*24*3600;
 
-            messageClient.sendGroupMulticastMessage(code,message);
+            code[0] = parseInt($('.broadcast-code').val());
+
+            console.log(code[0]+" "+startDate+" "+message+" "+expireDate);
+
+            messageClient.sendGroupMulticastMessage(code,message,startDate,expireDate);
         });
 
     });
