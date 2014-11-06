@@ -1,16 +1,17 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoFileAccessRecord;
-import com.vmesteonline.be.jdo2.VoTopic;
-import com.vmesteonline.be.jdo2.VoUser;
-import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.ServiceType;
+import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.StorageHelper;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.mail.internet.ContentType;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
 
 
 public class UPDATEServlet extends QueuedServletWithKeyHelper {
@@ -75,6 +73,67 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                     }
                 }
             }
+
+        } else if ("enableCounters".equalsIgnoreCase(action)) {
+            resultText = "Enable counters: ";
+
+            {
+                PersistenceManager pm = PMF.getPm();
+                Extent<VoUser> files = pm.getExtent(VoUser.class);
+                for (Iterator<VoUser> it = files.iterator(); it.hasNext(); ) {
+                    VoUser nfar = it.next();
+                    Set<ServiceType> services = nfar.getServices();
+                    if( null == services )
+                        services = new HashSet();
+                    else services = new HashSet<>( services );
+                    if( !services.contains( ServiceType.CountersEnabled )){
+                        services.add(ServiceType.CountersEnabled);
+                        nfar.setServices(services);
+                        pm.makePersistent( nfar);
+                        resultText += "\n<br/> Enabled for: "+ nfar.getName() + " " + nfar.getLastName();
+                    }
+                    long address = nfar.getAddress();
+                    List cntrs = (List) pm.newQuery(VoCounter.class, "postalAddressId==" + address).execute();
+                    if( null==cntrs || cntrs.size() == 0){
+                        pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", address));
+                        pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", address));
+                        pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", address));
+                        pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", address));
+                        pm.makePersistent( new VoCounter(CounterType.ELECTRICITY_DAY, "", "", address));
+                        pm.makePersistent( new VoCounter(CounterType.ELECTRICITY_NIGHT, "", "", address));
+                    }
+                }
+            }
+
+        } else if ("updatePools".equalsIgnoreCase(action)) {
+            resultText = "Update Pools: ";
+
+           {
+               PersistenceManager pm = PMF.getPm();
+               Query query = pm.newQuery("SQL", "SELECT * FROM VOPOLL WHERE ID>-1");
+               List results = (List) query.execute();
+               Iterator rit = results.iterator();
+               while(rit.hasNext()) {
+                   Object[] pool = (Object[]) rit.next();
+                   VoPoll nextPool = new VoPoll();
+                   try {
+                       nextPool.setSubject( ""+pool[3]);
+                       nextPool.setId( Long.parseLong( ""+pool[0]));
+                       List<Long> ap = loadListFromString(new String( (byte[])pool[1]), new Long(0L));
+                       nextPool.setAlreadyPoll( new HashSet<>(ap));
+                       List<String> names = loadListFromString(new String( (byte[])pool[2]), new String());
+                       nextPool.setNames(names);
+                       nextPool.setSubject( ""+pool[3]);
+                       List<Integer> vals = loadListFromString(new String((byte[])pool[4]), new Integer(0));
+                       nextPool.setValues(vals);
+                       pm.makePersistent(nextPool);
+                       resultText += resultText += "\n<br/> "+ nextPool.getSubject()+" Updated";
+                   } catch (NumberFormatException e) {
+                       resultText += resultText += "\n<br/> Failed to load VOPool: "+ nextPool.getSubject()+": "+e.getMessage();
+                   }
+               }
+            }
+
         } else if ("updateTopics".equalsIgnoreCase(action)) {
             PersistenceManager pm = PMF.getPm();
             try {
@@ -134,6 +193,24 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         arg1.setHeader("Content-Type","text/html");
         arg1.getOutputStream().write(resultText.getBytes());
             /*sendTheResultNotification(arg0, arg1, now, resultText);*/
+    }
+
+    private<T> List<T> loadListFromString(String s, T obj) {
+        List res = null;
+        if( s.startsWith("[") && s.endsWith("]")){
+            res = new ArrayList<>();
+            String[] list = s.substring(1,s.length()-1).split(",");
+            for( String ni: list ){
+                ni = ni.trim();
+                if( obj instanceof Long ){
+                    res.add( Long.parseLong( ni.substring(0,ni.length()-1) ));
+                } else if( obj instanceof Integer ){
+                    res.add( Integer.parseInt(ni.substring(0,ni.length()-1)));
+                } else
+                    res.add(  ni.trim() );
+            }
+        }
+        return res;
     }
 		
 		/*PersistenceManager pm = PMF.getPm();
