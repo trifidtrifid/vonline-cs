@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/lib/fancybox/jquery.fancybox.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/lib/fancybox/jquery.fancybox.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/main.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -976,7 +969,7 @@
       <workItem from="1414932103609" duration="171000" />
       <workItem from="1415102736679" duration="9689000" />
       <workItem from="1415208692449" duration="2049000" />
-      <workItem from="1415299068378" duration="10763000" />
+      <workItem from="1415299068378" duration="11123000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1010,7 +1003,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201463000" />
+    <option name="totallyTimeSpent" value="201823000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">

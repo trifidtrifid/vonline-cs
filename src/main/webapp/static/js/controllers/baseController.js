@@ -1017,7 +1017,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
         };
 
-        //setInterval(base.checkUpdates,5000);
+        setInterval(base.checkUpdates,5000);
 
         base.nextNotification = function(){
             base.me.userNotification = messageClient.getNextMulticastMessage();
@@ -1047,7 +1047,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
         base.isLentaFocus = false;
 
         $rootScope.base = base;
-        //base.checkUpdates();
+        base.checkUpdates();
 
         $rootScope.currentPage = 'lenta';
 
