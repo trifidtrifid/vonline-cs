@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/MapsController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/MapsController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,10 +69,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.jsp" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="main.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="199" column="80" selection-start="9518" selection-end="9518" vertical-scroll-proportion="0.7518248" vertical-offset="3177" max-vertical-offset="5933">
+            <state line="199" column="80" selection-start="9518" selection-end="9518" vertical-scroll-proportion="-7.923077" vertical-offset="3177" max-vertical-offset="5933">
               <folding>
                 <marker date="1415307927495" expanded="true" signature="1989:2210" placeholder="..." />
               </folding>
@@ -81,10 +83,19 @@
       <file leaf-file-name="backoffice.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="48" selection-start="5079" selection-end="5079" vertical-scroll-proportion="-4.9615383" vertical-offset="2064" max-vertical-offset="2567">
+            <state line="129" column="48" selection-start="5079" selection-end="5079" vertical-scroll-proportion="-0.0" vertical-offset="2193" max-vertical-offset="2567">
               <folding>
                 <marker date="1415305572171" expanded="true" signature="590:811" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="maps.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/maps.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="6" selection-start="703" selection-end="703" vertical-scroll-proportion="0.99270076" vertical-offset="0" max-vertical-offset="442">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,7 +121,7 @@
       <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="127" selection-start="5350" selection-end="5350" vertical-scroll-proportion="-5.117647" vertical-offset="1014" max-vertical-offset="3910">
+            <state line="75" column="127" selection-start="5350" selection-end="5350" vertical-scroll-proportion="0.0" vertical-offset="1014" max-vertical-offset="3910">
               <folding />
             </state>
           </provider>
@@ -723,21 +734,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment />
@@ -886,6 +882,21 @@
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <method />
     </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -969,7 +980,8 @@
       <workItem from="1414932103609" duration="171000" />
       <workItem from="1415102736679" duration="9689000" />
       <workItem from="1415208692449" duration="2049000" />
-      <workItem from="1415299068378" duration="11123000" />
+      <workItem from="1415299068378" duration="11723000" />
+      <workItem from="1415450514219" duration="1520000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1003,7 +1015,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="201823000" />
+    <option name="totallyTimeSpent" value="203943000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1093,11 +1105,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar!/com/mysql/jdbc/MysqlIO.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/datanucleus/datanucleus-rdbms/4.0.4/datanucleus-rdbms-4.0.4.jar!/org/datanucleus/store/rdbms/datasource/dbcp/DelegatingStatement.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
@@ -1326,9 +1333,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="86" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0" vertical-offset="542" max-vertical-offset="2975">
-          <folding />
-        </state>
+        <state line="44" column="86" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0" vertical-offset="542" max-vertical-offset="2975" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/thrift/userservice.thrift">
@@ -1345,28 +1350,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="48" selection-start="5079" selection-end="5079" vertical-scroll-proportion="-4.9615383" vertical-offset="2064" max-vertical-offset="2567">
-          <folding>
-            <marker date="1415305572171" expanded="true" signature="590:811" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="127" selection-start="5350" selection-end="5350" vertical-scroll-proportion="-5.117647" vertical-offset="1014" max-vertical-offset="3910">
+        <state line="75" column="127" selection-start="5350" selection-end="5350" vertical-scroll-proportion="0.0" vertical-offset="1014" max-vertical-offset="3910">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/main.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="199" column="80" selection-start="9518" selection-end="9518" vertical-scroll-proportion="0.7518248" vertical-offset="3177" max-vertical-offset="5933">
+        <state line="199" column="80" selection-start="9518" selection-end="9518" vertical-scroll-proportion="-7.923077" vertical-offset="3177" max-vertical-offset="5933">
           <folding>
             <marker date="1415307927495" expanded="true" signature="1989:2210" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="48" selection-start="5079" selection-end="5079" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="2567">
+          <folding>
+            <marker date="1415305572171" expanded="true" signature="590:811" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/maps.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="6" selection-start="703" selection-end="703" vertical-scroll-proportion="0.99270076" vertical-offset="0" max-vertical-offset="442">
+          <folding />
         </state>
       </provider>
     </entry>
