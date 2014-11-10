@@ -633,7 +633,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			 * visibleGroups.removeAll(currentUser.getGroups());
 			 * visibleGroups.addAll(currentUser.getGroups());
 			 */
-			theTopic.setVisibleGroups(visibleGroups);
+			theTopic.setVisibleGroups(newGroup.getUpperLevelGroups(pm));
 		}
 	}
 

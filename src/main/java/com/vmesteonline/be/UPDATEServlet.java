@@ -117,12 +117,12 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                    Object[] pool = (Object[]) rit.next();
                    VoPoll nextPool = new VoPoll();
                    try {
-                       nextPool.setSubject( ""+pool[3]);
                        nextPool.setId( Long.parseLong( ""+pool[0]));
+                       nextPool = pm.getObjectById(VoPoll.class, Long.parseLong( ""+pool[0]));
                        List<Long> ap = loadListFromString(new String( (byte[])pool[1]), new Long(0L));
-                       nextPool.setAlreadyPoll( new HashSet<>(ap));
+                       if( null!=ap) nextPool.setAlreadyPoll( new HashSet<>(ap));
                        List<String> names = loadListFromString(new String( (byte[])pool[2]), new String());
-                       nextPool.setNames(names);
+                       if( null!=names)  nextPool.setNames(names);
                        nextPool.setSubject( ""+pool[3]);
                        List<Integer> vals = loadListFromString(new String((byte[])pool[4]), new Integer(0));
                        nextPool.setValues(vals);
@@ -161,6 +161,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                 }
                 for (VoUserGroup vug : vugssrtd) { //collect all UserGroups and sort it from highest to lowest
                     try {
+                        vug.setUpperLevelGroups(null);
                         vug.getUpperLevelGroups(pm);
 
                     } catch (Exception e) {
@@ -199,7 +200,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         List res = null;
         if( s.startsWith("[") && s.endsWith("]")){
             res = new ArrayList<>();
-            String[] list = s.substring(1,s.length()-1).split(",");
+            String[] list = s.substring(1,s.length()-1).split(obj instanceof String ? "|" : ",");
             for( String ni: list ){
                 ni = ni.trim();
                 if( obj instanceof Long ){
