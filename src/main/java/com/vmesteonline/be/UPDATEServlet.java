@@ -7,12 +7,10 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
-import com.vmesteonline.be.utils.StorageHelper;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.mail.internet.ContentType;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,8 +49,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                     VoFileAccessRecord nfar = it.next();
                     try {
                         resultText += "\n<br/> "+ nfar+"ID: " + nfar.getId();
-                        ContentType contentType = new ContentType(nfar.getContentType());
-                        String urlStr =  "http://" + host + StorageHelper.getURL(nfar.getId(), contentType.getSubType());
+                        String urlStr =  "http://" + host + nfar.getURL();
                         resultText += " "+ urlStr;
                         URL fu = new URL(new String(urlStr));
                         InputStream inputStream = fu.openStream();
@@ -64,7 +61,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                         }
                         baos.close();
                         nfar.setData(baos.toByteArray());
-                        resultText += " OK downloaded "+baos.size();
+                        resultText += " OK <a href=\""+nfar.getURL()+"\">downloaded "+baos.size()+"</a>";
 
                         pm.makePersistent(nfar);
                     } catch (Exception e) {

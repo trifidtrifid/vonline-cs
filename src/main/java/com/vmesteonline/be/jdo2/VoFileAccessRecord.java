@@ -150,7 +150,7 @@ public class VoFileAccessRecord {
 	}
 	
 	public String getURL() {
-		if( null != url ) return url;
+		if( null != url && url.trim().length() > 0 ) return url;
 		return url = "/file/" + StorageHelper.numberToString(id)+ fileName.substring(fileName.indexOf("."));
 	}
 }
