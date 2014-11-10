@@ -6,7 +6,7 @@
 
     <textarea ng-model="ctrl.message.content" class="topic-textarea no-resize" ng-keyup="base.messageChange($event,1)"
               ng-blur="base.textareaBlur(ctrl.message.content,ctrl.message.default,ctrl,true)" ng-focus="base.textareaFocus(ctrl.message.content,ctrl.message.default,ctrl,true)"
-              ></textarea>
+              ng-hasfocus="base.isLentaFocus"></textarea>
 
     <div class="create-poll" ng-show="ctrl.isPollShow">
         <a class="poll-cancel pull-right" title="отмена опроса" href="#" ng-click="ctrl.isPollShow = false;ctrl.isPollAvailable = true;">&times;</a>

@@ -28,6 +28,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             }else{
                 if(message == "") ctrl.commentText = defaultText;
             }
+            base.isLentaFocus = false;
         };
 
         base.textareaFocus = function(message, defaultText,ctrl,isTopic){
@@ -957,7 +958,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
         var timeStamp = 0;
         base.checkUpdates = function(){
-            //timeStamp = messageClient.checkUpdates(timeStamp);
+            timeStamp = messageClient.checkUpdates(timeStamp);
 
             var updateMap,
                 old = 0;
@@ -1007,7 +1008,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
                 $rootScope.newMessages = [];
                 $rootScope.newImportantCount = timeStamp;
 
-                //$rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
+                $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
 
             }else{
                 $rootScope.newMessages = [];
@@ -1016,7 +1017,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
         };
 
-        //setInterval(base.checkUpdates,5000);
+        setInterval(base.checkUpdates,5000);
 
         base.nextNotification = function(){
             base.me.userNotification = messageClient.getNextMulticastMessage();
@@ -1043,8 +1044,10 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             }
         }
 
+        base.isLentaFocus = false;
+
         $rootScope.base = base;
-        //base.checkUpdates();
+        base.checkUpdates();
 
         $rootScope.currentPage = 'lenta';
 

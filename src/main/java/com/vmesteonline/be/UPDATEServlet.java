@@ -198,18 +198,19 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 
     private<T> List<T> loadListFromString(String s, T obj) {
         List res = null;
-        if( s.startsWith("[") && s.endsWith("]")){
-            res = new ArrayList<>();
-            String[] list = s.substring(1,s.length()-1).split(obj instanceof String ? "|" : ",");
-            for( String ni: list ){
-                ni = ni.trim();
-                if( obj instanceof Long ){
-                    res.add( Long.parseLong( ni.substring(0,ni.length()-1) ));
-                } else if( obj instanceof Integer ){
-                    res.add( Integer.parseInt(ni.substring(0,ni.length()-1)));
-                } else
-                    res.add(  ni.trim() );
-            }
+        if( s.startsWith("[") && s.endsWith("]")) {
+            s = s.substring(1,s.length()-1);
+        }
+        res = new ArrayList<>();
+        String[] list = s.split(obj instanceof String ? "[|]" : ",");
+        for( String ni: list ){
+            ni = ni.trim();
+            if( obj instanceof Long ){
+                res.add( Long.parseLong( ni.substring(0,ni.length()-1) ));
+            } else if( obj instanceof Integer ){
+                res.add( Integer.parseInt(ni.substring(0,ni.length()-1)));
+            } else
+                res.add(  ni.trim() );
         }
         return res;
     }
