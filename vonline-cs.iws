@@ -7,10 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/demo-jetty-web.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/demo-persistence.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/prod-jetty-web.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/prod-persistence.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/utils/ImageConverterVersionCreator$Crop.class" afterPath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/utils/ImageConverterVersionCreator$Crop.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/utils/ImageConverterVersionCreator$Scale.class" afterPath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/utils/ImageConverterVersionCreator$Scale.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/utils/ImageConverterVersionCreator.class" afterPath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/utils/ImageConverterVersionCreator.class" />
@@ -21,21 +17,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/VoFileAccess.class" afterPath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/VoFileAccess.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/jdo2/VoPoll.class" afterPath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/jdo2/VoPoll.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/jdo2/VoUserGroup.class" afterPath="$PROJECT_DIR$/target/classes/com/vmesteonline/be/jdo2/VoUserGroup.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/ImageConverterVersionCreator.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/ImageConverterVersionCreator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/UPDATEServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/UPDATEServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoFileAccess.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoFileAccess.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/log4j.properties" afterPath="$PROJECT_DIR$/target/classes/log4j.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/target/classes/META-INF/persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="$PROJECT_DIR$/vonline-cs.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.ipr" afterPath="$PROJECT_DIR$/vonline-cs.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
@@ -1072,7 +1056,7 @@
       <workItem from="1415401317885" duration="630000" />
       <workItem from="1415402396909" duration="1326000" />
       <workItem from="1415405300144" duration="27000" />
-      <workItem from="1415405339602" duration="39151000" />
+      <workItem from="1415405339602" duration="39240000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1128,11 +1112,17 @@
       <option name="project" value="LOCAL" />
       <updated>1415311645132</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="TOPICS AND POLL UPDATES TO MIGRATE FROM OLD GOOGLE VERSION TO mysql">
+      <created>1415605178793</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1415605178793</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="247610000" />
+    <option name="totallyTimeSpent" value="247699000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1213,7 +1203,8 @@
     <MESSAGE value="all functions are implemented&#10;encoding issue is not fixed yet" />
     <MESSAGE value="move attaches to separate table and some fixes" />
     <MESSAGE value="database fix&#10;updateServlet functions: updatePoll and enableCounters implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="database fix&#10;updateServlet functions: updatePoll and enableCounters implemented" />
+    <MESSAGE value="TOPICS AND POLL UPDATES TO MIGRATE FROM OLD GOOGLE VERSION TO mysql" />
+    <option name="LAST_COMMIT_MESSAGE" value="TOPICS AND POLL UPDATES TO MIGRATE FROM OLD GOOGLE VERSION TO mysql" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
