@@ -457,7 +457,7 @@ function getTagColor(labelName){
             if(i == 0){
                 color = 'label-pink';
             }else if(i == 1){
-                color = 'label-success';
+                color = 'label-success'; // green
             }else if(i == 2){
                 color = 'label-yellow';
             }else if(i == 3){
@@ -465,19 +465,6 @@ function getTagColor(labelName){
             }
         }
     }
-    /*switch(labelName){
-        case userClientGroups[0].visibleName:
-            color = 'label-pink';
-            break;
-        case userClientGroups[1].visibleName:
-            color = 'label-success';
-            break;
-        case userClientGroups[2].visibleName:
-            color = 'label-yellow';
-            break;
-        default :
-            break;
-    }*/
     return color;
 }
 
@@ -845,7 +832,13 @@ function cleanAttached(selector){
 }
 
 function initFancyBox(selector){
-    selector.find(".fancybox").fancybox();
+    selector.find(".fancybox").fancybox({
+        'transitionIn'	:	'elastic',
+        'transitionOut'	:	'elastic',
+        'speedIn'		:	600,
+        'speedOut'		:	200,
+        'overlayShow'	:	false
+    });
 }
 function clone(obj){
     if(obj == null || typeof(obj) != 'object')

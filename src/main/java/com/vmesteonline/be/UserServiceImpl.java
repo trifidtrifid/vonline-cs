@@ -154,7 +154,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			pm.retrieve(pa);
 			String code = "" + pa.getAddressCode();
 			pm.makePersistent(new VoInviteCode(code, pa.getId()));
-			;
+
 			locations.add(code);
 		}
 		return locations;

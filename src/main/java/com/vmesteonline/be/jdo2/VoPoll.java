@@ -13,7 +13,7 @@ import java.util.TreeSet;
 @PersistenceCapable
 public class VoPoll {
 
-	VoPoll() {
+	public VoPoll() {
 		alreadyPoll = new TreeSet<Long>();
 	}
 
@@ -100,15 +100,12 @@ public class VoPoll {
 	private String subject;
 
 	@Persistent
-    @Serialized
 	private List<String> names;
 
 	@Persistent
-    @Serialized
 	private List<Integer> values;
 
 	@Persistent
-    @Serialized
 	private Set<Long> alreadyPoll;
 
 }

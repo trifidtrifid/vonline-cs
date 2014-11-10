@@ -47,7 +47,12 @@ $(document).ready(function(){
         var href = document.location.href;
 
         if(!URL) {
-            if(href.indexOf('https') == -1 && (href.indexOf('144.76.221.175') == -1 && href.indexOf('127.0.0.1') == -1 && href.indexOf('localhost') == -1) && href.indexOf('appspot.com') == -1)
+            if(href.indexOf('https') == -1
+                && (href.indexOf('144.76.221.175') == -1
+                    && href.indexOf('127.0.0.1') == -1
+                    && href.indexOf('localhost') == -1)
+                && href.indexOf('demo.vmesteonline.ru') == -1
+                && href.indexOf('appspot.com') == -1)
                 document.location.replace('https://www.vmesteonline.ru/login');
         }
 

@@ -39,8 +39,8 @@
     <link rel="shortcut icon" href="/static/i/landing/vmesteonline.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="/static/css/lib/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
 <link rel="stylesheet" href="/static/css/style.css" />
-<link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
 <link rel="stylesheet" href="/static/css/lib/jquery.Jcrop.css"/>
 <link rel="stylesheet" href="/static/js/bower_components/select2/select2.css"/>
 
@@ -176,35 +176,6 @@
                         </ul>
                     </div>
 				</aside>
-                <%--<aside class="sidebar-right ng-cloak" ng-controller="rightBarController as rightbar">
-                    <div class="importantly-top">
-                        Важно
-                    </div>
-                    <div class="importantly-middle" ng-show="importantTopics.topics == null || importantTopics.topics.length == 0">{{base.emptyMessage}}</div>
-                    <ul>
-                        <li ng-repeat="importantTopic in importantTopics.topics" class="clearfix">
-                            <div class="importantly-left">
-                                <div class="avatar short" style="background-image: url({{importantTopic.userInfo.avatar}})"></div>
-                            </div>
-                            <div class="importantly-right">
-                                <h3>{{importantTopic.userInfo.firstName}}</h3>
-                                <p ng-show="importantTopic.message.content.length <= 50">{{ importantTopic.message.content }}</p>
-                                <p ng-hide="importantTopic.message.content.length <= 50">{{ importantTopic.message.content.slice(0,50)+"..." }}</p>
-
-                                <div ng-switch on="importantTopic.message.type" >
-
-                                    <a ui-sref="wall-single({ topicId :{{ importantTopic.id }} })" ng-switch-when="5">Перейти к записи</a>
-                                    <a ui-sref="talks-single({ talkId :{{ importantTopic.id }} })" ng-switch-when="1">Перейти к записи</a>
-
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="importantly-bottom" ng-hide="importantTopics.topics == null || importantTopics.topics.length == 0">
-                        Больше важных сообщений нет
-                    </div>
-
-                </aside>--%>
 
 				<div class="main-content dynamic ng-cloak">
 
@@ -219,12 +190,15 @@
                          ng-class="{'top-overflow-auto' : base.pageTitle.length}" ng-cloak>
 
                         <div class="ng-cloak">
-                        <div class="page-title pull-left" ng-show="base.pageTitle.length">{{base.pageTitle}}</div>
+                            <div class="page-title pull-left" ng-show="base.pageTitle.length">{{base.pageTitle}}</div>
                         </div>
 
                         <nav class="submenu pull-right clearfix">
-                            <button class="btn btn-sm btn-info no-border pull-right" ng-repeat="group in groups"
-                            id="{{group.id}}" ng-class="{active : currentGroup.id == group.id && group.id != 0}" ng-click="selectGroup(group)" ng-show="group.isShow">{{group.visibleName}}</button> <!-- {active : group.selected} -->
+                            <button class="btn btn-sm btn-info no-border pull-right" ng-repeat="group in groups" id="{{group.id}}"
+                            ng-class="{active : currentGroup.id == group.id && group.id != 0,
+                            'border-pink' : $index == 0, 'border-success': $index == 1, 'border-yellow': $index == 2, 'border-purple': $index == 3}"
+                            ng-click="selectGroup(group)" ng-show="group.isShow"
+                                    >{{group.visibleName}}</button> <!-- {active : group.selected} -->
                         </nav>
 
                         <div class="create-topic-btn pull-right ng-cloak" ng-show="base.talksIsActive || base.advertsIsActive">

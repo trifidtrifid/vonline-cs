@@ -3,6 +3,10 @@
 @import 'login.css'
 @import 'profile.css'
 
+//.fancybox-lock
+.fancybox-lock body
+  overflow: visible !important;
+
 main-radius = 2px
 second-radius = 1px
 
@@ -255,14 +259,37 @@ transform()
   padding 15px 10px 15px 0
   .btn
     display block
-    font-size 14px
+    font-size 13px
     margin-left 1px
     border 0
     border-top 3px solid rgb(111, 179, 224)
     height 35px
     padding-bottom 7px
-    &:hover
-      border-color #4f99c6
+    padding 2px 5px !important
+    color #000 !important
+    background-color transparent !important
+    border-top-width 0 !important
+    border-bottom 2px solid transparent !important
+  .border-pink
+    border-color #d6487e !important
+  .border-success
+    border-color #82af6f !important
+  .border-yellow
+    border-color #fee188 !important
+  .border-purple
+    border-color #9585bf !important
+  .btn.no-border.active
+    background-color transparent !important
+  .active.border-pink
+      border-top-width 2px !important
+  .active.border-success
+      border-top-width 2px !important
+  .active.border-yellow
+      border-top-width 2px !important
+  .active.border-purple
+      border-top-width 2px !important
+  &:hover
+    border-color #4f99c6
 
 .btn-group>.btn
   border-radius main-radius !important
@@ -605,8 +632,8 @@ transform()
 .btn.active:after
   border-bottom 0
 .btn-info.no-border.active
-  background #4184AF !important
-  border-color #4184AF !important
+  //background #4184AF !important
+  //border-color #4184AF !important
 .no-resize
   resize none
 
@@ -1017,12 +1044,17 @@ transform()
     .dialog-send-bottom
       margin-top 10px
 
+.page-title.top-overflow-auto
+  height 66px
+  margin -10px -10px 0 -10px
+  padding-right 10px
+
 .dialog
 .private-messages
   padding 10px
-  padding-top 15px
+  //padding-top 15px
   .page-title
-    padding 0
+    //padding 0
   .dialogs-container
     margin-top 15px
     .dialog-item
@@ -1111,6 +1143,7 @@ transform()
     float left
     margin-left 58px
     margin-top -20px
+    font-size 12px
 
     /* profle */
 .user-body
@@ -1495,3 +1528,13 @@ transform()
   h2
     text-align center
     margin-top 0
+    margin-bottom 15px
+    font-size 18px
+    font-weight bold
+
+/* backoffice */
+.backoffice
+  text-align left
+  .broadcast
+    textarea
+      width 100%

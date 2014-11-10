@@ -19,8 +19,6 @@ import java.util.Map;
 
 public class ImageConverterVersionCreator implements VersionCreator {
 
-    //private static ImagesService imagesService = ImagesServiceFactory.getImagesService();
-
     private PersistenceManager pm;
     private VoFileAccessRecord original;
 
@@ -45,46 +43,40 @@ public class ImageConverterVersionCreator implements VersionCreator {
 
         VoFileAccessRecord version = original.getVersion(versionKey);
 
-        if (version == null && createIfNotExists) {
+        if (version == null && createIfNotExists ) {
             byte[] result = original.getData();
             try {
+                SeekableStream s = SeekableStream.wrapInputStream(
+                        new ByteArrayInputStream( result ), true);
+                RenderedOp image = JAI.create("stream", s);
+                ((OpImage) image.getRendering()).setTileCache(null);
 
                 if (scale != null) {
-                    ByteArrayInputStream is = new ByteArrayInputStream(result);
-                    SeekableStream s = SeekableStream.wrapInputStream(is, true);
-                    RenderedOp image = JAI.create("stream", s);
-                    ((OpImage) image.getRendering()).setTileCache(null);
 
                     RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
                     double scalex = (double) scale.x / (double) image.getWidth();
                     double scaley = (double) scale.y / (double) image.getHeight();
 
-                    double minScale =  Math.max(scalex, scaley);
-                    RenderedOp resizedImage = JAI.create("SubsampleAverage", image, minScale, minScale, qualityHints);
-
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    JAI.create("encode", resizedImage, baos, "PNG", null);
-                    result = baos.toByteArray();
-
+                    double minScale =  Math.min(1.0D, Math.max(scalex, scaley));
+                    logger.debug("Scale for "+original.getFileName()+" X: "+scalex + "Y:"+scaley+" apply scale is:"+minScale);
+                    image = JAI.create("SubsampleAverage", image, minScale, minScale, qualityHints);
                 }
-                if (crop != null) {
-                    SeekableStream s = SeekableStream.wrapInputStream(
-                            new ByteArrayInputStream( result ), true);
-                    RenderedOp image = JAI.create("stream", s);
-                    ((OpImage) image.getRendering()).setTileCache(null);
 
+                if (crop != null) {
                     ParameterBlock pb = new ParameterBlock();
                     pb.addSource(image); // The source image
-                    pb.add((float)crop.Xlt);
-                    pb.add((float)crop.Ylt);
-                    pb.add((float)(crop.Xrb - crop.Xlt));
-                    pb.add((float)(crop.Yrb - crop.Ylt));
-                    RenderedOp resizedImage = JAI.create("crop", pb);
-
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    JAI.create("encode", resizedImage, baos, "PNG", null);
-                    result = baos.toByteArray();
+                    pb.add((float)Math.min( image.getWidth(), crop.Xlt));
+                    pb.add((float)Math.min( image.getHeight(), crop.Ylt));
+                    pb.add((float)(Math.min(image.getWidth()- crop.Xlt, crop.Xrb - crop.Xlt)));
+                    pb.add((float)(Math.min(image.getHeight()- crop.Ylt,crop.Yrb - crop.Ylt)));
+                    image = JAI.create("crop", pb);
+                    logger.debug(crop +" for "+original.getFileName() +" size is: w="+image.getWidth()+" h="+image.getHeight());
                 }
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                JAI.create("encode", image, baos, "PNG", null);
+                result = baos.toByteArray();
+
 
                 VoFileAccessRecord newVoFileAccessRecord = new VoFileAccessRecord(original.getUserId(), original.isPublic(),
                         original.getFileName(), original.getContentType(),
@@ -158,11 +150,22 @@ public class ImageConverterVersionCreator implements VersionCreator {
         int Xlt, Ylt;
         int Xrb, Yrb;
 
+        @Override
+        public String toString() {
+            return "Crop{" +
+                    "Xlt=" + Xlt +
+                    ", Ylt=" + Ylt +
+                    ", Xrb=" + Xrb +
+                    ", Yrb=" + Yrb +
+                    '}';
+        }
+
         public Crop(int xlt, int ylt, int xrb, int yrb) {
             Xlt = xlt;
             Ylt = ylt;
             Xrb = xrb;
             Yrb = yrb;
+
         }
 
         public String getVersionModificator() {
