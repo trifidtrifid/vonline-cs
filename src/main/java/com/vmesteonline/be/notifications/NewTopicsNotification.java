@@ -7,11 +7,11 @@ import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.thrift.messageservice.MessageType;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import java.io.IOException;
 import java.util.*;
-import org.apache.log4j.Logger;
 
 public class NewTopicsNotification extends Notification {
 	private static Logger logger = Logger.getLogger(NewTopicsNotification.class.getSimpleName());
@@ -132,13 +132,13 @@ public class NewTopicsNotification extends Notification {
 
 	private String createTopicContent(PersistenceManager pm, VoUserGroup ug, VoTopic tpc) {
 		VoUser author = pm.getObjectById(VoUser.class, tpc.getAuthorId());
-		String contactTxt = "<a href=\"https://"+host+"/profile-"+author.getId()+"\">"+StringEscapeUtils.escapeHtml4(author.getName() + " " + author.getLastName())+"</a>";
+		String contactTxt = "<a href=\"https://"+host+"/profile/"+author.getId()+"\">"+StringEscapeUtils.escapeHtml4(author.getName() + " " + author.getLastName())+"</a>";
 		
 		String topicTxt = "<p>"+new Date(((long) tpc.getCreatedAt()) * 1000L) + " " + contactTxt;
 		topicTxt += "<br/>"+(ug.getImportantScore() <= tpc.getImportantScore() ? "<b>Важно!</b><br/>" : "");
 		//topicTxt += StringEscapeUtils.escapeHtml4(tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length())));
 		topicTxt += tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length()));
-		if( tpc.getContent().length() > 255 ) topicTxt += "<a href=\"https://"+host+"/wall-single-"+tpc.getId()+"\">...</a>";
+		if( tpc.getContent().length() > 255 ) topicTxt += "<a href=\"https://"+host+"/wall-single/"+tpc.getId()+"\">...</a>";
 		topicTxt += "</p>--";
 		return topicTxt;
 	}

@@ -67,7 +67,6 @@ public class VoUser /* extends GeoLocation */{
 		this.popularuty = BASE_USER_SCORE;
 		this.lastNotified = this.registered = (int) (System.currentTimeMillis() / 1000L);
 		this.rootGroup = 0L;
-		
 	}
 
 	public UserProfile getUserProfile() {

@@ -117,7 +117,11 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                        nextPool.setId( Long.parseLong( ""+pool[0]));
                        nextPool = pm.getObjectById(VoPoll.class, Long.parseLong( ""+pool[0]));
                        List<Long> ap = loadListFromString(new String( (byte[])pool[1]), new Long(0L));
-                       if( null!=ap) nextPool.setAlreadyPoll( new HashSet<>(ap));
+                       if( null!=ap) {
+                           Set<Long> alreadyPoll = new TreeSet<>();
+                           alreadyPoll.addAll( ap );
+                           nextPool.setAlreadyPoll(alreadyPoll);
+                       }
                        List<String> names = loadListFromString(new String( (byte[])pool[2]), new String());
                        if( null!=names)  nextPool.setNames(names);
                        nextPool.setSubject( ""+pool[3]);

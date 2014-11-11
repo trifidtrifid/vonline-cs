@@ -53,7 +53,7 @@ $(document).ready(function(){
                     && href.indexOf('localhost') == -1)
                 && href.indexOf('demo.vmesteonline.ru') == -1
                 && href.indexOf('appspot.com') == -1)
-                document.location.replace('https://www.vmesteonline.ru/login');
+                document.location.replace('https://vmesteonline.ru/login');
         }
 
         var hrefInd = href.indexOf("/",9);

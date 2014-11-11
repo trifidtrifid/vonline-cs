@@ -35,7 +35,7 @@ public abstract class Notification {
 
 	protected static String host;
 	static {
-		host = "localhost:8080";
+		host = "vmesteonline.ru";
 	}
 
 	public abstract void makeNotification(Set<VoUser> users);
@@ -106,9 +106,10 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessions = (List<VoSession>) pm.newQuery(VoSession.class, "userId==" + vu.getId()).execute();
-		if( null==uSessions || 0==uSessions.size())
+		List<VoSession> uSessionsConst = (List<VoSession>) pm.newQuery(VoSession.class, "userId==" + vu.getId()).execute();
+		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
+		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
 		Collections.sort(uSessions, lastActivityComparator);
 		VoSession lastSession = uSessions.get(uSessions.size() - 1);
 		for (VoSession ns : uSessions) {
@@ -169,7 +170,7 @@ public abstract class Notification {
 
 		body += "<i>" + StringEscapeUtils.escapeHtml4(it.getContent()) + "</i>";
 
-		body += "<br/><br/><a href=\"https://" + host + "/wall-single-" + it.getId() + "\">Обсудить, ответить ...</a>";
+		body += "<br/><br/><a href=\"https://" + host + "/wall-single/" + it.getId() + "\">Обсудить, ответить ...</a>";
 		for (VoUser rcpt : usersForMessage) {
 			decorateAndSendMessage(rcpt, subject, body);
 		}
@@ -188,7 +189,7 @@ public abstract class Notification {
 
 				try {
 					String body = author.getName() + " " + author.getLastName() + " написал вам: <br/><br/><i>" + lastMsg.getContent()
-							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single-" + dlg.getId() + "\">Ответить...</a>";
+							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single/" + dlg.getId() + "\">Ответить...</a>";
 
 					decorateAndSendMessage(rcpt, "сообщение от " + author.getName(), body);
 
@@ -221,7 +222,7 @@ public abstract class Notification {
 		
 		body += "<br/> Мы создали этот сайт, чтобы Ваша жизнь стала чуть комфортней, от того что вы будете в курсе что происходит в вашем доме. <br/><br/>";
 		if (!newUser.isEmailConfirmed()) {
-			body += "Для доступа к сайту, подтвердите ваш email перейдя по <a href=\"https://" + host + "/confirm/profile-" + newUser.getId() + ","
+			body += "Для доступа к сайту, подтвердите ваш email перейдя по <a href=\"https://" + host + "/confirm/profile/" + newUser.getId() + ","
 					+ newUser.getConfirmCode() + "\">этой ссылке</a><br/></br>";
 			pm.makePersistent(newUser);// to save confirm code
 		}

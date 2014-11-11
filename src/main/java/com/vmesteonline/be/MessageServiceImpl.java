@@ -254,21 +254,21 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
         try {
 
             if( type == MessageType.BLOG ) {
-                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, "type=="+type.getValue()).execute();
+                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, "type=='"+type+"'").execute();
 
             } else {
                 filter += "visibleGroups.contains(";
 
                 for (Long group : groups) {
-                    filter += group + ",";
+                    filter += group + ") || visibleGroups.contains(";
                 }
-                filter = filter.substring(0, filter.length() - 1) + ")";
+                filter = filter.substring(0, filter.length() -" || visibleGroups.contains(".length());
 
                 allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, filter).execute();
 
                 if (importantOnly) {
                     int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
-                    filter = " isImportant == true && lastUpdate > " + minimumCreateDate;
+                    filter = " isImportant == true && lastUpdate > " + minimumCreateDate + "&& ("+filter+")";
                     allTopics = (List<VoTopic>) pm.newQuery( VoTopic.class, allTopics, filter ).execute();
                 }
 
