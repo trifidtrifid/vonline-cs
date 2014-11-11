@@ -23,17 +23,10 @@ detected.
     <Set name="extraClasspath">WEB-INF/classes,WEB-INF/libs,WEB-INF/classes/META-INF</Set>
     <!-- virtual hosts -->
     <Set name="virtualHosts">
-      <Array type="String">
-        <Item>vmesteonline.ru</Item>
-          <Item>localhost</Item>
-      </Array>
+        <Array type="String">
+            <Item>www.vmesteonline.ru</Item>
+            <Item>vmesteonline.ru</Item>
+            <Item>localhost</Item>
+        </Array>
     </Set>
-
-    <!-- disable cookies
-    <Get name="sessionHandler">
-       <Get name="sessionManager">
-          <Set name="usingCookies" type="boolean">false</Set>
-       </Get>
-    </Get>
-    -->
 </Configure>

@@ -225,5 +225,6 @@
 
         </plugins>
         <finalName>vonline</finalName>
+        <!--finalName>demo.vonline</finalName-->
     </build>
 </project>
