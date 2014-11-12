@@ -10,17 +10,26 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
         counters.typesArray = [];
         var typesEnumLength = 6;
 
+        var counterService = utilityClient.getCounterService();
+
         var currentDate = (new Date()).getDate;
 
-    if(currentDate >= 14 && currentDate <= 24 ){
-        if(countersNotSaved){
-            counters.state = 1;
+        counters.endDateOfMonth = counterService.endDateOfMonth;
+
+    console.log(counterService.startDateOfMonth+" " +
+        counterService.endDateOfMonth+" "+
+        counterService.infoProvided);
+
+        if(currentDate >= counterService.startDateOfMonth &&
+            currentDate <= counterService.endDateOfMonth ){
+            if(counterService.infoProvided){
+                counters.state = 1;
+            }else{
+                counters.state = 2;
+            }
         }else{
-            counters.state = 2;
+            counters.state = 0;
         }
-    }else{
-        counters.state = 0;
-    }
 
         for(var i = 0; i < typesEnumLength; i++){
             counters.typesArray[i] = {};

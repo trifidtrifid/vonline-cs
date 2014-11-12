@@ -339,7 +339,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
         base.user = shortUserInfo;
 
-        base.bufferSelectedGroup = userClientGroups[1];
+        base.bufferSelectedGroup = userClientGroups[3];
 
         base.markImportant = function(event,message){
             event.preventDefault();

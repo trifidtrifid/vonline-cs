@@ -7,6 +7,7 @@
 <title>Бэкоффис</title>
     <link rel="stylesheet" href="/static/css/lib/jquery-ui-1.10.3.full.min.css" />
 <link rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="/static/css/backoffice.css" />
 <link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
 <link rel="stylesheet" href="/static/css/lib/jquery.Jcrop.css"/>
 <link rel="stylesheet" href="/static/js/bower_components/select2/select2.css"/>
@@ -50,12 +51,6 @@
             </ul>
         </div>
 
-        <form method="post" action="#" class="form-group has-info form-search" ng-show="isTopSearchShow">
-            <span class="block input-icon input-icon-right">
-                <input id="search" type="text" class="form-control width-100" value="Поиск" onblur="if(this.value=='') this.value='Поиск';" onfocus="if(this.value=='Поиск') this.value='';"/>
-                <a href="#" class="icon-search icon-on-right bigger-110"></a>
-            </span>
-        </form>
     </div>
 </div>
 
@@ -65,19 +60,45 @@
 			<div class="main-container-inner">
                 <br>
                 <br>
+                <h2>Добавить пост в блог.</h2>
                 <input placeholder="Ссылка на пост" class="post-url" type="text"/>
 
                 <button class="btn no-border btn-sm btn-primary send-post">Отправить</button>
 
                 <div class="broadcast">
                     <br/>
-                    <br/>
-                    <br/>
+                    <h2>Отправить уведомление пользователям.</h2>
                     <div><input class="broadcast-code" type="text" placeholder="Код группы"/></div>
                     <p></p>
                     <div><textarea class="broadcast-message">Сообщение</textarea></div>
                     <p></p>
                     <button class="btn btn-sm no-border btn-primary send-broadcast">Разместить</button>
+                </div>
+
+                <div>
+                    <h2>Иниициализация счетчиков</h2>
+                    <div class="bo-counter-item"><input type="text" class="counter-buildingid" placeholder="Building id" /></div>
+                    <div class="bo-counter-item"><input type="text" class="counter-startdate" placeholder="start date" /></div>
+                    <div class="bo-counter-item"><input type="text" class="counter-enddate" placeholder="end date" /></div>
+
+                    <div class="bo-counters">
+                        <a href="#" class="addCounter pull-right">Добавить</a>
+                        <div class="bo-counter-select">
+                            <select>
+                                <option value="0">Горячая вода</option>
+                                <option value="1">Холодная вода</option>
+                                <option value="2">Эл-во общий</option>
+                                <option value="3">Эл-во ночь</option>
+                                <option value="4">Эл-во день</option>
+                                <option value="5">Газ</option>
+                                <option value="6">Другое</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-sm no-border btn-primary init-counter">Инициализировать</button>
+                    <span class="counter-init-status "></span>
+
                 </div>
 			</div>
 		</div>
@@ -92,6 +113,8 @@
 <script src="/gen-js/MessageService.js" type="text/javascript"></script>
 <script src="/gen-js/userservice_types.js" type="text/javascript"></script>
 <script src="/gen-js/UserService.js" type="text/javascript"></script>
+<script src="/gen-js/utilityservces_types.js" type="text/javascript"></script>
+<script src="/gen-js/UtilityService.js" type="text/javascript"></script>
 <!-- -->
 
 <script type="text/javascript">
@@ -103,6 +126,10 @@
         transport = new Thrift.Transport("/thrift/UserService");
         protocol = new Thrift.Protocol(transport);
         var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
+
+        transport = new Thrift.Transport("/thrift/UtilityService");
+        protocol = new Thrift.Protocol(transport);
+        var utilityClient = new com.vmesteonline.be.thrift.utilityservice.UtilityServiceClient(protocol);
 
         $('.send-post').click(function(e){
             e.preventDefault();
@@ -134,6 +161,40 @@
             console.log(code[0]+" "+startDate+" "+message+" "+expireDate);
 
             messageClient.sendGroupMulticastMessage(code,message,startDate,expireDate);
+        });
+
+        $('.addCounter').click(function(e){
+            e.preventDefault();
+
+            var counterHtml = '<div class="bo-counter-select"><select>'+
+                    '<option value="0">Горячая вода</option>'+
+            '<option value="1">Холодная вода</option>'+
+            '<option value="2">Эл-во общий</option>'+
+            '<option value="3">Эл-во ночь</option>'+
+            '<option value="4">Эл-во день</option>'+
+            '<option value="5">Газ</option>'+
+            '<option value="6">Другое</option>'+
+            '</select></div>';
+
+            $(this).parent().append(counterHtml);
+        });
+
+        $('.init-counter').click(function(){
+            var buildingId = parseInt($('.counter-buildingid').val()),
+                    startDate = parseInt($('.counter-startdate').val()),
+                    endDate = parseInt($('.counter-enddate').val()),
+                    countersList = [],ind = 0;
+
+            $('.bo-counters select').each(function(){
+                countersList[ind++] = parseInt($(this).find('option:selected').val());
+            });
+
+            console.log(buildingId+" "+startDate+" "+endDate);
+            console.log(countersList);
+
+            utilityClient.createCounterService(buildingId,startDate,endDate,countersList);
+
+            $('.counter-init-status').addClass('info-good').text('Успешно');
         });
 
     });

@@ -10,7 +10,8 @@ forumControllers.controller('LentaController',function($rootScope) {
             loadedLength = 10;
 
         $rootScope.COMMENTS_DEFAULT_COUNT = 4;
-        lenta.selectedGroupInTop = $rootScope.currentGroup;
+        //lenta.selectedGroupInTop = $rootScope.currentGroup;
+        $rootScope.base.bufferSelectedGroup = userClientGroups[3];
 
         /*if(!$rootScope.importantIsLoadedFromTop)
         $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
