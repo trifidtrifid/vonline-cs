@@ -298,7 +298,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			boolean addTopic = 0 == lastLoadedTopicId ? true : false;
 			for (VoTopic topic : allTopics) {
 
-				if (addTopic && userGroups.contains( topic.getUserGroupId() )) {
+				if (addTopic && (type == MessageType.BLOG || userGroups.contains( topic.getUserGroupId()) )) {
 					topics.add(topic);
 
 				} else if (topic.getId() == lastLoadedTopicId) {
