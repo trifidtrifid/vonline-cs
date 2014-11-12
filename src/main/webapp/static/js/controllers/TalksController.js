@@ -61,7 +61,8 @@ forumControllers.controller('TalksController',function($rootScope) {
             var fullTalkFirstMessagesLength,
                 talkId;
 
-            $rootScope.base.bufferSelectedGroup = talk.selectedGroup = $rootScope.currentGroup;
+            $rootScope.base.bufferSelectedGroup = talk.selectedGroup =
+                $rootScope.currentGroup = userClientGroups[3];
 
             /*if(!$rootScope.importantIsLoadedFromTop)
             $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);

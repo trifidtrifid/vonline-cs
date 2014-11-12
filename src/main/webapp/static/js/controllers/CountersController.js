@@ -10,6 +10,27 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
         counters.typesArray = [];
         var typesEnumLength = 6;
 
+        var counterService = utilityClient.getCounterService();
+
+        var currentDate = (new Date()).getDate;
+
+        counters.endDateOfMonth = counterService.endDateOfMonth;
+
+    console.log(counterService.startDateOfMonth+" " +
+        counterService.endDateOfMonth+" "+
+        counterService.infoProvided);
+
+        if(currentDate >= counterService.startDateOfMonth &&
+            currentDate <= counterService.endDateOfMonth ){
+            if(counterService.infoProvided){
+                counters.state = 1;
+            }else{
+                counters.state = 2;
+            }
+        }else{
+            counters.state = 0;
+        }
+
         for(var i = 0; i < typesEnumLength; i++){
             counters.typesArray[i] = {};
             counters.typesArray[i].type = i;
@@ -103,6 +124,10 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
             userClient.updateUserServices(newServicesStatuses);
 
             $rootScope.base.me.countersConfirmed = true;
+        };
+
+        counters.cancel = function(){
+            counters.state = 1;
         };
 
         counters.toggleNotification = function(){

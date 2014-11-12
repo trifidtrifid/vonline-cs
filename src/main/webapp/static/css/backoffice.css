@@ -1,0 +1,11 @@
+.bo-counter-item {
+  width: 200px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.bo-counters {
+  width: 200px;
+}
+.bo-counter-select {
+  margin-bottom: 10px;
+}
