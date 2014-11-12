@@ -9,8 +9,7 @@ import com.vmesteonline.be.utils.VoHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @PersistenceCapable
 @Indices({
@@ -53,20 +52,56 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	}
 
 	private VoUserGroup getParentGroup(PersistenceManager pm){
+		if( this.groupType == GroupType.NEIGHBORS.getValue() )
+			return null;
+
+		int gType = this.groupType + 1;
+		String queryStr = "longitude=='"+this.longitude
+				+"' && latitude=='"+this.latitude+"'"
+				+" && groupType=="+gType;
+
+		if( gType <= GroupType.STAIRCASE.getValue() )
+			queryStr += " && staircase==" + this.staircase;
+
+		if( gType <= GroupType.FLOOR.getValue() )
+			queryStr += " && floor==" + this.floor;
+
+		List<VoUserGroup> vugl = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, queryStr).execute();
+		if( vugl.size() == 1 )
+			return vugl.get(0);
+		if( vugl.size() == 0 ) { //it's a error that have to be cleaned
+			/*int users = ((List<Long>) pm.newQuery("SQL", "SELECT ID FROM USERGROUPS WHERE `GROUP`=" + this.getId()).execute()).size();
+			if( users > 0 )
+				throw new RuntimeException("There is grpup: " + this +" that have no parents but has "+users+" users registered!");
+			//delete the group and all of childs
+			List<Long> visibleGroups1 = this.getVisibleGroups(pm);
+			for( Long vg : visibleGroups1)
+				try {
+					pm.deletePersistent(pm.getObjectById(VoUserGroup.class, vg));
+				} catch (Exception e) {
+				}
+			pm.deletePersistent( this );*/
+			return null;
+		}
+
+		throw new RuntimeException("There is several groups that could be parent for: " + this +": "+vugl.get(0)+" && "+vugl.get(1));
+
+/*
+		pm.newQuery( VoUserGroup.class, "groupType=="+this.groupType + 1)
 		if( getGroupType() < GroupType.NEIGHBORS.getValue()){
 			if( null == upperLevelGroups || upperLevelGroups.size() == 0){
 				
-				int gType = this.groupType + 1; 
+				int gType = this.groupType + 1;
 				String queryStr = "longitude=='"+this.longitude
 						+"' && latitude=='"+this.latitude+"'"
 						+" && groupType=="+gType;
-				
+
 				if( gType <= GroupType.STAIRCASE.getValue() )
 					queryStr += " && staircase==" + this.staircase;
-				
+
 				if( gType <= GroupType.FLOOR.getValue() )
 					queryStr += " && floor==" + this.floor;
-				
+
 				List<VoUserGroup> vugl = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, queryStr).execute();
 				
 				if( vugl.size() > 1 ){
@@ -83,14 +118,17 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			}
 		} else 
 			return null;
+			*/
 	}
 	
 	private void registerInParentGroups( PersistenceManager pm) {
 		
 		VoUserGroup parentGroup = getParentGroup(pm);
 		if( null!=parentGroup ){
-			parentGroup.getVisibleGroups(pm).addAll(this.getVisibleGroups(pm));
-			pm.makePersistent(parentGroup);
+			Set<Long> visibleGroups = new HashSet<>(parentGroup.getVisibleGroups(pm));
+			visibleGroups.addAll(this.getVisibleGroups(pm));
+			parentGroup.setVisibleGroups( new ArrayList<>(visibleGroups));
+			pm.makePersistentAll( parentGroup );
 		}
 	}
 
@@ -152,13 +190,19 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			BigDecimal longMax = VoHelper.getLongitudeMax( new BigDecimal(longitude), new BigDecimal(latitude), radius);
 			BigDecimal longMin = VoHelper.getLongitudeMin( new BigDecimal(longitude), new BigDecimal(latitude), radius);
 			
-			String filter = "groupType=="+groupType;
-			List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, filter).execute();
+			String filter = "groupType="+groupType +" && longitude>='"+longMin.toPlainString()+"' &&  longitude<='"+longMax.toPlainString()+"' "+
+					" && latitude>='"+latMin.toPlainString()+"' &&  latitude<='"+latMax.toPlainString()+"'";
+
+			/*List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, filter).execute();
 			for( VoUserGroup ug: groups ){
 				if( ug.getId() != getId() && ug.getLatitude().compareTo( latMax ) <=0 && ug.getLatitude().compareTo( latMin ) >=0 
 						&& ug.getLongitude().compareTo( longMax ) <= 0 && ug.getLongitude().compareTo( longMin ) >= 0)
 					
 					vg.add( ug.getId() );
+			}*/
+			Iterator idit = ((List) pm.newQuery("SQL", "SELECT ID FROM VOUSERGROUP WHERE " + filter).execute()).iterator();
+			while( idit.hasNext()){
+				vg.add((Long)idit.next());
 			}
 		} 
 		
@@ -268,11 +312,11 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	
 	@Persistent
 	private int groupType;
-	
+
 	@Persistent
+    @Serialized
 	private List<Long> upperLevelGroups;
-	
-	
+
 	public int getImportantScore() {
 		return importantScore;
 	}
@@ -295,5 +339,8 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 				+ "]";
 	}
 
-	
+
+	public void setUpperLevelGroups(List<Long> upperLevelGroups) {
+		this.upperLevelGroups = upperLevelGroups;
+	}
 }

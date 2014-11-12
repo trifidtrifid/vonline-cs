@@ -4,6 +4,10 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
+    <session-config>
+        <!-- SESSION TIMEOUT IN MINUTES, set almost unlimited -->
+        <session-timeout>100000</session-timeout>
+    </session-config>
 
     <servlet>
         <servlet-name>oauth</servlet-name>
@@ -224,4 +228,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/about/*</url-pattern>
         <url-pattern>/count</url-pattern>
     </filter-mapping>
+
+    <!-- REDIRECT to HTTPS -->
+    <!--security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Everything in the webapp</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint-->
 </web-app>

@@ -174,7 +174,7 @@ public class Defaults {
 			defaultGroups = new ArrayList<VoGroup>();
 			for (VoGroup dg : new VoGroup[] { 
 					new VoGroup("Мой этаж", radiusZero, GroupType.FLOOR, true), 
-					new VoGroup("Мой подъезд", radiusZero, GroupType.STAIRCASE, true), 
+					new VoGroup("Моя парадная", radiusZero, GroupType.STAIRCASE, true),
 					new VoGroup("Мой дом", radiusBuilding, GroupType.BUILDING, true),
 					new VoGroup("Соседние дома", radiusNeighbors, GroupType.NEIGHBORS, true), 
 					}) {

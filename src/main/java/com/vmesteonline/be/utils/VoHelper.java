@@ -403,17 +403,33 @@ public class VoHelper {
 		return result;
 	}
 
-	public static final String passwordCharSet = "ABCDEFJHIJKLMNPQRSTUVWXYZabcdefjhijkmnpqrstuvwxyz23456789"; // characters to choose from
+	public static final String passwordCharSet = "ABCDEFJHJKLMNPQRSTUVWXYZabcdefjhijkmnpqrstuvwxyz23456789"; // characters to choose from
 	
 	public static String generatePassword( ) {
 		return generatePassword(8);
 	}
 
+	public static final String lettersCharSet = "ABCDEFJHJKLMNPQRSTUVWXYZ"; // characters to choose from
+	public static final String digitsCharSet = "23456789"; // characters to choose from
+
+	public static String generateCode(int letters, int digits) {
+		StringBuilder sb = new StringBuilder();
+		Random rand = new Random(System.nanoTime());
+		for (int i = 0; i < letters; i++) {
+			int k = rand.nextInt(lettersCharSet.length()); // random number between 0 and set.length()-1 inklusive
+			sb.append(lettersCharSet.charAt(k));
+		}
+		for (int i = 0; i < digits; i++) {
+			int k = rand.nextInt(digitsCharSet.length()); // random number between 0 and set.length()-1 inklusive
+			sb.append(digitsCharSet.charAt(k));
+		}
+		return sb.toString();
+	}
+
 	public static String generatePassword(int n) {
 		StringBuilder sb = new StringBuilder();
-		
+		Random rand = new Random(System.nanoTime());
 		for (int i = 0; i < n; i++) {
-			Random rand = new Random(System.nanoTime());
 			int k = rand.nextInt(passwordCharSet.length()); // random number between 0 and set.length()-1 inklusive
 			sb.append(passwordCharSet.charAt(k));
 		}

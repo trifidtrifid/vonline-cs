@@ -14,9 +14,9 @@ import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
@@ -54,7 +54,8 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 			return "Error: Parameter 'file' must be set";
 		}
 		try {
-			ByteArrayInputStream content = (ByteArrayInputStream) new URL(fileLink).getContent();
+			URL url1 = new URL(fileLink);
+			InputStream content = (InputStream) url1.getContent();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			byte[] buf = new byte[1024];
 			int read;
@@ -88,7 +89,7 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 					baos = new ByteArrayOutputStream();
 					CSVHelper.writeCSV(baos, csvData, null, "\n", null);
 					baos.close();
-					String url = StorageHelper.saveImage(baos.toByteArray(), "text/csv", 0, true, pm, "addresses.csv");
+					String url = StorageHelper.saveImage(baos.toByteArray(), "text/csv", 0, true, pm, url1.getFile());
 					EMailHelper.sendSimpleEMail("info@vmesteonline.ru", "csv", url);
 					
 				} catch (InvalidOperation e) {
@@ -113,7 +114,7 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 			
 			String passCode;
 			while(true){
-				passCode = VoHelper.generatePassword(6).toUpperCase();
+				passCode = VoHelper.generateCode(2, 4).toUpperCase();
 				if( codeSet.contains(passCode) )
 					continue;
 				List<VoInviteCode> list = (List<VoInviteCode>) pm.newQuery( VoInviteCode.class, "code=='" + passCode+"'").execute();

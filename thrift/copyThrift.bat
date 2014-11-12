@@ -15,3 +15,4 @@ if exist gen-js rmdir /S /Q gen-js
 robocopy gen-java ..\src\main\java /S /MOVE /np /ns /nfl
 exit 0
 
+

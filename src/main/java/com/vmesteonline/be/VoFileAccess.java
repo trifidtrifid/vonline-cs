@@ -45,8 +45,14 @@ public class VoFileAccess extends HttpServlet {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			long fileId = StorageHelper.getFileId(req.getRequestURI());
-			VoFileAccessRecord far = pm.getObjectById(VoFileAccessRecord.class, fileId);
-			
+			VoFileAccessRecord far;
+			try {
+				far = pm.getObjectById(VoFileAccessRecord.class, fileId);
+			} catch (Exception e) {
+				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+
 			if (null != req.getParameter("delete") && (far.getUserId() == serviceImpl.getCurrentUserId(pm))) {
 				StorageHelper.deleteImage(req.getRequestURI(), pm);
 				resp.setStatus(HttpServletResponse.SC_OK);
@@ -58,7 +64,7 @@ public class VoFileAccess extends HttpServlet {
 				resp.setHeader("Cache-directive", "cache");
 				resp.setHeader("Cache-control", "cache");
 				resp.setHeader("Pragma", "cache");
-				resp.setHeader("Expires", "1000000");
+				resp.setHeader("Expires", "100000");
 				StorageHelper.sendFileResponse(req, resp);
 
 			} else {

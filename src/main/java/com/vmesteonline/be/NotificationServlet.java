@@ -34,7 +34,6 @@ public class NotificationServlet extends HttpServlet {
 				sendNewDialogMsg(req);
 			
 			} else if( "news".equals(reqType)){
-				PersistenceManager pm = PMF.getPm();
 				new NewsNotification().sendNotifications();
 		
 			} else if( "pwdrem".equals(reqType)){
