@@ -64,7 +64,7 @@ public class VoFileAccess extends HttpServlet {
 				resp.setHeader("Cache-directive", "cache");
 				resp.setHeader("Cache-control", "cache");
 				resp.setHeader("Pragma", "cache");
-				resp.setHeader("Expires", "1000000");
+				resp.setHeader("Expires", "100000");
 				StorageHelper.sendFileResponse(req, resp);
 
 			} else {

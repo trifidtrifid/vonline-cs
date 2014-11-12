@@ -70,7 +70,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			 * be ordered from smaller to bigger one, so if topics of current group
 			 * are added, it's time to finish collecting break; }
 			 */
-			List<VoTopic> topics = getTopics(groupsToSearch, MessageType.WALL, lastLoadedIdTopicId, length, false, pm);
+			List<VoTopic> topics = getTopics(groupsToSearch, new HashSet<Long>(user.getGroups()), MessageType.WALL, lastLoadedIdTopicId, length, false, pm);
 
 			for (VoTopic voTopic : topics) {
 
@@ -243,7 +243,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		return mlp;
 	}
 
-	public static List<VoTopic> getTopics(List<Long> groups, MessageType type, long lastLoadedTopicId, int length, boolean importantOnly,
+	public static List<VoTopic> getTopics(List<Long> groups, Set<Long> userGroups, MessageType type, long lastLoadedTopicId, int length, boolean importantOnly,
 			PersistenceManager pm) {
 
 		String filter = "";
@@ -298,7 +298,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			boolean addTopic = 0 == lastLoadedTopicId ? true : false;
 			for (VoTopic topic : allTopics) {
 
-				if (addTopic) {
+				if (addTopic && userGroups.contains( topic.getUserGroupId() )) {
 					topics.add(topic);
 
 				} else if (topic.getId() == lastLoadedTopicId) {
@@ -322,7 +322,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public TopicListPart getBlog(long lastLoadedTopicId, int length) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
-		List<VoTopic> topics = getTopics(null, MessageType.BLOG, lastLoadedTopicId, length, false, pm);
+		List<VoTopic> topics = getTopics(null, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
 
@@ -360,7 +360,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			List<Long> groupsToSearch = new ArrayList<Long>();
 			groupsToSearch.add(groupId);
 
-			List<VoTopic> topics = getTopics(groupsToSearch, type, lastLoadedTopicId, length, importantOnly, pm);
+			List<VoTopic> topics = getTopics(groupsToSearch, new HashSet<Long>(user.getGroups()), type, lastLoadedTopicId, length, importantOnly, pm);
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);

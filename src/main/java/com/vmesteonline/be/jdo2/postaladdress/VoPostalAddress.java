@@ -2,12 +2,10 @@ package com.vmesteonline.be.jdo2.postaladdress;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUserGroup;
-import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.PostalAddress;
 import com.vmesteonline.be.thrift.VoError;
-import com.vmesteonline.be.thrift.utilityservice.CounterType;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
@@ -94,14 +92,14 @@ public class VoPostalAddress implements Comparable<VoPostalAddress> {
 		VoPostalAddress voPostalAddress = new VoPostalAddress(voBuilding, staircase, floor, flatNo, comment, pm);
 		pm.makePersistent(voPostalAddress);
 
-        pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", voPostalAddress.getId()));
+        /*pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.ELECTRICITY_DAY, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.ELECTRICITY_NIGHT, "", "", voPostalAddress.getId()));
 
-		pm.flush();
+		pm.flush();*/
 		return voPostalAddress;
 	}
 

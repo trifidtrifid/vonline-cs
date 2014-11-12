@@ -83,7 +83,7 @@ public class NewTopicsNotification extends Notification {
 		for( int gsi = 0; gsi < groups.size(); gsi += 10){
 			topics.addAll(
 					MessageServiceImpl.getTopics( 
-							groups.subList(gsi, Math.min( gsi+10, groups.size())), MessageType.WALL, 0, 10, false, pm));
+							groups.subList(gsi, Math.min( gsi+10, groups.size())), null, MessageType.WALL, 0, 10, false, pm));
 		}
 		
 		for( VoTopic topic: topics){

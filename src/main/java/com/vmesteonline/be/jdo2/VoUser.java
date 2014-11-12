@@ -243,16 +243,18 @@ public class VoUser /* extends GeoLocation */{
 		}
 
         setAddress(userAddress.getId());
-        ArrayList<Long> groups = new ArrayList<Long>();
-		for (VoGroup group : Defaults.defaultGroups) {
+		Vector<Long> groups = new Vector<>();
+		for ( int gid = Defaults.defaultGroups.size(); gid>0; gid--  ) {
+			VoGroup group = Defaults.defaultGroups.get( gid - 1 );
 			VoUserGroup ug = VoUserGroup.createVoUserGroup(building.getLongitude(), building.getLatitude(), 
 					group.getRadius(), userAddress.getStaircase(), userAddress.getFloor(),
 					group.getVisibleName(), group.getImportantScore(), group.getGroupType(), pm);
-			
+
 			UserServiceImpl.usersByGroup.forget( new Object[]{ ug.getId() });
 			groups.add(ug.getId());
 		}
-        setGroups(groups);
+		Collections.reverse(groups);
+        setGroups( groups );
 		resetRootGroup();
 
 		pm.makePersistent(this);

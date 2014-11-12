@@ -164,7 +164,7 @@ public class VoTopic extends VoBaseMessage {
 	@Persistent
 	private Long rubricId;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Long userGroupId;
 
     @Persistent(table = "topicvisiblegroups")

@@ -414,13 +414,12 @@ public class VoHelper {
 
 	public static String generateCode(int letters, int digits) {
 		StringBuilder sb = new StringBuilder();
+		Random rand = new Random(System.nanoTime());
 		for (int i = 0; i < letters; i++) {
-			Random rand = new Random(System.nanoTime());
 			int k = rand.nextInt(lettersCharSet.length()); // random number between 0 and set.length()-1 inklusive
 			sb.append(lettersCharSet.charAt(k));
 		}
 		for (int i = 0; i < digits; i++) {
-			Random rand = new Random(System.nanoTime());
 			int k = rand.nextInt(digitsCharSet.length()); // random number between 0 and set.length()-1 inklusive
 			sb.append(digitsCharSet.charAt(k));
 		}
@@ -429,9 +428,8 @@ public class VoHelper {
 
 	public static String generatePassword(int n) {
 		StringBuilder sb = new StringBuilder();
-		
+		Random rand = new Random(System.nanoTime());
 		for (int i = 0; i < n; i++) {
-			Random rand = new Random(System.nanoTime());
 			int k = rand.nextInt(passwordCharSet.length()); // random number between 0 and set.length()-1 inklusive
 			sb.append(passwordCharSet.charAt(k));
 		}

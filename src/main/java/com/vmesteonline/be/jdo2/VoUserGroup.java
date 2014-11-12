@@ -70,7 +70,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		if( vugl.size() == 1 )
 			return vugl.get(0);
 		if( vugl.size() == 0 ) { //it's a error that have to be cleaned
-			int users = ((List<Long>) pm.newQuery("SQL", "SELECT ID FROM USERGROUPS WHERE `GROUP`=" + this.getId()).execute()).size();
+			/*int users = ((List<Long>) pm.newQuery("SQL", "SELECT ID FROM USERGROUPS WHERE `GROUP`=" + this.getId()).execute()).size();
 			if( users > 0 )
 				throw new RuntimeException("There is grpup: " + this +" that have no parents but has "+users+" users registered!");
 			//delete the group and all of childs
@@ -80,7 +80,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 					pm.deletePersistent(pm.getObjectById(VoUserGroup.class, vg));
 				} catch (Exception e) {
 				}
-			pm.deletePersistent( this );
+			pm.deletePersistent( this );*/
 			return null;
 		}
 
@@ -124,10 +124,11 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	private void registerInParentGroups( PersistenceManager pm) {
 		
 		VoUserGroup parentGroup = getParentGroup(pm);
-		if( null!=parentGroup ){List<Long> parentVisibleGroups = parentGroup.getVisibleGroups(pm);
+		if( null!=parentGroup ){
 			Set<Long> visibleGroups = new HashSet<>(parentGroup.getVisibleGroups(pm));
 			visibleGroups.addAll(this.getVisibleGroups(pm));
-			pm.makePersistent( new ArrayList<>( visibleGroups));
+			parentGroup.setVisibleGroups( new ArrayList<>(visibleGroups));
+			pm.makePersistentAll( parentGroup );
 		}
 	}
 
