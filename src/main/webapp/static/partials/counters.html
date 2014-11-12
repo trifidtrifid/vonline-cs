@@ -17,6 +17,8 @@
             </div>
         </script>
 
+        <div ng-if="counter.state == 2">Данные будут переданы в УК {{}} числа</div>
+
         <table class="counters-table">
             <thead>
             <tr>
@@ -63,7 +65,8 @@
                     <div ng-show="counter.lastValue == 0"> - </div>
                 </td>
                 <td>
-                    <input type="text" ng-change="counter.wasEdit = true" class="counter-input" ng-model="counter.currentValue" ng-keypress="counters"/>
+                    <input type="text" ng-change="counter.wasEdit = true" ng-disabled="counters.state == 0 || counters.state == 2"
+                           class="counter-input" ng-model="counter.currentValue" ng-keypress="counters"/>
                     <a ui-sref="counters-history({ counterId : counter.id })" title="история показаний"><i class="fa fa-clock-o"></i></a>
                 </td>
                 <td class="align-center align-middle">
@@ -82,7 +85,8 @@
 
         <div class="clearfix">
             <a href="#" class="pull-right add-counter" ng-click="counters.addCounter()">Добавить счетчик</a>
-            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.save()">Отправить</button>
+            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.save()" ng-if="counters.state == 1">Отправить</button>
+            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.cancel()" ng-if="counters.state == 2">Отмена</button>
         </div>
         <br/>
 
