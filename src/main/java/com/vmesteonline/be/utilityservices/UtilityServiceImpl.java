@@ -184,13 +184,19 @@ public class UtilityServiceImpl extends ServiceImpl implements UtilityService.If
         VoUser currentUser = getCurrentUser();
         try {
             VoPostalAddress address = pm.getObjectById(VoPostalAddress.class, currentUser.getAddress());
-            List<VoCounter> vcl = (List<VoCounter>) pm.newQuery(VoCounter.class,"postalAddressId=="+address.getId());
-            VoCounterService vcs = pm.getObjectById(VoCounterService.class, address.getBuilding());
+            List<VoCounter> vcl = executeQuery(pm.newQuery(VoCounter.class, "postalAddressId==" + address.getId()));
+            List<VoCounterService> vcsl = executeQuery(pm.newQuery(VoCounterService.class, "buildingId==" + address.getBuilding()));
+            if( vcsl==null || vcsl.size() == 0 )
+                return null;
+            VoCounterService vcs = vcsl.get(0);
             CounterService cs = new CounterService( );
-            cs.setAgrementAccepted( currentUser.getServices().contains(ServiceType.CountersConfirmed));
-            cs.setEmailReminder( currentUser.getServices().contains(ServiceType.CountersConfirmed));
+            Set<ServiceType> services = currentUser.getServices();
+            if( null!=services) {
+                cs.setAgrementAccepted(services.contains(ServiceType.CountersConfirmed));
+                cs.setEmailReminder(services.contains(ServiceType.CountersNotification));
+            }
             cs.setEndDateOfMonth( vcs.getEndDate());
-            int lastDate = vcl.size() > 0 ? Collections.max(vcl.get(0).getValues().keySet()) : 0;
+            int lastDate = vcl.size() > 0 && vcl.get(0).getValues().size() > 0 ? Collections.max(vcl.get(0).getValues().keySet()) : 0;
             cs.setLastDate(lastDate);
             cs.setStartDateOfMonth(vcs.getStartDate());
             Calendar clndr = Calendar.getInstance();

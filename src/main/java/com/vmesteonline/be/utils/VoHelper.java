@@ -479,6 +479,7 @@ public class VoHelper {
 				if( params.length == 1) return (T)q.execute(params[0]);
 				if( params.length == 2) return (T)q.execute(params[0],params[1]);
 				if( params.length == 3) return (T)q.execute(params[0],params[1],params[2]);
+
 			} catch (NullPointerException e) {
 				logger.warn("Got NPE on execute. Try again:"+tl--,e);
 			}
