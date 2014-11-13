@@ -334,8 +334,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			Topic tpc = voTopic.getTopic(0, pm);
 			mlp.addToTopics(tpc);
 		}
+		Collections.reverse( mlp.topics );
 		return mlp;
-
 	}
 
 	@Override
@@ -946,22 +946,14 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     public void sendGroupMulticastMessage(List<Long> visibleGroups, String message, int startDate, int expireDate) throws InvalidOperation, TException {
         // get floor's group as a root of all other groups
         PersistenceManager pm = PMF.getPm();
-        Set<Long> vgs = null;
-        if (null != visibleGroups) {
-            vgs = new HashSet<Long>();
-            for (int i = 0; i * 20 < visibleGroups.size(); i++) {
-                String glist = "";
-                for (int j = 0; j < 20 && i * 20 + j < visibleGroups.size(); j++)
-                    glist += "," + visibleGroups.get(i * 20 + j);
+		Set vgs = new HashSet<Long>();
 
-                List<VoUserGroup> groups = executeQuery( pm.newQuery(VoUserGroup.class,
-                        "groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups IN (" + glist.substring(1) + ")"));
-                for (VoUserGroup voUserGroup : groups) {
-                    vgs.add(voUserGroup.getId());
-                }
-            }
-        }
-        sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
+		List<VoUserGroup> groups = executeQuery( pm.newQuery(VoUserGroup.class,
+				"groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups.contains(" + visibleGroups.get(0) + ")"));
+		for (VoUserGroup voUserGroup : groups) {
+			vgs.add(voUserGroup.getId());
+		}
+		sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
     }
 
     // =========================================================================================================================
