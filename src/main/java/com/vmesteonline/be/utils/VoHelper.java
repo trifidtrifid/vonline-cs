@@ -6,9 +6,11 @@ import com.vmesteonline.be.jdo2.VoInitKey;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.MatrixAsList;
 import com.vmesteonline.be.thrift.VoError;
+import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -20,6 +22,7 @@ import java.util.Map.Entry;
 
 public class VoHelper {
 
+	public static final Logger logger = Logger.getLogger(VoHelper.class);
 	public static BigDecimal earthRadius = new BigDecimal(6378137);
 
 	// (180.0 / Math.PI) = 57,29577952383886
@@ -456,14 +459,29 @@ public class VoHelper {
 				glist += "|| " + idName + "==" + gid;
 				i++;
 				if (i == vgs.size() || i > 0 && 0 == i % 20) {
-					vus.addAll((List<T>) pm.newQuery(clazz, condSet ? condition + " && (" + glist.substring(2) + ")" : glist.substring(2)).execute());
+					vus.addAll( executeQuery( pm.newQuery(clazz, condSet ? condition + " && (" + glist.substring(2) + ")" : glist.substring(2))));
 					glist = "";
 				}
 			}
 		} else {
 			vus.addAll((List<T>) pm.newQuery(clazz).execute());
 		}
-	
 		return vus;
+	}
+
+	public static final int executeQueryRetryLimit = 3;
+	public static <T> T executeQuery( Query q, Object... params ){
+		int tl = executeQueryRetryLimit;
+		while(tl>0)
+			try {
+				//i think it's beter then use reflection
+				if( params.length == 0) return (T)q.execute( );
+				if( params.length == 1) return (T)q.execute(params[0]);
+				if( params.length == 2) return (T)q.execute(params[0],params[1]);
+				if( params.length == 3) return (T)q.execute(params[0],params[1],params[2]);
+			} catch (NullPointerException e) {
+				logger.warn("Got NPE on execute. Try again:"+tl--,e);
+			}
+		return null;
 	}
 }

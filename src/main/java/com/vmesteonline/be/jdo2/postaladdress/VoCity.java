@@ -9,6 +9,8 @@ import javax.jdo.Query;
 import javax.jdo.annotations.*;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Indices({
         @Index(name="countryId_name", members = {"countryId","name"}),
@@ -19,7 +21,7 @@ public class VoCity {
 
         Query q = pm.newQuery(VoCity.class, "countryId==" + country.getId() + " && name==n");
         q.declareParameters("String n");
-        List<VoCity>vcl = (List<VoCity>) q.execute(name);
+        List<VoCity>vcl = executeQuery(q,name);
 
         if (vcl.size() == 1)
             return vcl.get(0);

@@ -20,6 +20,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 
 public class UPDATEServlet extends QueuedServletWithKeyHelper {
 
@@ -90,7 +92,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                         resultText += "\n<br/> Enabled for: "+ nfar.getName() + " " + nfar.getLastName();
                     }
                     long address = nfar.getAddress();
-                    List cntrs = (List) pm.newQuery(VoCounter.class, "postalAddressId==" + address).execute();
+                    List cntrs = executeQuery(  pm.newQuery(VoCounter.class, "postalAddressId==" + address) );
                     if( null==cntrs || cntrs.size() == 0){
                         pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", address));
                         pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", address));
@@ -108,7 +110,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
            {
                PersistenceManager pm = PMF.getPm();
                Query query = pm.newQuery("SQL", "SELECT * FROM VOPOLL WHERE ID>-1");
-               List results = (List) query.execute();
+               List results = executeQuery(  query );
                Iterator rit = results.iterator();
                while(rit.hasNext()) {
                    Object[] pool = (Object[]) rit.next();
@@ -237,7 +239,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 					voUserGroup.setVisibleGroups(null);
 					List<Long> visibleGroups = voUserGroup.getVisibleGroups(pm);
 					
-					List<VoTopic> topics = (List<VoTopic>) pm.newQuery(VoTopic.class, "userGroupId=="+voUserGroup.getId()).execute();
+					List<VoTopic> topics = executeQuery(  pm.newQuery(VoTopic.class, "userGroupId=="+voUserGroup.getId()) );
 					for (VoTopic voTopic : topics) {
 						voTopic.setVisibleGroups( new ArrayList<Long>(visibleGroups) );
 					}

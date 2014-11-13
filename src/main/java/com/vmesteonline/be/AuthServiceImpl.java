@@ -27,6 +27,8 @@ import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 
 	public AuthServiceImpl() {
@@ -238,7 +240,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		Query q = pm.newQuery(VoUser.class);
 		q.setFilter("email == eml");
         q.declareParameters("String eml");
-		List<VoUser> users = (List<VoUser>) q.execute(email.toLowerCase().trim());
+		List<VoUser> users = executeQuery( q, email.toLowerCase().trim());
 		if (users.isEmpty())
 			return null;
 		if (users.size() != 1)

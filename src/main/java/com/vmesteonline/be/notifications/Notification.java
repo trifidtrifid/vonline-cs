@@ -21,6 +21,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public abstract class Notification {
 
 	private static Logger logger = Logger.getLogger(Notification.class.getName());
@@ -62,7 +64,7 @@ public abstract class Notification {
 		}
 		// TODO Remove simple method above and uncomment method below to take activity into account it could be important for big amount of active users
 		
-		/*List<VoSession> vsl = (List<VoSession>) pm.newQuery(VoSession.class, "lastActivityTs < " + twoDaysAgo).execute();
+		/*List<VoSession> vsl = executeQuery(  pm.newQuery(VoSession.class, "lastActivityTs < " + twoDaysAgo) );
 		logger.debug("Total sessions with lastActivityTs < "+twoDaysAgo+" : " + vsl.size());
 	
 		for (VoSession vs : vsl) {
@@ -106,7 +108,7 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessionsConst = (List<VoSession>) pm.newQuery(VoSession.class, "userId==" + vu.getId()).execute();
+		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "userId==" + vu.getId()) );
 		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
 		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
@@ -206,7 +208,7 @@ public abstract class Notification {
 
 		body += "Ваш логин: "+newUser.getEmail()+"<br/>Пароль:    "+newUser.getPassword()+"<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		userSet.addAll((List<VoUser>) pm.newQuery(VoUser.class, "").execute());
+		userSet.addAll(executeQuery( pm.newQuery(VoUser.class, "")));
 
 		body += "На сайте уже зарегистрированно: " + userSet.size() + " пользователей<br/>";
 		

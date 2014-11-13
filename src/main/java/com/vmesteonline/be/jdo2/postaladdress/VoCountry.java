@@ -8,12 +8,14 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Index(name="name",members = {"name"})
 public class VoCountry {
 	
 	public static VoCountry createVoCountry(String name, PersistenceManager pm) throws InvalidOperation {
-		List<VoCountry> vcl = (List<VoCountry>)pm.newQuery(VoCountry.class, "name=='"+name+"'").execute();
+		List<VoCountry> vcl = executeQuery( pm.newQuery(VoCountry.class, "name=='"+name+"'") );
 		if( vcl.size() == 1 ){
 			return vcl.get(0);
 		} else if( vcl.size() == 0 ){

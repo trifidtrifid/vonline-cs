@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 	
 	private static Logger logger = Logger.getLogger(RegisterAddressesServlet.class.getSimpleName());
@@ -117,7 +119,7 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 				passCode = VoHelper.generateCode(2, 4).toUpperCase();
 				if( codeSet.contains(passCode) )
 					continue;
-				List<VoInviteCode> list = (List<VoInviteCode>) pm.newQuery( VoInviteCode.class, "code=='" + passCode+"'").execute();
+				List<VoInviteCode> list = executeQuery(  pm.newQuery( VoInviteCode.class, "code=='" + passCode+"'") );
 				if( list.size()>0 )
 					continue;
 				break;

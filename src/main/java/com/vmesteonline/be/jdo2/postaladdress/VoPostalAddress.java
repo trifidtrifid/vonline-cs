@@ -13,6 +13,8 @@ import javax.jdo.Query;
 import javax.jdo.annotations.*;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable
 @Indices({
         @Index(name="fullpa_idx",members = {"buildingId","staircase","floor", "flatNo"}),
@@ -83,7 +85,7 @@ public class VoPostalAddress implements Comparable<VoPostalAddress> {
 		
 		Query q = pm.newQuery(VoPostalAddress.class);
 		q.setFilter("buildingId=="+voBuilding.getId()+" && staircase==" + staircase + " && floor==" + floor + " && flatNo=="+ flatNo);
-		List<VoPostalAddress> pal = (List<VoPostalAddress>) q.execute();
+		List<VoPostalAddress> pal = executeQuery(  q );
 		if (pal.size() == 1) {
 			return pal.get(0);
 		} else if (pal.size() > 1) 

@@ -16,9 +16,12 @@ import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.thrift.utilityservice.UtilityService;
 import org.apache.thrift.TException;
 
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.*;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class UtilityServiceImpl extends ServiceImpl implements UtilityService.Iface {
 
@@ -89,7 +92,7 @@ public class UtilityServiceImpl extends ServiceImpl implements UtilityService.If
     @Override
     public List<Counter> getCounters() throws TException {
         PersistenceManager pm = PMF.getPm();
-        List<VoCounter> counters = (List<VoCounter>) pm.newQuery(VoCounter.class, "postalAddressId=="+getCurrentUser(pm).getAddress()).execute();
+        List<VoCounter> counters = executeQuery(  pm.newQuery(VoCounter.class, "postalAddressId=="+getCurrentUser(pm).getAddress()) );
         List<Counter> outList = new ArrayList<>();
         for (VoCounter voCounter : counters) {
             outList.add( voCounter.getCounter());
@@ -143,8 +146,8 @@ public class UtilityServiceImpl extends ServiceImpl implements UtilityService.If
     public void createCounterService(long buildingId, short startDateOfMonth, short endDateOfMonth, List<CounterType> defaultCounters) throws TException {
         PersistenceManager pm = PMF.getPm();
         VoBuilding voBuilding = pm.getObjectById(VoBuilding.class, buildingId);
-        Query query = pm.newQuery(VoCounterService.class, "buildingId"+buildingId);
-        List<VoCounterService> csl = (List<VoCounterService>) query.execute(voBuilding);
+        Query query = pm.newQuery(VoCounterService.class, "buildingId=="+buildingId);
+        List<VoCounterService> csl = executeQuery( query,voBuilding);
         if( csl.size()>0 ){
             throw new InvalidOperation(VoError.IncorrectParametrs,"Already defined");
         }
@@ -152,15 +155,15 @@ public class UtilityServiceImpl extends ServiceImpl implements UtilityService.If
         pm.makePersistent( vcs );
 
         //enable counters for users
-        List<VoPostalAddress> psl = (List<VoPostalAddress>) pm.newQuery(VoPostalAddress.class, "buildingId=="+buildingId ).execute();
+        List<VoPostalAddress> psl = executeQuery(  pm.newQuery(VoPostalAddress.class, "buildingId=="+buildingId ) );
         for( VoPostalAddress ps: psl){
             for( CounterType ct: defaultCounters){
                 pm.makePersistent( new VoCounter(ct, "", "", ps.getId()));
             }
-            List<VoUser> ul = (List<VoUser>) pm.newQuery(VoUser.class, "address=="+ps.getId()).execute();
+            List<VoUser> ul = executeQuery(pm.newQuery(VoUser.class, "address=="+ps.getId()));
             for( VoUser u: ul){
                 Set<ServiceType> uservices = u.getServices();
-                Set<ServiceType> services = uservices == null ? new HashSet( uservices ) : new HashSet( uservices );
+                Set<ServiceType> services = uservices == null ? new HashSet( ) : new HashSet( uservices );
                 services.add(ServiceType.CountersEnabled);
                 u.setServices( services );
                 pm.makePersistent( u );

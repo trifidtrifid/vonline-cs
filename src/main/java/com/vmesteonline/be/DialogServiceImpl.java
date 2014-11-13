@@ -20,6 +20,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class DialogServiceImpl extends ServiceImpl implements Iface {
 
 	private static Logger logger = Logger.getLogger(DialogServiceImpl.class.getName());
@@ -44,7 +46,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 		}
 		Query dlgQuery = pm.newQuery(VoDialog.class, "lastMessageDate>" + after + filterStr);
 		dlgQuery.setOrdering("lastMessageDate");
-		List<VoDialog> oldDialog = (List<VoDialog>) dlgQuery.execute();
+		List<VoDialog> oldDialog = executeQuery( dlgQuery );
 
 		VoDialog dlg;
 		if (oldDialog.size() == 0) { // there is no dialog exists, so create a new one
@@ -61,11 +63,11 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 	public List<Dialog> getDialogs(int after) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		long currentUserId = getCurrentUserId();
-		List<VoDialog> oldDialogs = (List<VoDialog>) pm.newQuery(VoDialog.class, "users.contains(" + currentUserId+")").execute();
+		List<VoDialog> oldDialogs = executeQuery(  pm.newQuery(VoDialog.class, "users.contains(" + currentUserId+")") );
 		if( oldDialogs.size() > 0 ) {
             Query dlgQuery = pm.newQuery(VoDialog.class, oldDialogs, "lastMessageDate > "+after);
             dlgQuery.setOrdering("lastMessageDate");
-            oldDialogs = (List<VoDialog>) dlgQuery.execute();
+            oldDialogs = executeQuery(  dlgQuery );
         }
 		return VoHelper.convertMutableSet(oldDialogs, new ArrayList<Dialog>(), new Dialog(), pm);
 	}

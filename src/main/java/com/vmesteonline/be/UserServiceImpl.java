@@ -24,6 +24,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	public UserServiceImpl() {
@@ -408,7 +410,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			List<City> cl = new ArrayList<City>();
 			Query q = pm.newQuery(VoCity.class);
 			q.setFilter("countryId == " + countryId);
-			List<VoCity> cs = (List<VoCity>) q.execute();
+			List<VoCity> cs = executeQuery(  q );
 			for (VoCity c : cs) {
 				cl.add(c.getCity());
 			}
@@ -427,7 +429,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			List<Street> cl = new ArrayList<Street>();
 			Query q = pm.newQuery(VoStreet.class, "cityId=="+cityId);
-			List<VoStreet> cs = (List<VoStreet>) q.execute();
+			List<VoStreet> cs = executeQuery(  q );
 			for (VoStreet c : cs) {
 				pm.retrieve(c);
 				cl.add(c.getStreet());
@@ -447,7 +449,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			List<Building> cl = new ArrayList<Building>();
 			Query q = pm.newQuery(VoBuilding.class, "streetId=="+streetId);
-			List<VoBuilding> cs = (List<VoBuilding>) q.execute();
+			List<VoBuilding> cs = executeQuery(  q );
 			for (VoBuilding c : cs) {
 				cl.add(c.getBuilding());
 			}
@@ -529,7 +531,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoCountry vc = VoCountry.createVoCountry(name, pm);
 			Query q = pm.newQuery(VoCountry.class);
 			q.setFilter("name == '" + name + "'");
-			List<VoCountry> countries = (List<VoCountry>) q.execute();
+			List<VoCountry> countries = executeQuery(  q );
 			if (countries.size() > 0) {
 				logger.info("City was NOT created. The same City was registered. Return an old one: " + countries.get(0));
 				return countries.get(0).getCountry();
@@ -580,7 +582,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			// TODO check that there is no building with the same name
 			VoStreet vs = pm.getObjectById(VoStreet.class, streetId);
 			Query q = pm.newQuery("SELECT * FROM vobuilding WHERE streetId == " + streetId + " &&  fullNo == '" + fullNo + "' ALLOW FILTERING");
-			List<VoBuilding> buildings = (List<VoBuilding>) q.execute();
+			List<VoBuilding> buildings = executeQuery(  q );
 			if (buildings.size() > 0) {
 				logger.info("VoBuilding was NOT created. The same VoBuilding was registered. Return an old one: " + buildings.get(0));
 				return buildings.get(0).getBuilding();
@@ -701,7 +703,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		if( null!= group ){
 			for( Long g : group.getVisibleGroups(pm)) {
 				String filter = "groups.contains(" + g +") && emailConfirmed==true";
-				users.addAll( (List<VoUser>)pm.newQuery(VoUser.class, filter).execute());
+				users.addAll( executeQuery(pm.newQuery(VoUser.class, filter)));
 			}
 		}
 		List<VoUser> ul = new ArrayList<VoUser>();
@@ -791,7 +793,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public static GroupType getRelations(VoUser askedUser, VoUser voUser, PersistenceManager pm) {
 		Query nq = pm.newQuery( VoUserGroup.class, "visibleGroups.contains("+askedUser.getRootGroup()+") && visibleGroups.contains("+voUser.getRootGroup()+")");
 		nq.setOrdering("groupType");
-		List<VoUserGroup> gtl = (List<VoUserGroup>) nq.execute();
+		List<VoUserGroup> gtl = executeQuery(  nq );
 		return gtl.size() > 0  ? GroupType.findByValue( gtl.get(0).getGroupType()) : GroupType.NEIGHBORS;  //it should not be called elsewhere
 	}
 
@@ -817,7 +819,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		query += " && flatNo==" + ( (flatChanged = 0 != flatNo && floor!=oldAddress.getFlatNo()) ? flatNo : oldAddress.getFlatNo());
 		
 		if( stairChanged || floorChanged || flatChanged ){
-			List<VoPostalAddress> newAddresses = (List<VoPostalAddress>) pm.newQuery( VoPostalAddress.class, query).execute();
+			List<VoPostalAddress> newAddresses = executeQuery(  pm.newQuery( VoPostalAddress.class, query) );
 			VoPostalAddress newAddr;
 			if( newAddresses.size() == 0 ){
 				newAddr = VoPostalAddress.createVoPostalAddress(

@@ -22,6 +22,8 @@ import javax.jdo.Query;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	public MessageServiceImpl() throws InvalidOperation {
@@ -138,7 +140,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
         Query q = pm.newQuery(VoMessage.class);
         q.setFilter("topicId == " + topicId);
-        List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
+		List<VoMessage> voMsgs =  executeQuery( q );
+        voMsgs = new ArrayList<VoMessage>(voMsgs);
         Collections.sort(voMsgs, new VoMessage.ComparatorByCreateDate());
 
         if (lastLoadedId != 0) {
@@ -171,7 +174,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
         Query q = pm.newQuery(VoMessage.class);
         q.setFilter( query.substring(2) );
-        List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
+		List<VoMessage> voMsgs = executeQuery( q );
+        voMsgs = new ArrayList<VoMessage>( voMsgs );
 
 
         for (VoMessage voMessage : voMsgs) {
@@ -254,7 +258,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
         try {
 
             if( type == MessageType.BLOG ) {
-                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, "type=='"+type+"'").execute();
+                allTopics = executeQuery(  pm.newQuery(VoTopic.class, "type=='"+MessageType.BLOG.name()+"'") );
 
             } else {
                 filter += "visibleGroups.contains(";
@@ -264,12 +268,12 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                 }
                 filter = filter.substring(0, filter.length() -" || visibleGroups.contains(".length());
 
-                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, filter).execute();
+                allTopics = executeQuery(  pm.newQuery(VoTopic.class, filter) );
 
                 if (importantOnly) {
                     int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
                     filter = " isImportant == true && lastUpdate > " + minimumCreateDate + "&& ("+filter+")";
-                    allTopics = (List<VoTopic>) pm.newQuery( VoTopic.class, allTopics, filter ).execute();
+                    allTopics = executeQuery(  pm.newQuery( VoTopic.class, allTopics, filter ) );
                 }
 
                 /*@TODO Fix it
@@ -793,7 +797,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			deleteAttachments(pm, msg.getDocuments());
 
 			// check if message can be deleted
-			List<VoMessage> msgsOfTopic = (List<VoMessage>) pm.newQuery(VoMessage.class, "topicId==" + topicId).execute();
+			List<VoMessage> msgsOfTopic = executeQuery(  pm.newQuery(VoMessage.class, "topicId==" + topicId) );
 			boolean canDelete = true;
 			for (VoMessage msgot : msgsOfTopic) {
 				if (msgot.getParentId() == msgId) {
@@ -854,7 +858,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			}
 
 			if (0 != tpc.getMessageNum()) {
-				List<VoMessage> childMsgs = (List<VoMessage>) pm.newQuery(VoMessage.class, "topicId==" + topicId).execute();
+				List<VoMessage> childMsgs = executeQuery(  pm.newQuery(VoMessage.class, "topicId==" + topicId) );
 				for (VoMessage msg : childMsgs) {
 					deleteAttachments(pm, msg.getImages());
 					deleteAttachments(pm, msg.getDocuments());
@@ -918,7 +922,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
         int now = (int) (System.currentTimeMillis() / 1000L);
         Query q = pm.newQuery(VoMulticastMessage.class, "visibleGroups==" + cu.getRootGroup() + " && startAfter>=" + lastShownTimestamp);
         q.setOrdering("startAfter");
-        List<VoMulticastMessage> newML = (List<VoMulticastMessage>) q.execute();
+        List<VoMulticastMessage> newML = executeQuery(  q );
         VoMulticastMessage curMessage = null;
         if (newML.size() != 0) {
             for (VoMulticastMessage voMulticastMessage : newML) {
@@ -950,8 +954,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                 for (int j = 0; j < 20 && i * 20 + j < visibleGroups.size(); j++)
                     glist += "," + visibleGroups.get(i * 20 + j);
 
-                List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery(VoUserGroup.class,
-                        "groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups IN (" + glist.substring(1) + ")").execute();
+                List<VoUserGroup> groups = executeQuery( pm.newQuery(VoUserGroup.class,
+                        "groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups IN (" + glist.substring(1) + ")"));
                 for (VoUserGroup voUserGroup : groups) {
                     vgs.add(voUserGroup.getId());
                 }
@@ -977,7 +981,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                 pm.makePersistent(vmcm);
                 sessionsToNotify = VoHelper.getAllOfSet(vuis, VoSession.class, "lastActivityTs > " + weekAgo, "userId", pm);
             } else {
-                sessionsToNotify = (List<VoSession>) pm.newQuery(VoSession.class, "lastActivityTs > " + weekAgo).execute();
+                sessionsToNotify = executeQuery(  pm.newQuery(VoSession.class, "lastActivityTs > " + weekAgo) );
             }
 
             for (VoSession voSession : sessionsToNotify) {
@@ -1001,7 +1005,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                     String query = "groupType==" + GroupType.FLOOR.getValue() + " && longitude=='" + building.getLongitude().toPlainString()
                             + "' && latitude=='" + building.getLatitude().toPlainString() + "'" + (0 == pa.staircase ? "" : " && staircase==" + pa.getStaircase())
                             + (0 == pa.floor ? "" : " && floor==" + pa.getFloor());
-                    List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery(VoUserGroup.class, query).execute();
+                    List<VoUserGroup> groups = executeQuery(  pm.newQuery(VoUserGroup.class, query) );
                     vgs = new HashSet<Long>();
                     for (VoUserGroup voUserGroup : groups) {
                         vgs.add(voUserGroup.getId());

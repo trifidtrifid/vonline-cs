@@ -13,6 +13,8 @@ import javax.jdo.PersistenceManager;
 import java.io.IOException;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 
 public class NewNeigboursNotification extends Notification {
 
@@ -114,7 +116,7 @@ public class NewNeigboursNotification extends Notification {
 		Map< VoUserGroup, List<VoUser>> nuMap = new TreeMap<VoUserGroup, List<VoUser>>( super.ugComp );
 
 		int weekAgo = (int) (System.currentTimeMillis() / 1000L) - 86400 * 2;
-		List<VoUser> newUsers = (List<VoUser>)pm.newQuery(VoUser.class, "registered>="+weekAgo).execute();
+		List<VoUser> newUsers = executeQuery( pm.newQuery(VoUser.class, "registered>="+weekAgo) );
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
 		userSet.addAll(newUsers);
 		return arrangeUsersInGroups(userSet,pm);

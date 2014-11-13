@@ -16,6 +16,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @SuppressWarnings("unchecked")
 public class Defaults {
 
@@ -126,7 +128,7 @@ public class Defaults {
 		while(true){
             Query newQuery = pm.newQuery(pc,"");
 			newQuery.setRange(0, 200);
-			List list = (List) newQuery.execute();
+			List list = executeQuery(  newQuery );
 			if( 0==list.size())
 				break;
 			pm.deletePersistentAll(list);

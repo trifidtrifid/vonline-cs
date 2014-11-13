@@ -4,11 +4,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable
 public class VoInitKey {
 	
 	public static VoInitKey getVoInitKey( PersistenceManager pm) {
-		List<VoInitKey> kl = (List<VoInitKey>) pm.newQuery(VoInitKey.class, "").execute();
+		List<VoInitKey> kl = executeQuery(  pm.newQuery(VoInitKey.class, "") );
 		if( 0==kl.size() ){
 			VoInitKey vik = new VoInitKey();
 			pm.makePersistent(vik);

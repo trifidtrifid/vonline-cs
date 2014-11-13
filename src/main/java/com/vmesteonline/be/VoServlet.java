@@ -1,5 +1,6 @@
 package com.vmesteonline.be;
 
+import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TProtocol;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 public class VoServlet extends HttpServlet {
 
+	public static final Logger logger = Logger.getLogger(VoServlet.class);
 	private static final long serialVersionUID = 6849485191443776061L;
 
 	protected TProcessor processor;
@@ -117,17 +119,14 @@ public class VoServlet extends HttpServlet {
 					.getProtocol(outTransport);
 			
 			processor.process(inProtocol, outProtocol);
-			out.flush();
 
 			writerSniffer.close();
 			readerSniffer.close();
             String req = readBaos.toString();
             if( !req.matches(disabledThriftLoggingPatterns)) {
-                System.out.println("THRIFT Got request: '" + req + "'");
-                System.out.println("THRIFT Sent a response: '" + writeBaos.toString() + "'");
+                logger.debug("THRIFT request: '" + req + "'");
+				logger.debug("THRIFT response: '" + writeBaos.toString() + "'");
             }
-
-			out.flush();
 		} catch (TException te) {
 			throw new ServletException(te);
 		}

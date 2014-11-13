@@ -11,6 +11,8 @@ import javax.jdo.annotations.*;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable
 @Indices({
         @Index(name="GT_IDX", members = {"groupType"}),
@@ -32,7 +34,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		if( gType <= GroupType.FLOOR.getValue() )
 			queryStr += " && floor==" + floor;
 		
-		List<VoUserGroup> ugl =  (List<VoUserGroup>)pm.newQuery(VoUserGroup.class,queryStr).execute();
+		List<VoUserGroup> ugl =  executeQuery(pm.newQuery(VoUserGroup.class, queryStr));
 		
 		if( 1==ugl.size() ) {
 			return ugl.get(0);
@@ -66,7 +68,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		if( gType <= GroupType.FLOOR.getValue() )
 			queryStr += " && floor==" + this.floor;
 
-		List<VoUserGroup> vugl = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, queryStr).execute();
+		List<VoUserGroup> vugl = executeQuery(  pm.newQuery( VoUserGroup.class, queryStr) );
 		if( vugl.size() == 1 )
 			return vugl.get(0);
 		if( vugl.size() == 0 ) { //it's a error that have to be cleaned
@@ -102,7 +104,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 				if( gType <= GroupType.FLOOR.getValue() )
 					queryStr += " && floor==" + this.floor;
 
-				List<VoUserGroup> vugl = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, queryStr).execute();
+				List<VoUserGroup> vugl = executeQuery(  pm.newQuery( VoUserGroup.class, queryStr) );
 				
 				if( vugl.size() > 1 ){
 					throw new RuntimeException("There is "+vugl.size() +" the same grpups: " + vugl.get(0) + " == "+vugl.get(1));
@@ -142,7 +144,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 				
 				if(nbGroup.getGroupType() == this.getGroupType() ){
 					nbGroup.getVisibleGroups( pm ).add(this.getId());
-					List<VoTopic> nnbgTopics = (List<VoTopic>)pm.newQuery(VoTopic.class, "userGroupId=="+nbgGrp).execute();
+					List<VoTopic> nnbgTopics = executeQuery( pm.newQuery(VoTopic.class, "userGroupId=="+nbgGrp) );
 					if( null!=nnbgTopics)
 						for( VoTopic tpc: nnbgTopics){
 							ArrayList<Long> groups = new ArrayList<Long>(nbGroup.getVisibleGroups( pm ));
@@ -193,14 +195,14 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			String filter = "groupType="+groupType +" && longitude>='"+longMin.toPlainString()+"' &&  longitude<='"+longMax.toPlainString()+"' "+
 					" && latitude>='"+latMin.toPlainString()+"' &&  latitude<='"+latMax.toPlainString()+"'";
 
-			/*List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, filter).execute();
+			/*List<VoUserGroup> groups = executeQuery(  pm.newQuery( VoUserGroup.class, filter) );
 			for( VoUserGroup ug: groups ){
 				if( ug.getId() != getId() && ug.getLatitude().compareTo( latMax ) <=0 && ug.getLatitude().compareTo( latMin ) >=0 
 						&& ug.getLongitude().compareTo( longMax ) <= 0 && ug.getLongitude().compareTo( longMin ) >= 0)
 					
 					vg.add( ug.getId() );
 			}*/
-			Iterator idit = ((List) pm.newQuery("SQL", "SELECT ID FROM VOUSERGROUP WHERE " + filter).execute()).iterator();
+			Iterator idit = ((List) executeQuery( pm.newQuery("SQL", "SELECT ID FROM VOUSERGROUP WHERE " + filter))).iterator();
 			while( idit.hasNext()){
 				vg.add((Long)idit.next());
 			}
@@ -226,7 +228,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 				filter += " && staircase=="+staircase;
 			} 
 			
-			List<VoUserGroup> childs = (List<VoUserGroup>) pm.newQuery( VoUserGroup.class, filter).execute();
+			List<VoUserGroup> childs = executeQuery(  pm.newQuery( VoUserGroup.class, filter) );
 			for (VoUserGroup childGroup : childs) {
 				childGroups.addAll(childGroup.getChildGroups(pm));
 			}

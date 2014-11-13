@@ -19,6 +19,8 @@ import javax.jdo.annotations.*;
 import java.io.IOException;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable
 @Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"lastMessageDate"})
 public class VoDialog {
@@ -106,7 +108,7 @@ public Dialog getDialog( VoUser cuser, PersistenceManager pm ) throws InvalidOpe
 		Query q = pm.newQuery(VoDialogMessage.class, "dialogId=="+id+
 				(afterDate > 0 ? " && createDate>"+afterDate : ""));
 		//q.setOrdering("createDate DESC"); List will be empty if sorting is enabled :(
-		List<VoDialogMessage> msgs = (List<VoDialogMessage>) q.execute();
+		List<VoDialogMessage> msgs = executeQuery(  q );
 		SortedSet<VoDialogMessage> msgsSorted = new TreeSet<VoDialogMessage>( new Comparator<VoDialogMessage>(){
 			@Override
 			public int compare(VoDialogMessage o1, VoDialogMessage o2) {
@@ -158,7 +160,7 @@ public Dialog getDialog( VoUser cuser, PersistenceManager pm ) throws InvalidOpe
     for( Long recipient : users ){
     	if( recipient != currentUser.getId() )
             Notification.dialogMessageNotification( this, currentUser, pm.getObjectById( VoUser.class, recipient) );
-		List<VoSession> sessList = (List<VoSession>) pm.newQuery(VoSession.class, "userId=="+recipient).execute();
+		List<VoSession> sessList = executeQuery(  pm.newQuery(VoSession.class, "userId=="+recipient) );
     	for( VoSession s:sessList ){
     		s.postNewDialogMessage(id);
     		pm.makePersistent( s );

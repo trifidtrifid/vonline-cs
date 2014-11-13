@@ -1,5 +1,7 @@
 package com.vmesteonline.be;
 
+import org.apache.log4j.Logger;
+
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -8,6 +10,7 @@ import java.io.IOException;
 
 public class PersistenceInitFilter implements Filter {
 
+	public static final Logger logger = Logger.getLogger(PersistenceInitFilter.class);
 	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory("vmesteonline");
 
 	private static PersistenceManagerFactory factory() {
@@ -15,15 +18,15 @@ public class PersistenceInitFilter implements Filter {
 	}
 
 	private static ThreadLocal<PersistenceManager> currentManager = new ThreadLocal<PersistenceManager>(){
-		
+
 	};
 
 	public static PersistenceManager getManager() {
 		PersistenceManager pm = currentManager.get();
 		if (pm == null || pm.isClosed() ) {
-			currentManager.set( pm = factory().getPersistenceManager() );
+			currentManager.set( factory().getPersistenceManager() );
 		} 
-		return pm;
+		return currentManager.get();
 	}
 
 	@Override
@@ -31,12 +34,14 @@ public class PersistenceInitFilter implements Filter {
 		PersistenceManager manager = null;
 		try {
 			manager = getManager();
+			logger.debug("Got request: " + req + " Processed with pm: " + manager);
 			chain.doFilter(req, res);
 		} finally {
 			if (manager != null) {
 				manager.flush();
 				manager.close();
 			}
+			logger.debug("End process request: "+req + " Just closed pm: "+manager);
 		}
 	}
 

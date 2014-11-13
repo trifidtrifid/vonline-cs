@@ -60,14 +60,14 @@ public class VoTopic extends VoBaseMessage {
 				null, null, getGroupType(pm));
 
 		if (pollId != 0) {
-			VoPoll voPoll = pm.getObjectById(VoPoll.class, pollId);
-			tpc.poll = voPoll.getPoll(userId);
+			try {
+				VoPoll voPoll = pm.getObjectById(VoPoll.class, pollId);
+				tpc.poll = voPoll.getPoll(userId);
+			} catch (Exception e) {
+			}
 		}
-		
 		tpc.setRubricId( rubricId );
-		
 		return tpc;
-
 	}
 
 	public GroupType getGroupType( PersistenceManager pm){
