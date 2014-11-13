@@ -10,7 +10,9 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
         counters.typesArray = [];
         var typesEnumLength = 6;
 
+    console.log('1');
         var counterService = utilityClient.getCounterService();
+    console.log('2');
 
         var currentDate = (new Date()).getDate;
 
