@@ -968,6 +968,8 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             var updateMap,
                 old = 0;
 
+            console.log('timestemp '+timeStamp);
+
             if(timeStamp == 0){
                 updateMap = messageClient.getDialogUpdates();
                 var temp = 0,
@@ -1010,6 +1012,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
             }else if(timeStamp >= 2 && timeStamp < 10000){
                 // important messages
+                console.log('important '+timeStamp);
                 $rootScope.newMessages = [];
                 $rootScope.newImportantCount = timeStamp;
 

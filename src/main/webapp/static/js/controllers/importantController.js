@@ -5,6 +5,7 @@ forumControllers.controller('importantController',function($rootScope) {
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;
         $rootScope.base.pageTitle = "Важно";
+        $rootScope.base.mainContentTopIsHide = true;
 
         var important = this,
             lastLoadedId = 0,
