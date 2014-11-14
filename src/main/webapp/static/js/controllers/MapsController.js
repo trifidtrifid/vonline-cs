@@ -81,7 +81,7 @@ forumControllers.controller('MapsController',function($rootScope) {
 
             setMap(location);
         };
-        $rootScope.selectGroup(getBuildingGroup($rootScope.currentGroup));
+        //$rootScope.selectGroup(getBuildingGroup($rootScope.currentGroup));
 
         angular.element($('.maps.page')).css({'min-height': $(window).height()-175}); 
 
