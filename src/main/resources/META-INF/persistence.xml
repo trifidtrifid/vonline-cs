@@ -28,7 +28,6 @@
         <class>com.vmesteonline.be.jdo2.dialog.VoDialogMessage</class>
         <class>com.vmesteonline.be.jdo2.utility.VoCounter</class>
         <class>com.vmesteonline.be.jdo2.VoMulticastMessage</class>
-        <class>com.vmesteonline.be.jdo2.utility.VoCounterService</class>
         <exclude-unlisted-classes/>
         <properties>
             <!-- PRODUCTION DATABASE VONLINE -->
