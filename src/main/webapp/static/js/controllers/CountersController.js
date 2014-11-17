@@ -12,7 +12,7 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
 
         var counterService = utilityClient.getCounterService();
 
-        var currentDate = (new Date()).getDate;
+        var currentDate = (new Date()).getDate();
 
         counters.endDateOfMonth = counterService.endDateOfMonth;
 
@@ -22,14 +22,20 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
 
         if(currentDate >= counterService.startDateOfMonth &&
             currentDate <= counterService.endDateOfMonth ){
-            if(counterService.infoProvided){
-                counters.state = 1;
-            }else{
+
+                if(counterService.infoProvided){
+                // с 14 по 24, отправлено
                 counters.state = 2;
+            }else{
+                // с 14 по 24, не отправлено
+                counters.state = 1;
             }
         }else{
+            // время с 24 по 14 число
             counters.state = 0;
         }
+
+    console.log('state '+counters.state);
 
         for(var i = 0; i < typesEnumLength; i++){
             counters.typesArray[i] = {};
@@ -49,18 +55,32 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
 
             var countersLen = counters.counters.length,
                 currentValue,
-                date;
+                date, isCanSave = true;
+
 
             for(var i = 0; i < countersLen; i++){
-                if(counters.counters[i].wasEdit) {
-                    date = Date.parse(new Date())/1000;
-                    currentValue = counters.counters[i].currentValue;
-
-                    if (!currentValue) currentValue = 0;
-                    utilityClient.setCurrentCounterValue(counters.counters[i].id, currentValue, date);
-                    counters.counters[i].lastValue = currentValue;
-                    counters.counters[i].currentValue = "";
+                if(!counters.counters[i].currentValue) {
+                    isCanSave= false;
+                    break;
                 }
+            }
+
+            if(isCanSave) {
+                counters.errorText = "";
+                for (i = 0; i < countersLen; i++) {
+                    if (counters.counters[i].wasEdit) {
+                        date = Date.parse(new Date()) / 1000;
+                        currentValue = counters.counters[i].currentValue;
+
+                        if (!currentValue) currentValue = 0;
+                        utilityClient.setCurrentCounterValue(counters.counters[i].id, currentValue, date);
+                        counters.counters[i].lastValue = currentValue;
+                        counters.counters[i].currentValue = "";
+                        counters.state = 2;
+                    }
+                }
+            }else{
+                counters.errorText = "Необходимо указать значения всех счтечиков";
             }
 
         };
@@ -142,6 +162,11 @@ forumControllers.controller('CountersController',function($rootScope, $modal,$co
             userClient.updateUserServices(newServicesStatuses);
 
         };
+
+    counters.inputCounter = function(counter){
+        counter.wasEdit = true;
+        counter.currentValue = parseInt(counter.currentValue);
+     };
 
         angular.element($('.counters')).css({'min-height': $(window).height()-105});
 

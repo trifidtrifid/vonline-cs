@@ -1,8 +1,9 @@
 
 <section class="counters page">
 
-    <h3>История показаний счетчика</h3>
+    <div class="page-title top-overflow-auto">{{ base.pageTitle}}</div>
 
+    <br/>
     <div ng-if="currentCounter.typeString != null">Тип счетчика : <span> {{ currentCounter.typeString }} </span>   </div>
     <div ng-if="currentCounter.location != null && currentCounter.location">Место установки : <span> {{ currentCounter.location }} </span> </div>
 
@@ -29,8 +30,6 @@
     <br/>
 
     <div ng-if="history.length == 0"> У данного счетчика пока нет истории. </div>
-
-    <br/>
 
     <a ui-sref="counters">Назад</a>
 

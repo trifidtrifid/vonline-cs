@@ -958,10 +958,17 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
         var timeStamp = 0;
         base.checkUpdates = function(){
-            timeStamp = messageClient.checkUpdates(timeStamp);
+            try {
+                timeStamp = messageClient.checkUpdates(timeStamp);
+            }catch(e){
+                document.location.replace('login.jsp');
+                //document.location.replace('login.jsp');
+            }
 
             var updateMap,
                 old = 0;
+
+            console.log('timestemp '+timeStamp);
 
             if(timeStamp == 0){
                 updateMap = messageClient.getDialogUpdates();
@@ -1005,6 +1012,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
 
             }else if(timeStamp >= 2 && timeStamp < 10000){
                 // important messages
+                console.log('important '+timeStamp);
                 $rootScope.newMessages = [];
                 $rootScope.newImportantCount = timeStamp;
 

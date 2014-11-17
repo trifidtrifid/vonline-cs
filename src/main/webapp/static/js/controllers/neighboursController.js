@@ -14,6 +14,8 @@ forumControllers.controller('neighboursController',function($rootScope,$state) {
         $rootScope.navbar.neighboursBtnStatus = "active";
         $rootScope.base.pageTitle = "";
 
+        $rootScope.currentGroup = userClientGroups[3];
+
         $rootScope.base.neighboursLoadStatus = "isLoaded";
 
         var neighbours = this;

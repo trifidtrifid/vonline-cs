@@ -27,12 +27,12 @@ forumControllers.controller('AdvertsController',function($rootScope) {
         adverts.message.content = adverts.message.default = TEXT_DEFAULT_3;
         adverts.subject = TEXT_DEFAULT_4;
 
+        $rootScope.base.bufferSelectedGroup = adverts.selectedGroup =
+        $rootScope.currentGroup = userClientGroups[3];
+
         $rootScope.base.initStartParamsForCreateTopic(adverts);
 
         adverts.answerFirstMessage = TEXT_DEFAULT_2;
-
-        $rootScope.base.bufferSelectedGroup = adverts.selectedGroup =
-            $rootScope.currentGroup = userClientGroups[3];
 
         adverts.topics = messageClient.getAdverts(adverts.selectedGroup.id, 0, 1000).topics;
 

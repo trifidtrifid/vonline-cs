@@ -1,7 +1,8 @@
 
         <section class="forum page ng-cloak" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()" ng-cloak>
 
-        <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"></div>
+        <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"
+             ng-show="lenta.isCreateNewsShow[currentGroup.id] || lenta.wallItems.length > 0"></div>
 
             <div class="lenta">
                 <div ng-if="!lenta.wallItems || lenta.wallItems.length == 0" class="empty-messages">

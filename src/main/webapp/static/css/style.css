@@ -265,6 +265,9 @@ h1 {
   padding: 15px 0 0 10px;
   font-size: 20px;
 }
+.important .page-title.top-overflow-auto {
+  margin-bottom: 15px;
+}
 /*.main-content-top
   border-bottom 1px solid #ccc*/
 .submenu {
@@ -1697,7 +1700,6 @@ h1 {
   top: -60px;
 }
 .counters {
-  padding: 10px 20px;
   min-height: 300px;
 }
 .counters h3 {
@@ -1744,6 +1746,11 @@ h1 {
 .fa-clock-o {
   font-size: 18px;
   margin-left: 10px;
+}
+.error-info {
+  position: relative;
+  left: 10px;
+  top: 3px;
 }
 .gray-text {
   color: #ccc;
