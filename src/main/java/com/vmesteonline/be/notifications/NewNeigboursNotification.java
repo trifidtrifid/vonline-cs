@@ -119,6 +119,6 @@ public class NewNeigboursNotification extends Notification {
 		List<VoUser> newUsers = executeQuery( pm.newQuery(VoUser.class, "registered>="+weekAgo) );
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
 		userSet.addAll(newUsers);
-		return arrangeUsersInGroups(userSet,pm);
+		return arrangeUsersInGroups(userSet);
 	}
 }

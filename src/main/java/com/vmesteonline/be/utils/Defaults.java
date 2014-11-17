@@ -68,6 +68,8 @@ public class Defaults {
 	public static int radiusBuilding = 50;
 	public static int radiusNeighbors = 350;
 	public static int radiusBlock = 500;
+
+	public static int FIRST_USERS_GROUP = GroupType.FLOOR.getValue();
 	
 	/*
 	 * public static int radiusMedium = 1500; public static int radiusLarge = 5000;

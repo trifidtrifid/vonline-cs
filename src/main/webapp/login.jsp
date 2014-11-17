@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.vmesteonline.be.AuthServiceImpl"%>
 <%@ page import="com.vmesteonline.be.thrift.InvalidOperation"%>
 
@@ -40,7 +40,6 @@
 	<body class="login-layout login-forum">
 		<div class="main-container">
 			<div class="main-content">
-
 				<div class="row clearfix">
 					<div class="col-sm-10 col-sm-offset-1">
                         <c:if test="${MESSAGE_TO_SHOW != null && MESSAGE_TO_SHOW != '' }">

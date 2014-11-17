@@ -22,7 +22,7 @@ import java.util.*;
         @Index(name="lastUpdateIdx", members = {"lastUpdate"}),
         @Index(name="importantScoreIdx", members = {"importantScore"})
 })
-public abstract class VoBaseMessage /*extends GeoLocation*/ {
+public abstract class VoBaseMessage extends GeoLocation {
 
 	public static final Charset STRING_CHARSET=Charset.forName("UTF-8");
 	
@@ -253,6 +253,7 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 		this.importantNotificationSentDate = importantNotificationSentDate;
 	}
 
+/*
 	public long getId() {
 		return id;
 	}
@@ -264,12 +265,9 @@ public abstract class VoBaseMessage /*extends GeoLocation*/ {
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;
+*/
 
-	/*
-	 * @PrimaryKey
-	 * 
-	 * @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) protected Key id;
-	 */
+
 	@Persistent
 	protected byte[] content;
 

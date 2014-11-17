@@ -144,12 +144,13 @@ public abstract class Notification {
 		messagesToSend.put(u, uns);
 	}
 
-	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users, PersistenceManager pm) {
+	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users) {
 		// group users by groups and group types
-		
 		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
 		for (VoUser u : users) {
-			for (Long ug : u.getGroups()) {
+			List<Long> groups = u.getGroups();
+			if( null!=groups && groups.size()>0){
+				Long ug = groups.get(groups.size() - 1);
 				Set<VoUser> ul;
 				if (null == (ul = groupUserMap.get(ug))) {
 					ul = new TreeSet<VoUser>(vuComp);
@@ -210,7 +211,7 @@ public abstract class Notification {
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
 		userSet.addAll(executeQuery( pm.newQuery(VoUser.class, "")));
 
-		body += "На сайте уже зарегистрированно: " + userSet.size() + " пользователей<br/>";
+		body += "На сайте уже зарегистрировано: " + userSet.size() + " пользователей<br/>";
 		
 		List<VoUser> ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.NEIGHBORS, pm), pm );
 		if(0!=ul.size()) body += "Из них рядом с вами живут: "+ul.size()+"<br/>";

@@ -6,6 +6,7 @@ import com.vmesteonline.be.thrift.messageservice.Attach;
 import com.vmesteonline.be.thrift.messageservice.Mark;
 import com.vmesteonline.be.thrift.messageservice.Message;
 import com.vmesteonline.be.thrift.messageservice.Topic;
+import com.vmesteonline.be.utils.Defaults;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
@@ -18,7 +19,9 @@ import java.util.List;
         @Index(name="lastUp_IDX", members={"lastUpdate"}),
         @Index(name="userGroupId_IDX", members={"userGroupId"}),
         @Index(name="type_vg_idx", members={"type"}),
-        @Index(name="type_vg_idx", members={"type", "isImportant", "lastUpdate"})
+        @Index(name="type_vg_idx", members={"type", "isImportant", "lastUpdate"}),
+		@Index(name="location_and_gtype", members={"userGroupType", "latitude", "longitude"}),
+		@Index(name="createDate_IDX", members={"createDate"})
 })
 public class VoTopic extends VoBaseMessage {
 	// id, message, messageNum, viewers, usersNum, lastUpdate, likes, unlikes,
@@ -32,8 +35,10 @@ public class VoTopic extends VoBaseMessage {
 		viewers = 1;
 		rubricId = topic.getRubricId();
 		userGroupId = topic.getMessage().getGroupId();
-		visibleGroups = pm.getObjectById(VoUserGroup.class, userGroupId ).getUpperLevelGroups(pm);
 		createDate = lastUpdate = (int) (System.currentTimeMillis() / 1000);
+		userGroupType = author.getGroups().indexOf( userGroupId ) + Defaults.FIRST_USERS_GROUP;
+		latitude = author.getLatitude().toPlainString();
+		longitude = author.getLongitude().toPlainString();
 	}
 
 	public Topic getTopic(long userId, PersistenceManager pm) {
@@ -123,14 +128,6 @@ public class VoTopic extends VoBaseMessage {
 	}
 
 	
-	public List<Long> getVisibleGroups() {
-		return visibleGroups;
-	}
-
-	public void setVisibleGroups(List<Long> visibleGroups) {
-		this.visibleGroups = visibleGroups;
-	}
-
 	@Override
 	public String toString() {
 		return "VoTopic [id=" + id + ", message=" + content.toString() + ", messageNum=" + messageNum + "]";
@@ -148,6 +145,9 @@ public class VoTopic extends VoBaseMessage {
 		this.subject = subject;
 	}
 
+	public int getUserGroupType() {
+		return userGroupType;
+	}
 
 	@Persistent
 	private int messageNum;
@@ -167,12 +167,7 @@ public class VoTopic extends VoBaseMessage {
 	@Persistent(defaultFetchGroup = "true")
 	private Long userGroupId;
 
-    @Persistent(table = "topicvisiblegroups")
-    @Join(column = "id")
-    @Element(column = "visibleGroup")
-	private List<Long> visibleGroups;
-
-	@Persistent
+    @Persistent
 	private long pollId;
 
 	@Persistent
@@ -180,4 +175,7 @@ public class VoTopic extends VoBaseMessage {
 	
 	@Persistent
 	private boolean isImportant;
+
+	@Persistent
+	private int userGroupType;
 }
