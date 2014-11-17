@@ -677,6 +677,14 @@ h1 {
     margin-left: 0;
   }
 }
+@media all and (max-width: 580px) {
+  .login-forum {
+    padding-top: 0;
+  }
+  .footer.footer-login {
+    width: 100%;
+  }
+}
 /* создание темы */
 .create-topic {
   padding: 0 10px;
