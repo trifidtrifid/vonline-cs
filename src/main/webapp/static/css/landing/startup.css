@@ -691,6 +691,9 @@ margin: 30px auto;
 }
 }
  @media (max-width: 767px) {
+     .logo{
+         margin-top: -25px;
+     }
  h1 {
 font-size: 60px;
 line-height: 60px;
@@ -711,9 +714,39 @@ padding: 40px 15px;
      .logo img,.testblock img{
          width: 100%;
      }
-	 
+     .go-to-login{
+         right: 50%;
+         margin-right: -55px;
+         margin-top: 105px !important;
+     }
+     .logo{
+         margin-top: -30px;
+     }
+     .footer-bottom{
+         padding-top: 0;
+         padding-bottom: 0;
+         text-align: center;
+     }
+
+    .footer-bottom .pull-left,
+    .footer-bottom .pull-right {
+        float: none !important;
+    }
+     .footer-bottom ul{
+         padding-left: 0;
+         padding-bottom: 10px;
+     }
 }
+@media (max-width: 520px) {
+    .go-to-login{
+        margin-top: 95px !important;
+    }
+}
+
 @media (max-width: 460px) {
+    .go-to-login{
+        margin-top: 85px !important;
+    }
     h1{
         font-size: 50px;
         line-height: 50px;
