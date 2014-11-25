@@ -228,9 +228,9 @@ public abstract class Notification {
 		if(0!=ul.size()) body += "Из них рядом с вами живут: "+ul.size()+"<br/>";
 		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.BUILDING, pm), pm );
 		if(0!=ul.size()) body += "В вашем доме: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.STAIRCASE, pm), pm );
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
 		if(0!=ul.size()) body += "В вашем подъезде: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.FLOOR, pm), pm );
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm );
 		if(0!=ul.size()) body += "На вашем этаже : "+ul.size()+"<br/>";
 		
 		

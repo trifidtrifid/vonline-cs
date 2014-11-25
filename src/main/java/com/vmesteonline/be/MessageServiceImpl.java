@@ -269,7 +269,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
             } else {
 				if (importantOnly) {
 					int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
-					filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& (" + filter + ")";
+					filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& " + filter;
 				}
 
 				if (type == MessageType.WALL)
@@ -299,7 +299,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			(e = ee).printStackTrace();
 		}
 		logger.debug("Got topic request type:" + type + " lastLoadedTopicId:" + lastLoadedTopicId + " length:" + length
-				+ " Query filter:" + filter + " Query Result:" + allTopics.size() + " Result: "
+				+ " Query filter:" + filter + " Query Result:" + (null !=allTopics ? allTopics.size() : -1) + " Result: "
 				+ topics.size() + (null != e ? " exception:" + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage()) : ""));
 
 		return topics;

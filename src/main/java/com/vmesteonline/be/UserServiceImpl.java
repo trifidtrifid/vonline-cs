@@ -701,7 +701,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 		int radius = group.getRadius();
 		List<VoUser> users;
-		if( 0==group.getRadius() ) {
+		if( group.getGroupType() <= GroupType.BUILDING.getValue() ) {
 			users = getUsersByGroup(group.getId(), pm);
 		} else {
 			String ufilter = "emailConfirmed==true && ";
