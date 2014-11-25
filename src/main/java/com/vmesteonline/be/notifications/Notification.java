@@ -2,12 +2,10 @@ package com.vmesteonline.be.notifications;
 
 import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoSession;
-import com.vmesteonline.be.jdo2.VoTopic;
-import com.vmesteonline.be.jdo2.VoUser;
-import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
+import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
@@ -177,6 +175,19 @@ public abstract class Notification {
 		for (VoUser rcpt : usersForMessage) {
 			decorateAndSendMessage(rcpt, subject, body);
 		}
+	}
+
+	public static void sendMessageCopy(VoBaseMessage msg, VoUser author) {
+
+		PersistenceManager pm = PMF.getPm();
+
+		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
+		String body = "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		body += "Тип: "+msg.getType()+"<br/>";
+		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
+				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
+		body += "<br/><i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
+		decorateAndSendMessage(null, subject, body);
 	}
 
 	public static void dialogMessageNotification(VoDialog dlg, VoUser author, VoUser rcpt) {

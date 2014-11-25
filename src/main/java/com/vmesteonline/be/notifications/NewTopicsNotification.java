@@ -5,6 +5,7 @@ import com.vmesteonline.be.jdo2.VoGroup;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.thrift.GroupType;
+import com.vmesteonline.be.thrift.messageservice.MessageType;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.VoHelper;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -35,6 +36,8 @@ public class NewTopicsNotification extends Notification {
 		List<VoTopic> newTopics = executeQuery( query );
 		Map<VoUser, List[]> userTopics = new HashMap<>();
 		for( VoTopic topic: newTopics ){
+			if( topic.getType() == MessageType.BLOG )
+				continue;
 			int radius = Defaults.defaultGroups.get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP).getRadius();
 			String ufilter;
 			if( 0==radius )

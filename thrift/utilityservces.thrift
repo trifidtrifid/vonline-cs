@@ -31,6 +31,7 @@ service UtilityService {
 	list<Counter> getCounters() throws (1:error.InvalidOperation exc), //возвращает счетчики на адресе текущего пользователя
 	map< i32, double> getCounterHistory(1:i64 counterId, 2:i32 fromDate, 3:i32 toDate) throws (1:error.InvalidOperation exc), //возвращает историю показаний счетчика
 	double setCurrentCounterValue(1:i64 counterId, 2:double counterValue, 3:i32 date) throws (1:error.InvalidOperation exc), //сохраняет показания счетчика и возвращает значение расхода. если данных за предыдущий период нет - возвращает 0
+	double cancelLastValue(1:i64 counterId) throws (1:error.InvalidOperation exc), //удаляет последние показания счетчика и возвращает предыдущее значение
 
 	//запрос инициализации сервиса счетчиков для дома
 	void createCounterService(1:i64 buildingId, 2:i16 startDateOfMonth, 3:i16 endDateOfMonth, 4:list<CounterType> defaultCounters) throws (1:error.InvalidOperation exc),

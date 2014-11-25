@@ -700,7 +700,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public static List<VoUser> getUsersByLocation(VoUserGroup group, PersistenceManager pm) {
 
 		int radius = group.getRadius();
-		List<VoUser> users = new ArrayList<>();
+		List<VoUser> users;
 		if( 0==group.getRadius() ) {
 			users = getUsersByGroup(group.getId(), pm);
 		} else {

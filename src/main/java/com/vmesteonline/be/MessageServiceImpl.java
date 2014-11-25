@@ -390,6 +390,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				pm.getObjectById(VoUserGroup.class, votopic.getUserGroupId());
 				topic.userInfo = user.getShortUserInfo(null, pm);
 
+				Notification.sendMessageCopy(votopic,user );
+
 			} else {
 				updateTopic(topic);
 			}
@@ -463,8 +465,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				topic.setLastUpdate((int) (System.currentTimeMillis() / 1000));
 				pm.makePersistent(topic);
 
-				if (msg.type != MessageType.BLOG)
-					msg.userInfo = getCurrentUser(pm).getShortUserInfo(null, pm);
+				if (msg.type != MessageType.BLOG) {
+					VoUser currentUser = getCurrentUser(pm);
+					msg.userInfo = currentUser.getShortUserInfo(null, pm);
+					Notification.sendMessageCopy(vomsg,currentUser );
+				}
+
+
 
 			} catch (Exception e) {
 				e.printStackTrace();

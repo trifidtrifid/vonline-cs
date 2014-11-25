@@ -1,6 +1,7 @@
 package com.vmesteonline.be.utils;
 
 import com.vmesteonline.be.jdo2.VoUser;
+import org.apache.log4j.Logger;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,7 +9,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import org.apache.log4j.Logger;
 
 public class EMailHelper {
 	
@@ -26,7 +26,7 @@ public class EMailHelper {
 	    con.setRequestMethod("POST");
 	    
 	    String urlParameters =  "from="+ URLEncoder.encode(fromAddress, "UTF-8") 
-	    		+"&to="+URLEncoder.encode(to, "UTF-8")
+	    		+"&to="+URLEncoder.encode(null == to ? "pr@vmesteonline.ru" : to, "UTF-8")
 	    		+"&cc="+URLEncoder.encode(fromAddress, "UTF-8")
 	    		+"&subject="+URLEncoder.encode(subject, "UTF-8")
 	    		+"&body="+URLEncoder.encode(body, "UTF-8");
@@ -73,7 +73,7 @@ public class EMailHelper {
 	}
 	
 	public static void sendSimpleEMail( VoUser to, String subject, String body) throws IOException {
-		sendSimpleEMail( to.getName() + " " + to.getLastName() + " <"+to.getEmail()+">", 
+		sendSimpleEMail( null==to ? null : to.getName() + " " + to.getLastName() + " <"+to.getEmail()+">",
 				subject, body);
 	}
 	
