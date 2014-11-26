@@ -36,7 +36,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         String action = (String) arg0.getParameter("action");
 
         if ("init".equalsIgnoreCase(action)) {
-            Defaults.initDefaultData();
+            Defaults.initDefaultData(PMF.getPm());
             resultText = "Init DONE";
 
 

@@ -15,6 +15,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
@@ -38,9 +40,10 @@ public class NewTopicsNotification extends Notification {
 		for( VoTopic topic: newTopics ){
 			if( topic.getType() == MessageType.BLOG )
 				continue;
-			int radius = Defaults.defaultGroups.get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP).getRadius();
+			VoGroup voGroup = Defaults.defaultGroups.get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
+			int radius = voGroup.getRadius();
 			String ufilter;
-			if( 0==radius )
+			if( voGroup.getGroupType() <= GroupType.BUILDING.getValue() )
 				ufilter = "longitude=='"+topic.getLongitude()+"' && latitude=='"+topic.getLatitude()+"'";
 			else {
 				BigDecimal latitudeMax = VoHelper.getLatitudeMax(topic.getLatitude(), radius);
@@ -121,8 +124,11 @@ public class NewTopicsNotification extends Notification {
 	private String createTopicContent(PersistenceManager pm, VoGroup ug, VoTopic tpc) {
 		VoUser author = pm.getObjectById(VoUser.class, tpc.getAuthorId());
 		String contactTxt = "<a href=\"https://"+host+"/profile/"+author.getId()+"\">"+StringEscapeUtils.escapeHtml4(author.getName() + " " + author.getLastName())+"</a>";
-		
-		String topicTxt = "<p>"+new Date(((long) tpc.getCreatedAt()) * 1000L) + " " + contactTxt;
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd 'в' HH:mm:ss z");
+		df.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+		Date date = new Date(((long) tpc.getCreatedAt()) * 1000L);
+
+		String topicTxt = "<p>"+ df.format(date) + " " + contactTxt;
 		topicTxt += "<br/>"+(ug.getImportantScore() <= tpc.getImportantScore() ? "<b>Важно!</b><br/>" : "");
 		//topicTxt += StringEscapeUtils.escapeHtml4(tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length())));
 		topicTxt += tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length()));

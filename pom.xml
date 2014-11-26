@@ -105,6 +105,12 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.8</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
 
@@ -202,16 +208,16 @@
             </plugin>
 
 
-            <!--plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin-->
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <includes>
+                        <include>Sample.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.4.1</version>
@@ -224,7 +230,7 @@
             </plugin>
 
         </plugins>
-        <!--finalName>vonline</finalName-->
-        <finalName>demo.vonline</finalName>
+        <finalName>vonline</finalName>
+        <!--finalName>demo.vonline</finalName-->
     </build>
 </project>

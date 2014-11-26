@@ -212,7 +212,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	@Override
 	public MessageListPart getMessages(long topicId, long groupId, MessageType messageType, long lastLoadedMsgId, boolean archived, int length)
-			throws InvalidOperation, TException {
+			throws InvalidOperation {
 
 		String key = mlpKeyPrefix + ":" + topicId + ":" + groupId + ":" + messageType + ":" + lastLoadedMsgId + ":" + archived + ":" + length;
 
@@ -242,7 +242,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		Exception e = null;
 		if( 0!=groupId) {
 			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
-			if( 0<ug.getRadius() ) {
+			if( ug.getGroupType() > GroupType.BUILDING.getValue() ) {
 				BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), ug.getRadius());
 				BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), ug.getRadius());
 				BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
@@ -273,7 +273,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				}
 
 				if (type == MessageType.WALL)
-					filter += "(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"')";
+					filter += "(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' || type=='" + MessageType.ADVERT+"')";
 				else
 					filter += "type=='" + type + "'";
 			}

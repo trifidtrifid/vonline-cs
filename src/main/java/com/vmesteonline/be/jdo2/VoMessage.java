@@ -178,6 +178,10 @@ public class VoMessage extends VoBaseMessage {
 		return "VoMessage [id=" + id + ", type=" + type + ", authorId=" + authorId + ", recipient=" + recipient + "]";
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public static class ComparatorByCreateDate implements Comparator<VoMessage> {
 
 		@Override

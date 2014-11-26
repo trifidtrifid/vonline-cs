@@ -56,7 +56,7 @@ public abstract class Notification {
 			if( voUser.isEmailConfirmed() ){
 				
 				VoSession lastSession = getTheLastSessionAndCeanOldOnes(voUser, weekAgo, pm);
-				if( lastSession == null || lastSession.getLastActivityTs() < twoDaysAgo )
+				if( lastSession == null /*|| lastSession.getLastActivityTs() < twoDaysAgo*/ )
 					addUserToNotificationIst(userList, now, voUser);
 			}
 		}

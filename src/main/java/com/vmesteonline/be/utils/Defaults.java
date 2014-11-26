@@ -6,10 +6,7 @@ import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
-import com.vmesteonline.be.thrift.GroupType;
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.thrift.ServiceType;
-import com.vmesteonline.be.thrift.VoError;
+import com.vmesteonline.be.thrift.*;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -78,19 +75,17 @@ public class Defaults {
 	public static String defaultAvatarMessageUrl = "/data/da.gif";
 	public static String defaultAvatarProfileUrl = "/data/da.gif";
 	public static String defaultAvatarShortProfileUrl = "/data/da.gif";
-	
+
+	public static VoPostalAddress[] addresses;
 	static {
 		PersistenceManager pm = PMF.getPm();
 		initializeGroups(pm);
 	}
 
-	public static boolean initDefaultData(boolean loadInviteCodes) {
+	public static boolean initDefaultData(PersistenceManager pm, boolean loadInviteCodes) {
 
-		PersistenceManager pm = PMF.getPm();
-		pm.setMultithreaded(false);
 		defaultRubrics = new ArrayList<VoRubric>();
 		try {
-			
 			clearLocations(pm);
 			clearGroups(pm);
 			clearUsers(pm);
@@ -121,8 +116,8 @@ public class Defaults {
 
 	}
 
-	public static boolean initDefaultData() {
-		return initDefaultData(false);
+	public static boolean initDefaultData( PersistenceManager pm ) {
+		return initDefaultData(pm,false);
 	}
 
 	// ======================================================================================================================

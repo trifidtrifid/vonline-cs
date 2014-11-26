@@ -286,12 +286,14 @@ public class VoHelper {
 			if(null!=pm) {
 				Method method = i0.getClass().getMethod("get" + o.getClass().getSimpleName(), new Class[] { PersistenceManager.class });
 				for (I i : inList) {
-					outList.add((O) method.invoke(i,pm));
+					O obj = (O) method.invoke(i, pm);
+					if(null!=obj) outList.add(obj);
 				}
 			} else {
 				Method method = i0.getClass().getMethod("get" + o.getClass().getSimpleName(), new Class[] { });
 				for (I i : inList) {
-					outList.add((O) method.invoke(i));
+					O obj = (O) method.invoke(i);
+					if(null!=obj) outList.add(obj);
 				}
 			}
 			
