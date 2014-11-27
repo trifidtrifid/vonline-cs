@@ -217,7 +217,7 @@ public class AuthServiceImplTests extends TestWorkAround{
     public void testRegisterNewUserByAddress() throws Exception {
 
         try {
-            String addressString = new String( "Россия, Ленинградская область, кудрово, Ленинградская улица д 7".getBytes("cp1251"),"UTF8");
+            String addressString = "Россия, Ленинградская область, кудрово, Ленинградская улица д 7";
             long nuid = asi.registerNewUserByAddress("FN", "LN", "PW", "aaa@bbb.com", addressString, (short) 1);
             assertTrue(nuid != 0L);
             VoUser vu = pm.getObjectById(VoUser.class, nuid);
@@ -230,7 +230,7 @@ public class AuthServiceImplTests extends TestWorkAround{
             VoStreet voStreet = pm.getObjectById(VoStreet.class, building.getStreetId());
             assertEquals(voStreet.getName(),"Ленинградская улица");
             VoCity voCity = pm.getObjectById(VoCity.class, voStreet.getCity());
-            assertEquals(voCity.getName(),"Ленинградская область, деревня Кудрово");
+            assertEquals(voCity.getName(),"деревня Кудрово");
             VoCountry voCountry = pm.getObjectById(VoCountry.class, voCity.getCountry());
             assertEquals(voCountry.getName(),"Россия");
         } catch (Exception e) {

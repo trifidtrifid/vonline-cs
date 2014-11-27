@@ -29,10 +29,10 @@ public class Defaults {
 	public static Long user4id = null;
 	public static Long user5id = null;
 	
-	public static String user1lastName = "Afamily";
-	public static String user1name = "Aname";
-	public static String user1email = "a";
-	public static String user1pass = "a";
+	public static String user1lastName = "Онлайн.ru";
+	public static String user1name = "Вместе";
+	public static String user1email = "info@vmesteonline.ru";
+	public static String user1pass = "123456";
 	public static String zan32k3Lat = "59.933146";
 	public static String zan32k3Long = "30.423117";
 
@@ -194,7 +194,7 @@ public class Defaults {
 
         for (String uname : unames) {
 				try {
-					long uid = asi.registerNewUser(uname, ulastnames[counter], uPasses[counter], uEmails[counter], locCodes.get(counter++), 0);
+					long uid = asi.registerNewUser(uname, ulastnames[counter], uPasses[counter], uEmails[counter], locCodes.get(counter++), 0,false);
 					VoUser user = pm.getObjectById(VoUser.class, uid);
 					user.setEmailConfirmed(true);
                     if( counter < 3 ) {
