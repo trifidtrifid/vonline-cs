@@ -4,17 +4,17 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.messageservice.Poll;
 
-import javax.jdo.annotations.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+import java.util.*;
 
 @PersistenceCapable
 public class VoPoll {
 
 	public VoPoll() {
-		alreadyPoll = new TreeSet<Long>();
+		alreadyPoll = new ArrayList<>();
 	}
 
 	public static VoPoll create(Poll poll) throws InvalidOperation {
@@ -84,13 +84,12 @@ public class VoPoll {
 
 	
 	public Set<Long> getAlreadyPoll() {
-		return alreadyPoll;
+		return new HashSet(alreadyPoll);
 	}
 
 	public void setAlreadyPoll(Set<Long> alreadyPoll) {
-		this.alreadyPoll = alreadyPoll;
+		this.alreadyPoll = new ArrayList<>(alreadyPoll);
 	}
-
 
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
@@ -106,6 +105,6 @@ public class VoPoll {
 	private List<Integer> values;
 
 	@Persistent
-	private Set<Long> alreadyPoll;
+	private List<Long> alreadyPoll;
 
 }

@@ -6,9 +6,11 @@ import com.vmesteonline.be.jdo2.VoInitKey;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.MatrixAsList;
 import com.vmesteonline.be.thrift.VoError;
+import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -20,6 +22,7 @@ import java.util.Map.Entry;
 
 public class VoHelper {
 
+	public static final Logger logger = Logger.getLogger(VoHelper.class);
 	public static BigDecimal earthRadius = new BigDecimal(6378137);
 
 	// (180.0 / Math.PI) = 57,29577952383886
@@ -283,12 +286,14 @@ public class VoHelper {
 			if(null!=pm) {
 				Method method = i0.getClass().getMethod("get" + o.getClass().getSimpleName(), new Class[] { PersistenceManager.class });
 				for (I i : inList) {
-					outList.add((O) method.invoke(i,pm));
+					O obj = (O) method.invoke(i, pm);
+					if(null!=obj) outList.add(obj);
 				}
 			} else {
 				Method method = i0.getClass().getMethod("get" + o.getClass().getSimpleName(), new Class[] { });
 				for (I i : inList) {
-					outList.add((O) method.invoke(i));
+					O obj = (O) method.invoke(i);
+					if(null!=obj) outList.add(obj);
 				}
 			}
 			
@@ -403,17 +408,33 @@ public class VoHelper {
 		return result;
 	}
 
-	public static final String passwordCharSet = "ABCDEFJHIJKLMNPQRSTUVWXYZabcdefjhijkmnpqrstuvwxyz23456789"; // characters to choose from
+	public static final String passwordCharSet = "ABCDEFJHJKLMNPQRSTUVWXYZabcdefjhijkmnpqrstuvwxyz23456789"; // characters to choose from
 	
 	public static String generatePassword( ) {
 		return generatePassword(8);
 	}
 
+	public static final String lettersCharSet = "ABCDEFJHJKLMNPQRSTUVWXYZ"; // characters to choose from
+	public static final String digitsCharSet = "23456789"; // characters to choose from
+
+	public static String generateCode(int letters, int digits) {
+		StringBuilder sb = new StringBuilder();
+		Random rand = new Random(System.nanoTime());
+		for (int i = 0; i < letters; i++) {
+			int k = rand.nextInt(lettersCharSet.length()); // random number between 0 and set.length()-1 inklusive
+			sb.append(lettersCharSet.charAt(k));
+		}
+		for (int i = 0; i < digits; i++) {
+			int k = rand.nextInt(digitsCharSet.length()); // random number between 0 and set.length()-1 inklusive
+			sb.append(digitsCharSet.charAt(k));
+		}
+		return sb.toString();
+	}
+
 	public static String generatePassword(int n) {
 		StringBuilder sb = new StringBuilder();
-		
+		Random rand = new Random(System.nanoTime());
 		for (int i = 0; i < n; i++) {
-			Random rand = new Random(System.nanoTime());
 			int k = rand.nextInt(passwordCharSet.length()); // random number between 0 and set.length()-1 inklusive
 			sb.append(passwordCharSet.charAt(k));
 		}
@@ -440,14 +461,30 @@ public class VoHelper {
 				glist += "|| " + idName + "==" + gid;
 				i++;
 				if (i == vgs.size() || i > 0 && 0 == i % 20) {
-					vus.addAll((List<T>) pm.newQuery(clazz, condSet ? condition + " && (" + glist.substring(2) + ")" : glist.substring(2)).execute());
+					vus.addAll( executeQuery( pm.newQuery(clazz, condSet ? condition + " && (" + glist.substring(2) + ")" : glist.substring(2))));
 					glist = "";
 				}
 			}
 		} else {
 			vus.addAll((List<T>) pm.newQuery(clazz).execute());
 		}
-	
 		return vus;
+	}
+
+	public static final int executeQueryRetryLimit = 3;
+	public static <T> T executeQuery( Query q, Object... params ){
+		int tl = executeQueryRetryLimit;
+		while(tl>0)
+			try {
+				//i think it's beter then use reflection
+				if( params.length == 0) return (T)q.execute( );
+				if( params.length == 1) return (T)q.execute(params[0]);
+				if( params.length == 2) return (T)q.execute(params[0],params[1]);
+				if( params.length == 3) return (T)q.execute(params[0],params[1],params[2]);
+
+			} catch (NullPointerException e) {
+				logger.warn("Got NPE on execute. Try again:"+tl--,e);
+			}
+		return null;
 	}
 }

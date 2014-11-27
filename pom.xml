@@ -86,13 +86,13 @@
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jsp-2.1</artifactId>
             <version>6.0.0</version>
-            <scope>provided</scope>
+            <!--scope>provided</scope-->
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>
-            <version>1.2-rev-1</version>
-            <scope>jar</scope>
+            <version>1.2</version>
+            <!--scope>compile</scope-->
         </dependency>
 
         <dependency>
@@ -104,6 +104,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.8</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -158,7 +164,7 @@
                     <schemaName>vonline</schemaName>
                     <metadataDirectory>${project.build.outputDirectory}/com/vmesteonline/be/jdo2</metadataDirectory>
                     <persistenceUnitName>vmesteonline</persistenceUnitName>
-                    <log4jConfiguration>src/main/resources/log4j.properties</log4jConfiguration>
+                    <log4jConfiguration>${project.basedir}/src/main/resources/log4j.properties</log4jConfiguration>
                     <verbose>true</verbose>
                 </configuration>
                 <executions>
@@ -205,16 +211,16 @@
             </plugin>
 
 
-            <!--plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin-->
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <includes>
+                        <include>Sample.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.4.1</version>
@@ -228,5 +234,6 @@
 
         </plugins>
         <finalName>vonline</finalName>
+        <!--finalName>demo.vonline</finalName-->
     </build>
 </project>

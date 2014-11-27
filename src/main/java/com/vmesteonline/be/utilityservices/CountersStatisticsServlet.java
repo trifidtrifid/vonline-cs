@@ -22,6 +22,8 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @SuppressWarnings("serial")
 public class CountersStatisticsServlet extends HttpServlet {
 
@@ -57,7 +59,7 @@ public class CountersStatisticsServlet extends HttpServlet {
 				Calendar clndr = Calendar.getInstance();
 				clndr.setTimeInMillis(((long)date)*1000L);
 				
-				List<VoPostalAddress> pal = (List<VoPostalAddress>) pm.newQuery( VoPostalAddress.class, "buildingId=="+buildingId).execute();
+				List<VoPostalAddress> pal = executeQuery(  pm.newQuery( VoPostalAddress.class, "buildingId=="+buildingId) );
 				Set<Long> vgs = new HashSet<Long>();
 				for (VoPostalAddress pa : pal) {
 					vgs.add(pa.getId());

@@ -24,10 +24,12 @@ detected.
     <!-- virtual hosts -->
     <Set name="virtualHosts">
         <Array type="String">
+            <Item>www.vmesteonline.ru</Item>
             <Item>vmesteonline.ru</Item>
             <Item>localhost</Item>
         </Array>
     </Set>
+<<<<<<< HEAD
 
     <!-- disable cookies
     <Get name="sessionHandler">
@@ -37,3 +39,6 @@ detected.
     </Get>
     -->
 </Configure>
+=======
+</Configure>
+>>>>>>> c1486ff4ac8aef7608e9dfff3c6007d66b4ed270

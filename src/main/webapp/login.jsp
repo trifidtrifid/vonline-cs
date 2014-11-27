@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.vmesteonline.be.AuthServiceImpl"%>
 <%@ page import="com.vmesteonline.be.thrift.InvalidOperation"%>
 
@@ -40,7 +40,6 @@
 	<body class="login-layout login-forum">
 		<div class="main-container">
 			<div class="main-content">
-
 				<div class="row clearfix">
 					<div class="col-sm-10 col-sm-offset-1">
                         <c:if test="${MESSAGE_TO_SHOW != null && MESSAGE_TO_SHOW != '' }">
@@ -65,7 +64,7 @@
 
                                                     <FORM action="https://oauth.vk.com/authorize" method="get">
                                                         <input type="hidden" name="client_id" value="4429306">
-                                                        <input type="hidden" name="redirect_uri" value="https://1-dot-algebraic-depot-657.appspot.com/oauth">
+                                                        <input type="hidden" name="redirect_uri" value="https://vmesteonline.ru/oauth">
                                                         <input type="hidden" name="scope" value="4194305">
                                                         <input type="hidden" name="v" value="5.21">
                                                         <INPUT type="submit" class="width-100 btn btn-sm no-border btn-primary" value="Войти через Вконтакте">

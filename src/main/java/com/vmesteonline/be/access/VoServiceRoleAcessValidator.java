@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import javax.jdo.PersistenceManager;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class VoServiceRoleAcessValidator extends VoTAccessValidator {
 	private static final Logger logger = Logger.getLogger(VoServiceRoleAcessValidator.class.getName());
 	
@@ -43,7 +45,7 @@ public class VoServiceRoleAcessValidator extends VoTAccessValidator {
 
 	private boolean checkAccessForUser(long currentUserId, long categoryId, String method) {
 		PersistenceManager pm = PMF.getPm();
-		List<VoUserAccessBase> acessList = (List<VoUserAccessBase>)pm.newQuery(si.getAuthRecordClass(), "categoryId == "+categoryId+" && userId == "+currentUserId).execute();
+		List<VoUserAccessBase> acessList = executeQuery( pm.newQuery(si.getAuthRecordClass(), "categoryId == "+categoryId+" && userId == "+currentUserId) );
 		for (VoUserAccessBase voUserAccessBase : acessList) {
 			if( si.accessAllowed( voUserAccessBase, currentUserId, categoryId, method, pm ) )
 				return true;

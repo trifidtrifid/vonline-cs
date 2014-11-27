@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ConfirmEmailServlet extends HttpServlet {
 	
 	private static final String MESSAGE_TO_SHOW = "MESSAGE_TO_SHOW";
-	private static String reqPrefix="/confirm/profile-";
+	private static String reqPrefix="/confirm/profile/";
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

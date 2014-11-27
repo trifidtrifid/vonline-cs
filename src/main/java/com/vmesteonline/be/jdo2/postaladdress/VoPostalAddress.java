@@ -2,18 +2,18 @@ package com.vmesteonline.be.jdo2.postaladdress;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUserGroup;
-import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.PostalAddress;
 import com.vmesteonline.be.thrift.VoError;
-import com.vmesteonline.be.thrift.utilityservice.CounterType;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.annotations.*;
 import java.util.List;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 @PersistenceCapable
 @Indices({
@@ -85,7 +85,7 @@ public class VoPostalAddress implements Comparable<VoPostalAddress> {
 		
 		Query q = pm.newQuery(VoPostalAddress.class);
 		q.setFilter("buildingId=="+voBuilding.getId()+" && staircase==" + staircase + " && floor==" + floor + " && flatNo=="+ flatNo);
-		List<VoPostalAddress> pal = (List<VoPostalAddress>) q.execute();
+		List<VoPostalAddress> pal = executeQuery(  q );
 		if (pal.size() == 1) {
 			return pal.get(0);
 		} else if (pal.size() > 1) 
@@ -94,14 +94,14 @@ public class VoPostalAddress implements Comparable<VoPostalAddress> {
 		VoPostalAddress voPostalAddress = new VoPostalAddress(voBuilding, staircase, floor, flatNo, comment, pm);
 		pm.makePersistent(voPostalAddress);
 
-        pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", voPostalAddress.getId()));
+        /*pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.ELECTRICITY_DAY, "", "", voPostalAddress.getId()));
         pm.makePersistent( new VoCounter(CounterType.ELECTRICITY_NIGHT, "", "", voPostalAddress.getId()));
 
-		pm.flush();
+		pm.flush();*/
 		return voPostalAddress;
 	}
 

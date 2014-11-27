@@ -9,8 +9,15 @@ forumControllers.controller('LentaController',function($rootScope) {
             lastLoadedId = 0,
             loadedLength = 10;
 
+        var len = userClientGroups.length;
+        lenta.isCreateNewsShow = [];
+        for(var i = 0; i < len; i++){
+            lenta.isCreateNewsShow[userClientGroups[i].id] = false;
+        }
+        //lenta.isCreateNewsShow[] = false;
         $rootScope.COMMENTS_DEFAULT_COUNT = 4;
-        lenta.selectedGroupInTop = $rootScope.currentGroup;
+        lenta.selectedGroupInTop = $rootScope.currentGroup =
+        $rootScope.base.bufferSelectedGroup = userClientGroups[3];
 
         /*if(!$rootScope.importantIsLoadedFromTop)
         $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);

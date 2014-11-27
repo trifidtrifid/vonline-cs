@@ -2,7 +2,6 @@ package com.vmesteonline.be.jdo2.postaladdress;
 
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
-import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.utils.Pair;
 import com.vmesteonline.be.utils.VoHelper;
 import org.xml.sax.Attributes;
@@ -19,6 +18,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class VoGeocoder {
 
@@ -50,8 +51,8 @@ public class VoGeocoder {
  * @return location, if found
  * @throws InvalidOperation
  */
-	public static Pair<String, String> getPosition(VoBuilding building, boolean fixNames) throws InvalidOperation {
-		PersistenceManager pm = PMF.getPm();
+	public static Pair<String, String> getPosition(VoBuilding building, boolean fixNames, PersistenceManager pm) throws InvalidOperation {
+
 		try {
 			VoStreet street = pm.getObjectById(VoStreet.class, building.getStreet());
 			VoCity city = pm.getObjectById(VoCity.class, street.getCity());
@@ -78,8 +79,8 @@ public class VoGeocoder {
 								if (addrInfo.getStreetName() != null && !street.getName().equals(addrInfo.getStreetName())) { // update
 																																																							// street
 																																																							// name
-									List<VoStreet> streets = (List<VoStreet>) pm.newQuery(VoStreet.class,
-											"cityId=="+street.getCity()+" && name == '" + addrInfo.getStreetName().trim() + "'").execute();
+									List<VoStreet> streets = executeQuery( pm.newQuery(VoStreet.class,
+											"cityId=="+street.getCity()+" && name == '" + addrInfo.getStreetName().trim() + "'"));
 	
 									VoStreet rightStreet;
 									if (streets.size() > 0) {
@@ -90,7 +91,7 @@ public class VoGeocoder {
 									}
 									building.setStreetId(rightStreet.getId());
 									// check if old street has a buildings
-									List<VoBuilding> buildings = (List<VoBuilding>) pm.newQuery(VoBuilding.class, "streetId=="+street.getId()).execute();
+									List<VoBuilding> buildings = executeQuery(  pm.newQuery(VoBuilding.class, "streetId=="+street.getId()) );
 									if (buildings.size() == 0) {
 										pm.deletePersistent(street);
 									}
@@ -105,7 +106,6 @@ public class VoGeocoder {
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new InvalidOperation(VoError.GeneralError, "Failed to get Location: " + ( e instanceof InvalidOperation ? ((InvalidOperation)e).why : e.getMessage()));
-			
 		}
 	}
 

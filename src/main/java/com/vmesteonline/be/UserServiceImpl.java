@@ -24,6 +24,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	public UserServiceImpl() {
@@ -244,7 +246,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	private GroupType determineProvacyByAddresses(VoUser currentUser, VoUser user, PersistenceManager pm) throws InvalidOperation {
-		/*//--------------- implementation faster then commented below but it requires that groups are in the same order and the same Type
+		//--------------- implementation faster then commented below but it requires that groups are in the same order and the same Type
 		Iterator<Long> ugit = user.getGroups().iterator();
 		Iterator<Long> cugit = currentUser.getGroups().iterator();
 		long commonGroupId;
@@ -253,10 +255,10 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				return GroupType.findByValue( pm.getObjectById(VoUserGroup.class, commonGroupId ).getGroupType());
 			}
 		}
-		return GroupType.TOWN;*/
+		return GroupType.TOWN;
 		
 	//---- Slower but reliable 
-		GroupType relation = GroupType.TOWN;
+		/*GroupType relation = GroupType.TOWN;
 		
 		VoPostalAddress cuAddr = pm.getObjectById( VoPostalAddress.class, currentUser.getAddress());
 		long uAddrId;
@@ -287,7 +289,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				relation = GroupType.BLOCK;
 			
 		}
-		return relation;
+		return relation;*/
 	}
 
 	@Override
@@ -408,7 +410,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			List<City> cl = new ArrayList<City>();
 			Query q = pm.newQuery(VoCity.class);
 			q.setFilter("countryId == " + countryId);
-			List<VoCity> cs = (List<VoCity>) q.execute();
+			List<VoCity> cs = executeQuery(  q );
 			for (VoCity c : cs) {
 				cl.add(c.getCity());
 			}
@@ -427,7 +429,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			List<Street> cl = new ArrayList<Street>();
 			Query q = pm.newQuery(VoStreet.class, "cityId=="+cityId);
-			List<VoStreet> cs = (List<VoStreet>) q.execute();
+			List<VoStreet> cs = executeQuery(  q );
 			for (VoStreet c : cs) {
 				pm.retrieve(c);
 				cl.add(c.getStreet());
@@ -447,7 +449,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			List<Building> cl = new ArrayList<Building>();
 			Query q = pm.newQuery(VoBuilding.class, "streetId=="+streetId);
-			List<VoBuilding> cs = (List<VoBuilding>) q.execute();
+			List<VoBuilding> cs = executeQuery(  q );
 			for (VoBuilding c : cs) {
 				cl.add(c.getBuilding());
 			}
@@ -529,7 +531,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoCountry vc = VoCountry.createVoCountry(name, pm);
 			Query q = pm.newQuery(VoCountry.class);
 			q.setFilter("name == '" + name + "'");
-			List<VoCountry> countries = (List<VoCountry>) q.execute();
+			List<VoCountry> countries = executeQuery(  q );
 			if (countries.size() > 0) {
 				logger.info("City was NOT created. The same City was registered. Return an old one: " + countries.get(0));
 				return countries.get(0).getCountry();
@@ -580,7 +582,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			// TODO check that there is no building with the same name
 			VoStreet vs = pm.getObjectById(VoStreet.class, streetId);
 			Query q = pm.newQuery("SELECT * FROM vobuilding WHERE streetId == " + streetId + " &&  fullNo == '" + fullNo + "' ALLOW FILTERING");
-			List<VoBuilding> buildings = (List<VoBuilding>) q.execute();
+			List<VoBuilding> buildings = executeQuery(  q );
 			if (buildings.size() > 0) {
 				logger.info("VoBuilding was NOT created. The same VoBuilding was registered. Return an old one: " + buildings.get(0));
 				return buildings.get(0).getBuilding();
@@ -590,7 +592,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				if (longitude == null || lattitude == null || longitude.isEmpty() || lattitude.isEmpty()) { // calculate
 					// location
 					try {
-						Pair<String, String> position = VoGeocoder.getPosition(voBuilding, false);
+						Pair<String, String> position = VoGeocoder.getPosition(voBuilding, false,pm);
 						voBuilding.setLocation(new BigDecimal(position.left), new BigDecimal(position.right));
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -692,21 +694,42 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	private static Comparator<VoUser> uIdCOmp = new Comparator<VoUser>(){
 		@Override
 		public int compare(VoUser o1, VoUser o2) {
-			return Long.compare(o1.getId(), o2.getId());
+			return (""+o1.getLastName()+o1.getName()).compareToIgnoreCase("" + o2.getLastName() + o2.getName());
 	}};
 		
 	public static List<VoUser> getUsersByLocation(VoUserGroup group, PersistenceManager pm) {
 
-		Set<VoUser> users = new TreeSet<VoUser>(uIdCOmp);
-		if( null!= group ){
-			for( Long g : group.getVisibleGroups(pm)) {
-				String filter = "groups.contains(" + g +") && emailConfirmed==true";
-				users.addAll( (List<VoUser>)pm.newQuery(VoUser.class, filter).execute());
-			}
+		int radius = group.getRadius();
+		List<VoUser> users;
+		if( group.getGroupType() <= GroupType.BUILDING.getValue() ) {
+			users = getUsersByGroup(group.getId(), pm);
+		} else {
+			String ufilter = "emailConfirmed==true && ";
+			BigDecimal latitudeMax = VoHelper.getLatitudeMax(group.getLatitude(), radius);
+			BigDecimal latitudeMin = VoHelper.getLatitudeMin(group.getLatitude(), radius);
+			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
+			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
+			ufilter += "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
+					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"'";
+			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
+			users = new ArrayList<>(ulist);
 		}
-		List<VoUser> ul = new ArrayList<VoUser>();
-		ul.addAll(users);
-		return ul;
+		Collections.sort(users,uIdCOmp);
+		return users;
+	}
+
+	public static  List<VoUser> getUsersByGroup(Long groupId, PersistenceManager pm) {
+		List<VoUser> users = new ArrayList<>();
+		List results = executeQuery(  pm.newQuery("SQL","SELECT `ID` FROM `USERGROUPS` WHERE `GROUP`="+groupId) );
+		List<Long> uids = new ArrayList<>();
+		Iterator rit = results.iterator();
+		while(rit.hasNext()) {
+            uids.add((Long) rit.next());
+        }
+		for( Long uid: uids){
+            users.add( pm.getObjectById(VoUser.class, uid));
+        }
+		return users;
 	}
 
 	@Override
@@ -789,10 +812,18 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 //	public static CachableObject<GroupType> usersRelation = new CachableObject<GroupType>();
 	
 	public static GroupType getRelations(VoUser askedUser, VoUser voUser, PersistenceManager pm) {
-		Query nq = pm.newQuery( VoUserGroup.class, "visibleGroups.contains("+askedUser.getRootGroup()+") && visibleGroups.contains("+voUser.getRootGroup()+")");
-		nq.setOrdering("groupType");
-		List<VoUserGroup> gtl = (List<VoUserGroup>) nq.execute();
-		return gtl.size() > 0  ? GroupType.findByValue( gtl.get(0).getGroupType()) : GroupType.NEIGHBORS;  //it should not be called elsewhere
+		/*List results = executeQuery(  pm.newQuery("SQL","SELECT `GROUP` FROM `USERGROUPS` WHERE `ID` INGROUP`="+group.getId()) );
+		List<Long> uids = new ArrayList<>();
+		Iterator rit = results.iterator();
+		while(rit.hasNext()) {
+			uids.add((Long) rit.next());
+		}
+		for( Long uid: uids){
+			users.add( pm.getObjectById(VoUser.class, uid));
+		}*/
+		List<Long> commonGroups = new ArrayList<>(askedUser.getGroups());
+		commonGroups.retainAll(voUser.getGroups());
+		return commonGroups.size() > 0  ? GroupType.findByValue( askedUser.getGroups().indexOf(commonGroups.get(0)) + Defaults.FIRST_USERS_GROUP ) : GroupType.NEIGHBORS;
 	}
 
 	@Override
@@ -817,7 +848,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		query += " && flatNo==" + ( (flatChanged = 0 != flatNo && floor!=oldAddress.getFlatNo()) ? flatNo : oldAddress.getFlatNo());
 		
 		if( stairChanged || floorChanged || flatChanged ){
-			List<VoPostalAddress> newAddresses = (List<VoPostalAddress>) pm.newQuery( VoPostalAddress.class, query).execute();
+			List<VoPostalAddress> newAddresses = executeQuery(  pm.newQuery( VoPostalAddress.class, query) );
 			VoPostalAddress newAddr;
 			if( newAddresses.size() == 0 ){
 				newAddr = VoPostalAddress.createVoPostalAddress(
@@ -840,7 +871,6 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					}
 					pos++;
 				}
-				currentUser.resetRootGroup();
 			}
 			pm.makePersistent(currentUser);
 				

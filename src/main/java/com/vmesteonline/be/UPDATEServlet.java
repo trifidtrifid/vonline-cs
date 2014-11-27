@@ -1,9 +1,10 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.VoFileAccessRecord;
+import com.vmesteonline.be.jdo2.VoPoll;
+import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.utility.VoCounter;
-import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
@@ -20,6 +21,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 
 public class UPDATEServlet extends QueuedServletWithKeyHelper {
 
@@ -33,7 +36,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         String action = (String) arg0.getParameter("action");
 
         if ("init".equalsIgnoreCase(action)) {
-            Defaults.initDefaultData();
+            Defaults.initDefaultData(PMF.getPm());
             resultText = "Init DONE";
 
 
@@ -90,7 +93,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                         resultText += "\n<br/> Enabled for: "+ nfar.getName() + " " + nfar.getLastName();
                     }
                     long address = nfar.getAddress();
-                    List cntrs = (List) pm.newQuery(VoCounter.class, "postalAddressId==" + address).execute();
+                    List cntrs = executeQuery(  pm.newQuery(VoCounter.class, "postalAddressId==" + address) );
                     if( null==cntrs || cntrs.size() == 0){
                         pm.makePersistent( new VoCounter(CounterType.COLD_WATER, "", "", address));
                         pm.makePersistent( new VoCounter(CounterType.HOT_WATER, "", "", address));
@@ -108,7 +111,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
            {
                PersistenceManager pm = PMF.getPm();
                Query query = pm.newQuery("SQL", "SELECT * FROM VOPOLL WHERE ID>-1");
-               List results = (List) query.execute();
+               List results = executeQuery(  query );
                Iterator rit = results.iterator();
                while(rit.hasNext()) {
                    Object[] pool = (Object[]) rit.next();
@@ -117,7 +120,11 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                        nextPool.setId( Long.parseLong( ""+pool[0]));
                        nextPool = pm.getObjectById(VoPoll.class, Long.parseLong( ""+pool[0]));
                        List<Long> ap = loadListFromString(new String( (byte[])pool[1]), new Long(0L));
-                       if( null!=ap) nextPool.setAlreadyPoll( new HashSet<>(ap));
+                       if( null!=ap) {
+                           Set<Long> alreadyPoll = new TreeSet<>();
+                           alreadyPoll.addAll( ap );
+                           nextPool.setAlreadyPoll(alreadyPoll);
+                       }
                        List<String> names = loadListFromString(new String( (byte[])pool[2]), new String());
                        if( null!=names)  nextPool.setNames(names);
                        nextPool.setSubject( ""+pool[3]);
@@ -132,7 +139,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
             }
 
         } else if ("updateTopics".equalsIgnoreCase(action)) {
-            PersistenceManager pm = PMF.getPm();
+           /* PersistenceManager pm = PMF.getPm();
             try {
                 Extent<VoUserGroup> vugs = pm.getExtent(VoUserGroup.class);
                 ArrayList<VoUserGroup> vugssrtd = new ArrayList<VoUserGroup>();
@@ -181,12 +188,11 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                 for (VoUser user : users) {
                     user.initRootGroup(pm);
                 }
-
             } catch (Exception e) {
                 resultText += " </br>\r\nERROR: " + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage());
             } finally {
                 pm.close();
-            }
+            }*/
         }
         arg1.setHeader("Content-Type","text/html");
         arg1.getOutputStream().write(resultText.getBytes());
@@ -233,7 +239,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 					voUserGroup.setVisibleGroups(null);
 					List<Long> visibleGroups = voUserGroup.getVisibleGroups(pm);
 					
-					List<VoTopic> topics = (List<VoTopic>) pm.newQuery(VoTopic.class, "userGroupId=="+voUserGroup.getId()).execute();
+					List<VoTopic> topics = executeQuery(  pm.newQuery(VoTopic.class, "userGroupId=="+voUserGroup.getId()) );
 					for (VoTopic voTopic : topics) {
 						voTopic.setVisibleGroups( new ArrayList<Long>(visibleGroups) );
 					}

@@ -10,6 +10,8 @@ import javax.jdo.annotations.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Unique(name="STREET_FN", members = {"streetId","fullNo"})
 @Index(name="STREET_ID", members = {"streetId"})
@@ -97,7 +99,7 @@ public class VoBuilding  {
 		Query q = pm.newQuery(VoBuilding.class);
         q.setFilter("streetId=="+vs.getId() +" && fullNo == fn");
         q.declareParameters("String fn");
-        List<VoBuilding> bgsl = (List<VoBuilding>) q.execute(fullNo);
+        List<VoBuilding> bgsl = executeQuery(q,fullNo);
 
 		if( 1==bgsl.size() ){
 			return bgsl.get(0);
@@ -110,7 +112,7 @@ public class VoBuilding  {
 		
 		if( null == longitude || longitude.toPlainString().trim().length() == 0 || 
 				null == latitude || latitude.toPlainString().trim().length() == 0) {
-			VoGeocoder.getPosition(vb, false);
+			VoGeocoder.getPosition(vb, false, pm);
 			
 		} 
 		if( vb.addressString == null ) {

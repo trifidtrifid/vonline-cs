@@ -21,7 +21,7 @@ import java.util.*;
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
         @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
 
-public class VoUser /* extends GeoLocation */{
+public class VoUser extends GeoLocation {
 
 	public static int BASE_USER_SCORE = 100;
 
@@ -67,7 +67,6 @@ public class VoUser /* extends GeoLocation */{
 		this.popularuty = BASE_USER_SCORE;
 		this.lastNotified = this.registered = (int) (System.currentTimeMillis() / 1000L);
 		this.rootGroup = 0L;
-		
 	}
 
 	public UserProfile getUserProfile() {
@@ -235,7 +234,7 @@ public class VoUser /* extends GeoLocation */{
 		// check if location is set
 		if (null == building.getLatitude() || 0 == building.getLatitude().intValue()) {
 			try {
-				VoGeocoder.getPosition(building, false);
+				VoGeocoder.getPosition(building, false,pm);
 				pm.makePersistent(building);
 
 			} catch (InvalidOperation e) {
@@ -244,18 +243,21 @@ public class VoUser /* extends GeoLocation */{
 		}
 
         setAddress(userAddress.getId());
-        ArrayList<Long> groups = new ArrayList<Long>();
-		for (VoGroup group : Defaults.defaultGroups) {
+		longitude = building.getLongitude().toPlainString();
+		latitude = building.getLatitude().toPlainString();
+
+		Vector<Long> groups = new Vector<>();
+		for ( int gid = Defaults.defaultGroups.size(); gid>0; gid--  ) {
+			VoGroup group = Defaults.defaultGroups.get( gid - 1 );
 			VoUserGroup ug = VoUserGroup.createVoUserGroup(building.getLongitude(), building.getLatitude(), 
 					group.getRadius(), userAddress.getStaircase(), userAddress.getFloor(),
 					group.getVisibleName(), group.getImportantScore(), group.getGroupType(), pm);
-			
+
 			UserServiceImpl.usersByGroup.forget( new Object[]{ ug.getId() });
 			groups.add(ug.getId());
 		}
-        setGroups(groups);
-		resetRootGroup();
-
+		Collections.reverse(groups);
+        setGroups( groups );
 		pm.makePersistent(this);
 	}
 
@@ -275,23 +277,15 @@ public class VoUser /* extends GeoLocation */{
 		this.emailConfirmed = emailConfirmed;
 	}
 
-	public long getId() {
-		return id;
-	}
-	
-	public long getRootGroup() {
-		return rootGroup;
-	}
-	
-	public void resetRootGroup() {
-		if( 0<groups.size() )
-			rootGroup = groups.get(0);
-	}
 	
 	public String getAddressString( GroupType gt, PersistenceManager pm){
 		boolean needUpdate = false;
-		if( null == addressStringsByGroupType){
-			addressStringsByGroupType = new HashMap<Integer,String>();
+		try {
+			if (null == addressStringsByGroupType) {
+				addressStringsByGroupType = new HashMap<Integer, String>();
+			}
+		} catch( Exception e){
+			addressStringsByGroupType = new HashMap<Integer, String>();
 		}
 		int gtValue = gt.getValue();
 		String as = addressStringsByGroupType.get(gtValue);
@@ -306,13 +300,13 @@ public class VoUser /* extends GeoLocation */{
 				break;
 			}
 			case BUILDING:
-				as = userAddress.getStaircase() == 0 ? "" : (userAddress.getStaircase() + " подъезд");
+				as = userAddress.getStaircase() == 0 ? "" : ( "парадная №"+userAddress.getStaircase());
 				break;
 			case STAIRCASE:
 				as = userAddress.getFloor() == 0 ? "" : (userAddress.getFloor() + " этаж");
 				break;
 			case FLOOR:
-				as = userAddress.getFlatNo() == 0 ? "" : (userAddress.getFlatNo() + " квартира");
+				as = userAddress.getFlatNo() == 0 ? "" : ("квартира №"+userAddress.getFlatNo());
 				break;
 			}
 			if( null!=as )
@@ -323,9 +317,10 @@ public class VoUser /* extends GeoLocation */{
 		return as;
 	}
 
-	@PrimaryKey
+
+/*	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
-	protected long id;
+	protected long id;*/
 
 	@Persistent
 	private Long address;

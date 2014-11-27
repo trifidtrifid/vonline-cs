@@ -6,15 +6,14 @@ import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
-import com.vmesteonline.be.thrift.GroupType;
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.thrift.ServiceType;
-import com.vmesteonline.be.thrift.VoError;
+import com.vmesteonline.be.thrift.*;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.*;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 @SuppressWarnings("unchecked")
 public class Defaults {
@@ -30,10 +29,10 @@ public class Defaults {
 	public static Long user4id = null;
 	public static Long user5id = null;
 	
-	public static String user1lastName = "Afamily";
-	public static String user1name = "Aname";
-	public static String user1email = "a";
-	public static String user1pass = "a";
+	public static String user1lastName = "Онлайн.ru";
+	public static String user1name = "Вместе";
+	public static String user1email = "info@vmesteonline.ru";
+	public static String user1pass = "123456";
 	public static String zan32k3Lat = "59.933146";
 	public static String zan32k3Long = "30.423117";
 
@@ -66,6 +65,8 @@ public class Defaults {
 	public static int radiusBuilding = 50;
 	public static int radiusNeighbors = 350;
 	public static int radiusBlock = 500;
+
+	public static int FIRST_USERS_GROUP = GroupType.FLOOR.getValue();
 	
 	/*
 	 * public static int radiusMedium = 1500; public static int radiusLarge = 5000;
@@ -74,19 +75,17 @@ public class Defaults {
 	public static String defaultAvatarMessageUrl = "/data/da.gif";
 	public static String defaultAvatarProfileUrl = "/data/da.gif";
 	public static String defaultAvatarShortProfileUrl = "/data/da.gif";
-	
+
+	public static VoPostalAddress[] addresses;
 	static {
 		PersistenceManager pm = PMF.getPm();
 		initializeGroups(pm);
 	}
 
-	public static boolean initDefaultData(boolean loadInviteCodes) {
+	public static boolean initDefaultData(PersistenceManager pm, boolean loadInviteCodes) {
 
-		PersistenceManager pm = PMF.getPm();
-		pm.setMultithreaded(false);
 		defaultRubrics = new ArrayList<VoRubric>();
 		try {
-			
 			clearLocations(pm);
 			clearGroups(pm);
 			clearUsers(pm);
@@ -117,8 +116,8 @@ public class Defaults {
 
 	}
 
-	public static boolean initDefaultData() {
-		return initDefaultData(false);
+	public static boolean initDefaultData( PersistenceManager pm ) {
+		return initDefaultData(pm,false);
 	}
 
 	// ======================================================================================================================
@@ -126,7 +125,7 @@ public class Defaults {
 		while(true){
             Query newQuery = pm.newQuery(pc,"");
 			newQuery.setRange(0, 200);
-			List list = (List) newQuery.execute();
+			List list = executeQuery(  newQuery );
 			if( 0==list.size())
 				break;
 			pm.deletePersistentAll(list);
@@ -174,7 +173,7 @@ public class Defaults {
 			defaultGroups = new ArrayList<VoGroup>();
 			for (VoGroup dg : new VoGroup[] { 
 					new VoGroup("Мой этаж", radiusZero, GroupType.FLOOR, true), 
-					new VoGroup("Мой подъезд", radiusZero, GroupType.STAIRCASE, true), 
+					new VoGroup("Моя парадная", radiusZero, GroupType.STAIRCASE, true),
 					new VoGroup("Мой дом", radiusBuilding, GroupType.BUILDING, true),
 					new VoGroup("Соседние дома", radiusNeighbors, GroupType.NEIGHBORS, true), 
 					}) {
@@ -195,7 +194,7 @@ public class Defaults {
 
         for (String uname : unames) {
 				try {
-					long uid = asi.registerNewUser(uname, ulastnames[counter], uPasses[counter], uEmails[counter], locCodes.get(counter++), 0);
+					long uid = asi.registerNewUser(uname, ulastnames[counter], uPasses[counter], uEmails[counter], locCodes.get(counter++), 0,false);
 					VoUser user = pm.getObjectById(VoUser.class, uid);
 					user.setEmailConfirmed(true);
                     if( counter < 3 ) {

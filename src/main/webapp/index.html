@@ -29,7 +29,7 @@
             && href.indexOf('demo.vmesteonline.ru') == -1
             && (href.indexOf('127.0.0.1') == -1 && href.indexOf('localhost') == -1)
 			&& href.indexOf('appspot.com') == -1)
-		document.location.replace('https://www.vmesteonline.ru');
+		document.location.replace('https://vmesteonline.ru');
 
 	var transport = new Thrift.Transport("/thrift/AuthService");
 	var protocol = new Thrift.Protocol(transport);
@@ -239,15 +239,15 @@
 			<section class="row breath">
 
 				<div class="footer footer-bottom clearfix">
+                    <div class="pull-right">
+                        <ul>
+                            <li><a href="about">О сайте</a></li>
+                            <li><a href="blog">Блог</a></li>
+                            <li><a href="contacts">Контакты</a></li>
+                        </ul>
+                    </div>
 					<div class="pull-left">
 						<span class="copypast">&copy;</span> ВместеОнлайн 2014
-					</div>
-					<div class="pull-right">
-						<ul>
-							<li><a href="about">О сайте</a></li>
-							<li><a href="blog">Блог</a></li>
-							<li><a href="contacts">Контакты</a></li>
-						</ul>
 					</div>
 				</div>
 			</section>

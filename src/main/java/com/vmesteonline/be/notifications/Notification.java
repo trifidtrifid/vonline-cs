@@ -2,12 +2,10 @@ package com.vmesteonline.be.notifications;
 
 import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoSession;
-import com.vmesteonline.be.jdo2.VoTopic;
-import com.vmesteonline.be.jdo2.VoUser;
-import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
+import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
@@ -20,6 +18,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public abstract class Notification {
 
@@ -35,7 +35,7 @@ public abstract class Notification {
 
 	protected static String host;
 	static {
-		host = "localhost:8080";
+		host = "vmesteonline.ru";
 	}
 
 	public abstract void makeNotification(Set<VoUser> users);
@@ -56,13 +56,13 @@ public abstract class Notification {
 			if( voUser.isEmailConfirmed() ){
 				
 				VoSession lastSession = getTheLastSessionAndCeanOldOnes(voUser, weekAgo, pm);
-				if( lastSession == null || lastSession.getLastActivityTs() < twoDaysAgo )
+				if( lastSession == null /*|| lastSession.getLastActivityTs() < twoDaysAgo*/ )
 					addUserToNotificationIst(userList, now, voUser);
 			}
 		}
 		// TODO Remove simple method above and uncomment method below to take activity into account it could be important for big amount of active users
 		
-		/*List<VoSession> vsl = (List<VoSession>) pm.newQuery(VoSession.class, "lastActivityTs < " + twoDaysAgo).execute();
+		/*List<VoSession> vsl = executeQuery(  pm.newQuery(VoSession.class, "lastActivityTs < " + twoDaysAgo) );
 		logger.debug("Total sessions with lastActivityTs < "+twoDaysAgo+" : " + vsl.size());
 	
 		for (VoSession vs : vsl) {
@@ -106,9 +106,10 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessions = (List<VoSession>) pm.newQuery(VoSession.class, "userId==" + vu.getId()).execute();
-		if( null==uSessions || 0==uSessions.size())
+		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "userId==" + vu.getId()) );
+		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
+		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
 		Collections.sort(uSessions, lastActivityComparator);
 		VoSession lastSession = uSessions.get(uSessions.size() - 1);
 		for (VoSession ns : uSessions) {
@@ -141,12 +142,13 @@ public abstract class Notification {
 		messagesToSend.put(u, uns);
 	}
 
-	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users, PersistenceManager pm) {
+	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users) {
 		// group users by groups and group types
-		
 		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
 		for (VoUser u : users) {
-			for (Long ug : u.getGroups()) {
+			List<Long> groups = u.getGroups();
+			if( null!=groups && groups.size()>0){
+				Long ug = groups.get(groups.size() - 1);
 				Set<VoUser> ul;
 				if (null == (ul = groupUserMap.get(ug))) {
 					ul = new TreeSet<VoUser>(vuComp);
@@ -169,10 +171,23 @@ public abstract class Notification {
 
 		body += "<i>" + StringEscapeUtils.escapeHtml4(it.getContent()) + "</i>";
 
-		body += "<br/><br/><a href=\"https://" + host + "/wall-single-" + it.getId() + "\">Обсудить, ответить ...</a>";
+		body += "<br/><br/><a href=\"https://" + host + "/wall-single/" + it.getId() + "\">Обсудить, ответить ...</a>";
 		for (VoUser rcpt : usersForMessage) {
 			decorateAndSendMessage(rcpt, subject, body);
 		}
+	}
+
+	public static void sendMessageCopy(VoBaseMessage msg, VoUser author) {
+
+		PersistenceManager pm = PMF.getPm();
+
+		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
+		String body = "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		body += "Тип: "+msg.getType()+"<br/>";
+		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
+				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
+		body += "<br/><i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
+		decorateAndSendMessage(null, subject, body);
 	}
 
 	public static void dialogMessageNotification(VoDialog dlg, VoUser author, VoUser rcpt) {
@@ -188,7 +203,7 @@ public abstract class Notification {
 
 				try {
 					String body = author.getName() + " " + author.getLastName() + " написал вам: <br/><br/><i>" + lastMsg.getContent()
-							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single-" + dlg.getId() + "\">Ответить...</a>";
+							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single/" + dlg.getId() + "\">Ответить...</a>";
 
 					decorateAndSendMessage(rcpt, "сообщение от " + author.getName(), body);
 
@@ -205,23 +220,23 @@ public abstract class Notification {
 
 		body += "Ваш логин: "+newUser.getEmail()+"<br/>Пароль:    "+newUser.getPassword()+"<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		userSet.addAll((List<VoUser>) pm.newQuery(VoUser.class, "").execute());
+		userSet.addAll(executeQuery( pm.newQuery(VoUser.class, "")));
 
-		body += "На сайте уже зарегистрированно: " + userSet.size() + " пользователей<br/>";
+		body += "На сайте уже зарегистрировано: " + userSet.size() + " пользователей<br/>";
 		
 		List<VoUser> ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.NEIGHBORS, pm), pm );
 		if(0!=ul.size()) body += "Из них рядом с вами живут: "+ul.size()+"<br/>";
 		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.BUILDING, pm), pm );
 		if(0!=ul.size()) body += "В вашем доме: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.STAIRCASE, pm), pm );
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
 		if(0!=ul.size()) body += "В вашем подъезде: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.FLOOR, pm), pm );
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm );
 		if(0!=ul.size()) body += "На вашем этаже : "+ul.size()+"<br/>";
 		
 		
 		body += "<br/> Мы создали этот сайт, чтобы Ваша жизнь стала чуть комфортней, от того что вы будете в курсе что происходит в вашем доме. <br/><br/>";
 		if (!newUser.isEmailConfirmed()) {
-			body += "Для доступа к сайту, подтвердите ваш email перейдя по <a href=\"https://" + host + "/confirm/profile-" + newUser.getId() + ","
+			body += "Для доступа к сайту, подтвердите ваш email перейдя по <a href=\"https://" + host + "/confirm/profile/" + newUser.getId() + ","
 					+ newUser.getConfirmCode() + "\">этой ссылке</a><br/></br>";
 			pm.makePersistent(newUser);// to save confirm code
 		}

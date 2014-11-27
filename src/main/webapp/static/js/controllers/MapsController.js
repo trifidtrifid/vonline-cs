@@ -20,9 +20,10 @@ forumControllers.controller('MapsController',function($rootScope) {
         //$rootScope.groups[0].isShow = false;
         //$rootScope.groups[1].selected = true;
 
-        if($rootScope.currentGroup.id == $rootScope.groups[0].id){
+        /*if($rootScope.currentGroup.id == $rootScope.groups[0].id){
             $rootScope.currentGroup = $rootScope.groups[1];
-        }
+        }*/
+    $rootScope.currentGroup = userClientGroups[3];
 
         $rootScope.base.isFooterBottom = true;
 
@@ -80,7 +81,7 @@ forumControllers.controller('MapsController',function($rootScope) {
 
             setMap(location);
         };
-        $rootScope.selectGroup(getBuildingGroup($rootScope.currentGroup));
+        //$rootScope.selectGroup(getBuildingGroup($rootScope.currentGroup));
 
         angular.element($('.maps.page')).css({'min-height': $(window).height()-175}); 
 

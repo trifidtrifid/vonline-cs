@@ -1,7 +1,9 @@
-/target
-/run
-/vonline-cs.iml
-/vonline-cs.ipr
-/vonline-cs.iws
+run
+/vonline-cs.*
 /src/main/java/com/vmesteonline/be/thrift
 /src/main/webapp/static/.idea
+**/*.class
+target
+vonline-cs.iml
+vonline-cs.iws
+vonline-cs.ipr

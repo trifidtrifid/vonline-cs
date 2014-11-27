@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 public class MessagesTree {
 
 	@SuppressWarnings("unchecked")
@@ -20,7 +22,8 @@ public class MessagesTree {
 
 		Query q = pm.newQuery(VoMessage.class);
 		q.setFilter("topicId == " + topicId);
-		List<VoMessage> voMsgs = new ArrayList<>((List<VoMessage>) q.execute());
+		List<VoMessage> voMsgs = executeQuery(q);
+		voMsgs = new ArrayList<>(voMsgs);
 		Collections.sort(voMsgs, voMessageAgeComparator);
 		MessagesTree tree = new MessagesTree(voMsgs);
 		return tree;

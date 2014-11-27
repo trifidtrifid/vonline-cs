@@ -77,9 +77,10 @@
 
                         <div class="profile-item last" ng-show="profile.userProfile.contacts.homeAddress != null">
                             <h3>Домашний адрес</h3>
-                            <div>
+                            <div id="{{profile.userProfile.contacts.homeAddress.building.id}}">
                                 {{profile.userProfile.contacts.homeAddress.street.name + " "+ profile.userProfile.contacts.homeAddress.building.fullNo+", этаж"}}
                                 {{profile.userProfile.contacts.homeAddress.floor + ", кв " + profile.userProfile.contacts.homeAddress.flatNo}}
+
                             </div>
                         </div>
 

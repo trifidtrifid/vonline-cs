@@ -8,6 +8,8 @@ import javax.jdo.*;
 import javax.jdo.annotations.*;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION, detachable = "true")
 @Indices({
         @Index(name="city_IDX", members = {"cityId"})
@@ -19,7 +21,7 @@ public class VoStreet {
 
         javax.jdo.Query q = pm.newQuery(VoStreet.class, "cityId==" + city.getId() + " && name==n");
         q.declareParameters("String n");
-        List<VoStreet> vcl = (List<VoStreet>) q.execute(name);
+        List<VoStreet> vcl = executeQuery(q,name);
 
         if (vcl.size() == 1)
             return vcl.get(0);

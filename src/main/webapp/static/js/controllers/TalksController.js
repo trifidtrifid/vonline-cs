@@ -48,6 +48,9 @@ forumControllers.controller('TalksController',function($rootScope) {
             talk.message.content = talk.message.default = TEXT_DEFAULT_3;
             talk.subject = TEXT_DEFAULT_4;
 
+            $rootScope.base.bufferSelectedGroup = talk.selectedGroup =
+            $rootScope.currentGroup = userClientGroups[3];
+
             $rootScope.base.initStartParamsForCreateTopic(talk);
 
             talk.isTalk = true;
@@ -60,8 +63,6 @@ forumControllers.controller('TalksController',function($rootScope) {
             talk.commentText = TEXT_DEFAULT_2;
             var fullTalkFirstMessagesLength,
                 talkId;
-
-            $rootScope.base.bufferSelectedGroup = talk.selectedGroup = $rootScope.currentGroup;
 
             /*if(!$rootScope.importantIsLoadedFromTop)
             $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);

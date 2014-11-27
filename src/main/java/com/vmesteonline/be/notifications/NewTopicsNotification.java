@@ -1,17 +1,25 @@
 package com.vmesteonline.be.notifications;
 
-import com.vmesteonline.be.MessageServiceImpl;
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.VoGroup;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
-import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.messageservice.MessageType;
+import com.vmesteonline.be.utils.Defaults;
+import com.vmesteonline.be.utils.VoHelper;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
-import org.apache.log4j.Logger;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class NewTopicsNotification extends Notification {
 	private static Logger logger = Logger.getLogger(NewTopicsNotification.class.getSimpleName());
@@ -26,33 +34,50 @@ public class NewTopicsNotification extends Notification {
 
 		PersistenceManager pm = PMF.getPm();
 
-		Map<Long, Set<VoTopic>> groupTopicMap = collectTopicsByGroups(users, pm);
+		Query query = pm.newQuery(VoTopic.class, "createDate>" + (now - 86400 * 7));
+		List<VoTopic> newTopics = executeQuery( query );
+		Map<VoUser, List[]> userTopics = new HashMap<>();
+		for( VoTopic topic: newTopics ){
+			if( topic.getType() == MessageType.BLOG )
+				continue;
+			VoGroup voGroup = Defaults.defaultGroups.get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
+			int radius = voGroup.getRadius();
+			String ufilter;
+			if( voGroup.getGroupType() <= GroupType.BUILDING.getValue() )
+				ufilter = "longitude=='"+topic.getLongitude()+"' && latitude=='"+topic.getLatitude()+"'";
+			else {
+				BigDecimal latitudeMax = VoHelper.getLatitudeMax(topic.getLatitude(), radius);
+				BigDecimal latitudeMin = VoHelper.getLatitudeMin(topic.getLatitude(), radius);
+				BigDecimal longitudeMax = VoHelper.getLongitudeMax(topic.getLongitude(), topic.getLatitude(), radius);
+				BigDecimal longitudeMin = VoHelper.getLongitudeMin(topic.getLongitude(), topic.getLatitude(), radius);
+				ufilter = "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
+						"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "'";
+			}
+			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
+			for( VoUser u: ulist ){
+				if( u.getLastNotified() < topic.getCreatedAt() ) {
+					List[] topics = userTopics.get(u);
+					if (null == topics)
+						userTopics.put(u, topics = new List[GroupType.values().length]);
+					if (topics[topic.getUserGroupType()] == null)
+						topics[topic.getUserGroupType()] = new ArrayList<>();
+					topics[topic.getUserGroupType()].add( topic );
+				}
+			}
+		}
+
 		// create message for each user
-		for (VoUser u : users) {
+		for (VoUser u : userTopics.keySet()) {
 			String body = "<p><b>Близкие события</b></p>";
 			boolean somethingToSend = false;
-			Set<VoTopic> userTopics = new TreeSet<VoTopic>( topicIdComp );
-			for (Long ug : u.getGroups()) {
-				Set<VoTopic> tpcs = groupTopicMap.get(ug);
-				if( null!=tpcs && tpcs.size()>0) {
-					Set<VoTopic> topics = new TreeSet<VoTopic>( topicIdComp );
-					topics.addAll(tpcs);
-					topics.removeAll(userTopics);
-					if (topics.size() != 0) {
-						/*Set<VoTopic>topicsByOtherUSers = new HashSet<VoTopic>( );
-						for (VoTopic voTopic : topics) {
-							if(voTopic.getAuthorId().getId() != u.getId())
-								topicsByOtherUSers.add(voTopic);
-						}
-						if( topicsByOtherUSers.size() > 0)*/{
-							String tc = createGroupContent(pm, ug, topics);
-							if( tc != null ){
-								somethingToSend = true;
-								body += tc;
-							}
-						}
+			for ( VoGroup ug: Defaults.defaultGroups ) {
+				List topicsList = userTopics.get(u)[ug.getGroupType()];
+				if (topicsList != null) {
+					String tc = createGroupContent(pm, ug, topicsList);
+					if (tc != null) {
+						somethingToSend = true;
+						body += tc;
 					}
-					userTopics.addAll(topics);
 				}
 			}
 			if(somethingToSend){
@@ -71,50 +96,16 @@ public class NewTopicsNotification extends Notification {
 		}
 	}
 
-	private Map<Long, Set<VoTopic>> collectTopicsByGroups(Set<VoUser> users, PersistenceManager pm) {
-		// collect topics by group
-		Map<Long, Set<VoUser>> groupUserMap = arrangeUsersInGroups(users, pm);
-		Map<Long, Set<VoTopic>> groupTopicMap = new TreeMap<Long, Set<VoTopic>>();
-		
-		List<Long> groups = new ArrayList<Long>();
-		groups.addAll(groupUserMap.keySet());
-		
-		Set<VoTopic> topics = new TreeSet<VoTopic>(topicIdComp);
-		for( int gsi = 0; gsi < groups.size(); gsi += 10){
-			topics.addAll(
-					MessageServiceImpl.getTopics( 
-							groups.subList(gsi, Math.min( gsi+10, groups.size())), MessageType.WALL, 0, 10, false, pm));
-		}
-		
-		for( VoTopic topic: topics){
-			VoUserGroup topicGroup = pm.getObjectById(VoUserGroup.class, topic.getUserGroupId());
-			for (Long tvg : topic.getVisibleGroups()) {
-				VoUserGroup visibkeGroup = pm.getObjectById(VoUserGroup.class, tvg);
-				if( topicGroup.getGroupType() <= visibkeGroup.getGroupType()){ 
-					Set<VoTopic> tsg = groupTopicMap.get( tvg );
-					if( tsg == null) {
-						groupTopicMap.put( tvg, tsg = new TreeSet<VoTopic>(topicIdComp));
-					}
-					tsg.add(topic);
-				}
-			}
-		}
-		logger.debug("Total topics to send "+topics.size()+" topics are created in "+groupTopicMap.size()+" groups" );
-		return groupTopicMap;
-	}
-
-	private String createGroupContent(PersistenceManager pm, Long ugId, Set<VoTopic> topics) {
-		VoUserGroup ug;
+	private String createGroupContent(PersistenceManager pm, VoGroup ug, List<VoTopic> topics) {
 		try {
-			ug = pm.getObjectById(VoUserGroup.class, ugId);
-			List<VoTopic> orderedTopics = new ArrayList<VoTopic>( topics );
+			List<VoTopic> orderedTopics = new ArrayList<>( topics );
 			Collections.sort(orderedTopics, topicCreatedDateComp);
 			
 			int weekAgo = (int) (System.currentTimeMillis()/1000L) - 7 * 86400;
 			if( orderedTopics.get(0).getCreatedAt() < weekAgo )
 				return null;
 			
-			String groupContent = "<p><b>Пишут в группе '" + ug.getName() + "'</b>";
+			String groupContent = "<p><b>Пишут в группе '" + ug.getVisibleName() + "'</b>";
 				
 			for (VoTopic tpc : orderedTopics) {
 				if( tpc.getCreatedAt() < weekAgo )
@@ -130,15 +121,18 @@ public class NewTopicsNotification extends Notification {
 		}
 	}
 
-	private String createTopicContent(PersistenceManager pm, VoUserGroup ug, VoTopic tpc) {
+	private String createTopicContent(PersistenceManager pm, VoGroup ug, VoTopic tpc) {
 		VoUser author = pm.getObjectById(VoUser.class, tpc.getAuthorId());
-		String contactTxt = "<a href=\"https://"+host+"/profile-"+author.getId()+"\">"+StringEscapeUtils.escapeHtml4(author.getName() + " " + author.getLastName())+"</a>";
-		
-		String topicTxt = "<p>"+new Date(((long) tpc.getCreatedAt()) * 1000L) + " " + contactTxt;
+		String contactTxt = "<a href=\"https://"+host+"/profile/"+author.getId()+"\">"+StringEscapeUtils.escapeHtml4(author.getName() + " " + author.getLastName())+"</a>";
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd 'в' HH:mm:ss z");
+		df.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+		Date date = new Date(((long) tpc.getCreatedAt()) * 1000L);
+
+		String topicTxt = "<p>"+ df.format(date) + " " + contactTxt;
 		topicTxt += "<br/>"+(ug.getImportantScore() <= tpc.getImportantScore() ? "<b>Важно!</b><br/>" : "");
 		//topicTxt += StringEscapeUtils.escapeHtml4(tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length())));
 		topicTxt += tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length()));
-		if( tpc.getContent().length() > 255 ) topicTxt += "<a href=\"https://"+host+"/wall-single-"+tpc.getId()+"\">...</a>";
+		if( tpc.getContent().length() > 255 ) topicTxt += "<a href=\"https://"+host+"/wall-single/"+tpc.getId()+"\">...</a>";
 		topicTxt += "</p>--";
 		return topicTxt;
 	}

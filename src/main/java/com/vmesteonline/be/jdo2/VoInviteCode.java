@@ -9,6 +9,8 @@ import javax.jdo.Query;
 import javax.jdo.annotations.*;
 import java.util.List;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
 @PersistenceCapable
 @Unique(name="IC_ID_IDX", members = {"code"})
 public class VoInviteCode {
@@ -35,7 +37,7 @@ public class VoInviteCode {
 		Query q = pm.newQuery(VoInviteCode.class);
 		q.setFilter("code == cv");
         q.declareParameters("String cv");
-		List<VoInviteCode> voInviteCodes = (List<VoInviteCode>) q.execute(inviteCode);
+		List<VoInviteCode> voInviteCodes = executeQuery( q, inviteCode);
 		if (voInviteCodes.isEmpty())
 			throw new InvalidOperation(VoError.IncorectLocationCode, "unknown invite code " + inviteCode);
 		if (voInviteCodes.size() != 1) {

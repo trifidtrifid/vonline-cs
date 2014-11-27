@@ -10,6 +10,7 @@ import com.vmesteonline.be.thrift.PostalAddress;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.messageservice.*;
 import com.vmesteonline.be.thrift.messageservice.MessageService.Iface;
+import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.VoHelper;
@@ -19,8 +20,11 @@ import org.apache.thrift.TException;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class MessageServiceImpl extends ServiceImpl implements Iface {
 
@@ -57,39 +61,23 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	@Override
 	public List<WallItem> getWallItems(long groupId, long lastLoadedIdTopicId, int length) throws InvalidOperation, TException {
-		List<WallItem> wallItems = new ArrayList<WallItem>();
+		List<WallItem> wallItems = new ArrayList<>();
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-
-			List<Long> groupsToSearch = new ArrayList<Long>();
-			groupsToSearch.add(groupId);
-			/*
-			 * List<Long> userGroups = user.getGroups(); for( Long ugId : userGroups
-			 * ){ groupsToSearch.add(ugId); if( ugId == groupId ) //usergGroups MUST
-			 * be ordered from smaller to bigger one, so if topics of current group
-			 * are added, it's time to finish collecting break; }
-			 */
-			List<VoTopic> topics = getTopics(groupsToSearch, MessageType.WALL, lastLoadedIdTopicId, length, false, pm);
-
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm);
 			for (VoTopic voTopic : topics) {
-
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
-
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
-
 				MessageListPart mlp = getMessagesAsList(tpc.id, MessageType.BASE, 0, false, 10000);
 				if (mlp.totalSize > 0)
 					logger.info("find msgs " + mlp.messages.size());
-
 				WallItem wi = new WallItem(mlp.messages, tpc);
 				wallItems.add(wi);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return wallItems;
 	}
 
@@ -138,7 +126,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
         Query q = pm.newQuery(VoMessage.class);
         q.setFilter("topicId == " + topicId);
-        List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
+		List<VoMessage> voMsgs =  executeQuery( q );
+        voMsgs = new ArrayList<>(voMsgs);
         Collections.sort(voMsgs, new VoMessage.ComparatorByCreateDate());
 
         if (lastLoadedId != 0) {
@@ -147,7 +136,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                 if (voMsgs.get(i).getId() == lastLoadedId)
                     subLst = voMsgs.subList(i + 1, voMsgs.size());
             }
-            voMsgs = (subLst == null) ? new ArrayList<VoMessage>() : subLst;
+            voMsgs = (subLst == null) ? new ArrayList<>() : subLst;
         }
         return createMlp(voMsgs, userId, pm, length);
     }
@@ -159,19 +148,20 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
             userId = getCurrentUserId();
 
         String query = "";
-        List<List<VoMessage>> msgsm = new ArrayList<List<VoMessage>>();
-        Map<Long, Integer> idPos = new TreeMap<Long, Integer>();
+        List<List<VoMessage>> msgsm = new ArrayList<>();
+        Map<Long, Integer> idPos = new TreeMap<>();
         for (Topic tid : topicIds) {
             query += "|| topicId == "+tid.getId();
             idPos.put(tid.getId(), msgsm.size());
-            msgsm.add( new ArrayList<VoMessage>());
+            msgsm.add( new ArrayList<>());
 
         }
         PersistenceManager pm = PMF.getPm();
 
         Query q = pm.newQuery(VoMessage.class);
         q.setFilter( query.substring(2) );
-        List<VoMessage> voMsgs = new ArrayList<VoMessage>((List<VoMessage>) q.execute());
+		List<VoMessage> voMsgs = executeQuery( q );
+        voMsgs = new ArrayList<>( voMsgs );
 
 
         for (VoMessage voMessage : voMsgs) {
@@ -179,7 +169,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
             ml = msgsm.get(idPos.get( voMessage.getTopicId()));
             ml.add(voMessage);
         }
-        List<MessageListPart> rslt = new ArrayList<MessageListPart>();
+        List<MessageListPart> rslt = new ArrayList<>();
         for ( List<VoMessage> ml: msgsm) {
 
             Collections.sort(ml, new VoMessage.ComparatorByCreateDate());
@@ -190,7 +180,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                     if (ml.get(i).getId() == lastLoadedId)
                         subLst = ml.subList(i + 1, ml.size());
                 }
-                ml = (subLst == null) ? new ArrayList<VoMessage>() : subLst;
+                ml = (subLst == null) ? new ArrayList<>() : subLst;
             }
             rslt.add( createMlp(ml, userId, pm, length));
         }
@@ -211,7 +201,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				if (voMsgs.get(i).getId() == lastLoadedId)
 					subLst = voMsgs.subList(i + 1, voMsgs.size());
 			}
-			voMsgs = (subLst == null) ? new ArrayList<VoMessage>() : subLst;
+			voMsgs = (subLst == null) ? new ArrayList<>() : subLst;
 		}
 
 		return createMlp(voMsgs, user.getId(), pm, length);
@@ -222,7 +212,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	@Override
 	public MessageListPart getMessages(long topicId, long groupId, MessageType messageType, long lastLoadedMsgId, boolean archived, int length)
-			throws InvalidOperation, TException {
+			throws InvalidOperation {
 
 		String key = mlpKeyPrefix + ":" + topicId + ":" + groupId + ":" + messageType + ":" + lastLoadedMsgId + ":" + archived + ":" + length;
 
@@ -239,61 +229,58 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		List<VoMessage> voMsgs = tree.getTreeMessagesAfter(lastLoadedMsgId,
 				new MessagesTree.Filters(user.getId(), pm.getObjectById(VoUserGroup.class, groupId)));
 		MessageListPart mlp = createMlp(voMsgs, user.getId(), pm, length);
-		putObjectToCache(key, new VoHelper.CacheObjectUnit<MessageListPart>(lastUpdate, mlp));
+		putObjectToCache(key, new VoHelper.CacheObjectUnit<>(lastUpdate, mlp));
 		return mlp;
 	}
 
-	public static List<VoTopic> getTopics(List<Long> groups, MessageType type, long lastLoadedTopicId, int length, boolean importantOnly,
+	public static List<VoTopic> getTopics(long groupId, List<Long> userGroups, MessageType type, long lastLoadedTopicId, int length, boolean importantOnly,
 			PersistenceManager pm) {
 
 		String filter = "";
 		List<VoTopic> allTopics = null;
-		List<VoTopic> topics = new ArrayList<VoTopic>();
+		List<VoTopic> topics = new ArrayList<>();
 		Exception e = null;
+		if( 0!=groupId) {
+			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
+			if( ug.getGroupType() > GroupType.BUILDING.getValue() ) {
+				BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), ug.getRadius());
+				BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), ug.getRadius());
+				BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
+				BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
+				filter += "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
+						"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "' && userGroupType <=" + ug.getGroupType() + " && ";
+			} else {
+				filter += "longitude == '" + ug.getLongitude() + "' && latitude == '" + ug.getLatitude()+ "' && userGroupType <=" + ug.getGroupType() + " && ";
+			}
+			if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
+				filter += "( userGroupType>="+GroupType.BUILDING.getValue()+" || ";
+				for( int gIdx = 0; gIdx < GroupType.BUILDING.getValue() - Defaults.FIRST_USERS_GROUP; gIdx ++){
+					filter += "userGroupType=="+GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue() +" && userGroupId=="+userGroups.get(gIdx)+" || ";
+				}
+				filter = filter.substring(0,filter.length()-4) + ") && ";
+			}
+		}
 
-        try {
+		try {
 
             if( type == MessageType.BLOG ) {
-                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, "type=="+type.getValue()).execute();
+				filter += "type=='"+MessageType.BLOG.name()+"'";
 
             } else {
-                filter += "visibleGroups.contains(";
+				if (importantOnly) {
+					int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
+					filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& " + filter;
+				}
 
-                for (Long group : groups) {
-                    filter += group + ",";
-                }
-                filter = filter.substring(0, filter.length() - 1) + ")";
+				if (type == MessageType.WALL)
+					filter += "(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' || type=='" + MessageType.ADVERT+"')";
+				else
+					filter += "type=='" + type + "'";
+			}
 
-                allTopics = (List<VoTopic>) pm.newQuery(VoTopic.class, filter).execute();
-
-                if (importantOnly) {
-                    int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
-                    filter = " isImportant == true && lastUpdate > " + minimumCreateDate;
-                    allTopics = (List<VoTopic>) pm.newQuery( VoTopic.class, allTopics, filter ).execute();
-                }
-
-                /*@TODO Fix it
-                if (type == MessageType.WALL)
-                    filter += "type==" + MessageType.WALL.getValue() + " || type==" + MessageType.BASE.getValue();
-                else
-                    filter += "type=='" + type + "'";
-                    (List<VoTopic>) pm.newQuery( VoTopic.class, allTopics, filter ).execute();
-                    */
-
-                List<VoTopic> filteredByType = new ArrayList( );
-                for( VoTopic tpc : allTopics ){
-                    if( type == MessageType.WALL && ( tpc.getType() == MessageType.WALL || tpc.getType() == MessageType.BASE) ||
-                            type == tpc.getType())
-                        filteredByType.add(tpc);
-                }
-                allTopics = filteredByType;
-                allTopics.sort( new Comparator<VoTopic>(){
-                    @Override
-                    public int compare(VoTopic o1, VoTopic o2) {
-                        return -Integer.compare(o1.getLastUpdate(), o2.getLastUpdate());
-                    }
-                });
-            }
+			Query q = pm.newQuery(VoTopic.class, filter);
+			q.setOrdering("lastUpdate DESC");
+			allTopics = executeQuery(q);
 
 			boolean addTopic = 0 == lastLoadedTopicId ? true : false;
 			for (VoTopic topic : allTopics) {
@@ -312,7 +299,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			(e = ee).printStackTrace();
 		}
 		logger.debug("Got topic request type:" + type + " lastLoadedTopicId:" + lastLoadedTopicId + " length:" + length
-				+ (null == groups ? "" : " groups count:" + groups.size()) + " Query filter:" + filter + " Query Result:" + allTopics.size() + " Result: "
+				+ " Query filter:" + filter + " Query Result:" + (null !=allTopics ? allTopics.size() : -1) + " Result: "
 				+ topics.size() + (null != e ? " exception:" + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage()) : ""));
 
 		return topics;
@@ -322,7 +309,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public TopicListPart getBlog(long lastLoadedTopicId, int length) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
-		List<VoTopic> topics = getTopics(null, MessageType.BLOG, lastLoadedTopicId, length, false, pm);
+		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
 
@@ -331,7 +318,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			mlp.addToTopics(tpc);
 		}
 		return mlp;
-
 	}
 
 	@Override
@@ -357,10 +343,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		try {
 			VoUser user = getCurrentUser(pm);
 
-			List<Long> groupsToSearch = new ArrayList<Long>();
+			List<Long> groupsToSearch = new ArrayList<>();
 			groupsToSearch.add(groupId);
 
-			List<VoTopic> topics = getTopics(groupsToSearch, type, lastLoadedTopicId, length, importantOnly, pm);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm);
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
@@ -382,7 +368,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			if (0 == topic.getId()) {
 
 				VoUser user = getCurrentUser(pm);
-
 				int now = (int) (System.currentTimeMillis() / 1000L);
 				topic.lastUpdate = now;
 				topic.message.created = now;
@@ -404,6 +389,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 				pm.getObjectById(VoUserGroup.class, votopic.getUserGroupId());
 				topic.userInfo = user.getShortUserInfo(null, pm);
+
+				Notification.sendMessageCopy(votopic,user );
 
 			} else {
 				updateTopic(topic);
@@ -478,8 +465,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				topic.setLastUpdate((int) (System.currentTimeMillis() / 1000));
 				pm.makePersistent(topic);
 
-				if (msg.type != MessageType.BLOG)
-					msg.userInfo = getCurrentUser(pm).getShortUserInfo(null, pm);
+				if (msg.type != MessageType.BLOG) {
+					VoUser currentUser = getCurrentUser(pm);
+					msg.userInfo = currentUser.getShortUserInfo(null, pm);
+					Notification.sendMessageCopy(vomsg,currentUser );
+				}
+
+
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -628,12 +620,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		if (newGroupId != theTopic.getUserGroupId()) {
 			VoUserGroup newGroup = pm.getObjectById(VoUserGroup.class, newGroupId);
 			theTopic.setUserGroupId(newGroupId);
-			ArrayList<Long> visibleGroups = new ArrayList<Long>(newGroup.getVisibleGroups(pm));
-			/*
-			 * visibleGroups.removeAll(currentUser.getGroups());
-			 * visibleGroups.addAll(currentUser.getGroups());
-			 */
-			theTopic.setVisibleGroups(newGroup.getUpperLevelGroups(pm));
+			theTopic.setLatitude(newGroup.getLatitude());
+			theTopic.setLongitude(newGroup.getLongitude());
 		}
 	}
 
@@ -670,9 +658,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	public static List<Long> updateAttachments(List<Long> oldFileIds, List<Attach> updatedAttaches, long userId, PersistenceManager pm) {
 
-		Set<Attach> onlyNewAttaches = new HashSet<Attach>();
+		Set<Attach> onlyNewAttaches = new HashSet<>();
 		onlyNewAttaches.addAll(updatedAttaches);
-		ArrayList<Long> updatedFileIdList = new ArrayList<Long>();
+		ArrayList<Long> updatedFileIdList = new ArrayList<>();
 
 		// delete old files
 		for (long fileId : oldFileIds) {
@@ -793,7 +781,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			deleteAttachments(pm, msg.getDocuments());
 
 			// check if message can be deleted
-			List<VoMessage> msgsOfTopic = (List<VoMessage>) pm.newQuery(VoMessage.class, "topicId==" + topicId).execute();
+			List<VoMessage> msgsOfTopic = executeQuery(  pm.newQuery(VoMessage.class, "topicId==" + topicId) );
 			boolean canDelete = true;
 			for (VoMessage msgot : msgsOfTopic) {
 				if (msgot.getParentId() == msgId) {
@@ -854,7 +842,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			}
 
 			if (0 != tpc.getMessageNum()) {
-				List<VoMessage> childMsgs = (List<VoMessage>) pm.newQuery(VoMessage.class, "topicId==" + topicId).execute();
+				List<VoMessage> childMsgs = executeQuery(  pm.newQuery(VoMessage.class, "topicId==" + topicId) );
 				for (VoMessage msg : childMsgs) {
 					deleteAttachments(pm, msg.getImages());
 					deleteAttachments(pm, msg.getDocuments());
@@ -914,11 +902,21 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     }
 
     private VoMulticastMessage getCurrentMessage(PersistenceManager pm, VoUser cu) {
-        int lastShownTimestamp = cu.getLastMulticastShown();
+        /*int lastShownTimestamp = cu.getLastMulticastShown();
         int now = (int) (System.currentTimeMillis() / 1000L);
+		List results = executeQuery( pm.newQuery("SQL", "SELECT ID FROM VOMULTICASTMESSAGE AS MM LEFT JOIN USERGROUPS AS UG ON MM.USERGROUP=UG.GROUP AND UG.ID=" + cu.getId()));
+		List<Long> uids = new ArrayList<>();
+		Iterator rit = results.iterator();
+		while(rit.hasNext()) {
+			uids.add((Long) rit.next());
+		}
+		for( Long uid: uids){
+			users.add( pm.getObjectById(VoUser.class, uid));
+		}
+
         Query q = pm.newQuery(VoMulticastMessage.class, "visibleGroups==" + cu.getRootGroup() + " && startAfter>=" + lastShownTimestamp);
         q.setOrdering("startAfter");
-        List<VoMulticastMessage> newML = (List<VoMulticastMessage>) q.execute();
+        List<VoMulticastMessage> newML = executeQuery(  q );
         VoMulticastMessage curMessage = null;
         if (newML.size() != 0) {
             for (VoMulticastMessage voMulticastMessage : newML) {
@@ -934,7 +932,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                 }
             }
         }
-        return curMessage;
+        return curMessage;*/
+		return null;
     }
 
     // =========================================================================================================================
@@ -942,55 +941,33 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     public void sendGroupMulticastMessage(List<Long> visibleGroups, String message, int startDate, int expireDate) throws InvalidOperation, TException {
         // get floor's group as a root of all other groups
         PersistenceManager pm = PMF.getPm();
-        Set<Long> vgs = null;
-        if (null != visibleGroups) {
-            vgs = new HashSet<Long>();
-            for (int i = 0; i * 20 < visibleGroups.size(); i++) {
-                String glist = "";
-                for (int j = 0; j < 20 && i * 20 + j < visibleGroups.size(); j++)
-                    glist += "," + visibleGroups.get(i * 20 + j);
+		Set vgs = new HashSet<Long>();
 
-                List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery(VoUserGroup.class,
-                        "groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups IN (" + glist.substring(1) + ")").execute();
-                for (VoUserGroup voUserGroup : groups) {
-                    vgs.add(voUserGroup.getId());
-                }
-            }
-        }
-        sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
+		List<VoUserGroup> groups = executeQuery( pm.newQuery(VoUserGroup.class,
+				"groupType==" + GroupType.FLOOR.getValue() + " && visibleGroups.contains(" + visibleGroups.get(0) + ")"));
+		for (VoUserGroup voUserGroup : groups) {
+			vgs.add(voUserGroup.getId());
+		}
+		sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
     }
 
     // =========================================================================================================================
     private void sendFloorGroupMulticastMessage(Set<Long> vgs, String message, int startDate, int expireDate, PersistenceManager pm) {
-        Collection<VoSession> sessionsToNotify;
+
         int weekAgo = (int) (System.currentTimeMillis() / 1000L - 86400 * 7);
-
         if (null != vgs) {
-            Set<VoUser> usersToUpdate = VoHelper.getAllOfSet(vgs, VoUser.class, null, "groups", pm);
-            if (null != usersToUpdate && usersToUpdate.size() > 0) {
-                Set<Long> vuis = new HashSet<>();
-                for (VoUser voUser : usersToUpdate) {
-                    vuis.add(voUser.getId());
-                }
-                List<Long> vgsList = new ArrayList<>(vgs);
-                VoMulticastMessage vmcm = new VoMulticastMessage(vgsList, startDate, expireDate, message);
-                pm.makePersistent(vmcm);
-                sessionsToNotify = VoHelper.getAllOfSet(vuis, VoSession.class, "lastActivityTs > " + weekAgo, "userId", pm);
-            } else {
-                sessionsToNotify = (List<VoSession>) pm.newQuery(VoSession.class, "lastActivityTs > " + weekAgo).execute();
-            }
-
-            for (VoSession voSession : sessionsToNotify) {
-                voSession.setNewBroadcastMessage(true);
-            }
-            pm.makePersistentAll(sessionsToNotify);
+            Set<VoUser> usersToUpdate = new HashSet<>();
+			for( Long ugId: vgs ){
+				usersToUpdate.addAll(UserServiceImpl.getUsersByGroup(ugId,pm));
+				pm.makePersistent( new VoMulticastMessage( pm.getObjectById(VoUserGroup.class, ugId), startDate, expireDate, message));
+				pm.newQuery("SQL","UPDATE VOSESSION AS S LEFT JOIN USERGROUPS AS UG ON S.USERID=UG.ID SET NEWBROADCASTMESSAGE = true WHERE UG.GROUP="+ugId+" AND S.LASTACTIVITYTS >" + weekAgo).execute();
+			}
         }
     }
 
     // =========================================================================================================================
     @Override
-    public void sendAddressMulticastMessage(List<PostalAddress> addresses, String message, int startDate, int expireDate) throws InvalidOperation,
-            TException {
+    public void sendAddressMulticastMessage(List<PostalAddress> addresses, String message, int startDate, int expireDate) throws TException {
         PersistenceManager pm = PMF.getPm();
         Set<Long> vgs = null;
 
@@ -1001,8 +978,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
                     String query = "groupType==" + GroupType.FLOOR.getValue() + " && longitude=='" + building.getLongitude().toPlainString()
                             + "' && latitude=='" + building.getLatitude().toPlainString() + "'" + (0 == pa.staircase ? "" : " && staircase==" + pa.getStaircase())
                             + (0 == pa.floor ? "" : " && floor==" + pa.getFloor());
-                    List<VoUserGroup> groups = (List<VoUserGroup>) pm.newQuery(VoUserGroup.class, query).execute();
-                    vgs = new HashSet<Long>();
+                    List<VoUserGroup> groups = executeQuery(  pm.newQuery(VoUserGroup.class, query) );
+                    vgs = new HashSet<>();
                     for (VoUserGroup voUserGroup : groups) {
                         vgs.add(voUserGroup.getId());
                     }

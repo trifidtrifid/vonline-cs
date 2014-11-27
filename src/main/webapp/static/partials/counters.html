@@ -6,7 +6,7 @@
     </div>
 
     <div ng-if="base.me.countersConfirmed">
-        <h3>{{base.pageTitle}}</h3>
+        <div class="page-title top-overflow-auto">{{ base.pageTitle}}</div>
 
         <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-body">
@@ -16,6 +16,9 @@
                 <button class="btn btn-sm no-border btn-default" ng-click="cancel()">Отмена</button>
             </div>
         </script>
+
+        <br/>
+        <div ng-show="counters.state == 2" class="info-good">Данные будут переданы в УК {{counters.endDateOfMonth}} числа</div>
 
         <table class="counters-table">
             <thead>
@@ -63,14 +66,15 @@
                     <div ng-show="counter.lastValue == 0"> - </div>
                 </td>
                 <td>
-                    <input type="text" ng-change="counter.wasEdit = true" class="counter-input" ng-model="counter.currentValue" ng-keypress="counters"/>
+                    <input type="text" ng-change="counters.inputCounter(counter)" ng-disabled="counters.state == 0 || counters.state == 2"
+                           class="counter-input" ng-model="counter.currentValue" ng-keypress="counters"/>
                     <a ui-sref="counters-history({ counterId : counter.id })" title="история показаний"><i class="fa fa-clock-o"></i></a>
                 </td>
                 <td class="align-center align-middle">
-                    <div ng-show="counter.currentValue > 0">
+                    <div ng-show="counter.currentValue > 0 && counter.lastValue != 0">
                         {{counter.currentValue - counter.lastValue}}
                     </div>
-                    <div ng-show="counter.currentValue == ''"> - </div>
+                    <div ng-show="counter.currentValue == '' || counter.lastValue == 0" class="gray-text"> нет данных </div>
                 </td>
                 <td width="6%" class="align-center align-middle">
                     <a href="#" title="редактировать" ng-click="counters.editCounter(counter)" ng-hide="counter.isEdit"><i class="fa fa-pencil"></i></a>
@@ -82,7 +86,9 @@
 
         <div class="clearfix">
             <a href="#" class="pull-right add-counter" ng-click="counters.addCounter()">Добавить счетчик</a>
-            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.save()">Отправить</button>
+            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.save()" ng-if="counters.state == 1">Отправить</button>
+            <span class="error-info">{{counters.errorText}}</span>
+            <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.cancel()" ng-if="counters.state == 2">Отмена</button>
         </div>
         <br/>
 
