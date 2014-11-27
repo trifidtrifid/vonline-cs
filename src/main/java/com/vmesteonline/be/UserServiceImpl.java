@@ -592,7 +592,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				if (longitude == null || lattitude == null || longitude.isEmpty() || lattitude.isEmpty()) { // calculate
 					// location
 					try {
-						Pair<String, String> position = VoGeocoder.getPosition(voBuilding, false);
+						Pair<String, String> position = VoGeocoder.getPosition(voBuilding, false,pm);
 						voBuilding.setLocation(new BigDecimal(position.left), new BigDecimal(position.right));
 					} catch (Exception e) {
 						e.printStackTrace();

@@ -5,6 +5,7 @@ import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.InvalidOperation;
@@ -12,7 +13,6 @@ import com.vmesteonline.be.thrift.UserLocation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.authservice.AuthService;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
-import com.vmesteonline.be.thrift.messageservice.Dialog;
 import com.vmesteonline.be.utils.EMailHelper;
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
@@ -22,9 +22,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
@@ -156,7 +154,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         VoPostalAddress pa = pm.getObjectById(VoPostalAddress.class, invite.getPostalAddressId());
         VoBuilding vBuilding = pm.getObjectById(VoBuilding.class, pa.getBuilding());
         if (vBuilding.getLatitude() == null || vBuilding.getLongitude() == null) {
-            VoGeocoder.getPosition(vBuilding, false);
+            VoGeocoder.getPosition(vBuilding, false, pm);
             pm.makePersistent(vBuilding);
         }
         return new UserLocation(pa.getAddressText(pm), Long.toString(invite.getPostalAddressId()), VoGeocoder.createMapImageURL(
@@ -217,7 +215,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         // Add the send welcomeMessage Task to the default queue.
         Notification.welcomeMessageNotification(user, pm);
 
-        sendPersonalWelcomeMessage(user);
+        sendPersonalWelcomeMessage(user,pm);
 
         return user.getId();
     }
@@ -254,7 +252,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         logger.info("register " + email+ " pass " + password+ " id "+ user.getId()+ " location '"+ addressString+"'");
         // Add the send welcomeMessage Task to the default queue.
         Notification.welcomeMessageNotification(user, pm);
-        sendPersonalWelcomeMessage(user);
+        sendPersonalWelcomeMessage(user,pm);
         return user.getId();
     }
 
@@ -264,15 +262,17 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
     }
 
     //Send personal message
-    private void sendPersonalWelcomeMessage(VoUser user) throws InvalidOperation {
+    private void sendPersonalWelcomeMessage(VoUser user, PersistenceManager pm) throws InvalidOperation {
         //getUser by Email info@vmesteonline.ru
         VoUser voUser = getUserByEmail("info@vmesteonline.ru");
         DialogServiceImpl ds = new DialogServiceImpl();
         ds.sessionStorage = this.sessionStorage;
-        List<Long> ul = new ArrayList<>();
+        Set<Long> ul = new TreeSet<>();
         ul.add(voUser.getId());
-        Dialog dialog = ds.getDialog(ul, 0);
-        ds.postMessage(dialog.getId(), user.getName() + ", рады приветствовать вас на сайте! Если у вас возникнут вопросы, связанные с его работой, пишите нам, ответим с удовольствием!", new ArrayList<>());
+        ul.add(user.getId());
+        VoDialog dlg = new VoDialog(new ArrayList<Long>(ul));
+        pm.makePersistent(dlg);
+        dlg.postMessage(voUser, user.getName() + ", рады приветствовать вас на сайте! Если у вас возникнут вопросы, связанные с его работой, пишите нам, ответим с удовольствием!", new ArrayList<>(), pm);
     }
 
     @Override

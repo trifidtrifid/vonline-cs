@@ -112,7 +112,7 @@ public class VoBuilding  {
 		
 		if( null == longitude || longitude.toPlainString().trim().length() == 0 || 
 				null == latitude || latitude.toPlainString().trim().length() == 0) {
-			VoGeocoder.getPosition(vb, false);
+			VoGeocoder.getPosition(vb, false, pm);
 			
 		} 
 		if( vb.addressString == null ) {

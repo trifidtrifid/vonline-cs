@@ -217,7 +217,8 @@ public class AuthServiceImplTests extends TestWorkAround{
     public void testRegisterNewUserByAddress() throws Exception {
 
         try {
-            long nuid = asi.registerNewUserByAddress("FN", "LN", "PW", "aaa@bbb.com", "Россия, Ленинградская область, Парголово, улица Ленинградская дом 7", (short) 1);
+            String addressString = new String( "Россия, Ленинградская область, кудрово, Ленинградская улица д 7".getBytes("cp1251"),"UTF8");
+            long nuid = asi.registerNewUserByAddress("FN", "LN", "PW", "aaa@bbb.com", addressString, (short) 1);
             assertTrue(nuid != 0L);
             VoUser vu = pm.getObjectById(VoUser.class, nuid);
             VoPostalAddress pa = pm.getObjectById(VoPostalAddress.class, vu.getAddress());
@@ -227,13 +228,14 @@ public class AuthServiceImplTests extends TestWorkAround{
             assertEquals(pa.getStaircase(), 0);
             assertEquals(pa.getFlatNo(), 0);
             VoStreet voStreet = pm.getObjectById(VoStreet.class, building.getStreetId());
-            assertEquals(voStreet.getName(),"улица Ленинградская");
+            assertEquals(voStreet.getName(),"Ленинградская улица");
             VoCity voCity = pm.getObjectById(VoCity.class, voStreet.getCity());
-            assertEquals(voCity.getName(),"Ленинградская область, поселок Парголово");
+            assertEquals(voCity.getName(),"Ленинградская область, деревня Кудрово");
             VoCountry voCountry = pm.getObjectById(VoCountry.class, voCity.getCountry());
-            assertEquals(voCountry.getName(),"Российчкая Федерация");
+            assertEquals(voCountry.getName(),"Россия");
         } catch (Exception e) {
-            System.out.println();
+            e.printStackTrace();
+            System.out.println(e);
             assertFalse(true);
         }
     }

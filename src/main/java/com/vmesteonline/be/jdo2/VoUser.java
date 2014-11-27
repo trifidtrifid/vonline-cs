@@ -234,7 +234,7 @@ public class VoUser extends GeoLocation {
 		// check if location is set
 		if (null == building.getLatitude() || 0 == building.getLatitude().intValue()) {
 			try {
-				VoGeocoder.getPosition(building, false);
+				VoGeocoder.getPosition(building, false,pm);
 				pm.makePersistent(building);
 
 			} catch (InvalidOperation e) {
