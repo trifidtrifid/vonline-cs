@@ -119,9 +119,11 @@
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
                         <contextPath>/</contextPath>
                     </webApp>
-                    <jettyXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-web.xml</jettyXml>
+
+                    <jettyXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-web.xml,${project.basedir}/src/main/webapp/WEB-INF/jetty-ssl.xml</jettyXml>
                     <stopPort>12345</stopPort>
                     <stopKey>12345</stopKey>
+
                 </configuration>
                 <executions>
                     <execution>
@@ -129,6 +131,7 @@
                         <phase>none</phase>
                     </execution>
                 </executions>
+
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
