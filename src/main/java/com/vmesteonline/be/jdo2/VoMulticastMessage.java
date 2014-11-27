@@ -1,8 +1,5 @@
 package com.vmesteonline.be.jdo2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -10,20 +7,19 @@ import javax.jdo.annotations.Persistent;
 public class VoMulticastMessage {
 
 	
-	public VoMulticastMessage(List<Long> visibleGroups, int startAfter, int endBefore, String message) {
-		super();
-		this.visibleGroups = new ArrayList<Long>(visibleGroups);
+	public VoMulticastMessage(VoUserGroup userGroup, int startAfter, int endBefore, String message) {
+		this.userGroup = userGroup;
 		this.startAfter = 0 == startAfter ? (int)(System.currentTimeMillis()/1000L) : startAfter;
 		this.endBefore = endBefore;
 		this.message = message;
 	}
 	
-	public List<Long> getVisibleGroups() {
-		return visibleGroups;
+	public VoUserGroup getUserGroups() {
+		return userGroup;
 	}
 
-	public void setVisibleGroups(List<Long> visibleGroups) {
-		this.visibleGroups = visibleGroups;
+	public void setUserGroup(VoUserGroup visibleGroups) {
+		this.userGroup = visibleGroups;
 	}
 
 	public String getMessage() {
@@ -51,7 +47,7 @@ public class VoMulticastMessage {
 	}
 
 	@Persistent
-	private List<Long> visibleGroups;
+	private VoUserGroup userGroup;
 	
 	@Persistent
 	private String message;

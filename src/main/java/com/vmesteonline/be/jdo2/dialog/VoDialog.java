@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+import static com.vmesteonline.be.utils.VoHelper.logger;
 
 @PersistenceCapable
 @Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"lastMessageDate"})
@@ -33,11 +34,23 @@ public class VoDialog {
 				VoUser user = pm.getObjectById(VoUser.class, uid);
 				usis.add( user.getShortUserInfo(null, pm) );
 			} catch (JDOObjectNotFoundException e) {
-				
-				throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
+				List<VoDialogMessage> dmsgs = executeQuery(pm.newQuery(VoDialogMessage.class, "dialogId==" + this.getId() + " && authorId==" + uid));
+				for( VoDialogMessage dmsg: dmsgs)
+					pm.deletePersistent(dmsg);
+				users.remove(uid);
+				logger.error("Invalid dialog properties. USer '"+uid+"' registered in dialog but not found. Remove him!");
 			}
 		}
-		return new Dialog(id, usis, createDate, lastMessageDate);
+		if( users.size() <= 1 ){
+			logger.error("Invalid dialog. It contains only one user. Remove it at all!");
+			List<VoDialogMessage> dmsgs = executeQuery(pm.newQuery(VoDialogMessage.class, "dialogId==" + this.getId()));
+			for( VoDialogMessage dmsg: dmsgs)
+				pm.deletePersistent(dmsg);
+			users.remove(users.get(0));
+			pm.deletePersistent(this);
+			throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
+		}
+		return null;
 	}
 	
 public Dialog getDialog( VoUser cuser, PersistenceManager pm ) throws InvalidOperation {

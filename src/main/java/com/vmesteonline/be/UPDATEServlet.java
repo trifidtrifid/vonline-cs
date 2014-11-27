@@ -1,9 +1,10 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.VoFileAccessRecord;
+import com.vmesteonline.be.jdo2.VoPoll;
+import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.utility.VoCounter;
-import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
@@ -35,7 +36,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         String action = (String) arg0.getParameter("action");
 
         if ("init".equalsIgnoreCase(action)) {
-            Defaults.initDefaultData();
+            Defaults.initDefaultData(PMF.getPm());
             resultText = "Init DONE";
 
 
@@ -138,7 +139,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
             }
 
         } else if ("updateTopics".equalsIgnoreCase(action)) {
-            PersistenceManager pm = PMF.getPm();
+           /* PersistenceManager pm = PMF.getPm();
             try {
                 Extent<VoUserGroup> vugs = pm.getExtent(VoUserGroup.class);
                 ArrayList<VoUserGroup> vugssrtd = new ArrayList<VoUserGroup>();
@@ -187,12 +188,11 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                 for (VoUser user : users) {
                     user.initRootGroup(pm);
                 }
-
             } catch (Exception e) {
                 resultText += " </br>\r\nERROR: " + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage());
             } finally {
                 pm.close();
-            }
+            }*/
         }
         arg1.setHeader("Content-Type","text/html");
         arg1.getOutputStream().write(resultText.getBytes());

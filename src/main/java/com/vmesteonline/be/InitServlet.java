@@ -1,5 +1,6 @@
 package com.vmesteonline.be;
 
+import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.utils.Defaults;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,8 @@ public class InitServlet extends QueuedServletWithKeyHelper {
 		
 		/*if( keyRequestAndQueuePush(arg0, arg1) ){
 		*/
-			Defaults.initDefaultData();
+
+		Defaults.initDefaultData(PMF.getPm());
 		/*	String resultText = "Init DONE";
 			sendTheResultNotification(arg0, arg1, now, resultText);
 		}*/
