@@ -49,7 +49,7 @@
 							<!--<button type="submit" class="btn btn-success btn-lg">Получить код</button>-->
                             <div class="request-response">
 
-                                <img class="request-map" src="#" alt="карта"/>
+                                <img id="map" class="request-map" src="#" alt="карта"/>
                                 <span></span>
 
                             </div>
@@ -57,9 +57,13 @@
 					</div>
 				</form>
 
-
-
-                <span id="result" class="alertMsg"></span>
+                <span id="result" class="alertMsg">
+                    <div>Адрес найден верно ?</div>
+                    <div>
+                        <a class="btn btn-sm no-border btn-primary yes" href="#">Да</a>
+                        <a class="btn btn-sm no-border btn-primary no" href="#">Нет</a>
+                    </div>
+                </span>
 			</div>
 		</div>
 	</div>
@@ -92,6 +96,8 @@
     <script src="/gen-js/AuthService.js" type="text/javascript"></script>
     <!-- -->
 
+    <script type="text/javascript" src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru_RU&coordorder=longlat"></script>
+
 	<!-- Typer -->
 
 	<script>
@@ -117,20 +123,38 @@
                     var address = $('#address').val()+", "+$('#flat-number').val(),
                             email = $('#email').val();
 
-                    try{
-                        var responseMap = authClient.requestInviteCode(address,email);
-                        var response = $('.request-response');
-                        response.find('img').attr('src',responseMap);
-                        response.find('span').text('Мы доставим код в почтовый ящик в Вашем подъезде').removeClass('error-info');
-                    }catch(e){
-                        response.find('span').text('Мы не смогли найти указанный Вами адрес. Проверьте адрес и попробуйте снова').addClass('error-info');
-                    }
+                    $.ajax({
+                        url: 'http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Москва,+Тверская+улица,+дом+7',
+                        success: function(data){
+                            alert(data);
 
-                    response.fadeIn(200);
+                            var map = new ymaps.Map("map", {
+                                center: [55.76, 37.64],
+                                zoom: 17
+                            });
 
+                            if(data){
+                                $('#result').show()
+                            }
+
+                        }
+                    });
 				}
 				return false;
 			});
+
+            $('.yes').click(function(){
+                try{
+                    var responseMap = authClient.requestInviteCode(address,email);
+                    var response = $('.request-response');
+                    //response.find('img').attr('src',responseMap);
+                    response.find('span').text('Мы доставим код в почтовый ящик в Вашем подъезде').removeClass('error-info');
+                }catch(e){
+                    response.find('span').text('Мы не смогли найти указанный Вами адрес. Проверьте адрес и попробуйте снова').addClass('error-info');
+                }
+
+                response.fadeIn(200);
+            });
 
 
         });
