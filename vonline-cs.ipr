@@ -47,12 +47,12 @@
     </artifact>
     <artifact type="war" name="vonline-cs:war">
       <output-path>$PROJECT_DIR$/target</output-path>
-      <root id="archive" name="vonline.war">
+      <root id="archive" name="demo.vonline.war">
         <element id="artifact" artifact-name="vonline-cs:war exploded" />
       </root>
     </artifact>
     <artifact type="exploded-war" name="vonline-cs:war exploded">
-      <output-path>$PROJECT_DIR$/target/vonline</output-path>
+      <output-path>$PROJECT_DIR$/target/demo.vonline</output-path>
       <root id="root">
         <element id="directory" name="WEB-INF">
           <element id="directory" name="classes">
@@ -307,13 +307,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
-    <library name="JPA 1.0-JPA 1.0">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/javaee.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
     <library name="Maven: ant:ant:1.6.5">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/ant/ant/1.6.5/ant-1.6.5.jar!/" />

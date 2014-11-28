@@ -213,7 +213,8 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
                 + (0 == groups.size() ? "Undefined!" : pm.getObjectById(VoUserGroup.class, groups.get(0)).getName() + "[" + uaddress.getAddressText(pm)
                 + "]"));
         // Add the send welcomeMessage Task to the default queue.
-        if(needConfirmEmail) {
+        if(needConfirmEmail)
+        {
             Notification.welcomeMessageNotification(user, pm);
             sendPersonalWelcomeMessage(user, pm);
         }
@@ -266,12 +267,14 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
     private void sendPersonalWelcomeMessage(VoUser user, PersistenceManager pm) throws InvalidOperation {
         //getUser by Email info@vmesteonline.ru
         VoUser voUser = getUserByEmail("info@vmesteonline.ru");
-        Set<Long> ul = new TreeSet<>();
-        ul.add(voUser.getId());
-        ul.add(user.getId());
-        VoDialog dlg = new VoDialog(new ArrayList<>(ul));
-        pm.makePersistent(dlg);
-        dlg.postMessage(voUser, user.getName() + ", рады приветствовать вас на сайте! Если у вас возникнут вопросы, связанные с его работой, пишите нам, ответим с удовольствием!", new ArrayList<>(), pm);
+        if(null!=voUser) {
+            Set<Long> ul = new TreeSet<>();
+            ul.add(voUser.getId());
+            ul.add(user.getId());
+            VoDialog dlg = new VoDialog(new ArrayList<>(ul));
+            pm.makePersistent(dlg);
+            dlg.postMessage(voUser, user.getName() + ", рады приветствовать вас на сайте! Если у вас возникнут вопросы, связанные с его работой, пишите нам, ответим с удовольствием!", new ArrayList<>(), pm);
+        }
     }
 
     @Override
