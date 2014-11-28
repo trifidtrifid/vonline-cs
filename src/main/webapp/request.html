@@ -27,23 +27,24 @@
 	<div class="preloader"></div>
 	<main id="top" class="masthead" role="main">
 	<div class="container">
-		<div class="logo">
+		<div class="logo request-logo">
 			<a href="/"><img src="/static/i/landing/vmesteonline.logo.500.png" alt="startup-logo"></a>
+            <div>Социальная сеть только для соседей.</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-8 col-sm-12 col-md-offset-4 subscribe">
 				<form class="form-horizontal" role="form" action="subscribe.php" id="subscribeForm" method="POST">
-					<div class="form-group">
+					<div class="form-group request">
 						<div class="col-md-7 col-sm-6 col-sm-offset-1 col-md-offset-0">
-                            <h2>Присоединяйтесь к сообществу ваших соседей !</h2>
+                            <h3>Присоединяйтесь к сообществу ваших соседей !</h3>
                             <br/>
-							<input class="form-control input-lg active" name="address" type="text" id="address" placeholder="Ваш город" required="required">
-							<input class="form-control active" name="address" type="text" id="street" placeholder="Ваша улица" required="required">
-							<input class="form-control active" name="address" type="text" id="flat-number" placeholder="№ квартиры" required="required">
-							<input class="form-control input-lg active" name="address" type="email" id="email" placeholder="Ваш email" required="required">
+							<input class="form-control input-lg" name="address" type="text" id="city" placeholder="Ваш город" required="required">
+                            <input class="form-control input-lg flat-input" name="address" type="text" id="flat-number" placeholder="№ квартиры" required="required">
+							<input class="form-control input-lg street-input" name="address" type="text" id="street" placeholder="Ваша улица" required="required">
+							<input class="form-control input-lg" name="address" type="email" id="email" placeholder="Ваш email" required="required">
                             <br/>
-                            <div class="error-info">Указанный вами email уже зарегистрирован.</div>
+                            <div class="error-info hidden">Указанный вами email уже зарегистрирован.</div>
                             <button type="submit" class="btn btn-success btn-lg">Войти</button>
 						</div>
 						<!--<div class="col-md-5 col-sm-4">
@@ -55,6 +56,18 @@
                             </div>
 						</div>-->
 					</div>
+                    <div class="form-group confirm hidden">
+                        <div class="col-md-7 col-sm-6 col-sm-offset-1 col-md-offset-0">
+                            <h2>Проверьте адрес</h2>
+                            <br/>
+                            <div class="confirm-address"></div>
+                            <div id="map" style="height: 300px;"></div>
+
+
+                            <a href="#" type="submit" class="btn btn-success btn-sm confirm-back">Не верно</a>
+                            <a href="#" type="submit" class="btn btn-success btn-sm confirm-forward">Верно</a>
+                        </div>
+                    </div>
 				</form>
 
 
@@ -104,40 +117,103 @@
 
 	<script>
 		$(document).ready(function() {
+            var map;
 
 			$('#subscribeForm').ketchup().submit(function(e) {
                 e.preventDefault();
 
 				if ($(this).ketchup('isValid')) {
-					var action = $(this).attr('action');
-                    var transport = new Thrift.Transport("/thrift/AuthService");
-                    var protocol = new Thrift.Protocol(transport);
-                    var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
+					var action = $(this).attr('action'),
+                        transport = new Thrift.Transport("/thrift/AuthService"),
+                        protocol = new Thrift.Protocol(transport),
+                        authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol),
+                        addressStreet = $('#city').val()+", "+$('#street').val(),
+                        address = addressStreet+", квартира "+$('#flat-number').val(),
+                        email = $('#email').val(),
+                        hasUser = authClient.checkEmailRegistered(email);
 
-                    var address = $('#address').val()+", "+$('#flat-number').val(),
-                            email = $('#email').val();
+                    console.log(address);
 
-                    $.ajax({
-                        url: 'http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Москва,+Тверская+улица,+дом+7',
-                        success: function(data){
-                            alert(data);
+                    if(hasUser){
+                        $('.error-info').removeClass('hidden');
+                    }else{
 
-                            var map = new ymaps.Map("map", {
-                                center: [55.76, 37.64],
-                                zoom: 17
-                            });
+                        var myGeocoder = ymaps.geocode(addressStreet);
+                        myGeocoder.then(
+                                function (res) {
+                                    //map.geoObjects.add(res.geoObjects);
+                                    //console.log(res.geoObjects.get(0).geometry);
+                                    var center = res.geoObjects.get(0).geometry._$g;
 
-                            if(data){
-                                $('#result').show()
+                                    if(!map){
+                                        map = new ymaps.Map("map", {
+                                            center: center,
+                                            zoom: 17
+                                        });
+                                    }else{
+                                        map.setCenter(center);
+                                    }
+
+                                    var myGeoObject = new ymaps.GeoObject({
+                                        geometry: {
+                                            type: "Point",// тип геометрии - точка
+                                            coordinates: center // координаты точки
+                                        }
+                                    });
+                                    map.geoObjects.add(myGeoObject); // Размещение геообъекта на карте.
+                                    // Выведем в консоль данные, полученные в результате геокодирования объекта.
+
+                                    $('.confirm-address').text(address);
+                                    $('.request').addClass('hidden');
+                                    $('.confirm').removeClass('hidden');
+
+                                    $('.confirm-back').click(function(e){
+                                        e.preventDefault();
+
+                                        $('.confirm').addClass('hidden');
+                                        $('.request').removeClass('hidden');
+
+                                    });
+
+                                    $('.confirm-forward').click(function(e){
+                                        e.preventDefault();
+
+                                        var addr = encodeURIComponent(address);
+                                        document.location.replace('registration.html#email='+ email+ ";address="+ addr);
+                                    });
+
+                                },
+                                function (err) {
+                                    // обработка ошибки
+                                }
+                        );
+
+                        /*$.ajax({
+                            url: 'http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Москва,+Тверская+улица,+дом+7',
+                            success: function(data){
+                                console.log('---');
+                                console.log(data);
+
+                                if(data){
+                                    $('#result').show()
+                                }
+
+                                $('.confirm-address').text(address);
+                                $('.request').addClass('hidden');
+                                $('.confirm').removeClass('hidden');
+
+
+
                             }
+                        });*/
 
-                        }
-                    });
+                    }
+
+
 				}
-				return false;
 			});
 
-            $('.yes').click(function(){
+            /*$('.yes').click(function(){
                 try{
                     var responseMap = authClient.requestInviteCode(address,email);
                     var response = $('.request-response');
@@ -148,7 +224,7 @@
                 }
 
                 response.fadeIn(200);
-            });
+            });*/
 
 
         });

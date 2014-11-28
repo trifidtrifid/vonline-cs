@@ -164,6 +164,18 @@ a:hover, a:focus {
 .input-lg {
 	height: 55px;
 }
+.street-input,
+.flat-input{
+    display: inline-block;
+}
+.street-input{
+    width: 290px;
+    margin-right: 10px;
+}
+.flat-input{
+    float: right;
+    width: 140px;
+}
 .btn-lg, .btn-group-lg > .btn {
 	padding: 10px 28px;
 	height: 52px;
@@ -269,6 +281,10 @@ to {
     margin-top: -60px;
     overflow: hidden;
     margin-bottom: 70px;
+}
+.logo.request-logo{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .logo span{
     display: block;
