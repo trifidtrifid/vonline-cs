@@ -7,13 +7,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.servlet.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PersistenceInitFilter implements Filter {
 
 	public static final Logger logger = Logger.getLogger(PersistenceInitFilter.class);
-	private static final Map<String,PersistenceManagerFactory> persistenceManagerFactoryMap = new HashMap<>();
+	/*private static final Map<String,PersistenceManagerFactory> persistenceManagerFactoryMap = new HashMap<>();
 
 	private static PersistenceManagerFactory factory( String name) {
 		PersistenceManagerFactory pmf = persistenceManagerFactoryMap.get(name);
@@ -35,6 +33,18 @@ public class PersistenceInitFilter implements Filter {
 		}
 		currentManagerMap.set( pmm );
 		return pm;
+	}*/
+	private static final String databaseName = "vmesteonline";
+	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory(databaseName);;
+
+	private static ThreadLocal<PersistenceManager> currentManager = new ThreadLocal<>();
+
+	public static PersistenceManager getManager(String databaseName) {
+		PersistenceManager pm = currentManager.get();
+		if (pm == null || pm.isClosed() ) {
+			currentManager.set(pm = persistenceManagerFactory.getPersistenceManager());
+		}
+		return pm;
 	}
 
 	@Override
@@ -45,7 +55,7 @@ public class PersistenceInitFilter implements Filter {
 			logger.debug("Got request: " + req + " Processed with pm: " + manager);
 			chain.doFilter(req, res);
 		} finally {
-			if (manager != null) {
+			if (manager != null && !manager.isClosed()) {
 				manager.flush();
 				manager.close();
 			}

@@ -230,7 +230,7 @@
             </plugin>
 
         </plugins>
-        <finalName>vonline</finalName>
-        <!--finalName>demo.vonline</finalName-->
+        <!--finalName>vonline</finalName-->
+        <finalName>demo.vonline</finalName>
     </build>
 </project>
