@@ -47,12 +47,12 @@
     </artifact>
     <artifact type="war" name="vonline-cs:war">
       <output-path>$PROJECT_DIR$/target</output-path>
-      <root id="archive" name="demo.vonline.war">
+      <root id="archive" name="vonline.war">
         <element id="artifact" artifact-name="vonline-cs:war exploded" />
       </root>
     </artifact>
     <artifact type="exploded-war" name="vonline-cs:war exploded">
-      <output-path>$PROJECT_DIR$/target/demo.vonline</output-path>
+      <output-path>$PROJECT_DIR$/target/vonline</output-path>
       <root id="root">
         <element id="javaee-facet-resources" facet="vonline-cs/web/Web" />
         <element id="directory" name="WEB-INF">
