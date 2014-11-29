@@ -182,7 +182,12 @@ public abstract class Notification {
 		PersistenceManager pm = PMF.getPm();
 
 		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
-		String body = "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		String body = "";
+		try {
+			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		} catch (Exception e) {
+			body += "Адрес: пользовтеля не существует address="+author.getAddress()+"<br/>";
+		}
 		body += "Тип: "+msg.getType()+"<br/>";
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
 				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";

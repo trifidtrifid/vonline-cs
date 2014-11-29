@@ -5,7 +5,6 @@ import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
-import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.InvalidOperation;
@@ -22,7 +21,8 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
@@ -216,7 +216,6 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         if(needConfirmEmail)
         {
             Notification.welcomeMessageNotification(user, pm);
-            sendPersonalWelcomeMessage(user, pm);
         }
 
         return user.getId();
@@ -254,27 +253,12 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         logger.info("register " + email+ " pass " + password+ " id "+ user.getId()+ " location '"+ addressString+"'");
         // Add the send welcomeMessage Task to the default queue.
         Notification.welcomeMessageNotification(user, pm);
-        sendPersonalWelcomeMessage(user,pm);
         return user.getId();
     }
 
     @Override
     public boolean emailRegistered(String email) throws InvalidOperation, TException {
         return getUserByEmail(email) == null;
-    }
-
-    //Send personal message
-    private void sendPersonalWelcomeMessage(VoUser user, PersistenceManager pm) throws InvalidOperation {
-        //getUser by Email info@vmesteonline.ru
-        VoUser voUser = getUserByEmail("info@vmesteonline.ru");
-        if(null!=voUser) {
-            Set<Long> ul = new TreeSet<>();
-            ul.add(voUser.getId());
-            ul.add(user.getId());
-            VoDialog dlg = new VoDialog(new ArrayList<>(ul));
-            pm.makePersistent(dlg);
-            dlg.postMessage(voUser, user.getName() + ", рады приветствовать вас на сайте! Если у вас возникнут вопросы, связанные с его работой, пишите нам, ответим с удовольствием!", new ArrayList<>(), pm);
-        }
     }
 
     @Override
@@ -289,7 +273,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
     }
 
     @SuppressWarnings("unchecked")
-    public VoUser getUserByEmail(String email, PersistenceManager pm) {
+    public static VoUser getUserByEmail(String email, PersistenceManager pm) {
 
         Query q = pm.newQuery(VoUser.class);
         q.setFilter("email == eml");
