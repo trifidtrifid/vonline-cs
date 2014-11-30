@@ -65,16 +65,52 @@ $(document).ready(function(){
             URLArray = URL.split(';');
 
             email = URLArray[0].split('=')[1];
-            var address = decodeURIComponent(URLArray[2].split('=')[1]),
-                code = URLArray[3].split('=')[1];
+            var address = decodeURIComponent(URLArray[1].split('=')[1]),
+                code;
 
-            $('#vk_state').val('inviteCode:'+code);
-            var mapUrlTemp = URLArray[1].split('=');
-            mapUrlTemp.shift();
-            var mapUrl = mapUrlTemp.join('=');
+            var isCodeReg = (URLArray[2]) ? true : false;
+
+            // регистрация по коду
+            if(isCodeReg) {
+                code = URLArray[3].split('=')[1];
+                $('#vk_state').val('inviteCode:' + code);
+                var mapUrlTemp = URLArray[2].split('=');
+                mapUrlTemp.shift();
+                var mapUrl = mapUrlTemp.join('=');
+                $('.mapUrl').attr('src', mapUrl).removeClass('hidden');
+            }else{
+                console.log(address);
+                $('#map').removeClass('hidden');
+                ymaps.ready(function(){
+                    var myGeocoder = ymaps.geocode(address),
+                    map;
+                myGeocoder.then(
+                    function (res) {
+                        var center = res.geoObjects.get(0).geometry._$g;
+                        console.log(center);
+
+                        if (!map) {
+                            map = new ymaps.Map("map", {
+                                center: center,
+                                zoom: 17
+                            });
+                        } else {
+                            map.setCenter(center);
+                        }
+
+                        var myGeoObject = new ymaps.GeoObject({
+                            geometry: {
+                                type: "Point",// тип геометрии - точка
+                                coordinates: center // координаты точки
+                            }
+                        });
+                        map.geoObjects.add(myGeoObject);
+                    });
+                });
+
+            }
 
             $('#email').val(email);
-            $('.mapUrl').attr('src', mapUrl);
             $('.address').text(address);
 
             document.location.hash = "";
@@ -114,7 +150,11 @@ $(document).ready(function(){
         }else{
 
             try{
-                authClient.registerNewUser(firstName, lastName, pass, email, code, gender);
+                if(isCodeReg) {
+                    authClient.registerNewUser(firstName, lastName, pass, email, code, gender);
+                }else {
+                    authClient.registerNewUserByAddress(firstName, lastName, pass, email, address, gender);
+                }
                 document.location.replace('coming-soon.html');
             }catch(e){
                 $('.error-info').html('Такой адрес email уже зарегистрирован. <a href="#" class="reg-remember">Забыли пароль?</a>').show();

@@ -34,7 +34,8 @@
                             <!--<div ng-show="profile.userProfile.userInfo.gender != null"><span>Пол: </span> {{profile.userProfile.userInfo.genderMeta}}</div>-->
                         </div>
 
-                        <div class="profile-item" ng-show="profile.userProfile.contacts.mobilePhone != null || profile.userProfile.contacts.email != null">
+                        <div class="profile-item" ng-show="(profile.userProfile.contacts.mobilePhone != null || profile.userProfile.contacts.email != null) &&
+                        profile.userProfile.userInfo.userId == base.me.id">
                             <h3>Контактная информация</h3>
                             <div ng-show="profile.userProfile.contacts.mobilePhone != null"><span>Телефон:</span> {{ profile.userProfile.contacts.mobilePhone }}</div>
                             <div ng-show="profile.userProfile.contacts.email != null"><span>Email:</span> {{ profile.userProfile.contacts.email }}</div>
