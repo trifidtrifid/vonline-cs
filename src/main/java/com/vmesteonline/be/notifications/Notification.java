@@ -2,12 +2,10 @@ package com.vmesteonline.be.notifications;
 
 import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoSession;
-import com.vmesteonline.be.jdo2.VoTopic;
-import com.vmesteonline.be.jdo2.VoUser;
-import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
+import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
@@ -58,7 +56,7 @@ public abstract class Notification {
 			if( voUser.isEmailConfirmed() ){
 				
 				VoSession lastSession = getTheLastSessionAndCeanOldOnes(voUser, weekAgo, pm);
-				if( lastSession == null || lastSession.getLastActivityTs() < twoDaysAgo )
+				if( lastSession == null /*|| lastSession.getLastActivityTs() < twoDaysAgo*/ )
 					addUserToNotificationIst(userList, now, voUser);
 			}
 		}
@@ -144,12 +142,13 @@ public abstract class Notification {
 		messagesToSend.put(u, uns);
 	}
 
-	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users, PersistenceManager pm) {
+	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users) {
 		// group users by groups and group types
-		
 		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
 		for (VoUser u : users) {
-			for (Long ug : u.getGroups()) {
+			List<Long> groups = u.getGroups();
+			if( null!=groups && groups.size()>0){
+				Long ug = groups.get(groups.size() - 1);
 				Set<VoUser> ul;
 				if (null == (ul = groupUserMap.get(ug))) {
 					ul = new TreeSet<VoUser>(vuComp);
@@ -176,6 +175,19 @@ public abstract class Notification {
 		for (VoUser rcpt : usersForMessage) {
 			decorateAndSendMessage(rcpt, subject, body);
 		}
+	}
+
+	public static void sendMessageCopy(VoBaseMessage msg, VoUser author) {
+
+		PersistenceManager pm = PMF.getPm();
+
+		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
+		String body = "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		body += "Тип: "+msg.getType()+"<br/>";
+		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
+				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
+		body += "<br/><i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
+		decorateAndSendMessage(null, subject, body);
 	}
 
 	public static void dialogMessageNotification(VoDialog dlg, VoUser author, VoUser rcpt) {
@@ -210,15 +222,15 @@ public abstract class Notification {
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
 		userSet.addAll(executeQuery( pm.newQuery(VoUser.class, "")));
 
-		body += "На сайте уже зарегистрированно: " + userSet.size() + " пользователей<br/>";
+		body += "На сайте уже зарегистрировано: " + userSet.size() + " пользователей<br/>";
 		
 		List<VoUser> ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.NEIGHBORS, pm), pm );
 		if(0!=ul.size()) body += "Из них рядом с вами живут: "+ul.size()+"<br/>";
 		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.BUILDING, pm), pm );
 		if(0!=ul.size()) body += "В вашем доме: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.STAIRCASE, pm), pm );
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
 		if(0!=ul.size()) body += "В вашем подъезде: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.FLOOR, pm), pm );
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm );
 		if(0!=ul.size()) body += "На вашем этаже : "+ul.size()+"<br/>";
 		
 		

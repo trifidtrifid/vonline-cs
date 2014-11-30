@@ -18,9 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
@@ -67,9 +65,10 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 			List<List<String>> csvData = CSVHelper.parseCSV( baos.toByteArray(), null, null, null);
 			//Code;ZIP Code;Country;City;Street;Building;Korpus;staircase;Appt;floor
 			//749282;188689;Российская Федерация;Ленинградская Обл. п. Кудрово;улица Ленинградская;7;0;1;2;2
-			if( csvData.size() <2 ) return "Empty file. Two lines the must"; 
+			if( csvData.size() <2 ) return "Empty file. Two lines the must";
+			List<String> header = csvData.get(0);
 			csvData.remove(0);
-			PersistenceManager pm = PMF.getPm();
+			PersistenceManager pm = PMF .getPm();
 			try {
 				VoBuilding vb;
 				VoStreet cs;
@@ -85,13 +84,22 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 					String fullNo = null==korp || 0 == korp.trim().length() || korp.trim().equals("0") ?  firstLine.get(5)  : 
 						firstLine.get(5) + (korp.matches("[1-9]+") ? "к" + korp : korp);
 					vb = VoBuilding.createVoBuilding(firstLine.get(1), cs, fullNo , null, null, pm);
-					
+
+					//insert Building address
+					csvData.add(Arrays.asList(new String[]{
+						firstLine.get(0),firstLine.get(1),firstLine.get(2),firstLine.get(3),firstLine.get(4),firstLine.get(5),firstLine.get(6),"0","0","0"
+					}));
 					initPostalAddresses( csvData, pm, vb); 
 					
 					baos = new ByteArrayOutputStream();
-					CSVHelper.writeCSV(baos, csvData, null, "\n", null);
+					List<List<String>> fullcsvData = new ArrayList<>();
+					fullcsvData.add(header);
+					fullcsvData.addAll(csvData);
+					CSVHelper.writeCSV(baos, fullcsvData, null, "\n", null);
 					baos.close();
-					String url = StorageHelper.saveImage(baos.toByteArray(), "text/csv", 0, true, pm, url1.getFile());
+					String file = url1.getFile();
+					file = file.substring(file.lastIndexOf('/') == -1 ? 0 : file.lastIndexOf('/') + 1);
+					String url = StorageHelper.saveImage(baos.toByteArray(), "text/csv", 0, true, pm, file);
 					EMailHelper.sendSimpleEMail("info@vmesteonline.ru", "csv", url);
 					
 				} catch (InvalidOperation e) {

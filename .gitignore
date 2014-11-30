@@ -3,7 +3,7 @@ run
 /src/main/java/com/vmesteonline/be/thrift
 /src/main/webapp/static/.idea
 *.class
-target
+target/
 vonline-cs.iml
 vonline-cs.iws
 vonline-cs.ipr

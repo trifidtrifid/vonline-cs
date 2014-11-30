@@ -201,12 +201,34 @@ public class UtilityServiceImpl extends ServiceImpl implements UtilityService.If
             cs.setStartDateOfMonth(vcs.getStartDate());
             Calendar clndr = Calendar.getInstance();
             clndr.set(Calendar.DAY_OF_MONTH, vcs.getStartDate());
-            cs.setInfoProvided( new Date(((long) lastDate)* 1000L).after( clndr.getTime()));
+            Date providetAt = new Date(((long) lastDate) * 1000L);
+            cs.setInfoProvided(providetAt.after(clndr.getTime()) || providetAt.equals(clndr.getTime()));
             Date now = new Date();
             cs.setTimeToProvideInfo( !cs.infoProvided && now.after(clndr.getTime()) && Calendar.getInstance().get( Calendar.DAY_OF_MONTH) <= vcs.getEndDate());
             return cs;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    @Override
+    public double cancelLastValue(long counterId) throws InvalidOperation {
+        PersistenceManager pm = PMF.getPm();
+        try {
+            VoCounter cntr = pm.getObjectById(VoCounter.class, counterId);
+            Map<Integer, Double> values = cntr.getValues();
+            if( null==values || values.size() == 0 )
+                return 0D;
+
+            TreeSet<Integer> sortedDates = new TreeSet<>(values.keySet());
+            Integer last = sortedDates.last();
+            values.remove(last);
+            sortedDates.remove(last);
+            pm.makePersistent(cntr);
+            return values.size() > 0 ? values.get(sortedDates.last()) : 0D;
+
+        } catch (Exception e) {
+            throw new InvalidOperation(VoError.IncorrectParametrs, "No counter found by id: "+counterId);
         }
     }
 }

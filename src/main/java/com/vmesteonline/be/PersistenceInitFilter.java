@@ -11,33 +11,51 @@ import java.io.IOException;
 public class PersistenceInitFilter implements Filter {
 
 	public static final Logger logger = Logger.getLogger(PersistenceInitFilter.class);
-	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory("vmesteonline");
+	/*private static final Map<String,PersistenceManagerFactory> persistenceManagerFactoryMap = new HashMap<>();
 
-	private static PersistenceManagerFactory factory() {
-		return persistenceManagerFactory;
+	private static PersistenceManagerFactory factory( String name) {
+		PersistenceManagerFactory pmf = persistenceManagerFactoryMap.get(name);
+		if( null == pmf )
+			persistenceManagerFactoryMap.put( name, pmf = JDOHelper.getPersistenceManagerFactory(name));
+		return pmf;
 	}
 
-	private static ThreadLocal<PersistenceManager> currentManager = new ThreadLocal<PersistenceManager>(){
+	private static ThreadLocal<Map<String,PersistenceManager>> currentManagerMap = new ThreadLocal<>();
 
-	};
+	public static PersistenceManager getManager(String databaseName) {
+		Map<String,PersistenceManager> pmm = currentManagerMap.get();
+		if( null == pmm)
+			currentManagerMap.set( pmm = new HashMap<>());
 
-	public static PersistenceManager getManager() {
+		PersistenceManager pm = pmm.get(databaseName);
+		if (pm == null || pm.isClosed() ) {
+			pmm.put(databaseName, factory(databaseName).getPersistenceManager());
+		}
+		currentManagerMap.set( pmm );
+		return pm;
+	}*/
+	private static final String databaseName = "vmesteonline";
+	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory(databaseName);;
+
+	private static ThreadLocal<PersistenceManager> currentManager = new ThreadLocal<>();
+
+	public static PersistenceManager getManager(String databaseName) {
 		PersistenceManager pm = currentManager.get();
 		if (pm == null || pm.isClosed() ) {
-			currentManager.set( factory().getPersistenceManager() );
-		} 
-		return currentManager.get();
+			currentManager.set(pm = persistenceManagerFactory.getPersistenceManager());
+		}
+		return pm;
 	}
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		PersistenceManager manager = null;
 		try {
-			manager = getManager();
+			manager = getManager("vmesteonline");
 			logger.debug("Got request: " + req + " Processed with pm: " + manager);
 			chain.doFilter(req, res);
 		} finally {
-			if (manager != null) {
+			if (manager != null && !manager.isClosed()) {
 				manager.flush();
 				manager.close();
 			}

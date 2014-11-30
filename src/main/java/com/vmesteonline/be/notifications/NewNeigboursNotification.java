@@ -1,12 +1,12 @@
 package com.vmesteonline.be.notifications;
 
-import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
+import com.vmesteonline.be.thrift.GroupType;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.jdo.PersistenceManager;
@@ -36,8 +36,10 @@ public class NewNeigboursNotification extends Notification {
 			boolean somethingToSend = false;
 			Set<VoUser> neghbors = new TreeSet<VoUser>( vuComp );
 			neghbors.add(u);
+			ArrayList<Long> ugs = new ArrayList<>(u.getGroups());
+			Collections.reverse(ugs);
 			String body = "<p><b>Новые соседи</b></p>";
-			for (Long ug : u.getGroups()) {
+			for (Long ug : ugs) {
 				Set<VoUser> usersOfGroup = groupUsersMap.get(ug);
 				if( null!=usersOfGroup && usersOfGroup.size()>0){
 					Set<VoUser> ggoupNeighbors = new TreeSet<VoUser>(vuComp);
@@ -113,12 +115,12 @@ public class NewNeigboursNotification extends Notification {
 	//новые соседи зарегестрировавшиеся за последнюю неделю
 	private Map< Long, Set<VoUser>> getNewNeighbors( PersistenceManager pm ){
 		
-		Map< VoUserGroup, List<VoUser>> nuMap = new TreeMap<VoUserGroup, List<VoUser>>( super.ugComp );
+		//Map< VoUserGroup, List<VoUser>> nuMap = new TreeMap<VoUserGroup, List<VoUser>>( super.ugComp );
 
 		int weekAgo = (int) (System.currentTimeMillis() / 1000L) - 86400 * 2;
 		List<VoUser> newUsers = executeQuery( pm.newQuery(VoUser.class, "registered>="+weekAgo) );
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
 		userSet.addAll(newUsers);
-		return arrangeUsersInGroups(userSet,pm);
+		return arrangeUsersInGroups(userSet);
 	}
 }
