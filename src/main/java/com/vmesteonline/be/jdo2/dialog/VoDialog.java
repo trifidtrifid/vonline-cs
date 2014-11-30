@@ -28,7 +28,7 @@ public class VoDialog {
 	
 	public Dialog getDialog( PersistenceManager pm ) throws InvalidOperation {
 		
-		List< ShortUserInfo > usis = new ArrayList<ShortUserInfo>();
+		List< ShortUserInfo > usis = new ArrayList<>();
 		for( Long uid : users){
 			try {
 				VoUser user = pm.getObjectById(VoUser.class, uid);
@@ -48,9 +48,9 @@ public class VoDialog {
 				pm.deletePersistent(dmsg);
 			users.remove(users.get(0));
 			pm.deletePersistent(this);
-			throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
+			return null;//throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
 		}
-		return null;
+		return new Dialog(id, usis, createDate, lastMessageDate);
 	}
 	
 public Dialog getDialog( VoUser cuser, PersistenceManager pm ) throws InvalidOperation {

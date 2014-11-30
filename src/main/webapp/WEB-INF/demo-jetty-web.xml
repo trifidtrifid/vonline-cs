@@ -25,6 +25,7 @@ detected.
     <Set name="virtualHosts">
         <Array type="String">
             <Item>demo.vmesteonline.ru</Item>
+            <Item>demo.localhost</Item>
         </Array>
     </Set>
 </Configure>
