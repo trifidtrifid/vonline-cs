@@ -925,6 +925,9 @@ html{
     font-size: 30px;
 }
 .ketchup-error{display:none !important}
+.error-info{
+    color: #ff0000;
+}
 
 .message-to-show{
     width: 100%;

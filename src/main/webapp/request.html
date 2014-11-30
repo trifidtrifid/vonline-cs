@@ -45,6 +45,7 @@
 							<input class="form-control input-lg" name="address" type="email" id="email" placeholder="Ваш email" required="required">
                             <br/>
                             <div class="error-info hidden">Указанный вами email уже зарегистрирован.</div>
+                            <br/>
                             <button type="submit" class="btn btn-success btn-lg">Войти</button>
 						</div>
 						<!--<div class="col-md-5 col-sm-4">
@@ -138,6 +139,7 @@
                     if(hasUser){
                         $('.error-info').removeClass('hidden');
                     }else{
+                        $('.error-info').addClass('hidden');
 
                         var myGeocoder = ymaps.geocode(addressStreet);
                         myGeocoder.then(
