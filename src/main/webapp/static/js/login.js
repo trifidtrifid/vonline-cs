@@ -68,8 +68,10 @@ $(document).ready(function(){
             var address = decodeURIComponent(URLArray[1].split('=')[1]),
                 code;
 
+            var isCodeReg = (URLArray[2]) ? true : false;
+
             // регистрация по коду
-            if(URLArray[2]) {
+            if(isCodeReg) {
                 code = URLArray[3].split('=')[1];
                 $('#vk_state').val('inviteCode:' + code);
                 var mapUrlTemp = URLArray[2].split('=');
@@ -78,6 +80,7 @@ $(document).ready(function(){
                 $('.mapUrl').attr('src', mapUrl).removeClass('hidden');
             }else{
                 console.log(address);
+                $('#map').removeClass('hidden');
                 ymaps.ready(function(){
                     var myGeocoder = ymaps.geocode(address),
                     map;
@@ -147,8 +150,11 @@ $(document).ready(function(){
         }else{
 
             try{
-                //authClient.registerNewUser(firstName, lastName, pass, email, code, gender);
-                authClient.registerNewUserByAddress(firstName, lastName, pass, email, address, gender);
+                if(isCodeReg) {
+                    authClient.registerNewUser(firstName, lastName, pass, email, code, gender);
+                }else {
+                    authClient.registerNewUserByAddress(firstName, lastName, pass, email, address, gender);
+                }
                 document.location.replace('coming-soon.html');
             }catch(e){
                 $('.error-info').html('Такой адрес email уже зарегистрирован. <a href="#" class="reg-remember">Забыли пароль?</a>').show();

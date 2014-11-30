@@ -164,17 +164,20 @@ a:hover, a:focus {
 .input-lg {
 	height: 55px;
 }
-.street-input,
-.flat-input{
-    display: inline-block;
-}
 .street-input{
+    display: inline-block;
+    float: left;
     width: 290px;
-    margin-right: 10px;
 }
 .flat-input{
-    float: right;
+    margin-left: 300px;
     width: 140px;
+}
+.confirm-address{
+    margin-bottom: 10px;
+}
+#map{
+    margin-bottom: 15px;
 }
 .btn-lg, .btn-group-lg > .btn {
 	padding: 10px 28px;
@@ -284,7 +287,7 @@ to {
 }
 .logo.request-logo{
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
 }
 .logo span{
     display: block;

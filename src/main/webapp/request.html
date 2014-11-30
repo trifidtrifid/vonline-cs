@@ -40,8 +40,8 @@
                             <h3>Присоединяйтесь к сообществу ваших соседей !</h3>
                             <br/>
 							<input class="form-control input-lg" name="address" type="text" id="city" placeholder="Ваш город" required="required">
-                            <input class="form-control input-lg flat-input" name="address" type="text" id="flat-number" placeholder="№ квартиры" required="required">
 							<input class="form-control input-lg street-input" name="address" type="text" id="street" placeholder="Ваша улица" required="required">
+                            <input class="form-control input-lg flat-input" name="address" type="text" id="flat-number" placeholder="№ квартиры" required="required">
 							<input class="form-control input-lg" name="address" type="email" id="email" placeholder="Ваш email" required="required">
                             <br/>
                             <div class="error-info hidden">Указанный вами email уже зарегистрирован.</div>
@@ -63,9 +63,10 @@
                             <div class="confirm-address"></div>
                             <div id="map" style="height: 300px;"></div>
 
-
-                            <a href="#" type="submit" class="btn btn-success btn-sm confirm-back">Не верно</a>
-                            <a href="#" type="submit" class="btn btn-success btn-sm confirm-forward">Верно</a>
+                            <div style="text-align: center">
+                                <a href="#" type="submit" class="btn btn-success btn-lg confirm-back">Не верно</a>
+                                <a href="#" type="submit" class="btn btn-success btn-lg confirm-forward">Верно</a>
+                            </div>
                         </div>
                     </div>
 				</form>
@@ -154,6 +155,7 @@
                                         map.setCenter(center);
                                     }
 
+                                    //map.geoObjects = null;
                                     var myGeoObject = new ymaps.GeoObject({
                                         geometry: {
                                             type: "Point",// тип геометрии - точка
@@ -170,6 +172,7 @@
                                     $('.confirm-back').click(function(e){
                                         e.preventDefault();
 
+                                        map.geoObjects.remove(myGeoObject);
                                         $('.confirm').addClass('hidden');
                                         $('.request').removeClass('hidden');
 
