@@ -173,7 +173,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
                                 boolean needConfirmEmail) throws InvalidOperation {
 
         VoUser userByEmail = getUserByEmail(email);
-        if (userByEmail != null && userByEmail.isEmailConfirmed())
+        if (userByEmail != null && userByEmail.isEmailConfirmed() && userByEmail.isAddressConfirmed() )
             throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
         if (null == inviteCode || "".equals(inviteCode.trim()))
             throw new InvalidOperation(VoError.IncorrectParametrs, "unknown invite code " + inviteCode);
@@ -188,6 +188,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
                 new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
         user.setGender(gender);
         user.setEmailConfirmed(!needConfirmEmail);
+        user.setAddressConfirmed(true);
 
         pm.makePersistent(user);
         pm.makePersistent(voInviteCode);
@@ -247,6 +248,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         user.setGender(gender);
         user.setEmailConfirmed(false);
         user.setCurrentPostalAddress( pa, pm );
+        user.setAddressConfirmed(true);
         pm.makePersistent(user);
 
         List<Long> groups = user.getGroups();
@@ -406,4 +408,6 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         }
         return false;
     }
+
+
 }
