@@ -10,10 +10,12 @@ import com.vmesteonline.be.thrift.GroupType;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.io.IOException;
 import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+import static com.vmesteonline.be.utils.VoHelper.logger;
 
 
 public class NewNeigboursNotification extends Notification {
@@ -118,9 +120,22 @@ public class NewNeigboursNotification extends Notification {
 		//Map< VoUserGroup, List<VoUser>> nuMap = new TreeMap<VoUserGroup, List<VoUser>>( super.ugComp );
 
 		int weekAgo = (int) (System.currentTimeMillis() / 1000L) - 86400 * 2;
-		List<VoUser> newUsers = executeQuery( pm.newQuery(VoUser.class, "registered>="+weekAgo) );
-		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		userSet.addAll(newUsers);
-		return arrangeUsersInGroups(userSet);
+
+		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
+		Query sql = pm.newQuery("SQL", "select `GROUP`,U.ID FROM VOUSER as U RIGHT JOIN USERGROUPS as UG ON UG.ID=U.ID WHERE U.registered > " + weekAgo);
+		List results = executeQuery(sql);
+		Iterator rit = results.iterator();
+		while(rit.hasNext()) {
+			Object[] groupAndUserIds = (Object[]) rit.next();
+			Set<VoUser> voUsers = groupUserMap.get(groupAndUserIds[0]);
+			if (null == voUsers)
+				voUsers = new TreeSet<>(vuComp);
+			try {
+				voUsers.add(pm.getObjectById(VoUser.class, groupAndUserIds[1]));
+			} catch (Exception e) {
+				logger.warn("Failed to load Uer that was created, ID:" + groupAndUserIds[1]);
+			}
+		}
+		return groupUserMap;
 	}
 }

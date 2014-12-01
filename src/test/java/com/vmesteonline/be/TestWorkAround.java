@@ -1,6 +1,5 @@
 package com.vmesteonline.be;
 
-import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.thrift.GroupType;
@@ -16,6 +15,7 @@ import java.util.TreeMap;
 
 public class TestWorkAround {
 
+	private static PersistenceInitFilter pif;
 	public static String sessionId = "11111111111111111111111";
 
 	protected AuthServiceImpl asi;
@@ -26,7 +26,7 @@ public class TestWorkAround {
 	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory("votest");
 	protected static final PersistenceManager pm;
 	static {
-		PMF.setDatabaseName("votest");
+		pif.databaseName = "votest";
 		pm = persistenceManagerFactory.getPersistenceManager();
 	}
 

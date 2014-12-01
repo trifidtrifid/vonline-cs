@@ -151,7 +151,7 @@ public abstract class Notification {
 				Long ug = groups.get(groups.size() - 1);
 				Set<VoUser> ul;
 				if (null == (ul = groupUserMap.get(ug))) {
-					ul = new TreeSet<VoUser>(vuComp);
+					ul = new TreeSet<>(vuComp);
 					groupUserMap.put(ug, ul);
 				}
 				ul.add(u);
@@ -270,8 +270,7 @@ public abstract class Notification {
 	public static Comparator<VoUserGroup> ugComp = new Comparator<VoUserGroup>() {
 		@Override
 		public int compare(VoUserGroup o1, VoUserGroup o2) {
-			Long.compare(o1.getId(), o2.getId());
-			return 0;
+			return Long.compare(o1.getId(), o2.getId());
 		}
 	};
 
