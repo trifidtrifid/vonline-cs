@@ -6,7 +6,6 @@ import com.vmesteonline.be.thrift.messageservice.Attach;
 import com.vmesteonline.be.thrift.messageservice.Mark;
 import com.vmesteonline.be.thrift.messageservice.Message;
 import com.vmesteonline.be.thrift.messageservice.Topic;
-import com.vmesteonline.be.utils.Defaults;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.Index;
@@ -39,7 +38,7 @@ public class VoTopic extends VoBaseMessage {
 		rubricId = topic.getRubricId();
 		userGroupId = topic.getMessage().getGroupId();
 		createDate = lastUpdate = (int) (System.currentTimeMillis() / 1000);
-		userGroupType = author.getGroups().indexOf( userGroupId ) + Defaults.FIRST_USERS_GROUP;
+		userGroupType = pm.getObjectById(VoUserGroup.class, userGroupId ).getGroupType();
 		latitude = author.getLatitude().toPlainString();
 		longitude = author.getLongitude().toPlainString();
 		authorId = author.getId();
@@ -66,7 +65,7 @@ public class VoTopic extends VoBaseMessage {
 
 
 		Topic tpc = new Topic(getId(), subject, msg, getMessageNum(), getViewers(), getUsersNum(), getLastUpdate(), getLikes(), 0, null,
-				null, null, getGroupType(pm));
+				null, null, GroupType.findByValue(userGroupType));
 
 		if (pollId != 0) {
 			try {
