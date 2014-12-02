@@ -22,7 +22,6 @@
             <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.1" />
             <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
             <element id="library" level="project" name="Maven: javax.transaction:jta:1.1" />
-            <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
             <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.33" />
             <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
             <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.2.5" />
@@ -40,6 +39,7 @@
             <element id="library" level="project" name="Maven: org.mortbay.jetty:jetty-util:6.0.0" />
             <element id="library" level="project" name="Maven: ant:ant:1.6.5" />
             <element id="library" level="project" name="Maven: org.mortbay.jetty:servlet-api-2.5:6.0.0" />
+            <element id="library" level="project" name="Maven: log4j:log4j:1.2.14" />
           </element>
         </element>
         <element id="javaee-facet-resources" facet="vonline-cs/web/Web" />
@@ -54,6 +54,7 @@
     <artifact type="exploded-war" name="vonline-cs:war exploded">
       <output-path>$PROJECT_DIR$/target/demo.vonline</output-path>
       <root id="root">
+        <element id="javaee-facet-resources" facet="vonline-cs/web/Web" />
         <element id="directory" name="WEB-INF">
           <element id="directory" name="classes">
             <element id="module-output" name="vonline-cs" />
@@ -76,9 +77,9 @@
             <element id="library" level="project" name="Maven: org.apache.thrift:libthrift:0.9.1" />
             <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.5.8" />
             <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.2.5" />
+            <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.2.4" />
             <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.1" />
             <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.6" />
-            <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.2.4" />
             <element id="library" level="project" name="Maven: org.mortbay.jetty:jsp-2.1:6.0.0" />
             <element id="library" level="project" name="Maven: org.eclipse.jdt:core:3.1.1" />
             <element id="library" level="project" name="Maven: org.mortbay.jetty:servlet-api-2.5:6.0.0" />
@@ -88,14 +89,10 @@
             <element id="library" level="project" name="Maven: javax.servlet.jsp.jstl:jstl-api:1.2" />
             <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
             <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.1" />
-            <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+            <element id="library" level="project" name="Maven: log4j:log4j:1.2.14" />
             <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.5.8" />
           </element>
         </element>
-        <element id="directory" name="META-INF">
-          <element id="file-copy" path="C:\work\workspace\idea\vonline-cs\target/MANIFEST.MF" />
-        </element>
-        <element id="javaee-facet-resources" facet="vonline-cs/web/Web" />
       </root>
     </artifact>
   </component>
@@ -129,14 +126,16 @@
       <module name="vonline-cs" target="1.8" />
     </bytecodeTargetLevel>
   </component>
-  <component name="CopyrightManager" default="" />
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
   <component name="DataNucleusConfiguration">
-    <option name="api" value="JDO" />
     <option name="enabledModules">
-      <set>
+      <list>
         <option value="vonline-cs" />
-      </set>
+      </list>
     </option>
+    <option name="enhancerEnabled" value="false" />
   </component>
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
@@ -288,18 +287,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target/tmp" />
   </component>
-  <component name="PublishConfigData" serverName="Jetty" autoUploadExternalChanges="true">
-    <serverData>
-      <paths name="Jetty">
-        <serverdata>
-          <mappings>
-            <mapping deploy="\" local="$PROJECT_DIR$/target/vonline" web="/" />
-            <mapping local="" />
-          </mappings>
-        </serverdata>
-      </paths>
-    </serverData>
-  </component>
+  <component name="PublishConfigData" serverName="Jetty" autoUploadExternalChanges="true" />
   <component name="ThriftCompiler">
     <compilers />
   </component>
@@ -483,15 +471,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: log4j:log4j:1.2.17">
+    <library name="Maven: log4j:log4j:1.2.14">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.14/log4j-1.2.14.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.14/log4j-1.2.14-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.14/log4j-1.2.14-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: mysql:mysql-connector-java:5.1.33">
@@ -683,3 +671,4 @@
     </library>
   </component>
 </project>
+

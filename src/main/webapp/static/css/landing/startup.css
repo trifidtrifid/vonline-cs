@@ -164,6 +164,21 @@ a:hover, a:focus {
 .input-lg {
 	height: 55px;
 }
+.street-input{
+    display: inline-block;
+    float: left;
+    width: 290px;
+}
+.flat-input{
+    margin-left: 300px;
+    width: 140px;
+}
+.confirm-address{
+    margin-bottom: 10px;
+}
+#map{
+    margin-bottom: 15px;
+}
 .btn-lg, .btn-group-lg > .btn {
 	padding: 10px 28px;
 	height: 52px;
@@ -269,6 +284,10 @@ to {
     margin-top: -60px;
     overflow: hidden;
     margin-bottom: 70px;
+}
+.logo.request-logo{
+    margin-top: 20px;
+    margin-bottom: 20px !important;
 }
 .logo span{
     display: block;
@@ -906,6 +925,9 @@ html{
     font-size: 30px;
 }
 .ketchup-error{display:none !important}
+.error-info{
+    color: #ff0000;
+}
 
 .message-to-show{
     width: 100%;
