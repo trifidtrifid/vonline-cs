@@ -32,20 +32,22 @@
 		</div>
 
 		<div class="row">
-			<div class="col-md-8 col-sm-12 col-md-offset-4 subscribe">
-				<form class="form-horizontal" role="form" action="subscribe.php" id="subscribeForm" method="POST">
+			<div class="col-md-12 col-sm-12">
+				<form class="form-horizontal subscribe" role="form" action="subscribe.php" id="subscribeForm" method="POST">
 					<div class="form-group">
-						<div class="col-md-7 col-sm-6 col-sm-offset-1 col-md-offset-0">
                             <h2>Отлично! теперь необходимо подтвердить Ваш адрес проживания</h2>
                             <p>Для того, чтобы создать доверенное и безопасное сообщество, все участники должны подтвердить адрес проживания.</p>
                             <p>Ваш адрес не будет виден никому из участников.</p>
                             <br/>
-                            <p>Код доступа будет доставлен по адресу "Заневский 32 к. 3, кв 116" в течении 3-5 дней.</p>
+                            <p>Код доступа будет доставлен по адресу <span class="unconfirm-address"></span> в течении 3-5 дней.</p>
 
-                            <div><input type="text" placeholder="Код доступа"/></div>
+                            <div class="col-md-4 col-sm-12 col-md-offset-4" style="text-align: center">
+                                <br/>
+                                <div><input type="text" class="form-control input-lg code-input" placeholder="Код доступа"/></div>
+                                <br/>
 
-                            <button type="submit" class="btn btn-success btn-lg">Войти</button>
-						</div>
+                                <button type="submit" class="btn btn-success btn-lg">Войти</button>
+                            </div>
 					</div>
 				</form>
 			</div>
@@ -78,6 +80,8 @@
     <script src="/gen-js/bedata_types.js" type="text/javascript"></script>
     <script src="/gen-js/authservice_types.js" type="text/javascript"></script>
     <script src="/gen-js/AuthService.js" type="text/javascript"></script>
+    <script src="/gen-js/userservice_types.js" type="text/javascript"></script>
+    <script src="/gen-js/UserService.js" type="text/javascript"></script>
     <!-- -->
 
     <script type="text/javascript" src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru_RU&coordorder=longlat"></script>
@@ -94,52 +98,28 @@
 
 	<script>
 		$(document).ready(function() {
+            var transport = new Thrift.Transport("/thrift/UserService"),
+            protocol = new Thrift.Protocol(transport),
+            userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
-			$('#subscribeForm').ketchup().submit(function(e) {
-                e.preventDefault();
+            transport = new Thrift.Transport("/thrift/AuthService");
+            protocol = new Thrift.Protocol(transport);
+            var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
 
-				if ($(this).ketchup('isValid')) {
-					var action = $(this).attr('action');
-                    var transport = new Thrift.Transport("/thrift/AuthService");
-                    var protocol = new Thrift.Protocol(transport);
-                    var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
+            console.log("---");
+            var user = userClient.getShortUserInfo();
+            console.log(user);
 
-                    var address = $('#address').val()+", "+$('#flat-number').val(),
-                            email = $('#email').val();
+            $('.unconfirm-address').text(user.address);
 
-                    $.ajax({
-                        url: 'http://geocode-maps.yandex.ru/1.x/?format=json&geocode=Москва,+Тверская+улица,+дом+7',
-                        success: function(data){
-                            alert(data);
+            $('.btn-success').click(function(){
+                var code = $('.code-input').val();
 
-                            var map = new ymaps.Map("map", {
-                                center: [55.76, 37.64],
-                                zoom: 17
-                            });
+                var userLocation = authClient.checkInviteCode(code);
 
-                            if(data){
-                                $('#result').show()
-                            }
+                //authClient.registerNewUser(user.firstName, user.lastName, user.pass, user.email, code, gender);
 
-                        }
-                    });
-				}
-				return false;
-			});
-
-            $('.yes').click(function(){
-                try{
-                    var responseMap = authClient.requestInviteCode(address,email);
-                    var response = $('.request-response');
-                    //response.find('img').attr('src',responseMap);
-                    response.find('span').text('Мы доставим код в почтовый ящик в Вашем подъезде').removeClass('error-info');
-                }catch(e){
-                    response.find('span').text('Мы не смогли найти указанный Вами адрес. Проверьте адрес и попробуйте снова').addClass('error-info');
-                }
-
-                response.fadeIn(200);
             });
-
 
         });
 	</script>
