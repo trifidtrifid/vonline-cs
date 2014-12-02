@@ -2,8 +2,6 @@ var forumControllers = angular.module('forum.controllers', ['ui.select2','infini
 
 forumControllers.controller('baseController',function($rootScope,$state,$filter) {
 
-    if(!shortUserInfo.addressConfirmed) document.location.replace('/unconfirm.html');
-
         $rootScope.isTopSearchShow = true;
         var base = this;
         base.neighboursLoadStatus = "";

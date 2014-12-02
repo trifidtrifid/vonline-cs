@@ -109,7 +109,7 @@
 
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                         <li><a ui-sref="profile({ userId : 0})"> <i class="icon-user"></i>
-                            Профиль 2
+                            Профиль
                         </a></li>
                         <li ng-if="base.me.countersEnabled"><a ui-sref="counters"> <i class="icon-fa fa fa-tachometer"></i>
                             Счетчики
