@@ -2,6 +2,7 @@ package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUser;
+import com.vmesteonline.be.jdo2.dialog.VoDialog;
 
 import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class ConfirmEmailServlet extends HttpServlet {
 	
@@ -28,7 +32,10 @@ public class ConfirmEmailServlet extends HttpServlet {
 						user.setEmailConfirmed(true);
 						user.setConfirmCode(System.currentTimeMillis()*System.currentTimeMillis()); //just to reset
 						serviceImpl.setSession(req.getSession());
-						serviceImpl.saveUserInSession(pm, user);				
+						serviceImpl.saveUserInSession(pm, user);
+
+						//getUser by Email info@vmesteonline.ru
+						sendPersonalWelcomeMessage(user,  pm);
 					} else {
 						getServletContext().setAttribute(MESSAGE_TO_SHOW, "Вы ввели некорректный код подтверждения или ввели его повторно.");
 					}
@@ -41,6 +48,19 @@ public class ConfirmEmailServlet extends HttpServlet {
 		return;
 	}
 
+	//Send personal message
+	private void sendPersonalWelcomeMessage(VoUser user, PersistenceManager pm) {
+		//getUser by Email info@vmesteonline.ru
+		VoUser voUser = AuthServiceImpl.getUserByEmail("info@vmesteonline.ru", pm);
+		if(null!=voUser) {
+			Set<Long> ul = new TreeSet<>();
+			ul.add(voUser.getId());
+			ul.add(user.getId());
+			VoDialog dlg = new VoDialog(new ArrayList<>(ul));
+			pm.makePersistent(dlg);
+			dlg.postMessage(voUser, user.getName() + ", рады приветствовать вас на сайте! Если у вас возникнут вопросы, связанные с его работой, пишите нам, ответим с удовольствием!", new ArrayList<>(), pm);
+		}
+	}
 	private AuthServiceImpl serviceImpl;
 
 	public ConfirmEmailServlet() {

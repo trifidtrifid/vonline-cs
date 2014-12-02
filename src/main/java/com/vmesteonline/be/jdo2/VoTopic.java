@@ -9,7 +9,10 @@ import com.vmesteonline.be.thrift.messageservice.Topic;
 import com.vmesteonline.be.utils.Defaults;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.annotations.*;
+import javax.jdo.annotations.Index;
+import javax.jdo.annotations.Indices;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,7 @@ public class VoTopic extends VoBaseMessage {
 		userGroupType = author.getGroups().indexOf( userGroupId ) + Defaults.FIRST_USERS_GROUP;
 		latitude = author.getLatitude().toPlainString();
 		longitude = author.getLongitude().toPlainString();
+		authorId = author.getId();
 	}
 
 	public Topic getTopic(long userId, PersistenceManager pm) {

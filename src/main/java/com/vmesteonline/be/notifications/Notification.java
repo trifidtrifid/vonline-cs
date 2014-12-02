@@ -151,7 +151,7 @@ public abstract class Notification {
 				Long ug = groups.get(groups.size() - 1);
 				Set<VoUser> ul;
 				if (null == (ul = groupUserMap.get(ug))) {
-					ul = new TreeSet<VoUser>(vuComp);
+					ul = new TreeSet<>(vuComp);
 					groupUserMap.put(ug, ul);
 				}
 				ul.add(u);
@@ -182,7 +182,12 @@ public abstract class Notification {
 		PersistenceManager pm = PMF.getPm();
 
 		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
-		String body = "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		String body = "";
+		try {
+			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		} catch (Exception e) {
+			body += "Адрес: пользовтеля не существует address="+author.getAddress()+"<br/>";
+		}
 		body += "Тип: "+msg.getType()+"<br/>";
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
 				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
@@ -265,8 +270,7 @@ public abstract class Notification {
 	public static Comparator<VoUserGroup> ugComp = new Comparator<VoUserGroup>() {
 		@Override
 		public int compare(VoUserGroup o1, VoUserGroup o2) {
-			Long.compare(o1.getId(), o2.getId());
-			return 0;
+			return Long.compare(o1.getId(), o2.getId());
 		}
 	};
 
