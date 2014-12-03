@@ -46,13 +46,13 @@ public class VoTopic extends VoBaseMessage {
 
 	public Topic getTopic(long userId, PersistenceManager pm) {
 
-		List<Attach> imgs = new ArrayList<Attach>();
+		List<Attach> imgs = new ArrayList<>();
 		if (null != images)
 			for (Long farId : images) {
 				VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, farId);
 				imgs.add(att.getAttach());
 			}
-		List<Attach> docs = new ArrayList<Attach>();
+		List<Attach> docs = new ArrayList<>();
 		if (null != documents)
 			for (Long farId : documents) {
 				VoFileAccessRecord att = pm.getObjectById(VoFileAccessRecord.class, farId);

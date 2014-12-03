@@ -481,7 +481,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		if (0 == msg.getId()) {
 			PersistenceManager pm = PMF.getPm();
 			try {
-				msg.setAuthorId( getCurrentUserId() );
+				VoUser currentUser = getCurrentUser(pm);
+				msg.setAuthorId( currentUser.getId() );
 				vomsg = new VoMessage(msg, pm);
 				VoTopic topic = pm.getObjectById(VoTopic.class, msg.getTopicId());
 				topic.setMessageNum(topic.getMessageNum() + 1);
@@ -489,7 +490,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				pm.makePersistent(topic);
 
 				if (msg.type != MessageType.BLOG) {
-					VoUser currentUser = getCurrentUser(pm);
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg,currentUser );
 				}

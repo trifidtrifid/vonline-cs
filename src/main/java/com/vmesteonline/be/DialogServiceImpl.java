@@ -38,7 +38,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 		// add current user if not added
 		if (!userss.contains(currentUserId))
 			userss.add(currentUserId);
-		List<Long> usersaSorted = new ArrayList<Long>(userss);
+		List<Long> usersaSorted = new ArrayList<>(userss);
 
 		String filterStr = "";
 		for (Long userId : usersaSorted) {
@@ -63,13 +63,17 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 	public List<Dialog> getDialogs(int after) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		long currentUserId = getCurrentUserId();
-		List<VoDialog> oldDialogs = executeQuery(  pm.newQuery(VoDialog.class, "users.contains(" + currentUserId+")") );
-		if( oldDialogs.size() > 0 ) {
-            Query dlgQuery = pm.newQuery(VoDialog.class, oldDialogs, "lastMessageDate > "+after);
-            dlgQuery.setOrdering("lastMessageDate");
-            oldDialogs = executeQuery(  dlgQuery );
-        }
-		return VoHelper.convertMutableSet(oldDialogs, new ArrayList<Dialog>(), new Dialog(), pm);
+		String filter = "users.contains(" + currentUserId + ")";
+		if( after!=0 )
+			filter += " && lastMessageDate < "+after;
+
+		Query q = pm.newQuery(VoDialog.class, filter);
+		q.setOrdering("lastMessageDate DESC");
+		List<VoDialog> oldDialogs = executeQuery(q);
+
+		List<Dialog> dialogs = VoHelper.convertMutableSet(oldDialogs, new ArrayList<>(), new Dialog(), pm);
+		Collections.reverse(dialogs);
+		return dialogs;
 	}
 
 	@Override
@@ -80,7 +84,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 		VoSession sess = getCurrentSession(pm);
 		long currentUserId = sess.getUserId();
 		VoDialog vdlg = pm.getObjectById(VoDialog.class, dialogID);
-		if (!new HashSet<Long>(vdlg.getUsers()).contains(currentUserId))
+		if (!new HashSet<>(vdlg.getUsers()).contains(currentUserId))
 			throw new InvalidOperation(VoError.IncorrectParametrs, "User not involved in this dialog.");
 
 		Collection<VoDialogMessage> msgs = vdlg.getMessages(afterDate, tailSize, lastLoadedId, pm);
@@ -91,8 +95,8 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 			else
 				sess.getDialogUpdates().remove(dialogID);
 		}
-			
-		return VoHelper.convertMutableSet(msgs, new ArrayList<DialogMessage>(), new DialogMessage(), pm);
+
+		return VoHelper.convertMutableSet(msgs, new ArrayList<>(), new DialogMessage(), pm);
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 		try {
 			VoUser currentUser = getCurrentUser();
 			VoDialog vdlg = pm.getObjectById(VoDialog.class, dialogId);
-			if (!new HashSet<Long>(vdlg.getUsers()).contains(currentUser.getId()))
+			if (!new HashSet<>(vdlg.getUsers()).contains(currentUser.getId()))
 				throw new InvalidOperation(VoError.IncorrectParametrs, "User not involved in this dialog.");
 
 			return vdlg.postMessage(currentUser, content, attachs, pm).getDialogMessage(pm);
@@ -162,7 +166,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 
 		long currentUserId = getCurrentUserId();
 		VoDialog vdlg = pm.getObjectById(VoDialog.class, dialogId);
-		HashSet<Long> usersSet = new HashSet<Long>(vdlg.getUsers());
+		HashSet<Long> usersSet = new HashSet<>(vdlg.getUsers());
 		if (!usersSet.contains(currentUserId))
 			throw new InvalidOperation(VoError.IncorrectParametrs, "User not involved in this dialog.");
 
@@ -181,13 +185,13 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 
 		long currentUserId = getCurrentUserId();
 		VoDialog vdlg = pm.getObjectById(VoDialog.class, dialogId);
-		HashSet<Long> usersSet = new HashSet<Long>(vdlg.getUsers());
+		HashSet<Long> usersSet = new HashSet<>(vdlg.getUsers());
 		if (!usersSet.contains(currentUserId))
 			throw new InvalidOperation(VoError.IncorrectParametrs, "User not involved in this dialog.");
 
 		if (usersSet.remove(userId)) {
 
-			vdlg.setUsers(new ArrayList<Long>(usersSet));
+			vdlg.setUsers(new ArrayList<>(usersSet));
 			pm.makePersistent(vdlg);
 			logger.debug("USer " + userId + " removed from dialog " + dialogId);
 		} else {
