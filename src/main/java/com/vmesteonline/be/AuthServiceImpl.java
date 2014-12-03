@@ -248,7 +248,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         user.setGender(gender);
         user.setEmailConfirmed(false);
         user.setCurrentPostalAddress( pa, pm );
-        user.setAddressConfirmed(true);
+        user.setAddressConfirmed(false);
         pm.makePersistent(user);
 
         List<Long> groups = user.getGroups();
