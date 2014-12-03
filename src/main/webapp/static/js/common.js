@@ -26,8 +26,6 @@ var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(pr
 var userClientGroups = userClient.getUserGroups();
 var shortUserInfo = userClient.getShortUserInfo();
 
-if(!shortUserInfo.addressConfirmed) document.location.replace('/unconfirm.html');
-
 var servicesStr = shortUserInfo.services.join(';');
 if(servicesStr.indexOf('10') != -1) shortUserInfo.countersEnabled = true;
 if(servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
