@@ -1,6 +1,8 @@
 
 forumControllers.controller('LentaController',function($rootScope) {
 
+    $('.ng-cloak').removeClass('ng-cloak');
+    console.log('lenta');
         $rootScope.setTab(1);
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;
@@ -191,7 +193,5 @@ forumControllers.controller('LentaController',function($rootScope) {
         };
 
         initFancyBox($('.forum'));
-
-        $('.ng-cloak').removeClass('ng-cloak');
 
     })
