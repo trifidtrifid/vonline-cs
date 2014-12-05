@@ -1,5 +1,8 @@
 
-        <section class="forum page ng-cloak" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()" ng-cloak>
+    <section ng-if="!base.me.addressConfirmed" ng-include="'/static/partials/unconfirm.html'"></section>
+
+    <div ng-if="base.me.addressConfirmed">
+        <section class="forum page" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()">
 
         <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"
              ng-show="lenta.isCreateNewsShow[currentGroup.id] || lenta.wallItems.length > 0"></div>
@@ -217,6 +220,7 @@
             </div>
 
         </section>
+    </div>
 
 
 

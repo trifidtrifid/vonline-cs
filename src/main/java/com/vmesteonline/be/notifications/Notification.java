@@ -210,7 +210,7 @@ public abstract class Notification {
 					String body = author.getName() + " " + author.getLastName() + " написал вам: <br/><br/><i>" + lastMsg.getContent()
 							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single/" + dlg.getId() + "\">Ответить...</a>";
 
-					decorateAndSendMessage(rcpt, "сообщение от " + author.getName(), body);
+					decorateAndSendMessage(rcpt,  author.getName()+" "+author.getLastName() +" отправил вам сообщение", body);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -286,8 +286,8 @@ public abstract class Notification {
 		try {
 			String body = user.getName() + " " + user.getLastName() + ", <br/>"
 					+ "<p>На сайте Вашего дома было запрошено восстановление пароля доступа для адреса вашей электронной почты. "
-					+ "Если вы хотите выполнить эту действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
-					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">этой ссылкой</a>.</p>"
+					+ "Если вы хотите выполнить это действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
+					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">ссылкой</a>.</p>"
 					+ "<p>Если у вас возникли трудности с доступом к сайту или есть вопросы, вы можете задать их нам в ответном письме.</p>";
 			decorateAndSendMessage(user, "восстановление пароля", body);
 

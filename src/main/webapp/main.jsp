@@ -84,17 +84,10 @@
 
         <div class="navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
-                <li ng-class="navbar.mapsBtnStatus"><a class="btn btn-info no-border private-messages-link"
+                <li ng-class="navbar.mapsBtnStatus" ng-if="base.me.addressConfirmed"><a class="btn btn-info no-border private-messages-link"
                                                                   ui-sref="maps">Карты</a></li>
 
-                <%--<li ng-class="navbar.privateMessagesBtnStatus">
-                    <a class="btn btn-info no-border private-messages-link"
-                                                                  ui-sref="dialogs">Личные сообщения</a>
-
-                    <a ui-sref="dialog-single({dialogId: {{ base.biggestCountDialogId }} })" class="new-private-message-count" ng-if="base.newPrivateMessagesCount">{{base.newPrivateMessagesCount}}</a>
-                </li>--%>
-
-                <li ng-class="navbar.neighboursBtnStatus"><a class="btn btn-info no-border nextdoors-link"
+                <li ng-class="navbar.neighboursBtnStatus" ng-if="base.me.addressConfirmed"><a class="btn btn-info no-border nextdoors-link"
                                                             ui-sref="neighbours">Соседи</a></li>
 
                 <li class="user-short light-blue">
@@ -136,7 +129,7 @@
 		<div class="main-container" id="main-container">
 			<div class="main-container-inner">
 
-				<aside class="sidebar" id="sidebar" ng-controller="leftBarController as leftbar">
+				<aside class="sidebar" id="sidebar" ng-if="!base.hideSidebar" ng-controller="leftBarController as leftbar">
 					<script type="text/javascript">
 						try {
 							ace.settings.check('sidebar', 'fixed')
@@ -177,7 +170,7 @@
                     </div>
 				</aside>
 
-				<div class="main-content dynamic ng-cloak">
+				<div class="main-content dynamic ng-cloak" ng-class="{'no-margin': base.hideSidebar}">
 
                     <div class="user-notification" ng-show="base.me.userNotification && base.me.notificationIsShow">
                         <a href="#" class="pull-right" ng-click="base.nextNotification()">&times;</a>
@@ -215,6 +208,7 @@
 
 				</div>
 			</div>
+
 		</div>
         
         <div class="footer footer-bottom clearfix ng-cloak" ng-show="base.isFooterBottom">
@@ -298,6 +292,7 @@
 <script src="/static/js/controllers/ModalInstanceCtrl.js"></script>
 <script src="/static/js/controllers/CountersHistoryController.js"></script>
 <script src="/static/js/controllers/importantController.js"></script>
+<script src="/static/js/controllers/UnconfirmedCtrl.js"></script>
 
 <script src="/static/js/angular/angular-ui-router.js"></script>
 <script src="/static/js/angular/sanitize.js"></script>

@@ -10,6 +10,7 @@ var main = angular.module('forum', [
 ]);
 
 main.config(function($stateProvider, $urlRouterProvider) {
+
     $urlRouterProvider.otherwise("/main");
 
     $stateProvider

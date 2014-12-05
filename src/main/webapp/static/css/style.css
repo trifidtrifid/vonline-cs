@@ -361,6 +361,9 @@ h1 {
   border-left: 1px solid #ccc;
   min-height: 100%;
 }
+.main-content.no-margin {
+  margin-left: 0;
+}
 .widget-main {
   overflow: auto;
   padding: 0;
@@ -556,6 +559,9 @@ h1 {
 }
 .dd-list .dd-list {
   padding-left: 37px;
+}
+.dd-list .dd-list .topic-left {
+  width: 48px;
 }
 .dd-list .dd-list .topic-right {
   margin-left: 60px;
@@ -1783,6 +1789,17 @@ h1 {
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: bold;
+}
+/* --- */
+.unconfirm {
+  padding: 15px;
+}
+.unconfirm h2 {
+  margin-top: 0;
+}
+.code-block {
+  text-align: center;
+  float: none !important;
 }
 /* backoffice */
 .backoffice {

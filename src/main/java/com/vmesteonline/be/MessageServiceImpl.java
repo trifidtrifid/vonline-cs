@@ -249,7 +249,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 			ug = pm.getObjectById(VoUserGroup.class, groupId);
 
-			if (!"info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())) {
+			if ( type != MessageType.BLOG && !"info@vmesteonline.ru".equalsIgnoreCase( user.getEmail()) ) {
 				if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
                     filter += " ( ";
                     for( int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx ++){
@@ -278,7 +278,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		try {
 
             if( type == MessageType.BLOG ) {
-				filter += " && type=='"+MessageType.BLOG.name()+"'";
+				filter = "type=='"+MessageType.BLOG.name()+"'";
 
             } else {
 				if (importantOnly) {
@@ -323,17 +323,12 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public TopicListPart getBlog(long lastLoadedTopicId, int length) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
-		VoUser user = getCurrentUser();
-		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm, user);
+
+		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm, null);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
-
 		for (VoTopic voTopic : topics) {
 			Topic tpc = voTopic.getTopic(0, pm);
-			if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
-				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
-				tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
-			}
 			mlp.addToTopics(tpc);
 		}
 		return mlp;

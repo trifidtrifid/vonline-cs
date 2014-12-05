@@ -1,5 +1,6 @@
 
 forumControllers.controller('navbarController', function($rootScope) {
+
         this.privateMessagesBtnStatus = "";
         $rootScope.navbar = this;
 

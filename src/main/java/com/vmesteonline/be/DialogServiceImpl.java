@@ -60,19 +60,18 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	@Override
-	public List<Dialog> getDialogs(int after) throws InvalidOperation {
+	public List<Dialog> getDialogs(int before) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		long currentUserId = getCurrentUserId();
 		String filter = "users.contains(" + currentUserId + ")";
-		if( after!=0 )
-			filter += " && lastMessageDate < "+after;
+		if( before!=0 )
+			filter += " && lastMessageDate < "+before;
 
 		Query q = pm.newQuery(VoDialog.class, filter);
 		q.setOrdering("lastMessageDate DESC");
 		List<VoDialog> oldDialogs = executeQuery(q);
 
 		List<Dialog> dialogs = VoHelper.convertMutableSet(oldDialogs, new ArrayList<>(), new Dialog(), pm);
-		Collections.reverse(dialogs);
 		return dialogs;
 	}
 
