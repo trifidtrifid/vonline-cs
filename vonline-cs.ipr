@@ -131,11 +131,10 @@
   </component>
   <component name="CopyrightManager" default="" />
   <component name="DataNucleusConfiguration">
-    <option name="api" value="JDO" />
     <option name="enabledModules">
-      <set>
+      <list>
         <option value="vonline-cs" />
-      </set>
+      </list>
     </option>
   </component>
   <component name="DependencyValidationManager">
@@ -288,18 +287,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target/tmp" />
   </component>
-  <component name="PublishConfigData" serverName="Jetty" autoUploadExternalChanges="true">
-    <serverData>
-      <paths name="Jetty">
-        <serverdata>
-          <mappings>
-            <mapping deploy="\" local="$PROJECT_DIR$/target/vonline" web="/" />
-            <mapping local="" />
-          </mappings>
-        </serverdata>
-      </paths>
-    </serverData>
-  </component>
+  <component name="PublishConfigData" serverName="Jetty" autoUploadExternalChanges="true" />
   <component name="ThriftCompiler">
     <compilers />
   </component>
@@ -690,3 +678,4 @@
     </library>
   </component>
 </project>
+
