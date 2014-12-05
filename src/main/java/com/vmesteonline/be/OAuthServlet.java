@@ -4,6 +4,8 @@ import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.VoHelper;
+
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,6 +13,7 @@ import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,6 +25,7 @@ import java.util.Date;
 public class OAuthServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6391276180341584453L;
+	private static Logger logger = Logger.getLogger(OAuthServlet.class);
 
 	protected String getDomain(String state) {
 		return new String();
@@ -33,13 +37,9 @@ public class OAuthServlet extends HttpServlet {
 		resp.setContentType("text/html; charset=utf-8");
 		String authCode = req.getParameter("code");
 		String domain = "https://" + new URL(req.getRequestURL().toString()).getHost() + "/";
-
 		String inviteCode = req.getParameter("state");
 
-		resp.getWriter().println("<head><meta charset=\"utf-8\">");
-		resp.getWriter().println("request " + req.toString());
-		resp.getWriter().println("try authorize in " + inviteCode + " with code=" + authCode);
-
+		logger.info("request " + req.toString() + "try authorize in " + inviteCode + " with code=" + authCode);
 		try {
 			String response = runUrl(new URL("https://oauth.vk.com/access_token?client_id=4429306&redirect_uri=" + domain
 					+ "oauth&client_secret=oQBV8uO3tHyBONHcNsxe&code=" + authCode));
@@ -49,8 +49,7 @@ public class OAuthServlet extends HttpServlet {
 			AuthServiceImpl authServiceImpl = new AuthServiceImpl();
 			authServiceImpl.setSession(req.getSession());
 			String email = jsonObj.getString("email");
-
-			resp.getWriter().println("<br><br>" + email + " find");
+			logger.info(email + "find");
 
 			if (inviteCode == null || inviteCode.isEmpty()) {
 				try {
