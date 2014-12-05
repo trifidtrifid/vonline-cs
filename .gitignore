@@ -1,7 +1,8 @@
 run
 /vonline-cs.*
-/src/main/java/com/vmesteonline/be/thrift
+/src/main/java/com/vmesteonline/be/thrift/
 /src/main/webapp/static/.idea
+<<<<<<< HEAD
 **/*.class
 target/*
 vonline-cs.iml
@@ -11,3 +12,6 @@ vonline-cs.ipr
 .project
 .settings/
 /target/
+=======
+target/
+>>>>>>> 1be987977f8e8743cb958fabc387281d753672f5

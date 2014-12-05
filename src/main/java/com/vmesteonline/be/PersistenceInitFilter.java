@@ -7,33 +7,24 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.servlet.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PersistenceInitFilter implements Filter {
 
 	public static final Logger logger = Logger.getLogger(PersistenceInitFilter.class);
-	private static final Map<String,PersistenceManagerFactory> persistenceManagerFactoryMap = new HashMap<>();
 
-	private static PersistenceManagerFactory factory( String name) {
-		PersistenceManagerFactory pmf = persistenceManagerFactoryMap.get(name);
-		if( null == pmf )
-			persistenceManagerFactoryMap.put( name, pmf = JDOHelper.getPersistenceManagerFactory(name));
-		return pmf;
-	}
+	public static String databaseName = "vmesteonline"; //default value. Must be initialized before the first call of PFM.getPm();
+	private static PersistenceManagerFactory persistenceManagerFactory = null;
 
-	private static ThreadLocal<Map<String,PersistenceManager>> currentManagerMap = new ThreadLocal<>();
+	private static ThreadLocal<PersistenceManager> currentManager = new ThreadLocal<>();
 
-	public static PersistenceManager getManager(String databaseName) {
-		Map<String,PersistenceManager> pmm = currentManagerMap.get();
-		if( null == pmm)
-			currentManagerMap.set( pmm = new HashMap<>());
+	public static PersistenceManager getManager() {
+		if( null == persistenceManagerFactory)
+			persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory(databaseName);
 
-		PersistenceManager pm = pmm.get(databaseName);
+		PersistenceManager pm = currentManager.get();
 		if (pm == null || pm.isClosed() ) {
-			pmm.put(databaseName, factory(databaseName).getPersistenceManager());
+			currentManager.set(pm = persistenceManagerFactory.getPersistenceManager());
 		}
-		currentManagerMap.set( pmm );
 		return pm;
 	}
 
@@ -41,11 +32,11 @@ public class PersistenceInitFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		PersistenceManager manager = null;
 		try {
-			manager = getManager("vmesteonline");
+			manager = getManager();
 			logger.debug("Got request: " + req + " Processed with pm: " + manager);
 			chain.doFilter(req, res);
 		} finally {
-			if (manager != null) {
+			if (manager != null && !manager.isClosed()) {
 				manager.flush();
 				manager.close();
 			}

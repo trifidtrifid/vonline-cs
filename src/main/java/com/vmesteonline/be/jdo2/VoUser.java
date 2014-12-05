@@ -82,6 +82,17 @@ public class VoUser extends GeoLocation {
 		return up;
 	}
 
+	public boolean isAddressConfirmed(){
+		return (rootGroup & 0x1L) != 0L;
+	}
+
+	public void setAddressConfirmed( boolean conf){
+		if(conf)
+			rootGroup |= 0x1L;
+		else
+			rootGroup -= rootGroup & 0x1L;
+
+	}
 	public UserFamily getUserFamily() {
 		return userFamily;
 	}
@@ -104,12 +115,12 @@ public class VoUser extends GeoLocation {
 
 	public ShortUserInfo getShortUserInfo( PersistenceManager pm) {
 		
-		return new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null, null==services ? new HashSet<ServiceType>() : services);
+		return new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null, null==services ? new HashSet<ServiceType>() : services, isAddressConfirmed());
 	}
 
 	public ShortUserInfo getShortUserInfo( VoUser askedUser, PersistenceManager pm) {
 		
-		ShortUserInfo shortUserInfo = new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null, null==services ? new HashSet<ServiceType>() : services);
+		ShortUserInfo shortUserInfo = new ShortUserInfo(getId(), name, lastName, birthday, getAvatarTopic(), null, null==services ? new HashSet<ServiceType>() : services, isAddressConfirmed());
 		if( null!=askedUser )
 			if( askedUser != this)
 				shortUserInfo.setGroupType( UserServiceImpl.getRelations( askedUser, this, pm ));
@@ -633,16 +644,4 @@ public class VoUser extends GeoLocation {
 		else
 			moderationGroups.remove(groupId);
 	}
-
-	public void initRootGroup(PersistenceManager pm) {
-		VoUserGroup lowestGroup = null;
-		for (Long gid: getGroups()) {
-			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, gid);
-			if( null == lowestGroup || ug.getGroupType() < lowestGroup.getGroupType() )
-				lowestGroup = ug;
-		}
-		if( null!=lowestGroup )
-			rootGroup = lowestGroup.getId();
-	}
-
 }

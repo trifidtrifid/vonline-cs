@@ -332,6 +332,8 @@ transform()
   border-right 1px solid #ccc;
   border-left 1px solid #ccc;
   min-height 100%
+  &.no-margin
+    margin-left 0
   //margin-right 190px
 
 .widget-main
@@ -424,7 +426,7 @@ transform()
     .topic-left
       float left
       text-align center
-      width 55px
+      width 80px
       .plus-minus
         font-size 30px
         margin-top 5px
@@ -498,6 +500,8 @@ transform()
 
 .dd-list .dd-list
   padding-left 37px
+  .topic-left
+    width 48px
 
 .dd-list .dd-list .topic-right //.topic-item
   margin-left 60px
@@ -606,7 +610,7 @@ transform()
 @media all and (max-width: 580px)
   .login-forum
     padding-top 0
-  .footer.footer-login 
+  .footer.footer-login
     width 100%
 
 /* создание темы */
@@ -636,7 +640,7 @@ transform()
 .itemdiv > .user > img
   border-radius 0
 .itemdiv.dialogdiv > .body
-  padding-bottom 26px
+  padding-bottom 30px
 .itemdiv
   padding-right 0
 .btn.active:after
@@ -826,7 +830,7 @@ transform()
         width 100px
     .body
       margin-left 90px
-      padding-bottom 20px
+      padding-bottom 25px
       .time
         float right
       .tools
@@ -899,7 +903,7 @@ transform()
   margin 5px 0
 
 .forum-wrap
-  font-size 14px
+  font-size 12px
 
 .fa-star
 .fa-heart
@@ -942,7 +946,7 @@ transform()
 
 .itemdiv.dialogdiv > .body
   margin-left 58px
-  font-size 14px
+  font-size 12px
 
 .avatar
   width 80px
@@ -1544,6 +1548,15 @@ transform()
     margin-bottom 15px
     font-size 18px
     font-weight bold
+
+/* --- */
+.unconfirm
+  padding 15px
+  h2
+    margin-top 0
+.code-block
+  text-align center
+  float none !important
 
 /* backoffice */
 .backoffice

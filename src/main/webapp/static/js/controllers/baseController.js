@@ -2,7 +2,7 @@ var forumControllers = angular.module('forum.controllers', ['ui.select2','infini
 
 forumControllers.controller('baseController',function($rootScope,$state,$filter) {
 
-        $rootScope.isTopSearchShow = true;
+    $rootScope.isTopSearchShow = true;
         var base = this;
         base.neighboursLoadStatus = "";
         base.privateMessagesLoadStatus = "";

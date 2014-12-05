@@ -7,12 +7,16 @@ import com.vmesteonline.be.thrift.messageservice.Message;
 import com.vmesteonline.be.thrift.messageservice.MessageType;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.StorageHelper.FileSource;
+import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @PersistenceCapable
@@ -169,7 +173,7 @@ public abstract class VoBaseMessage extends GeoLocation {
 			popularityScore += up;
 			likes.add(user.getId());
 			try{
-				if( null==author && 0==authorId )
+				if( null==author && 0!=authorId )
 					author = pm.getObjectById(VoUser.class,authorId);
 				int ap = author.getPopularuty();
 				if( ap == 0 ) author.setImportancy( ap = VoUser.BASE_USER_SCORE );
@@ -220,7 +224,8 @@ public abstract class VoBaseMessage extends GeoLocation {
 						int importancyDelta = importancyK * Math.min( 100, (Math.max (1, ui / 10 ))) * ( isImportant ? 1 : -1 );
 						author.setImportancy( ai + importancyDelta );
 					}
-			} catch(Exception e){ 
+			} catch(Exception e){
+				Logger.getLogger(VoBaseMessage.class).error("Failed to change importancy.", e);
 			}
 		}
 		pm.makePersistent(this);

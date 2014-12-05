@@ -65,9 +65,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm, user);
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
+				if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
+					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
+					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				MessageListPart mlp = getMessagesAsList(tpc.id, MessageType.BASE, 0, false, 10000);
 				if (mlp.totalSize > 0)
@@ -234,37 +238,47 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	public static List<VoTopic> getTopics(long groupId, List<Long> userGroups, MessageType type, long lastLoadedTopicId, int length, boolean importantOnly,
-			PersistenceManager pm) {
+										  PersistenceManager pm, VoUser user) {
 
 		String filter = "";
 		List<VoTopic> allTopics = null;
 		List<VoTopic> topics = new ArrayList<>();
 		Exception e = null;
+		VoUserGroup ug = null;
 		if( 0!=groupId) {
-			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
-			if( ug.getGroupType() > GroupType.BUILDING.getValue() ) {
-				BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), ug.getRadius());
-				BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), ug.getRadius());
-				BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
-				BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
-				filter += "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
-						"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "' && userGroupType <=" + ug.getGroupType() + " && ";
+
+			ug = pm.getObjectById(VoUserGroup.class, groupId);
+
+			if ( type != MessageType.BLOG && !"info@vmesteonline.ru".equalsIgnoreCase( user.getEmail()) ) {
+				if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
+                    filter += " ( ";
+                    for( int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx ++){
+                        int groupTypeValue = GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue();
+                        filter += "userGroupType=="+ groupTypeValue + " && ";
+                        if( groupTypeValue > GroupType.BUILDING.getValue() ) {
+                            BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), ug.getRadius());
+                            BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), ug.getRadius());
+                            BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
+                            BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
+                            filter += "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
+                                    "' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "')";
+                        }
+                        else {
+                            filter += "userGroupId=="+userGroups.get(gIdx);
+                        }
+                        filter += " || ";
+                    }
+                    filter = filter.substring(0,filter.length()-4) + ")";
+                }
 			} else {
-				filter += "longitude == '" + ug.getLongitude() + "' && latitude == '" + ug.getLatitude()+ "' && userGroupType <=" + ug.getGroupType() + " && ";
-			}
-			if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
-				filter += "( userGroupType>="+GroupType.BUILDING.getValue()+" || ";
-				for( int gIdx = 0; gIdx < GroupType.BUILDING.getValue() - Defaults.FIRST_USERS_GROUP; gIdx ++){
-					filter += "userGroupType=="+GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue() +" && userGroupId=="+userGroups.get(gIdx)+" || ";
-				}
-				filter = filter.substring(0,filter.length()-4) + ") && ";
+				filter = " true ";
 			}
 		}
 
 		try {
 
             if( type == MessageType.BLOG ) {
-				filter += "type=='"+MessageType.BLOG.name()+"'";
+				filter = "type=='"+MessageType.BLOG.name()+"'";
 
             } else {
 				if (importantOnly) {
@@ -273,9 +287,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				}
 
 				if (type == MessageType.WALL)
-					filter += "(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' || type=='" + MessageType.ADVERT+"')";
+					filter += "&& (type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' )"; //|| type=='" + MessageType.ADVERT+"')";
 				else
-					filter += "type=='" + type + "'";
+					filter += "&& type=='" + type + "'";
 			}
 
 			Query q = pm.newQuery(VoTopic.class, filter);
@@ -309,10 +323,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public TopicListPart getBlog(long lastLoadedTopicId, int length) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
-		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm);
+
+		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm, null);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
-
 		for (VoTopic voTopic : topics) {
 			Topic tpc = voTopic.getTopic(0, pm);
 			mlp.addToTopics(tpc);
@@ -342,14 +356,17 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-
 			List<Long> groupsToSearch = new ArrayList<>();
 			groupsToSearch.add(groupId);
 
-			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm, user);
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
+				if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
+					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
+					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				tpc.setMessageNum(voTopic.getMessageNum());
 				mlp.addToTopics(tpc);
@@ -459,6 +476,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		if (0 == msg.getId()) {
 			PersistenceManager pm = PMF.getPm();
 			try {
+				VoUser currentUser = getCurrentUser(pm);
+				msg.setAuthorId( currentUser.getId() );
 				vomsg = new VoMessage(msg, pm);
 				VoTopic topic = pm.getObjectById(VoTopic.class, msg.getTopicId());
 				topic.setMessageNum(topic.getMessageNum() + 1);
@@ -466,7 +485,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				pm.makePersistent(topic);
 
 				if (msg.type != MessageType.BLOG) {
-					VoUser currentUser = getCurrentUser(pm);
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg,currentUser );
 				}

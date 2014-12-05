@@ -112,12 +112,11 @@ public class VoFileAccessRecord {
 			if( null!=contentType){
 				try {
 					ContentType ct = new ContentType(contentType);
-					if( null !=  ct){
-						VersionCreator vc  = StorageHelper.getVersionCreator( this, ct, pm );
-						if( null != vc ){
-							return vc.createParametrizedVersion( params, createIfNotExists);
-						}
+					VersionCreator vc  = StorageHelper.getVersionCreator( this, ct, pm );
+					if( null != vc ){
+						return vc.createParametrizedVersion( params, createIfNotExists);
 					}
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

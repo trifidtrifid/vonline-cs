@@ -151,7 +151,7 @@ public abstract class Notification {
 				Long ug = groups.get(groups.size() - 1);
 				Set<VoUser> ul;
 				if (null == (ul = groupUserMap.get(ug))) {
-					ul = new TreeSet<VoUser>(vuComp);
+					ul = new TreeSet<>(vuComp);
 					groupUserMap.put(ug, ul);
 				}
 				ul.add(u);
@@ -182,7 +182,12 @@ public abstract class Notification {
 		PersistenceManager pm = PMF.getPm();
 
 		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
-		String body = "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		String body = "";
+		try {
+			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
+		} catch (Exception e) {
+			body += "Адрес: пользовтеля не существует address="+author.getAddress()+"<br/>";
+		}
 		body += "Тип: "+msg.getType()+"<br/>";
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
 				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
@@ -205,7 +210,7 @@ public abstract class Notification {
 					String body = author.getName() + " " + author.getLastName() + " написал вам: <br/><br/><i>" + lastMsg.getContent()
 							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single/" + dlg.getId() + "\">Ответить...</a>";
 
-					decorateAndSendMessage(rcpt, "сообщение от " + author.getName(), body);
+					decorateAndSendMessage(rcpt,  author.getName()+" "+author.getLastName() +" отправил вам сообщение", body);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -265,8 +270,7 @@ public abstract class Notification {
 	public static Comparator<VoUserGroup> ugComp = new Comparator<VoUserGroup>() {
 		@Override
 		public int compare(VoUserGroup o1, VoUserGroup o2) {
-			Long.compare(o1.getId(), o2.getId());
-			return 0;
+			return Long.compare(o1.getId(), o2.getId());
 		}
 	};
 
@@ -282,8 +286,8 @@ public abstract class Notification {
 		try {
 			String body = user.getName() + " " + user.getLastName() + ", <br/>"
 					+ "<p>На сайте Вашего дома было запрошено восстановление пароля доступа для адреса вашей электронной почты. "
-					+ "Если вы хотите выполнить эту действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
-					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">этой ссылкой</a>.</p>"
+					+ "Если вы хотите выполнить это действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
+					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">ссылкой</a>.</p>"
 					+ "<p>Если у вас возникли трудности с доступом к сайту или есть вопросы, вы можете задать их нам в ответном письме.</p>";
 			decorateAndSendMessage(user, "восстановление пароля", body);
 

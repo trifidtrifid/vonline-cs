@@ -73,6 +73,7 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
 
     <div class="main-container" id="main-container">
         <div class="main-container-inner">
+
             <div class="main-content-top top-overflow-auto clearfix">
 
                 <div class="page-title pull-left">Новости проекта</div>

@@ -105,7 +105,7 @@ public class NewTopicsNotification extends Notification {
 			if( orderedTopics.get(0).getCreatedAt() < weekAgo )
 				return null;
 			
-			String groupContent = "<p><b>Пишут в группе '" + ug.getVisibleName() + "'</b>";
+			String groupContent = "<p><b>Ваши соседи пишут в группе '" + ug.getVisibleName() + "'</b>";
 				
 			for (VoTopic tpc : orderedTopics) {
 				if( tpc.getCreatedAt() < weekAgo )

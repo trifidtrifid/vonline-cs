@@ -127,9 +127,9 @@ struct DialogMessage {
 service DialogService {
 	//DIALOGUE implementation methods
 	//method returns dilaog ID that just created or thorw an exception if a parameter is incorrect
-	Dialog getDialog( 1:list<i64> users, 2:i32 after ) throws (1:error.InvalidOperation exc),
+	Dialog getDialog( 1:list<i64> users, 2:i32 before ) throws (1:error.InvalidOperation exc),
 	Dialog getDialogById( 1:i64 dialogId ) throws (1:error.InvalidOperation exc),
-	list<Dialog> getDialogs(1:i32 after ) throws (1:error.InvalidOperation exc),
+	list<Dialog> getDialogs(1:i32 before ) throws (1:error.InvalidOperation exc),
 	list<DialogMessage> getDialogMessages( 1:i64 dialogID, 2:i32 afterDate, 3:i32 tailSize, 4:i64 lastLoadedId) throws (1:error.InvalidOperation exc),
 	DialogMessage postMessage( 1:i64 dialogId, 2:string content, 3:list<Attach> attachments ) throws (1:error.InvalidOperation exc),
 	void updateDialogMessage( 1:i64 dlgMsgId, 2:string content, 3:list<Attach> attachments ) throws (1:error.InvalidOperation exc),

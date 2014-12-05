@@ -54,6 +54,7 @@ struct ShortUserInfo{
 	7: optional set<i64> moderationGroups,
 	8: optional string address,
 	9: set<ServiceType> services,
+	10: bool addressConfirmed,
 }
 
 struct ShortProfile{

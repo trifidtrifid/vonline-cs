@@ -83,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	}
 
-	public static ShortUserInfo getShortUserInfo( VoUser cuser, long userId, PersistenceManager pm) {
+	public static ShortUserInfo  getShortUserInfo( VoUser cuser, long userId, PersistenceManager pm) {
 		if (userId == 0)
 			return null;
 		
@@ -752,12 +752,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		String mapKey = "yandex.group.map." + groupId + "." + color;
 		String url = ServiceImpl.getObjectFromCache(mapKey);
 		if (null != url)
-			if (url instanceof String) {
-				return (String) url;
-			} else {
-				// incorrect type of object in the cache
-				ServiceImpl.removeObjectFromCache(mapKey);
-			}
+			return url;
+
 		PersistenceManager pm = PMF.getPm();
 		int width = 450, height = 450;
 		
@@ -792,14 +788,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					url += "," + (lod + Math.sin(i) * loDelta) + "," + (lad + Math.cos(i) * laDelta);
 				}
 			
-				ServiceImpl.putObjectToCache(mapKey, (String) url);
+				ServiceImpl.putObjectToCache(mapKey, url);
 				
 			} else {
 				
 				url = VoGeocoder.createMapImageURL(  userGroup.getLongitude(), userGroup.getLatitude(), 450, 450 );
 			}
 
-		return (String) url;
+		return url;
 	}
 
 	private static List<Rubric> tmpRubrics = Arrays.asList( new Rubric[]{ new Rubric(0L,"","","")});
