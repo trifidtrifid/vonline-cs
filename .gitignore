@@ -7,3 +7,6 @@ target/*
 vonline-cs.iml
 vonline-cs.iws
 vonline-cs.ipr
+.classpath
+.project
+.settings/
