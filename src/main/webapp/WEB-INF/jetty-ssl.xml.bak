@@ -33,11 +33,11 @@
   <!-- Add a SecureRequestCustomizer to extract certificate and    -->
   <!-- session information                                         -->
   <!-- =========================================================== -->
-  <!--New id="sslHttpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
+  <New id="sslHttpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
     <Arg><Ref refid="httpConfig"/></Arg>
     <Call name="addCustomizer">
       <Arg><New class="org.eclipse.jetty.server.SecureRequestCustomizer"/></Arg>
     </Call>
-  </New-->
+  </New>
 
 </Configure>
