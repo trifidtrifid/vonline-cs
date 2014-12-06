@@ -6,17 +6,39 @@
 
     <!-- JDO -->
     <persistence-unit name="vmesteonline">
+        <class>com.vmesteonline.be.jdo2.VoBaseMessage</class>
+        <class>com.vmesteonline.be.jdo2.VoFileAccessRecord</class>
+        <class>com.vmesteonline.be.jdo2.VoGroup</class>
+        <class>com.vmesteonline.be.jdo2.VoInitKey</class>
+        <class>com.vmesteonline.be.jdo2.VoInviteCode</class>
+        <class>com.vmesteonline.be.jdo2.GeoLocation</class>
+        <class>com.vmesteonline.be.jdo2.VoMessage</class>
+        <class>com.vmesteonline.be.jdo2.VoPoll</class>
+        <class>com.vmesteonline.be.jdo2.VoRubric</class>
+        <class>com.vmesteonline.be.jdo2.VoSession</class>
+        <class>com.vmesteonline.be.jdo2.VoTopic</class>
+        <class>com.vmesteonline.be.jdo2.VoUser</class>
+        <class>com.vmesteonline.be.jdo2.VoUserGroup</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoBuilding</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoCountry</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoCity</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoStreet</class>
+        <class>com.vmesteonline.be.jdo2.postaladdress.VoGeocoder</class>
+        <class>com.vmesteonline.be.jdo2.dialog.VoDialog</class>
+        <class>com.vmesteonline.be.jdo2.dialog.VoDialogMessage</class>
+        <class>com.vmesteonline.be.jdo2.utility.VoCounter</class>
+        <class>com.vmesteonline.be.jdo2.VoMulticastMessage</class>
         <exclude-unlisted-classes/>
         <properties>
-            <!-- PRODUCTION DATABASE VONLINE
+            <!-- PRODUCTION DATABASE VONLINE -->
             <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://127.0.0.1/vonline?useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;connectionCollation=utf8_general_ci"/>
             <property name="javax.jdo.option.ConnectionUserName" value="vonline"/>
             <property name="javax.jdo.option.ConnectionPassword" value="vonline"/>
--->
+
             <!-- DEMO database -->
-            <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://127.0.0.1/demo?useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;connectionCollation=utf8_general_ci"/>
+            <!--property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://127.0.0.1/demo?useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=utf8&amp;connectionCollation=utf8_general_ci"/>
             <property name="javax.jdo.option.ConnectionUserName" value="demo"/>
-            <property name="javax.jdo.option.ConnectionPassword" value="demo"/>
+            <property name="javax.jdo.option.ConnectionPassword" value="demo"/-->
 
             <property name="javax.jdo.option.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
             <property name="javax.jdo.option.Mapping" value="mysql"/>
