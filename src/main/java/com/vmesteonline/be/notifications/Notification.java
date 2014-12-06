@@ -210,7 +210,7 @@ public abstract class Notification {
 					String body = author.getName() + " " + author.getLastName() + " написал вам: <br/><br/><i>" + lastMsg.getContent()
 							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single/" + dlg.getId() + "\">Ответить...</a>";
 
-					decorateAndSendMessage(rcpt, "сообщение от " + author.getName(), body);
+					decorateAndSendMessage(rcpt,  author.getName()+" "+author.getLastName() +" отправил вам сообщение", body);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -223,21 +223,24 @@ public abstract class Notification {
 
 		String body = newUser.getName() + " " + newUser.getLastName() + ", добро пожаловать на сайт Вашего дома!<br/><br/> ";
 
-		body += "Ваш логин: "+newUser.getEmail()+"<br/>Пароль:    "+newUser.getPassword()+"<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
+		body += "Ваш логин: " + newUser.getEmail() + "<br/>Пароль:    " + newUser.getPassword() + "<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
 		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		userSet.addAll(executeQuery( pm.newQuery(VoUser.class, "")));
+		userSet.addAll(executeQuery(pm.newQuery(VoUser.class, "")));
 
 		body += "На сайте уже зарегистрировано: " + userSet.size() + " пользователей<br/>";
-		
-		List<VoUser> ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.NEIGHBORS, pm), pm );
-		if(0!=ul.size()) body += "Из них рядом с вами живут: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.BUILDING, pm), pm );
-		if(0!=ul.size()) body += "В вашем доме: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
-		if(0!=ul.size()) body += "В вашем подъезде: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm );
-		if(0!=ul.size()) body += "На вашем этаже : "+ul.size()+"<br/>";
-		
+
+		List<VoUser> ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.NEIGHBORS, pm), pm);
+		if (0 != ul.size()) body += "В соседних домах: " + ul.size() + "<br/>";
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.BUILDING, pm), pm);
+		if (0 != ul.size()) body += "В вашем доме: " + ul.size() + "<br/>";
+		if (0 != pm.getObjectById(VoPostalAddress.class, newUser.getAddress()).getStaircase()) {
+			ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
+			if (0 != ul.size()) body += "В вашем подъезде: " + ul.size() + "<br/>";
+		}
+		if (0 != pm.getObjectById(VoPostalAddress.class, newUser.getAddress()).getFloor()) {
+			ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm);
+			if (0 != ul.size()) body += "На вашем этаже : " + ul.size() + "<br/>";
+		}
 		
 		body += "<br/> Мы создали этот сайт, чтобы Ваша жизнь стала чуть комфортней, от того что вы будете в курсе что происходит в вашем доме. <br/><br/>";
 		if (!newUser.isEmailConfirmed()) {
@@ -286,8 +289,8 @@ public abstract class Notification {
 		try {
 			String body = user.getName() + " " + user.getLastName() + ", <br/>"
 					+ "<p>На сайте Вашего дома было запрошено восстановление пароля доступа для адреса вашей электронной почты. "
-					+ "Если вы хотите выполнить эту действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
-					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">этой ссылкой</a>.</p>"
+					+ "Если вы хотите выполнить это действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
+					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">ссылкой</a>.</p>"
 					+ "<p>Если у вас возникли трудности с доступом к сайту или есть вопросы, вы можете задать их нам в ответном письме.</p>";
 			decorateAndSendMessage(user, "восстановление пароля", body);
 

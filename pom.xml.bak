@@ -120,7 +120,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.2.3.v20140905</version>
                 <configuration>
-                	<jettyXml>jetty-web.xml,jetty-http.xml,jetty-https.xml</jettyXml>
+                	<jettyXml>jetty-web.xml</jettyXml>
                     <webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>
                     <webApp>
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
@@ -183,7 +183,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.3.2</version>
@@ -215,7 +215,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
 
 
             <plugin>
@@ -242,40 +242,5 @@
         </plugins>
         <finalName>vonline</finalName>
         <!--finalName>demo.vonline</finalName-->
-        <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>
-        									org.codehaus.mojo
-        								</groupId>
-        								<artifactId>
-        									exec-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[1.3.2,)
-        								</versionRange>
-        								<goals>
-        									<goal>exec</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
-        </pluginManagement>
     </build>
 </project>

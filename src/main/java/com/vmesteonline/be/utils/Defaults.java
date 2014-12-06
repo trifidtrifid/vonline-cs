@@ -64,8 +64,13 @@ public class Defaults {
 	public static int radiusZero = 0;
 	public static int radiusBuilding = 50;
 	public static int radiusNeighbors = 350;
-	public static int radiusBlock = 500;
+	public static int radiusBlock = 700;
+	public static int radiusDistrict = 1500;
+	public static int radiusTown = 6000;
 
+	//NOBODY(0),	FLAT(1),	FLOOR(2),	STAIRCASE(3),	BUILDING(4),	NEIGHBORS(5),	BLOCK(6),	DISTRICT(7),	TOWN(8)
+	public static int[] radiusByType =
+			new int[]{ radiusZero, radiusZero, radiusZero, radiusZero, radiusBuilding, radiusNeighbors, radiusBlock, radiusDistrict, radiusTown};
 	public static int FIRST_USERS_GROUP = GroupType.FLOOR.getValue();
 	
 	/*

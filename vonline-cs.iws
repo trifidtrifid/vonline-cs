@@ -1,0 +1,1373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-https.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-ssl.xml.bak" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-ssl.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pom.xml.bak" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/ConfirmEmailServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/ConfirmEmailServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/Defaults.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/Defaults.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/DialogServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/DialogServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/NewTopicsNotification.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/NewTopicsNotification.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/Notification.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/Notification.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/OAuthServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/OAuthServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/UserServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoBaseMessage.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoBaseMessage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/postaladdress/VoBuilding.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/postaladdress/VoBuilding.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/dialog/VoDialog.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/dialog/VoDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/thrift/messageservice.thrift" afterPath="$PROJECT_DIR$/thrift/messageservice.thrift" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="$PROJECT_DIR$/vonline-cs.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.ipr" afterPath="$PROJECT_DIR$/vonline-cs.ipr" />
+    </list>
+    <ignored path="vonline-cs.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="vonline-cs" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="6" selection-start="40" selection-end="40" vertical-scroll-proportion="0.19029851" vertical-offset="0" max-vertical-offset="7718">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="133" column="0" selection-start="4462" selection-end="4462" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4216">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="authservice.thrift" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="62" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" vertical-offset="219" max-vertical-offset="748">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/StorageHelper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/ImageConverterVersionCreator.java" />
+        <option value="$PROJECT_DIR$/thrift/messageservice.thrift" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/controllers/CountersController.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/archieve/controllers.js" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/postaladdress/VoCountry.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/important.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/changeAvatar.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-counters.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/counters.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/counters-history.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-profit.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/confirm.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/src/main/webapp/registration.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/profile.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/request.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/unconfirm.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/neighbours.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/controllers/navbarController.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/controllers/UnconfirmedCtrl.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/controllers/ProfileController.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/unconfirm.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/partials/main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/main.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/login.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/about.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/contacts.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/blog.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="vonline-cs Maven Webapp" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="vonline-cs Maven Webapp" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Run Configurations" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RunConfigurationsNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="vonline-cs Maven Webapp" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Plugins" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$PluginsNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="vonline-cs Maven Webapp" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Lifecycle" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="1" />
+    <option name="width" value="1366" />
+    <option name="height" value="726" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.21642266" />
+    <property name="project.structure.side.proportion" value="0.34477124" />
+    <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="options.lastSelected" value="org.datanucleus.ide.idea.DNEProjectComponent" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="LayoutCode.rearrangeEntriesXML" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="FullScreen" value="false" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+  </component>
+  <component name="RunManager" selected="Maven.jetty:run">
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails" singleton="true">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="jetty:run" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="true" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <data>
+          <option name="configFiles">
+            <list>
+              <JettyConfigFile>
+                <option name="path" value="modules\annotations.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\client.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\continuation.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\debug.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\deploy.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\ext.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\fcgi.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\hawtio.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\http.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\https.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\ipaccess.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jaas.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jamon.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jaspi.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jminix.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jmx-remote.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="active" value="true" />
+                <option name="path" value="modules\jmx.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jndi.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jolokia.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jsp.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jstl.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jvm.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\logging.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\lowresources.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\monitor.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\plus.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\protonego.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\proxy.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\quickstart.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\requestlog.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\resources.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\rewrite.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\security.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\server.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\servlet.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\servlets.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\setuid.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\spdy.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\spring.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\ssl.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\stats.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\webapp.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\websocket.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\xinetd.mod" />
+              </JettyConfigFile>
+            </list>
+          </option>
+        </data>
+      </server-settings>
+      <predefined_log_file id="Jetty" enabled="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="false" name="jetty" type="JettyConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Jetty 9.2.3.v20140905" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
+      <option name="UPDATING_POLICY" value="update-resources" />
+      <deployment>
+        <artifact name="BE">
+          <settings DEPLOYMENT_METHOD="contexts">
+            <option name="defaultContextRoot" value="false" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <data>
+          <option name="configFiles">
+            <list>
+              <JettyConfigFile>
+                <option name="path" value="modules\annotations.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\client.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\continuation.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\debug.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\deploy.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\ext.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\fcgi.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\hawtio.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\http.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\https.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\ipaccess.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jaas.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jamon.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jaspi.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jminix.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jmx-remote.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="active" value="true" />
+                <option name="path" value="modules\jmx.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jndi.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jolokia.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jsp.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jstl.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\jvm.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\logging.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\lowresources.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\monitor.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\plus.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\protonego.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\proxy.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\quickstart.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\requestlog.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\resources.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\rewrite.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\security.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\server.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\servlet.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\servlets.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\setuid.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\spdy.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\spring.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\ssl.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\stats.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\webapp.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\websocket.mod" />
+              </JettyConfigFile>
+              <JettyConfigFile>
+                <option name="path" value="modules\xinetd.mod" />
+              </JettyConfigFile>
+            </list>
+          </option>
+        </data>
+      </server-settings>
+      <predefined_log_file id="Jetty" enabled="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper VM_VAR="" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method>
+        <option name="Make" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="false" name="jetty:run" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="jetty:run" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="true" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Enhanced" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="datanucleus:enhance" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="true" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Jetty Server.jetty" />
+      <item index="1" class="java.lang.String" itemvalue="Maven.jetty:run" />
+      <item index="2" class="java.lang.String" itemvalue="Maven.Enhanced" />
+    </list>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="" />
+      <created>1414188909488</created>
+      <updated>1414188909488</updated>
+      <workItem from="1414188913201" duration="339000" />
+      <workItem from="1414189252914" duration="20420000" />
+      <workItem from="1414356606360" duration="8372000" />
+      <workItem from="1414422784984" duration="3059000" />
+      <workItem from="1414429264677" duration="176000" />
+      <workItem from="1414441777842" duration="15000" />
+      <workItem from="1414441938275" duration="9270000" />
+      <workItem from="1414489771823" duration="11668000" />
+      <workItem from="1414504240038" duration="87706000" />
+      <workItem from="1414757790323" duration="33844000" />
+      <workItem from="1414879875103" duration="3922000" />
+      <workItem from="1414932103609" duration="171000" />
+      <workItem from="1415102736679" duration="9689000" />
+      <workItem from="1415208692449" duration="2049000" />
+      <workItem from="1415299068378" duration="11723000" />
+      <workItem from="1415450514219" duration="8194000" />
+      <workItem from="1415726704373" duration="3668000" />
+      <workItem from="1415809464650" duration="309000" />
+      <workItem from="1415867503860" duration="578000" />
+      <workItem from="1415905445498" duration="3325000" />
+      <workItem from="1415976141074" duration="14671000" />
+      <workItem from="1416058007052" duration="930000" />
+      <workItem from="1416255305565" duration="5114000" />
+      <workItem from="1416515222042" duration="1299000" />
+      <workItem from="1416773291529" duration="2141000" />
+      <workItem from="1417113307558" duration="1479000" />
+      <workItem from="1417114794847" duration="7868000" />
+      <workItem from="1417187685131" duration="9510000" />
+      <workItem from="1417211765802" duration="1363000" />
+      <workItem from="1417290195078" duration="9132000" />
+      <workItem from="1417546675574" duration="7274000" />
+      <workItem from="1417629996744" duration="11510000" />
+      <workItem from="1417687050328" duration="15718000" />
+      <workItem from="1417805343441" duration="10449000" />
+    </task>
+    <task id="LOCAL-00001" summary="more fixes">
+      <created>1414599484537</created>
+      <updated>1414599484537</updated>
+    </task>
+    <task id="LOCAL-00002" summary="image scaling">
+      <created>1414610668190</created>
+      <updated>1414610668190</updated>
+    </task>
+    <task id="LOCAL-00003" summary="dialog implemented, image scaling">
+      <created>1414710791148</created>
+      <updated>1414710791148</updated>
+    </task>
+    <task id="LOCAL-00004" summary="mysql JDO">
+      <created>1414800467107</created>
+      <updated>1414800467107</updated>
+    </task>
+    <task id="LOCAL-00005" summary="all functions are implemented&#10;encoding issue is not fixed yet">
+      <created>1414876974272</created>
+      <updated>1414876974272</updated>
+    </task>
+    <task id="LOCAL-00006" summary="all functions are implemented&#10;encoding issue is not fixed yet">
+      <created>1414877821706</created>
+      <updated>1414877821706</updated>
+    </task>
+    <task id="LOCAL-00007" summary="all functions are implemented&#10;encoding issue is not fixed yet">
+      <created>1414878895059</created>
+      <updated>1414878895059</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="328085000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="1" width="1366" height="726" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3166287" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.24102564" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41403508" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23380727" sideWeight="0.24169184" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973376" sideWeight="0.4993046" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19724771" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.75641024" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3697183" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5159453" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41725352" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USERS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <MESSAGE value="basic functionality tested" />
+    <MESSAGE value="more fixes" />
+    <MESSAGE value="image scaling" />
+    <MESSAGE value="dialog implemented, image scaling" />
+    <MESSAGE value="mysql JDO" />
+    <MESSAGE value="all functions are implemented&#10;encoding issue is not fixed yet" />
+    <option name="LAST_COMMIT_MESSAGE" value="all functions are implemented&#10;encoding issue is not fixed yet" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="52" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="39" selection-start="260" selection-end="260" vertical-scroll-proportion="0.13492064" vertical-offset="0" max-vertical-offset="782" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="41" selection-start="114" selection-end="114" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-talks.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="9" selection-start="553" selection-end="553" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="476" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/css/style.styl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="168" selection-end="168" vertical-scroll-proportion="0.4294355" vertical-offset="42" max-vertical-offset="25568" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/templates/createTopic.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="285" selection-end="285" vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="1717" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-important.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="56" selection-start="486" selection-end="486" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="357" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/maps.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="6" selection-start="703" selection-end="703" vertical-scroll-proportion="-10.461538" vertical-offset="0" max-vertical-offset="442" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-counters.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="1149" selection-end="1149" vertical-scroll-proportion="-6.6153846" vertical-offset="134" max-vertical-offset="408" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profile.changeAvatar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="59" selection-start="518" selection-end="518" vertical-scroll-proportion="0.2751938" vertical-offset="96" max-vertical-offset="612" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/counters.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="0" selection-start="5550" selection-end="5550" vertical-scroll-proportion="-2.6666667" vertical-offset="510" max-vertical-offset="833" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/utilityservces.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="97" selection-start="1851" selection-end="1851" vertical-scroll-proportion="0.0" vertical-offset="365" max-vertical-offset="714" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/counters-history.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="0" selection-start="1166" selection-end="1166" vertical-scroll-proportion="0.67054266" vertical-offset="215" max-vertical-offset="731" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-dialogs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="26" selection-start="300" selection-end="300" vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="357" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-profit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="10" selection-start="539" selection-end="539" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="357" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/empty/empty-main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="40" selection-start="292" selection-end="292" vertical-scroll-proportion="-4.576923" vertical-offset="0" max-vertical-offset="425" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="23" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="3893" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="183" column="65" selection-start="6924" selection-end="6924" vertical-scroll-proportion="4.699659" vertical-offset="1734" max-vertical-offset="3468" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="18" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="663" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialog-single.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1343" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/PersistenceInitFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="0" selection-start="2186" selection-end="2186" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="1241" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="338" selection-end="338" vertical-scroll-proportion="0.5279503" vertical-offset="0" max-vertical-offset="493" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="33" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="7310">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="0" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0" vertical-offset="392" max-vertical-offset="2431" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/FileServiceServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="33" selection-start="354" selection-end="354" vertical-scroll-proportion="0.5882353" vertical-offset="0" max-vertical-offset="425" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="2431" selection-end="2431" vertical-scroll-proportion="0.0" vertical-offset="517" max-vertical-offset="1989" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/userservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="1" selection-start="261" selection-end="261" vertical-scroll-proportion="0.0" vertical-offset="886" max-vertical-offset="1428" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/coming-soon.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="442" selection-end="442" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1887" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="12" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.9723247" vertical-offset="0" max-vertical-offset="629">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/MapsController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1581" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/navbarController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="35" selection-start="226" selection-end="226" vertical-scroll-proportion="0.4375" vertical-offset="0" max-vertical-offset="408" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="20" selection-start="745" selection-end="758" vertical-scroll-proportion="0.2080537" vertical-offset="720" max-vertical-offset="2992">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="9" selection-start="769" selection-end="769" vertical-scroll-proportion="0.0" vertical-offset="205" max-vertical-offset="4284">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="33" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="18173">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/ProfileController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="2295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="27" selection-start="142" selection-end="142" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="3434">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/UnconfirmedCtrl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="42" selection-start="137" selection-end="137" vertical-scroll-proportion="0.096408315" vertical-offset="0" max-vertical-offset="529">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.096408315" vertical-offset="153" max-vertical-offset="1972">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/neighbours.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="79" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/unconfirm.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="61" selection-start="349" selection-end="349" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="408">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="31" selection-start="496" selection-end="496" vertical-scroll-proportion="5.8846154" vertical-offset="306" max-vertical-offset="3995">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/registration.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="48" selection-start="3292" selection-end="3292" vertical-scroll-proportion="-7.1923075" vertical-offset="918" max-vertical-offset="2907">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/request.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="127" column="56" selection-start="5193" selection-end="5450" vertical-scroll-proportion="0.57337886" vertical-offset="1991" max-vertical-offset="4845">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="0" selection-start="4462" selection-end="4462" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="62" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" vertical-offset="219" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="6" selection-start="40" selection-end="40" vertical-scroll-proportion="0.19029851" vertical-offset="0" max-vertical-offset="7718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

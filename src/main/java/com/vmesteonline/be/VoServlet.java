@@ -88,6 +88,8 @@ public class VoServlet extends HttpServlet {
 					response.addHeader(header.getKey(), header.getValue());
 				}
 			}
+			allowCrossdomainRequests(response);
+
 			final InputStream in = request.getInputStream();
 			final OutputStream out = response.getOutputStream();
 
@@ -130,6 +132,13 @@ public class VoServlet extends HttpServlet {
 		} catch (TException te) {
 			throw new ServletException(te);
 		}
+	}
+
+	private void allowCrossdomainRequests(HttpServletResponse response) {
+		response.addHeader("Access-Control-Allow-Origin","*");
+		response.addHeader("Access-Control-Allow-Methods","POST");
+		response.addHeader("Access-Control-Max-Age","10000");
+		response.addHeader("Access-Control-Allow-Headers","*");
 	}
 
 	/**

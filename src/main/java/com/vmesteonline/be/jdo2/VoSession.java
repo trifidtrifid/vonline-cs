@@ -175,6 +175,6 @@ public class VoSession {
 
     public Map<Long, Integer> getDialogUpdates(){
         return null==newDialogMessages ?
-                newDialogMessages = new HashMap<Long, Integer>():newDialogMessages;
+                newDialogMessages = new HashMap<>():newDialogMessages;
     }
 }

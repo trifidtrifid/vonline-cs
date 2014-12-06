@@ -644,16 +644,4 @@ public class VoUser extends GeoLocation {
 		else
 			moderationGroups.remove(groupId);
 	}
-
-	public void initRootGroup(PersistenceManager pm) {
-		VoUserGroup lowestGroup = null;
-		for (Long gid: getGroups()) {
-			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, gid);
-			if( null == lowestGroup || ug.getGroupType() < lowestGroup.getGroupType() )
-				lowestGroup = ug;
-		}
-		if( null!=lowestGroup )
-			rootGroup = lowestGroup.getId();
-	}
-
 }

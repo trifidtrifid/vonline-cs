@@ -83,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	}
 
-	public static ShortUserInfo getShortUserInfo( VoUser cuser, long userId, PersistenceManager pm) {
+	public static ShortUserInfo  getShortUserInfo( VoUser cuser, long userId, PersistenceManager pm) {
 		if (userId == 0)
 			return null;
 		
@@ -581,7 +581,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			// TODO check that there is no building with the same name
 			VoStreet vs = pm.getObjectById(VoStreet.class, streetId);
-			Query q = pm.newQuery("SELECT * FROM vobuilding WHERE streetId == " + streetId + " &&  fullNo == '" + fullNo + "' ALLOW FILTERING");
+			Query q = pm.newQuery("SQL", "SELECT * FROM VOBUILDING WHERE streetId = " + streetId + " &&  fullNo = '" + fullNo + "'");
 			List<VoBuilding> buildings = executeQuery(  q );
 			if (buildings.size() > 0) {
 				logger.info("VoBuilding was NOT created. The same VoBuilding was registered. Return an old one: " + buildings.get(0));
@@ -713,6 +713,15 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"'";
 			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
 			users = new ArrayList<>(ulist);
+			try {
+				VoUserGroup lowerLevelGroup = VoUserGroup.createVoUserGroup ( group.getLongitude(), group.getLongitude(), Defaults.radiusByType[ group.getGroupType() - 1],
+                        group.getStaircase(), group.getFloor(), "", 0, group.getGroupType() - 1, pm);
+				users.removeAll( getUsersByLocation( lowerLevelGroup, pm));
+
+			} catch (InvalidOperation invalidOperation) {
+
+			}
+
 		}
 		Collections.sort(users,uIdCOmp);
 		return users;
@@ -752,12 +761,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		String mapKey = "yandex.group.map." + groupId + "." + color;
 		String url = ServiceImpl.getObjectFromCache(mapKey);
 		if (null != url)
-			if (url instanceof String) {
-				return (String) url;
-			} else {
-				// incorrect type of object in the cache
-				ServiceImpl.removeObjectFromCache(mapKey);
-			}
+			return url;
+
 		PersistenceManager pm = PMF.getPm();
 		int width = 450, height = 450;
 		
@@ -792,14 +797,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					url += "," + (lod + Math.sin(i) * loDelta) + "," + (lad + Math.cos(i) * laDelta);
 				}
 			
-				ServiceImpl.putObjectToCache(mapKey, (String) url);
+				ServiceImpl.putObjectToCache(mapKey, url);
 				
 			} else {
 				
 				url = VoGeocoder.createMapImageURL(  userGroup.getLongitude(), userGroup.getLatitude(), 450, 450 );
 			}
 
-		return (String) url;
+		return url;
 	}
 
 	private static List<Rubric> tmpRubrics = Arrays.asList( new Rubric[]{ new Rubric(0L,"","","")});

@@ -72,6 +72,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         PersistenceManager pm = PMF.getPm();
         VoUser u = getUserByEmail(email, pm);
         if (u != null) {
+            pm.refresh(u);
             if (u.getPassword().equals(pwd) || !checkPwd) {
                 if (!u.isEmailConfirmed())
                     return LoginResult.EMAIL_NOT_CONFIRMED;
@@ -222,7 +223,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         return user.getId();
     }
     @Override
-    public long registerNewUserByAddress(String firstname, String lastname, String password, String email, String addressString, short gender) throws InvalidOperation, TException {
+    public long registerNewUserByAddress(String firstname, String lastname, String password, String email, String addressString, short gender) throws InvalidOperation {
 
         VoUser userByEmail = getUserByEmail(email);
         if (userByEmail != null && userByEmail.isEmailConfirmed())
@@ -248,11 +249,16 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         user.setGender(gender);
         user.setEmailConfirmed(false);
         user.setCurrentPostalAddress( pa, pm );
-        user.setAddressConfirmed(true);
+        user.setAddressConfirmed(false);
         pm.makePersistent(user);
 
-        List<Long> groups = user.getGroups();
-        logger.info("register " + email+ " pass " + password+ " id "+ user.getId()+ " location '"+ addressString+"'");
+        try {
+            EMailHelper.sendSimpleEMail("trifid@gmail.com", "Wants to register: "+addressString,
+                    "ID:" + user.getId() + " <br/>Full name:" +user.getName() + " " + user.getLastName() + "<br/>email:" + user.getEmail() + "<br/>Address: " + addressString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        logger.info("register " + email + " pass " + password + " id " + user.getId() + " location '" + addressString + "'");
         // Add the send welcomeMessage Task to the default queue.
         Notification.welcomeMessageNotification(user, pm);
         return user.getId();

@@ -25,161 +25,162 @@ import static com.vmesteonline.be.utils.VoHelper.logger;
 @PersistenceCapable
 @Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"lastMessageDate"})
 public class VoDialog {
-	
-	public Dialog getDialog( PersistenceManager pm ) throws InvalidOperation {
-		
-		List< ShortUserInfo > usis = new ArrayList<>();
-		for( Long uid : users){
-			try {
-				VoUser user = pm.getObjectById(VoUser.class, uid);
-				usis.add( user.getShortUserInfo(null, pm) );
-			} catch (JDOObjectNotFoundException e) {
-				List<VoDialogMessage> dmsgs = executeQuery(pm.newQuery(VoDialogMessage.class, "dialogId==" + this.getId() + " && authorId==" + uid));
-				for( VoDialogMessage dmsg: dmsgs)
-					pm.deletePersistent(dmsg);
-				users.remove(uid);
-				logger.error("Invalid dialog properties. USer '"+uid+"' registered in dialog but not found. Remove him!");
-			}
-		}
-		if( users.size() <= 1 ){
-			logger.error("Invalid dialog. It contains only one user. Remove it at all!");
-			List<VoDialogMessage> dmsgs = executeQuery(pm.newQuery(VoDialogMessage.class, "dialogId==" + this.getId()));
-			for( VoDialogMessage dmsg: dmsgs)
-				pm.deletePersistent(dmsg);
-			users.remove(users.get(0));
-			pm.deletePersistent(this);
-			return null;//throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
-		}
-		return new Dialog(id, usis, createDate, lastMessageDate);
-	}
-	
-public Dialog getDialog( VoUser cuser, PersistenceManager pm ) throws InvalidOperation {
-		
-		List< ShortUserInfo > usis = new ArrayList<ShortUserInfo>();
-		for( Long uid : users){
-			try {
-				VoUser user = pm.getObjectById(VoUser.class, uid);
-				usis.add( user.getShortUserInfo(cuser, pm) );
-			} catch (JDOObjectNotFoundException e) {
-				
-				throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
-			}
-		}
-		return new Dialog(id, usis, createDate, lastMessageDate);
-	}
-	
-	public VoDialog(List<Long> users) {
-		this.users = users;
-		this.createDate = (int)(System.currentTimeMillis() / 1000L);
-		this.lastMessageDate = (int)(System.currentTimeMillis() / 1000L);
-	}
 
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
-	protected long id;
+    public Dialog getDialog(PersistenceManager pm) throws InvalidOperation {
+
+        List<ShortUserInfo> usis = new ArrayList<>();
+        for (Long uid : users) {
+            try {
+                VoUser user = pm.getObjectById(VoUser.class, uid);
+                usis.add(user.getShortUserInfo(null, pm));
+            } catch (JDOObjectNotFoundException e) {
+                List<VoDialogMessage> dmsgs = executeQuery(pm.newQuery(VoDialogMessage.class, "dialogId==" + this.getId() + " && authorId==" + uid));
+                for (VoDialogMessage dmsg : dmsgs)
+                    pm.deletePersistent(dmsg);
+                users.remove(uid);
+                logger.error("Invalid dialog properties. USer '" + uid + "' registered in dialog but not found. Remove him!");
+            }
+        }
+        if (users.size() <= 1) {
+            logger.error("Invalid dialog. It contains only one user. Remove it at all!");
+            List<VoDialogMessage> dmsgs = executeQuery(pm.newQuery(VoDialogMessage.class, "dialogId==" + this.getId()));
+            for (VoDialogMessage dmsg : dmsgs)
+                pm.deletePersistent(dmsg);
+            users.remove(users.get(0));
+            pm.deletePersistent(this);
+            return null;//throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
+        }
+        return new Dialog(id, usis, createDate, lastMessageDate);
+    }
+
+    public Dialog getDialog(VoUser cuser, PersistenceManager pm) throws InvalidOperation {
+
+        List<ShortUserInfo> usis = new ArrayList<ShortUserInfo>();
+        for (Long uid : users) {
+            try {
+                VoUser user = pm.getObjectById(VoUser.class, uid);
+                usis.add(user.getShortUserInfo(cuser, pm));
+            } catch (JDOObjectNotFoundException e) {
+
+                throw new InvalidOperation(VoError.GeneralError, "Invalid dialog properties. USer registered in dialog but not found. Remove him!");
+            }
+        }
+        return new Dialog(id, usis, createDate, lastMessageDate);
+    }
+
+    public VoDialog(List<Long> users) {
+        this.users = users;
+        this.createDate = (int) (System.currentTimeMillis() / 1000L);
+        this.lastMessageDate = (int) (System.currentTimeMillis() / 1000L);
+    }
+
+    @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
+    protected long id;
 
     @Persistent(table = "dialog_userIds")
     @Join(column = "id")
     @Element(column = "user")
-	private List<Long> users;
-	
-	@Persistent
-	private int createDate;
-	
-	@Persistent
-	private int lastMessageDate;
+    private List<Long> users;
 
-	public List<Long> getUsers() {
-		return users;
-	}
+    @Persistent
+    private int createDate;
 
-	public void setUsers(List<Long> users) {
-		this.users = users;
-	}
+    @Persistent
+    private int lastMessageDate;
 
-	public int getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(int createDate) {
-		this.createDate = createDate;
-	}
-
-	public int getLastMessageDate() {
-		return lastMessageDate;
-	}
-
-	public void setLastMessageDate(int lastMessageDate) {
-		this.lastMessageDate = lastMessageDate;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public Collection<VoDialogMessage> getMessages(int afterDate, int lastCount, long lastLoadedId, PersistenceManager pm) {
-		Query q = pm.newQuery(VoDialogMessage.class, "dialogId=="+id+
-				(afterDate > 0 ? " && createDate>"+afterDate : ""));
-		//q.setOrdering("createDate DESC"); List will be empty if sorting is enabled :(
-		List<VoDialogMessage> msgs = executeQuery(  q );
-		SortedSet<VoDialogMessage> msgsSorted = new TreeSet<VoDialogMessage>( new Comparator<VoDialogMessage>(){
-			@Override
-			public int compare(VoDialogMessage o1, VoDialogMessage o2) {
-				return -Integer.compare(o1.getCreateDate(), o2.getCreateDate());
-			}});
-		msgsSorted.addAll(msgs);
-		if( (lastCount<=0 || lastCount>=msgsSorted.size())&& lastLoadedId == 0)
-			return msgsSorted;
-		
-		List<VoDialogMessage> listPart = new ArrayList<VoDialogMessage>();
-		Iterator<VoDialogMessage> mi = msgsSorted.iterator();
-		boolean startAdd = lastLoadedId == 0 ? true : false; 
-		while( mi.hasNext() && listPart.size()<lastCount){
-			
-			if( startAdd ) {
-				listPart.add(mi.next());
-				
-			} else if( lastLoadedId == mi.next().getId() )
-				startAdd = true;
-		}
-		return listPart;
-	}
-
-	public VoDialogMessage postMessage(VoUser currentUser, String content, List<Attach> attachs, PersistenceManager pm) {
-		VoDialogMessage dmsg = new VoDialogMessage(id, currentUser.getId(), content);
-		List<Long> attchs = new ArrayList<Long>();
-		for( Attach att: attachs ){
-			try {
-				FileSource fs = StorageHelper.createFileSource( att );
-				VoFileAccessRecord cfar;
-				if( fs == null ){
-					cfar = pm.getObjectById(VoFileAccessRecord.class, StorageHelper.getFileId(att.getURL()));
-					cfar.updateContentParams(att.contentType, att.fileName);
-				}	else {	
-					cfar = StorageHelper.saveAttach( fs.fname, fs.contentType, currentUser.getId(), true, fs.is, pm);
-				}
-				attchs.add( cfar.getId());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		dmsg.setAttachs(attchs);
-		lastMessageDate = dmsg.getCreateDate();
-		pm.makePersistent(dmsg);
-		pm.makePersistent(this);
-
-
-
-    for( Long recipient : users ){
-    	if( recipient != currentUser.getId() )
-            Notification.dialogMessageNotification( this, currentUser, pm.getObjectById( VoUser.class, recipient) );
-		List<VoSession> sessList = executeQuery(  pm.newQuery(VoSession.class, "userId=="+recipient) );
-    	for( VoSession s:sessList ){
-    		s.postNewDialogMessage(id);
-    		pm.makePersistent( s );
-    	}
+    public List<Long> getUsers() {
+        return users;
     }
-		return dmsg;
-	}
-	
+
+    public void setUsers(List<Long> users) {
+        this.users = users;
+    }
+
+    public int getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(int createDate) {
+        this.createDate = createDate;
+    }
+
+    public int getLastMessageDate() {
+        return lastMessageDate;
+    }
+
+    public void setLastMessageDate(int lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Collection<VoDialogMessage> getMessages(int afterDate, int lastCount, long lastLoadedId, PersistenceManager pm) {
+        Query q = pm.newQuery(VoDialogMessage.class, "dialogId==" + id +
+                (afterDate > 0 ? " && createDate>" + afterDate : ""));
+        //q.setOrdering("createDate DESC"); List will be empty if sorting is enabled :(
+        List<VoDialogMessage> msgs = executeQuery(q);
+        SortedSet<VoDialogMessage> msgsSorted = new TreeSet<VoDialogMessage>(new Comparator<VoDialogMessage>() {
+            @Override
+            public int compare(VoDialogMessage o1, VoDialogMessage o2) {
+                return -Integer.compare(o1.getCreateDate(), o2.getCreateDate());
+            }
+        });
+        msgsSorted.addAll(msgs);
+        if ((lastCount <= 0 || lastCount >= msgsSorted.size()) && lastLoadedId == 0)
+            return msgsSorted;
+
+        List<VoDialogMessage> listPart = new ArrayList<VoDialogMessage>();
+        Iterator<VoDialogMessage> mi = msgsSorted.iterator();
+        boolean startAdd = lastLoadedId == 0 ? true : false;
+        while (mi.hasNext() && listPart.size() < lastCount) {
+
+            if (startAdd) {
+                listPart.add(mi.next());
+
+            } else if (lastLoadedId == mi.next().getId())
+                startAdd = true;
+        }
+        return listPart;
+    }
+
+    public VoDialogMessage postMessage(VoUser currentUser, String content, List<Attach> attachs, PersistenceManager pm) {
+        VoDialogMessage dmsg = new VoDialogMessage(id, currentUser.getId(), content);
+        List<Long> attchs = new ArrayList<Long>();
+        for (Attach att : attachs) {
+            try {
+                FileSource fs = StorageHelper.createFileSource(att);
+                VoFileAccessRecord cfar;
+                if (fs == null) {
+                    cfar = pm.getObjectById(VoFileAccessRecord.class, StorageHelper.getFileId(att.getURL()));
+                    cfar.updateContentParams(att.contentType, att.fileName);
+                } else {
+                    cfar = StorageHelper.saveAttach(fs.fname, fs.contentType, currentUser.getId(), true, fs.is, pm);
+                }
+                attchs.add(cfar.getId());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        dmsg.setAttachs(attchs);
+        lastMessageDate = dmsg.getCreateDate();
+        pm.makePersistent(dmsg);
+        pm.makePersistent(this);
+
+
+        for (Long recipient : users) {
+            if (recipient != currentUser.getId()) {
+                Notification.dialogMessageNotification(this, currentUser, pm.getObjectById(VoUser.class, recipient));
+                List<VoSession> sessList = executeQuery(pm.newQuery(VoSession.class, "userId==" + recipient));
+                for (VoSession s : sessList) {
+                    s.postNewDialogMessage(id);
+                    pm.makePersistent(s);
+                }
+            }
+        }
+        return dmsg;
+    }
+
 }
