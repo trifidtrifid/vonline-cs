@@ -581,7 +581,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			// TODO check that there is no building with the same name
 			VoStreet vs = pm.getObjectById(VoStreet.class, streetId);
-			Query q = pm.newQuery("SELECT * FROM vobuilding WHERE streetId == " + streetId + " &&  fullNo == '" + fullNo + "' ALLOW FILTERING");
+			Query q = pm.newQuery("SQL", "SELECT * FROM VOBUILDING WHERE streetId = " + streetId + " &&  fullNo = '" + fullNo + "'");
 			List<VoBuilding> buildings = executeQuery(  q );
 			if (buildings.size() > 0) {
 				logger.info("VoBuilding was NOT created. The same VoBuilding was registered. Return an old one: " + buildings.get(0));
@@ -713,6 +713,15 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"'";
 			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
 			users = new ArrayList<>(ulist);
+			try {
+				VoUserGroup lowerLevelGroup = VoUserGroup.createVoUserGroup ( group.getLongitude(), group.getLongitude(), Defaults.radiusByType[ group.getGroupType() - 1],
+                        group.getStaircase(), group.getFloor(), "", 0, group.getGroupType() - 1, pm);
+				users.removeAll( getUsersByLocation( lowerLevelGroup, pm));
+
+			} catch (InvalidOperation invalidOperation) {
+
+			}
+
 		}
 		Collections.sort(users,uIdCOmp);
 		return users;
