@@ -11,15 +11,24 @@ var TEXTAREA_DEFAULT_HEIGHT = 54;
 
 /* functions */
 
-var transport = new Thrift.Transport("/thrift/MessageService");
+var host = 'http://localhost:8080';
+
+var transport = new Thrift.Transport(host+"/thrift/MessageService");
 var protocol = new Thrift.Protocol(transport);
 var messageClient = new com.vmesteonline.be.thrift.messageservice.MessageServiceClient(protocol);
 
-transport = new Thrift.Transport("/thrift/DialogService");
+transport = new Thrift.Transport(host+"/thrift/AuthService");
+protocol = new Thrift.Protocol(transport);
+var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
+
+var isLogin = authClient.checkIfAuthorised();
+if(!isLogin) document.location.replace('/login');
+
+transport = new Thrift.Transport(host+"/thrift/DialogService");
 protocol = new Thrift.Protocol(transport);
 var dialogClient = new com.vmesteonline.be.thrift.messageservice.DialogServiceClient(protocol);
 
-transport = new Thrift.Transport("/thrift/UserService");
+transport = new Thrift.Transport(host+"/thrift/UserService");
 protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
@@ -31,15 +40,11 @@ if(servicesStr.indexOf('10') != -1) shortUserInfo.countersEnabled = true;
 if(servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
 if(servicesStr.indexOf('12') != -1) shortUserInfo.countersNotification = true;
 
-transport = new Thrift.Transport("/thrift/AuthService");
-protocol = new Thrift.Protocol(transport);
-var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
-
-transport = new Thrift.Transport("/thrift/UtilityService");
+transport = new Thrift.Transport(host+"/thrift/UtilityService");
 protocol = new Thrift.Protocol(transport);
 var utilityClient = new com.vmesteonline.be.thrift.utilityservice.UtilityServiceClient(protocol);
 
-transport = new Thrift.Transport("/thrift/fs");
+transport = new Thrift.Transport(host+"/thrift/fs");
 protocol = new Thrift.Protocol(transport);
 var fileClient = new com.vmesteonline.be.thrift.fileservice.FileServiceClient(protocol);
 

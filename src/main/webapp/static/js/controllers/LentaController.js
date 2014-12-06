@@ -2,7 +2,7 @@
 forumControllers.controller('LentaController',function($rootScope) {
 
     $('.ng-cloak').removeClass('ng-cloak');
-    console.log('lenta');
+    console.log('lenta 4444');
         $rootScope.setTab(1);
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;

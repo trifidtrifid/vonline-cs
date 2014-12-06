@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    var transport = new Thrift.Transport("/thrift/AuthService");
+    var host = 'http://localhost:8080';
+    var transport = new Thrift.Transport(host+"/thrift/AuthService");
     var protocol = new Thrift.Protocol(transport);
     var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
 

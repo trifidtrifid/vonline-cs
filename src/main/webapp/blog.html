@@ -1,37 +1,3 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%@ page import="com.vmesteonline.be.thrift.messageservice.TopicListPart"%>
-<%@ page import="com.vmesteonline.be.MessageServiceImpl"%>
-<%@ page import="com.vmesteonline.be.AuthServiceImpl"%>
-<%@ page import="com.vmesteonline.be.thrift.InvalidOperation"%>
-
-
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<%
-HttpSession sess = request.getSession();
-pageContext.setAttribute("auth",true);
-Boolean isAuth = true;
-
-try {
-AuthServiceImpl.checkIfAuthorised(sess.getId());
-} catch (InvalidOperation ioe) {
-    isAuth = false;
-    pageContext.setAttribute("auth",false);
-    //return;
-}
-
-    MessageServiceImpl messageService = new MessageServiceImpl(request.getSession().getId());
-
-    TopicListPart Blog = messageService.getBlog(0,1000);
-
-    pageContext.setAttribute("blog",Blog.topics);
-
-%>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,18 +46,10 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
 
             </div>
 
-            <div class="wallitem-message blog" data-auth="<%=isAuth%>">
+            <div class="wallitem-message blog">
 
-
-                <% if(Blog.topics != null){
-                    int topicsSize = Blog.topics.size();
-                    for(int i = 0; i < topicsSize; i++){
-                %>
-                <div class="post" data-postlink="<%=Blog.topics.get(i).message.content%>" data-topicid="<%=Blog.topics.get(i).id%>" >
-                    <%--<div class="post-avatar pull-left">
-                        <div style="background-image: url(<%=Blog.topics.get(i).userInfo%>)"></div>
-                    </div>--%>
-                    <%--<div class="post-date" data-date="<%=Blog.topics.get(i).message.created%>"></div>--%>
+                <!-- data-postlink="<%=Blog.topics.get(i).message.content%>" data-topicid="<%=Blog.topics.get(i).id%>" -->
+                <div class="post" >
                     <div class="topic"></div>
                     <div class="topic-stuff">
                         <a href="#" class="show-comment">Показать комментарии</a> |
@@ -103,9 +61,7 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
 
                     <div class="input-group">
 
-                        <% if(!isAuth){  %>
-                            <input type="text" class="anonName" placeholder="Имя Фамилия"/>
-                        <% } %>
+                        <input type="text" class="anonName hidden" placeholder="Имя Фамилия"/>
 
                         <textarea class="message-textarea"
                                   onblur="if(this.value=='') this.value='Ваш ответ';"
@@ -123,8 +79,6 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
                     </div>
 
                 </div>
-        <% }} %>
-
         </div>
 
         </div>
@@ -151,6 +105,8 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
 <script src="/gen-js/MessageService.js" type="text/javascript"></script>
 <script src="/gen-js/userservice_types.js" type="text/javascript"></script>
 <script src="/gen-js/UserService.js" type="text/javascript"></script>
+<script src="/gen-js/authservice_types.js" type="text/javascript"></script>
+<script src="/gen-js/AuthService.js" type="text/javascript"></script>
 <!-- -->
 <script type="text/javascript">
     $(document).ready(function(){
@@ -162,13 +118,20 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
         protocol = new Thrift.Protocol(transport);
         var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
-        var isAuth = true,
+        transport = new Thrift.Transport("/thrift/AuthService");
+        protocol = new Thrift.Protocol(transport);
+        var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
+
+        var isAuth = authClient.checkIfAuthorized(),
             me;
-        if($('.blog').attr('data-auth') == 'false') isAuth = false;
 
         if(isAuth){
             me = userClient.getUserProfile();
+            $('.anonName').removeClass('hidden');
         }
+
+        var blog = messageClient.getBlog(0,1000);
+        //blog.topics;
 
         /*$('.post-date').each(function(){
 
@@ -317,9 +280,6 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
             message.content = $(this).closest('.input-group').find('.message-textarea').val();
             message.parentId = 0;
             message.created = Date.parse(new Date())/1000;
-            var isAuth = true;
-
-            if($('.blog').attr('data-auth') == 'false') isAuth = false;
 
             if(!isAuth){
                 message.anonName = $(this).closest('.input-group').find('.anonName').val();
@@ -378,7 +338,6 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
 
         });
 
-
         function getTiming(messageObjDate){
             var minute = 60*1000,
                     hour = minute*60,
@@ -421,7 +380,6 @@ AuthServiceImpl.checkIfAuthorised(sess.getId());
 
             return timing;
         }
-
 
         function setSelectionRange(input, selectionStart, selectionEnd) {
             if (input.setSelectionRange) {
