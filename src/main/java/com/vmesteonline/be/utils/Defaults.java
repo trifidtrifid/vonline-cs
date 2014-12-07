@@ -92,6 +92,7 @@ public class Defaults {
 		defaultRubrics = new ArrayList<VoRubric>();
 		try {
 			clearLocations(pm);
+			clearMulticastMesssages(pm);
 			clearGroups(pm);
 			clearUsers(pm);
 			clearFiles(pm);
@@ -164,6 +165,9 @@ public class Defaults {
 
 	// ======================================================================================================================
 
+	private static void clearMulticastMesssages(PersistenceManager pm) {
+		deletePersistentAll(pm, VoMulticastMessage.class);
+	}
 	private static void clearGroups(PersistenceManager pm) {
 		deletePersistentAll(pm, VoUserGroup.class);
 	}
@@ -243,7 +247,6 @@ public class Defaults {
 			VoStreet streetZ = VoStreet.createVoStreet(city, "Заневский", pm);
 			VoStreet streetR = VoStreet.createVoStreet(city, "Республиканская", pm);
 
-			VoPostalAddress[] addresses;
 			VoBuilding zanevsky32k3 = VoBuilding.createVoBuilding("195213", streetZ, "32к3", null, null, pm);
 			VoBuilding respublikanskaya35 = VoBuilding.createVoBuilding("195213", streetR, "35", null, null, pm);
 			VoBuilding resp6 = VoBuilding.createVoBuilding("195213", streetR, "6", null, null, pm);

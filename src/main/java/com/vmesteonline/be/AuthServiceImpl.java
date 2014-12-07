@@ -324,14 +324,17 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
             vu.setConfirmCode(code);
             pm.makePersistent(vu);
 
-            File localFIle = new File(localfileName);
-            FileInputStream fis = new FileInputStream(localFIle);
-            byte[] content = new byte[(int) localFIle.length()];
-            fis.read(content);
-            fis.close();
+            if( !EMailHelper.isItTests){
+                File localFIle = new File(localfileName);
 
-            EMailHelper.sendSimpleEMail(to, "Код для смены пароля на сайте Во!",
-                    new String(content, "UTF-8").replace("%code%", "" + code).replace("%name%", vu.getName() + " " + vu.getLastName()));
+                FileInputStream fis = new FileInputStream(localFIle);
+                byte[] content = new byte[(int) localFIle.length()];
+                fis.read(content);
+                fis.close();
+
+                EMailHelper.sendSimpleEMail(to, "Код для смены пароля на сайте Во!",
+                        new String(content, "UTF-8").replace("%code%", "" + code).replace("%name%", vu.getName() + " " + vu.getLastName()));
+            }
             logger.info("Code to change password is: " + code);
 
         } catch (Exception e) {

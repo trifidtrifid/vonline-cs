@@ -356,8 +356,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-			List<Long> groupsToSearch = new ArrayList<>();
-			groupsToSearch.add(groupId);
 
 			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm, user);
 			mlp.totalSize += topics.size();

@@ -41,10 +41,7 @@ public class UserServiceImplTest extends TestWorkAround {
 		// register and login current user
 		// Initialize USer Service
 
-		List<String> userLocation = UserServiceImpl.getLocationCodesForRegistration();
-		Assert.assertNotNull(userLocation);
-		Assert.assertTrue(userLocation.size() > 0);
-		userHomeLocation = userLocation.get(0);
+		userHomeLocation ="1";
 
 		userId = asi.registerNewUser("fn", "ln", "pswd", "eml", userHomeLocation, Integer.parseInt(userHomeLocation));
 		Assert.assertTrue(userId > 0);
