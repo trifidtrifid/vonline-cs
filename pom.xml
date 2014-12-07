@@ -126,12 +126,6 @@
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
                         <contextPath>/</contextPath>
                     </webApp>
-		    <connectors>
-			<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-				<port>8080</port>
-				<maxIdleTime>60000</maxIdleTime>
-			</connector>
-		    </connectors>
                     <jettyXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-web.xml,${project.basedir}/src/main/webapp/WEB-INF/jetty-ssl.xml</jettyXml>
                     <stopPort>12345</stopPort>
                     <stopKey>12345</stopKey>

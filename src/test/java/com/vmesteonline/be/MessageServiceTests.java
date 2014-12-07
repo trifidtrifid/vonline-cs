@@ -20,7 +20,6 @@ import com.vmesteonline.be.thrift.PostalAddress;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.thrift.messageservice.*;
 import com.vmesteonline.be.utils.Defaults;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -75,13 +74,10 @@ public class MessageServiceTests extends TestWorkAround {
 
 	@Before
 	public void setUp() throws Exception {
+		setUp();
 		Assert.assertTrue(init());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		close();
-	}
 
 	@Test
 	public void testCreateTopticAndTwoReplies() {

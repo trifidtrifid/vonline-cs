@@ -36,7 +36,7 @@ public class UserServiceImplTest extends TestWorkAround {
 
 	@Before
 	public void setUp() throws Exception {
-
+		super.setUp();
 		Assert.assertTrue(init());
 		// register and login current user
 		// Initialize USer Service
@@ -170,7 +170,7 @@ public class UserServiceImplTest extends TestWorkAround {
 	 * Assert.assertEquals(ui.birthday, uiBack.birthday); Assert.assertEquals(ui.firstName, uiBack.firstName); Assert.assertEquals(ui.lastName,
 	 * uiBack.lastName); Assert.assertEquals(ui.relations, uiBack.relations);
 	 * 
-	 * } catch (Exception e) { e.printStackTrace(); fail(e.getMessage()); } finally { pm.close(); } }
+	 * } catch (Exception e) { e.printStackTrace(); fail(e.getMessage()); } finally { s; } }
 	 */
 	@Test
 	public void testUpdateUserContacts() {
@@ -464,8 +464,6 @@ public class UserServiceImplTest extends TestWorkAround {
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Exception " + e.getMessage());
-		} finally {
-			pm.close();
 		}
 	}
 
@@ -475,11 +473,11 @@ public class UserServiceImplTest extends TestWorkAround {
 			asi.login(Defaults.user2email, Defaults.user2email);
 			long userAid = updateFamily(GroupType.FLOOR);
 			// same building same staircase same floor
-			profileIsVisible(Defaults.user3email, Defaults.user3email, userAid);
+			profileIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
 			// same building another staircase
-			profileIsInVisible(Defaults.user1email, Defaults.user1email, userAid);
+			profileIsInVisible(Defaults.user1email, Defaults.user1pass, userAid);
 			// another building
-			profileIsInVisible(Defaults.user4email, Defaults.user4email, userAid);
+			profileIsInVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -493,11 +491,11 @@ public class UserServiceImplTest extends TestWorkAround {
 			asi.login(Defaults.user2email, Defaults.user2email);
 			long userAid = updateFamily(GroupType.STAIRCASE);
 			// same building same staircase same floor
-			profileIsVisible(Defaults.user3email, Defaults.user3email, userAid);
+			profileIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
 			// same building another staircase
-			profileIsInVisible(Defaults.user1email, Defaults.user1email, userAid);
+			profileIsInVisible(Defaults.user1email, Defaults.user1pass, userAid);
 			// another building
-			profileIsInVisible(Defaults.user4email, Defaults.user4email, userAid);
+			profileIsInVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -508,14 +506,14 @@ public class UserServiceImplTest extends TestWorkAround {
 	@Test
 	public void testGetUserProfileBuilding() {
 		try {
-			asi.login(Defaults.user1email, Defaults.user1email);
+			asi.login(Defaults.user1email, Defaults.user1pass);
 			long userAid = updateFamily(GroupType.BUILDING);
 			// same building same staircase same floor
-			profileIsVisible(Defaults.user3email, Defaults.user3email, userAid);
+			profileIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
 			// same building another staircase
-			profileIsVisible(Defaults.user1email, Defaults.user1email, userAid);
+			profileIsVisible(Defaults.user1email, Defaults.user1pass, userAid);
 			// another building
-			profileIsInVisible(Defaults.user4email, Defaults.user4email, userAid);
+			profileIsInVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -527,9 +525,9 @@ public class UserServiceImplTest extends TestWorkAround {
 	public void testGetUserProfileNeighbors() {
 		try {
 			long userAid = updateFamily(GroupType.NEIGHBORS);
-			profileIsVisible(Defaults.user2email, Defaults.user2email, userAid);
-			profileIsVisible(Defaults.user3email, Defaults.user3email, userAid);
-			profileIsVisible(Defaults.user4email, Defaults.user4email, userAid);
+			profileIsVisible(Defaults.user2email, Defaults.user2pass, userAid);
+			profileIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
+			profileIsVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -541,8 +539,8 @@ public class UserServiceImplTest extends TestWorkAround {
 	public void testGetUserContactsNeighbors() {
 		try {
 			long userAid = updateContacts(GroupType.NEIGHBORS);
-			contactsIsVisible(Defaults.user2email, Defaults.user2email, userAid);
-			contactsIsVisible(Defaults.user4email, Defaults.user4email, userAid);
+			contactsIsVisible(Defaults.user2email, Defaults.user2pass, userAid);
+			contactsIsVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -554,9 +552,9 @@ public class UserServiceImplTest extends TestWorkAround {
 	public void testGetUserContactsBuilding() {
 		try {
 			long userAid = updateContacts(GroupType.BUILDING);
-			asi.login(Defaults.user2email, Defaults.user2email);
-			contactsIsVisible(Defaults.user2email, Defaults.user2email, userAid);
-			contactsIsInVisible(Defaults.user4email, Defaults.user4email, userAid);
+			asi.login(Defaults.user2email, Defaults.user2pass);
+			contactsIsVisible(Defaults.user2email, Defaults.user2pass, userAid);
+			contactsIsInVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -570,11 +568,11 @@ public class UserServiceImplTest extends TestWorkAround {
 			asi.login(Defaults.user2email, Defaults.user2email);
 			long userAid = updateContacts(GroupType.STAIRCASE);
 			// same building same staircase same floor
-			contactsIsVisible(Defaults.user3email, Defaults.user3email, userAid);
+			contactsIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
 			// same building another staircase
-			contactsIsInVisible(Defaults.user1email, Defaults.user1email, userAid);
+			contactsIsInVisible(Defaults.user1email, Defaults.user1pass, userAid);
 			// another building
-			contactsIsInVisible(Defaults.user4email, Defaults.user4email, userAid);
+			contactsIsInVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -588,11 +586,11 @@ public class UserServiceImplTest extends TestWorkAround {
 			asi.login(Defaults.user2email, Defaults.user2email);
 			long userAid = updateContacts(GroupType.FLOOR);
 			// same building same staircase same floor
-			contactsIsVisible(Defaults.user3email, Defaults.user3email, userAid);
+			contactsIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
 			// same building another staircase
-			contactsIsInVisible(Defaults.user1email, Defaults.user1email, userAid);
+			contactsIsInVisible(Defaults.user1email, Defaults.user1pass, userAid);
 			// another building
-			contactsIsInVisible(Defaults.user4email, Defaults.user4email, userAid);
+			contactsIsInVisible(Defaults.user4email, Defaults.user4pass, userAid);
 
 		} catch (Exception e) {
 			e.printStackTrace();

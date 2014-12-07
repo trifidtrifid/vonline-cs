@@ -9,7 +9,6 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.utils.Defaults;
 import org.apache.thrift.TException;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,15 +27,11 @@ public class AuthServiceImplTests extends TestWorkAround{
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         Defaults.initDefaultData(pm);
         asi = new AuthServiceImpl(httpSessionId);
         usi = new UserServiceImpl(httpSessionId);
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        pm.close();
     }
 
     @Test

@@ -246,7 +246,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	private GroupType determineProvacyByAddresses(VoUser currentUser, VoUser user, PersistenceManager pm) throws InvalidOperation {
-		//--------------- implementation faster then commented below but it requires that groups are in the same order and the same Type
+		/*//--------------- implementation faster then commented below but it requires that groups are in the same order and the same Type
+
 		Iterator<Long> ugit = user.getGroups().iterator();
 		Iterator<Long> cugit = currentUser.getGroups().iterator();
 		long commonGroupId;
@@ -255,10 +256,10 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				return GroupType.findByValue( pm.getObjectById(VoUserGroup.class, commonGroupId ).getGroupType());
 			}
 		}
-		return GroupType.TOWN;
+		return GroupType.TOWN;*/
 		
 	//---- Slower but reliable 
-		/*GroupType relation = GroupType.TOWN;
+		GroupType relation = GroupType.TOWN;
 		
 		VoPostalAddress cuAddr = pm.getObjectById( VoPostalAddress.class, currentUser.getAddress());
 		long uAddrId;
@@ -289,7 +290,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				relation = GroupType.BLOCK;
 			
 		}
-		return relation;*/
+		return relation;
 	}
 
 	@Override
@@ -729,7 +730,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	public static  List<VoUser> getUsersByGroup(Long groupId, PersistenceManager pm) {
 		List<VoUser> users = new ArrayList<>();
-		List results = executeQuery(  pm.newQuery("SQL","SELECT `ID` FROM `USERGROUPS` WHERE `GROUP`="+groupId) );
+		List results = executeQuery(  pm.newQuery("SQL","SELECT g.`ID` FROM `USERGROUPS` as g JOIN VOUSER as u ON u.ID=g.ID WHERE `GROUP`="+groupId +" AND u.emailConfirmed=true") );
 		List<Long> uids = new ArrayList<>();
 		Iterator rit = results.iterator();
 		while(rit.hasNext()) {
