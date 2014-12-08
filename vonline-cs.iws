@@ -2,38 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-https.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-ssl.xml.bak" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-ssl.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pom.xml.bak" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/ConfirmEmailServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/ConfirmEmailServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/Defaults.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/Defaults.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/DialogServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/DialogServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/NewTopicsNotification.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/NewTopicsNotification.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/Notification.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/notifications/Notification.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/OAuthServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/OAuthServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/UserServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoBaseMessage.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoBaseMessage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/postaladdress/VoBuilding.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/postaladdress/VoBuilding.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/dialog/VoDialog.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/dialog/VoDialog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/thrift/messageservice.thrift" afterPath="$PROJECT_DIR$/thrift/messageservice.thrift" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="$PROJECT_DIR$/vonline-cs.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vonline-cs.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/CountersController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/CountersController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/main.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.ipr" afterPath="$PROJECT_DIR$/vonline-cs.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -97,10 +71,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="6" selection-start="40" selection-end="40" vertical-scroll-proportion="0.19029851" vertical-offset="0" max-vertical-offset="7718">
+            <state line="10" column="0" selection-start="302" selection-end="302" vertical-scroll-proportion="-0.0" vertical-offset="170" max-vertical-offset="7718">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="236" column="0" selection-start="11382" selection-end="11382" vertical-scroll-proportion="0.0" vertical-offset="3847" max-vertical-offset="5253">
+              <folding>
+                <marker date="1417964880992" expanded="true" signature="913:1134" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="47" selection-start="340" selection-end="340" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="3247">
               <folding />
             </state>
           </provider>
@@ -109,16 +103,16 @@
       <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="133" column="0" selection-start="4462" selection-end="4462" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4216">
+            <state line="152" column="54" selection-start="5245" selection-end="5245" vertical-scroll-proportion="0.0" vertical-offset="2142" max-vertical-offset="4216">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="authservice.thrift" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="authservice.thrift" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="62" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" vertical-offset="219" max-vertical-offset="748">
+            <state line="20" column="46" selection-start="794" selection-end="794" vertical-scroll-proportion="0.41087613" vertical-offset="204" max-vertical-offset="748">
               <folding />
             </state>
           </provider>
@@ -137,7 +131,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" />
@@ -187,6 +180,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/blog.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/.htaccess" />
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
       </list>
     </option>
@@ -256,9 +250,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="y" value="1" />
-    <option name="width" value="1366" />
-    <option name="height" value="726" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -307,7 +302,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="LayoutCode.rearrangeEntriesXML" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="dynamic.classpath" value="false" />
     <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
@@ -1010,6 +1005,10 @@
       <workItem from="1417629996744" duration="11510000" />
       <workItem from="1417687050328" duration="15718000" />
       <workItem from="1417805343441" duration="10449000" />
+      <workItem from="1417904101034" duration="754000" />
+      <workItem from="1417964544747" duration="3256000" />
+      <workItem from="1417967996934" duration="1949000" />
+      <workItem from="1418068008305" duration="1993000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1043,25 +1042,24 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="328085000" />
+    <option name="totallyTimeSpent" value="336037000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="1" width="1366" height="726" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3166287" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.24102564" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41403508" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.24102564" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23380727" sideWeight="0.24169184" order="2" side_tool="true" content_ui="tabs" />
@@ -1071,7 +1069,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19724771" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.75641024" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3697183" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3686007" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1109,6 +1108,27 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="6" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="0" selection-start="4462" selection-end="4462" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="62" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" vertical-offset="219" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="39" selection-start="260" selection-end="260" vertical-scroll-proportion="0.13492064" vertical-offset="0" max-vertical-offset="782" />
@@ -1216,9 +1236,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="33" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="7310">
-          <folding />
-        </state>
+        <state line="10" column="33" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="7310" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoTopic.java">
@@ -1248,9 +1266,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="12" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.9723247" vertical-offset="0" max-vertical-offset="629">
-          <folding />
-        </state>
+        <state line="31" column="12" selection-start="1565" selection-end="1565" vertical-scroll-proportion="0.9723247" vertical-offset="0" max-vertical-offset="629" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/MapsController.js">
@@ -1265,105 +1281,97 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="20" selection-start="745" selection-end="758" vertical-scroll-proportion="0.2080537" vertical-offset="720" max-vertical-offset="2992">
-          <folding />
-        </state>
+        <state line="46" column="20" selection-start="745" selection-end="758" vertical-scroll-proportion="0.2080537" vertical-offset="720" max-vertical-offset="2992" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="9" selection-start="769" selection-end="769" vertical-scroll-proportion="0.0" vertical-offset="205" max-vertical-offset="4284">
-          <folding />
-        </state>
+        <state line="21" column="9" selection-start="769" selection-end="769" vertical-scroll-proportion="0.0" vertical-offset="205" max-vertical-offset="4284" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="33" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="18173">
-          <folding />
-        </state>
+        <state line="10" column="33" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="18173" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/ProfileController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="2295">
-          <folding />
-        </state>
+        <state line="3" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.0" vertical-offset="561" max-vertical-offset="2295" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/LentaController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="27" selection-start="142" selection-end="142" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="3434">
-          <folding />
-        </state>
+        <state line="4" column="27" selection-start="142" selection-end="142" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="3434" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/UnconfirmedCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="42" selection-start="137" selection-end="137" vertical-scroll-proportion="0.096408315" vertical-offset="0" max-vertical-offset="529">
-          <folding />
-        </state>
+        <state line="3" column="42" selection-start="137" selection-end="137" vertical-scroll-proportion="0.096408315" vertical-offset="0" max-vertical-offset="529" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.096408315" vertical-offset="153" max-vertical-offset="1972">
-          <folding />
-        </state>
+        <state line="12" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.096408315" vertical-offset="153" max-vertical-offset="1972" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/neighbours.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="79" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="663">
-          <folding />
-        </state>
+        <state line="1" column="79" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="663" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/unconfirm.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="61" selection-start="349" selection-end="349" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="408">
-          <folding />
-        </state>
+        <state line="5" column="61" selection-start="349" selection-end="349" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="408" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="31" selection-start="496" selection-end="496" vertical-scroll-proportion="5.8846154" vertical-offset="306" max-vertical-offset="3995">
-          <folding />
-        </state>
+        <state line="9" column="31" selection-start="496" selection-end="496" vertical-scroll-proportion="5.8846154" vertical-offset="306" max-vertical-offset="3995" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/registration.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="48" selection-start="3292" selection-end="3292" vertical-scroll-proportion="-7.1923075" vertical-offset="918" max-vertical-offset="2907">
-          <folding />
-        </state>
+        <state line="65" column="48" selection-start="3292" selection-end="3292" vertical-scroll-proportion="-7.1923075" vertical-offset="918" max-vertical-offset="2907" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/request.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="56" selection-start="5193" selection-end="5450" vertical-scroll-proportion="0.57337886" vertical-offset="1991" max-vertical-offset="4845">
-          <folding />
-        </state>
+        <state line="127" column="56" selection-start="5193" selection-end="5450" vertical-scroll-proportion="0.57337886" vertical-offset="1991" max-vertical-offset="4845" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="0" selection-start="4462" selection-end="4462" vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="4216">
+        <state line="152" column="54" selection-start="5245" selection-end="5245" vertical-scroll-proportion="0.0" vertical-offset="2142" max-vertical-offset="4216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="236" column="0" selection-start="11382" selection-end="11382" vertical-scroll-proportion="0.0" vertical-offset="3847" max-vertical-offset="5253">
+          <folding>
+            <marker date="1417964880992" expanded="true" signature="913:1134" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="7718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="47" selection-start="340" selection-end="340" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="3247">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="62" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0" vertical-offset="219" max-vertical-offset="748">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="6" selection-start="40" selection-end="40" vertical-scroll-proportion="0.19029851" vertical-offset="0" max-vertical-offset="7718">
+        <state line="20" column="46" selection-start="794" selection-end="794" vertical-scroll-proportion="0.41087613" vertical-offset="204" max-vertical-offset="748">
           <folding />
         </state>
       </provider>
