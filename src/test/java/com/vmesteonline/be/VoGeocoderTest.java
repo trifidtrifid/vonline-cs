@@ -17,14 +17,6 @@ public class VoGeocoderTest extends TestWorkAround{
 	@Test
 	public void testGetPosition() {
 		Extent<VoBuilding> vbe = pm.getExtent(VoBuilding.class);
-		UserServiceImpl usi = new UserServiceImpl("123");
-		try {
-			UserServiceImpl.getLocationCodesForRegistration();
-		} catch (InvalidOperation e1) {
-			e1.printStackTrace();
-			fail("Failed! " + e1.getMessage());
-			return;
-		}
 		for (VoBuilding voBuilding : vbe) {
 			try {
 				Pair<String, String> position = VoGeocoder.getPosition(voBuilding,true,pm);

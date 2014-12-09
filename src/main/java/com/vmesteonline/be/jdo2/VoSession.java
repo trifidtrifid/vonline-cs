@@ -8,27 +8,24 @@ import java.util.Map;
 //extends GeoLocation
 
 @PersistenceCapable
-@Indices({@Index(name="usd_idx",members = {"userId"})})
+@Indices({@Index(name="usd_idx",members = {"user"})})
 public class VoSession {
 
     public VoSession(String sessId, VoUser user) {
-
-        // this.id = KeyFactory.createKey(VoSession.class.getSimpleName(), sessId);
         id = sessId;
         setUser(user);
-        curAttrMap = new HashMap<Integer, Long>();
+        curAttrMap = new HashMap<>();
     }
 
     public void setUser(VoUser user) {
         if (null != user) {
             setName(user.getName());
             setLastName(user.getLastName());
-            setUserId(user.getId());
         } else {
             setName("");
             setLastName("Гость");
-            setName("");
         }
+        this.user = user;
     }
 
     public void setId(String s) {
@@ -66,7 +63,7 @@ public class VoSession {
     private String lastName;
 
     @Persistent
-    private long userId;
+    private VoUser user;
 
     @Persistent
     private int lastActivityTs; //дата последнего действия пользователя
@@ -122,12 +119,8 @@ public class VoSession {
         this.lastActivityTs = lastActivityTs;
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = null == userId ? 0 : userId;
+    public VoUser getUser() {
+        return user;
     }
 
     public long getSessionAttribute(CurrentAttributeType type) {
@@ -151,13 +144,13 @@ public class VoSession {
 
     @Override
     public String toString() {
-        return "VoSession [id=" + id + ", name=" + name + ", lastName=" + lastName + ", userId=" + userId + ", lastActivityTs=" + lastActivityTs
+        return "VoSession [id=" + id + ", name=" + name + ", lastName=" + lastName + ", user=" + user + ", lastActivityTs=" + lastActivityTs
                 + ", lastUpdateTs=" + lastUpdateTs + "]";
     }
 
     public void postNewDialogMessage( long dialogId ){
         if( null==newDialogMessages )
-            newDialogMessages = new HashMap<Long, Integer>();
+            newDialogMessages = new HashMap<>();
         Integer newVal = newDialogMessages.get(dialogId);
         newDialogMessages.put(dialogId, null == newVal ? 1 : ++newVal);
         setLastUpdateTs((int) (System.currentTimeMillis() / 1000L));

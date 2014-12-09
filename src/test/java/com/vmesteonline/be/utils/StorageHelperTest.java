@@ -1,7 +1,6 @@
 package com.vmesteonline.be.utils;
 
 import com.vmesteonline.be.AuthServiceImpl;
-import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.data.PMF;
 import junit.framework.Assert;
 import org.junit.After;
@@ -34,15 +33,8 @@ public class StorageHelperTest extends StorageHelper {
 			String sessionId = "11111";
 			try {
 				Defaults.initDefaultData(PMF.getPm());
-				asi = new AuthServiceImpl(sessionId);
-				List<String> userLocation = UserServiceImpl.getLocationCodesForRegistration();
-				Assert.assertNotNull(userLocation);
-				Assert.assertTrue(userLocation.size() > 0);
-
-				String userHomeLocation = userLocation.get(0);
-				userId = asi.registerNewUser("fn", "ln", "pswd", "eml", userHomeLocation, 0);
-				Assert.assertTrue(userId > 0);
-				asi.login("eml", "pswd");
+				asi = new AuthServiceImpl();
+				asi.login(Defaults.user1email, Defaults.user1pass);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

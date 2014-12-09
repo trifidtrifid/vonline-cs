@@ -10,7 +10,7 @@
 
     try {
 
-        AuthServiceImpl.checkIfAuthorised(sess.getId());
+        AuthServiceImpl.checkIfAuthorised(request);
         response.sendRedirect("/main");
 
     }catch(InvalidOperation ioe){

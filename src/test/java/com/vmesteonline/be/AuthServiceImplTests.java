@@ -29,8 +29,8 @@ public class AuthServiceImplTests extends TestWorkAround{
     public void setUp() throws Exception {
         super.setUp();
         Defaults.initDefaultData(pm);
-        asi = new AuthServiceImpl(httpSessionId);
-        usi = new UserServiceImpl(httpSessionId);
+        asi = new AuthServiceImpl();
+        usi = new UserServiceImpl();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class AuthServiceImplTests extends TestWorkAround{
     public void testLoginSuccess() {
         try {
             asi.login(Defaults.user1email, Defaults.user1pass);
-            AuthServiceImpl.checkIfAuthorised(httpSessionId);
+            new AuthServiceImpl().checkIfAuthorized();
         } catch (InvalidOperation e) {
             fail("user a with pass a should be valid");
         }
@@ -57,7 +57,7 @@ public class AuthServiceImplTests extends TestWorkAround{
     @Test
     public void testGetSessionNotAuthorized() {
         try {
-            AuthServiceImpl.checkIfAuthorised("ttemptySession");
+            new AuthServiceImpl().checkIfAuthorized();
             fail("session should throw exception");
         } catch (InvalidOperation e) {
             assertEquals(VoError.NotAuthorized, e.what);

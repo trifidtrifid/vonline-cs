@@ -1,14 +1,14 @@
 package com.vmesteonline.be.jdo2.dialog;
 
-import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.thrift.ShortUserInfo;
-import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.jdo2.VoFileAccessRecord;
 import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
+import com.vmesteonline.be.notifications.Notification;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.ShortUserInfo;
+import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.messageservice.Attach;
 import com.vmesteonline.be.thrift.messageservice.Dialog;
-import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.StorageHelper.FileSource;
 
@@ -173,8 +173,9 @@ public class VoDialog {
         for (Long recipient : users) {
             if (recipient != currentUser.getId()) {
                 Notification.dialogMessageNotification(this, currentUser, pm.getObjectById(VoUser.class, recipient));
-                List<VoSession> sessList = executeQuery(pm.newQuery(VoSession.class, "userId==" + recipient));
-                for (VoSession s : sessList) {
+                List<String> sessIdList = executeQuery(pm.newQuery("SQL", "SELECT ID FROM VOSESSION WHERE USER_ID_OID=" + recipient));
+                for (String sId : sessIdList) {
+                    VoSession s = pm.getObjectById(VoSession.class, sId);
                     s.postNewDialogMessage(id);
                     pm.makePersistent(s);
                 }

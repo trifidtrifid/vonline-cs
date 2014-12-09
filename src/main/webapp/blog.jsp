@@ -16,14 +16,14 @@ pageContext.setAttribute("auth",true);
 Boolean isAuth = true;
 
 try {
-AuthServiceImpl.checkIfAuthorised(sess.getId());
+AuthServiceImpl.checkIfAuthorised(request);
 } catch (InvalidOperation ioe) {
     isAuth = false;
     pageContext.setAttribute("auth",false);
     //return;
 }
 
-    MessageServiceImpl messageService = new MessageServiceImpl(request.getSession().getId());
+    MessageServiceImpl messageService = new MessageServiceImpl( request );
 
     TopicListPart Blog = messageService.getBlog(0,1000);
 

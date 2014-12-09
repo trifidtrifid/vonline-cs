@@ -81,7 +81,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 
 		VoSession sess = getCurrentSession(pm);
-		long currentUserId = sess.getUserId();
+		long currentUserId = sess.getUser().getId();
 		VoDialog vdlg = pm.getObjectById(VoDialog.class, dialogID);
 		if (!new HashSet<>(vdlg.getUsers()).contains(currentUserId))
 			throw new InvalidOperation(VoError.IncorrectParametrs, "User not involved in this dialog.");

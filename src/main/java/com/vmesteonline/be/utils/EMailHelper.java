@@ -19,7 +19,7 @@ public class EMailHelper {
     public static void sendSimpleEMail(String from, String to, String subject, String body) throws IOException {
 
         logger.debug("Try to send MEssage to '" + to + "' from '" + fromAddress + "' Subj: '" + subject + "'");
-        if (!isItTests) {
+        if (!Defaults.isItTests) {
             try {
                 URL url = new URL("https://mail.vmesteonline.ru/send.php");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -74,8 +74,6 @@ public class EMailHelper {
             logger.debug("MEssage body was: "+body);
         }
     }
-
-    public static boolean isItTests = false;
 
     public static void sendSimpleEMail(VoUser to, String subject, String body) throws IOException {
         sendSimpleEMail(null == to ? null : to.getName() + " " + to.getLastName() + " <" + to.getEmail() + ">",

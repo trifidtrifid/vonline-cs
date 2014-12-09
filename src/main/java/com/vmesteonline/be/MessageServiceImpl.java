@@ -20,6 +20,7 @@ import org.apache.thrift.TException;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -29,12 +30,10 @@ import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	public MessageServiceImpl() throws InvalidOperation {
-		initDb();
 	}
 
-	public MessageServiceImpl(String sessId) throws InvalidOperation {
-		super(sessId);
-		initDb();
+	public MessageServiceImpl(HttpServletRequest req) throws InvalidOperation {
+		super(req);
 	}
 
 	@Override
@@ -501,10 +500,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		return msg;
 	}
 
-	private void initDb() throws InvalidOperation {
-
-	}
-
 	@Override
 	public Poll doPoll(long pollId, int item) throws InvalidOperation {
 		long userId = getCurrentUserId();
@@ -891,7 +886,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     public String getNextMulticastMessage() throws InvalidOperation, TException {
         PersistenceManager pm = PMF.getPm();
         VoSession currentSession = getCurrentSession();
-        VoUser cu = pm.getObjectById(VoUser.class, currentSession.getUserId());
+        VoUser cu = currentSession.getUser();
         int now = (int) (System.currentTimeMillis() / 1000L);
         VoMulticastMessage message = getCurrentMessage(pm, cu);
         if (currentSession.isNewBroadcastMessage() && (message == null || !message.hasNext)) {
@@ -907,7 +902,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     public String getMulticastMessage() throws InvalidOperation, TException {
         PersistenceManager pm = PMF.getPm();
         VoSession currentSession = getCurrentSession();
-        VoUser cu = pm.getObjectById(VoUser.class, currentSession.getUserId());
+        VoUser cu = currentSession.getUser();
         VoMulticastMessage message = getCurrentMessage(pm, cu);
 		/*
 		 * if(currentSession.isNewBroadcastMessage() && (message == null ||

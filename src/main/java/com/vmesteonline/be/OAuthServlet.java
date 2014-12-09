@@ -47,7 +47,7 @@ public class OAuthServlet extends HttpServlet {
 			JSONObject jsonObj = new JSONObject(response.toString());
 
 			AuthServiceImpl authServiceImpl = new AuthServiceImpl();
-			authServiceImpl.setSession(req.getSession());
+			authServiceImpl.initCurrentSession(req);
 			String email = jsonObj.getString("email");
 			logger.info(email + "find");
 

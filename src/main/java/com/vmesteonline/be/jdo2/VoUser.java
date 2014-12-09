@@ -612,8 +612,8 @@ public class VoUser extends GeoLocation {
 	}
 
 	public String toFullString() {
-		return "VoUser [id=" + getId() + ", address=" + address + ", name=" + name + ", lastName=" + lastName + ", email=" + email + ", password="
-				+ password + ", messagesNum=" + messagesNum + ", topicsNum=" + topicsNum + ", likesNum=" + likesNum + ", unlikesNum=" + unlikesNum + "]";
+		return "VoUser [id=" + getId() + ", name=" + name + ", lastName=" + lastName + ", email=" + email + ", password="
+				+ password + "]";
 	}
 
 	public int getImportancy() {
