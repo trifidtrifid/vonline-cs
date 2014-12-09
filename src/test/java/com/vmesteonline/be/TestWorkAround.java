@@ -5,7 +5,6 @@ import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.utils.Defaults;
-import com.vmesteonline.be.utils.EMailHelper;
 import org.junit.After;
 import org.junit.Before;
 
@@ -28,14 +27,15 @@ public class TestWorkAround {
 
 	protected boolean init() {
 		try {
+			Defaults.isItTests = true;
 			if (!Defaults.initDefaultData(pm, false))
 				return false;
 
-			asi = new AuthServiceImpl(sessionId);
+			asi = new AuthServiceImpl();
 			if (LoginResult.SUCCESS != asi.login(Defaults.user1email, Defaults.user1pass))
 				return false;
-			usi = new UserServiceImpl(sessionId);
-			msi = new MessageServiceImpl(sessionId);
+			usi = new UserServiceImpl();
+			msi = new MessageServiceImpl();
 
 			return true;
 
@@ -58,7 +58,7 @@ public class TestWorkAround {
 
 	@Before
 	public void setUp() throws Exception {
-		EMailHelper.isItTests = true;
+		Defaults.isItTests = true;
 		pif.databaseName = "votest";
 		pm = persistenceManagerFactory.getPersistenceManager();
 	}

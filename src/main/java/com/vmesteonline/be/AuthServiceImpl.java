@@ -12,6 +12,7 @@ import com.vmesteonline.be.thrift.UserLocation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.authservice.AuthService;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
+import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
@@ -19,6 +20,7 @@ import org.apache.thrift.TException;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
@@ -31,41 +33,21 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
     public AuthServiceImpl() {
     }
 
-    public AuthServiceImpl(String sessId) {
-        super(sessId);
+    public AuthServiceImpl(HttpServletRequest req) {
+        super(req);
     }
-
 
     @Override
     public boolean checkIfAuthorized() throws InvalidOperation {
-        PersistenceManager pm = PMF.getPm();
-
-        long uid;
-        if (0 != (uid = getCurrentSession(pm).getUserId())) {
-            try {
-                pm.getObjectById(VoUser.class, uid);
-                return true;
-            } catch (JDOObjectNotFoundException e) {
-            }
-        }
-        return false;
+        return null != getCurrentSession().getUser();
     }
 
-    public static void checkIfAuthorised(String httpSessId) throws InvalidOperation {
+    public static void checkIfAuthorised(HttpServletRequest req) throws InvalidOperation {
         PersistenceManager pm = PMF.getPm();
-
+        String httpSessId = ServiceImpl.createSessId( req );
         VoSession session = getSession(httpSessId, pm);
-
-        if (null == session || 0 == session.getUserId()) {
-            throw new InvalidOperation(VoError.NotAuthorized, "can't find user session for " + httpSessId);
-        }
-        try {
-            pm.getObjectById(VoUser.class, session.getUserId());
-        } catch (Exception e) {
-            session.setUserId(null);
-            throw new InvalidOperation(VoError.NotAuthorized, "can't find user session for " + httpSessId);
-        }
-
+        if( null ==session || null==session.getUser())
+            throw new InvalidOperation(VoError.NotAuthorized, "Not authorized");
     }
 
     public LoginResult allowUserAccess(String email, String pwd, boolean checkPwd) throws InvalidOperation {
@@ -76,8 +58,8 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
             if (u.getPassword().equals(pwd) || !checkPwd) {
                 if (!u.isEmailConfirmed())
                     return LoginResult.EMAIL_NOT_CONFIRMED;
-                logger.info("save session '" + sessionStorage.getId() + "' userId " + u.getId());
-                saveUserInSession(pm, u);
+                logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
+                saveUserInSession(getCurrentSession(), pm, u);
                 return LoginResult.SUCCESS;
             } else
                 logger.info("incorrect password " + email + " pass " + pwd);
@@ -89,13 +71,9 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         return LoginResult.NOT_MATCH;
     }
 
-    void saveUserInSession(PersistenceManager pm, VoUser u) throws InvalidOperation {
-        VoSession currentSession = getCurrentSession(pm);
-        if (null == currentSession)
-            currentSession = new VoSession(sessionStorage.getId(), u);
-        else
-            currentSession.setUser(u);
-        pm.makePersistent(currentSession);
+    void saveUserInSession(VoSession sess, PersistenceManager pm, VoUser u) throws InvalidOperation {
+        sess.setUser(u);
+        pm.makePersistent(sess);
     }
 
     public static VoSession getSession(String sessId, PersistenceManager pm) throws InvalidOperation {
@@ -116,19 +94,13 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 
     @Override
     public LoginResult login(final String email, final String password) throws InvalidOperation {
-        if (sessionStorage == null) {
-            logger.debug("http session is null");
-            throw new InvalidOperation(VoError.IncorrectParametrs, "http session is null");
-        }
-
         logger.info("try authentificate user " + email + " pass " + password);
-
         return allowUserAccess(email, password, true);
     }
 
     public void allowUserAccess(PersistenceManager pm, VoUser u) throws InvalidOperation {
-        logger.info("save session '" + sessionStorage.getId() + "' userId " + u.getId());
-        saveUserInSession(pm, u);
+        logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
+        saveUserInSession( getCurrentSession(), pm, u);
     }
 
     @Override
@@ -324,7 +296,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
             vu.setConfirmCode(code);
             pm.makePersistent(vu);
 
-            if( !EMailHelper.isItTests){
+            if( !Defaults.isItTests){
                 File localFIle = new File(localfileName);
 
                 FileInputStream fis = new FileInputStream(localFIle);
@@ -411,7 +383,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
                 user.setEmailConfirmed(true);
 
                 pm.makePersistent(user);
-                saveUserInSession(pm, user);
+                saveUserInSession(getCurrentSession(), pm, user);
                 return true;
             }
         }

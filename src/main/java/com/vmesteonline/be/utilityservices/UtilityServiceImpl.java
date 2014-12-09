@@ -19,6 +19,7 @@ import org.apache.thrift.TException;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
@@ -174,8 +175,8 @@ public class UtilityServiceImpl extends ServiceImpl implements UtilityService.If
     public UtilityServiceImpl() {
     }
 
-    public UtilityServiceImpl(String sessId) {
-        super(sessId);
+    public UtilityServiceImpl(HttpServletRequest req) {
+        super(req);
     }
 
     @Override

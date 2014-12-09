@@ -13,10 +13,10 @@
     pageContext.setAttribute("auth",true);
 
 	try {
-	 	AuthServiceImpl.checkIfAuthorised(sess.getId());
-        UserServiceImpl userService = new UserServiceImpl(request.getSession());
+	 	new AuthServiceImpl(request);
+        UserServiceImpl userService = new UserServiceImpl(request);
 
-        MessageServiceImpl messageService = new MessageServiceImpl(request.getSession().getId());
+        MessageServiceImpl messageService = new MessageServiceImpl(request);
 
         session.setAttribute("toURL","");
 

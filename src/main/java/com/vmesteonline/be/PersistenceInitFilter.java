@@ -6,6 +6,7 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public class PersistenceInitFilter implements Filter {
@@ -33,14 +34,14 @@ public class PersistenceInitFilter implements Filter {
 		PersistenceManager manager = null;
 		try {
 			manager = getManager();
-			logger.debug("Got request: " + req + " Processed with pm: " + manager);
+			logger.debug("Got request ["+ServiceImpl.createSessId((HttpServletRequest) req)+"]: " + req + " Processed with pm: " + manager);
 			chain.doFilter(req, res);
 		} finally {
 			if (manager != null && !manager.isClosed()) {
 				manager.flush();
 				manager.close();
 			}
-			logger.debug("End process request: "+req + " Just closed pm: "+manager);
+			logger.debug("End request ["+ServiceImpl.createSessId((HttpServletRequest) req)+"]: "+req + " Just closed pm: "+manager);
 		}
 	}
 

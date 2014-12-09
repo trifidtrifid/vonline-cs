@@ -16,9 +16,9 @@
     Boolean isAuth = true;
 
     try {
-        AuthServiceImpl.checkIfAuthorised(sess.getId());
+        AuthServiceImpl.checkIfAuthorised(request);
 
-        UserServiceImpl userService = new UserServiceImpl(request.getSession());
+        UserServiceImpl userService = new UserServiceImpl(request);
 
         ShortUserInfo shortUserInfo = userService.getShortUserInfo();
         UserContacts userContacts = userService.getUserContacts();

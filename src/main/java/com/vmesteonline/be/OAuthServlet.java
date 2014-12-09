@@ -51,7 +51,7 @@ public class OAuthServlet extends HttpServlet {
 			logger.info(email + "find");
 
 			AuthServiceImpl authServiceImpl = new AuthServiceImpl();
-			authServiceImpl.setSession(req.getSession());
+			authServiceImpl.initCurrentSession(req);
 
 			if (inviteCode == null || inviteCode.isEmpty()) {
 				try {

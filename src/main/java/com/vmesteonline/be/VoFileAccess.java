@@ -38,7 +38,7 @@ public class VoFileAccess extends HttpServlet {
 	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		serviceImpl.setSession(req.getSession());
+		serviceImpl.initCurrentSession(req);
 
 		// TODO check user rights
 
@@ -87,7 +87,7 @@ public class VoFileAccess extends HttpServlet {
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		serviceImpl.setSession(req.getSession());
+		serviceImpl.initCurrentSession(req);
 
 		PersistenceManager pm = PMF.getPm();
 		try {

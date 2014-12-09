@@ -106,7 +106,7 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "userId==" + vu.getId()) );
+		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "user==" + vu.getId()) );
 		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
 		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
@@ -181,7 +181,7 @@ public abstract class Notification {
 
 		PersistenceManager pm = PMF.getPm();
 
-		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
+		String subject = "сообщение пользователя: "+author.getName()+" "+author.getLastName();
 		String body = "";
 		try {
 			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
@@ -192,7 +192,11 @@ public abstract class Notification {
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
 				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
 		body += "<br/><i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
-		decorateAndSendMessage(null, subject, body);
+		try {
+			EMailHelper.sendSimpleEMail(author.getName() + " " + author.getLastName() + "<" + author.getEmail() + ">", "info@vmesteonline.ru", subject, body);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void dialogMessageNotification(VoDialog dlg, VoUser author, VoUser rcpt) {

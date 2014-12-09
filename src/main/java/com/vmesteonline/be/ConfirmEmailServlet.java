@@ -37,8 +37,7 @@ public class ConfirmEmailServlet extends HttpServlet {
 					if((""+ confirmCode).equals(uidAndConfCode[1])){
 						user.setEmailConfirmed(true);
 						user.setConfirmCode(System.currentTimeMillis()*System.currentTimeMillis()); //just to reset
-						serviceImpl.setSession(req.getSession());
-						serviceImpl.saveUserInSession(pm, user);
+						serviceImpl.saveUserInSession(serviceImpl.initCurrentSession(req), pm, user);
 						logger.info("USer:"+user.getName()+" "+user.getLastName()+" email:"+user.getEmail()+" confirmed the email.");
 						//getUser by Email info@vmesteonline.ru
 						sendPersonalWelcomeMessage(user, pm);

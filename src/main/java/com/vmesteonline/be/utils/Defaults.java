@@ -87,6 +87,8 @@ public class Defaults {
 		initializeGroups(pm);
 	}
 
+	public static boolean isItTests = false;
+
 	public static boolean initDefaultData(PersistenceManager pm, boolean loadInviteCodes) {
 
 		defaultRubrics = new ArrayList<VoRubric>();

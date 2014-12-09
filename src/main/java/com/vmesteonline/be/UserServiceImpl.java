@@ -1,7 +1,6 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
@@ -18,7 +17,7 @@ import javax.jdo.Extent;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.Map.Entry;
@@ -31,12 +30,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public UserServiceImpl() {
 	}
 
-	public UserServiceImpl(String sessId) {
-		super(sessId);
-	}
-
-	public UserServiceImpl(HttpSession sess) {
-		super(sess);
+	public UserServiceImpl(HttpServletRequest req) {
+		super(req);
 	}
 
 	@Override
@@ -110,7 +105,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				user = pm.getObjectById(VoUser.class, userId);
 			} catch (JDOObjectNotFoundException e) {
 				logger.info("Current user doues not exists. Not found by Id.");
-				getCurrentSession(pm).setUserId(null);
+				getCurrentSession(pm).setUser(null);
 				throw new InvalidOperation(VoError.NotAuthorized, "can't find user by id");
 			}
 
@@ -143,7 +138,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	
-	public static List<String> getLocationCodesForRegistration() throws InvalidOperation {
+	/*public static List<String> getLocationCodesForRegistration() throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
 		Extent<VoPostalAddress> postalAddresses = pm.getExtent(VoPostalAddress.class, true);
@@ -160,7 +155,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			locations.add(code);
 		}
 		return locations;
-	}
+	}*/
 
 	@Override
 	public void deleteUserAddress(PostalAddress newAddress) throws InvalidOperation, TException {
