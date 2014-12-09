@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 //extends GeoLocation
 
-@PersistenceCapable
+@PersistenceCapable( detachable = "true" )
 @Indices({@Index(name="usd_idx",members = {"user"})})
 public class VoSession {
 
@@ -56,34 +56,34 @@ public class VoSession {
     @Persistent
     protected String id;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private String name;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private String lastName;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private VoUser user;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private int lastActivityTs; //дата последнего действия пользователя
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private int lastUpdateTs; //дата последнего запроса обновления
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     @Serialized
     private Map<Integer, Long> curAttrMap;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private boolean newBroadcastMessage;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     private int newImportantMessages;
     /**
      * Map that contains quantity of mew messages in dialogs that are not opened by user recently
      */
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     @Serialized
     private Map<Long, Integer> newDialogMessages;
 

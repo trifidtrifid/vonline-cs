@@ -203,7 +203,7 @@
                             <workingDirectory>${project.basedir}/thrift/</workingDirectory>
                         </configuration>
                         <id>do-generate-thrift</id>
-                        <phase>generate-sources</phase>
+                        <phase>post-clean</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>

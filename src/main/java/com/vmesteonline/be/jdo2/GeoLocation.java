@@ -3,7 +3,7 @@ package com.vmesteonline.be.jdo2;
 import javax.jdo.annotations.*;
 import java.math.BigDecimal;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 @Index(name="locIdx", members={"longitude","latitude"})
 public abstract class GeoLocation {

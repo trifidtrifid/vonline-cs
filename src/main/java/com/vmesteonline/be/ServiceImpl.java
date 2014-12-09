@@ -21,17 +21,20 @@ import java.util.Map;
 
 public class ServiceImpl {
 
-	public VoSession initCurrentSession(HttpServletRequest request) {
+	public String initCurrentSession(HttpServletRequest request) {
 		PersistenceManager pm = PMF.getPm();
 		VoSession cs;
+		String sessId = ServiceImpl.createSessId(request);
 		try {
-			cs = pm.getObjectById(VoSession.class, ServiceImpl.createSessId(request));
+			cs = pm.getObjectById(VoSession.class, sessId);
 		} catch (Exception e) {
-			cs = new VoSession( ServiceImpl.createSessId(request), null );
+			cs = new VoSession(sessId, null );
 			pm.makePersistent(cs);
 		}
-		currentSessionTL.set( cs );
-		return cs;
+
+		currentSessionTL.set(sessId);
+		//cs.setUser(pm.detachCopy(cs.getUser()));
+		return sessId;
 	}
 
 	public enum ServiceCategoryID {
@@ -45,7 +48,7 @@ public class ServiceImpl {
 	private static Cache cache;
 	public static Logger logger;
 	public static String hostName;
-	protected ThreadLocal<VoSession> currentSessionTL = new ThreadLocal<>();
+	protected ThreadLocal<String> currentSessionTL = new ThreadLocal<>();
 
 	static {
 		logger = Logger.getLogger(ServiceImpl.class.getName());
@@ -104,7 +107,7 @@ public class ServiceImpl {
 	}
 
 	public ServiceImpl() {
-		currentSessionTL.set(Defaults.isItTests ? new VoSession("111111", null) : null);
+		currentSessionTL.set(Defaults.isItTests ? "111111" :  null);
 	}
 
 
@@ -118,11 +121,16 @@ public class ServiceImpl {
 	}
 
 	protected long getCurrentUserId(PersistenceManager _pm) throws InvalidOperation {
-		return getCurrentUser().getId();
+		return getCurrentUser(_pm).getId();
 	}
 
 	protected VoUser getCurrentUser() throws InvalidOperation {
-		VoSession voSession = currentSessionTL.get();
+		PersistenceManager pm = PMF.getPm();
+		return getCurrentUser( pm );
+	}
+
+	public VoUser getCurrentUser(PersistenceManager pm) throws InvalidOperation {
+		VoSession voSession = pm.getObjectById(VoSession.class, currentSessionTL.get());
 		if (null == voSession)
 			throw new InvalidOperation(VoError.GeneralError, "Failed to process request. No session set.");
 
@@ -131,12 +139,8 @@ public class ServiceImpl {
 		return voSession.getUser();
 	}
 
-	public VoUser getCurrentUser(PersistenceManager pm) throws InvalidOperation {
-		return getCurrentUser();
-	}
-
 	protected VoSession getCurrentSession() throws InvalidOperation {
-		return currentSessionTL.get();
+		return getCurrentSession(PMF.getPm());
 	}
 
 	public Map<Integer, Long> getCurrentSessionAttributes() throws InvalidOperation {
@@ -145,11 +149,15 @@ public class ServiceImpl {
 	}
 
 	protected VoSession getCurrentSession(PersistenceManager pm) throws InvalidOperation {
-		return currentSessionTL.get();
+		try {
+			return pm.getObjectById(VoSession.class, currentSessionTL.get());
+		} catch (Exception e) {
+			return pm.makePersistent( new VoSession( currentSessionTL.get(), null));
+		}
 	}
 
 	public void setCurrentAttribute(int key, long value) throws InvalidOperation {
-		setCurrentAttribute(key, value, null);
+		setCurrentAttribute(key, value, PMF.getPm());
 	}
 
 	public void setCurrentAttribute(int key, long value, PersistenceManager _pm) throws InvalidOperation {

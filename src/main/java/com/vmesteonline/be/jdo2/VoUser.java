@@ -15,7 +15,7 @@ import javax.jdo.annotations.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 @Indices({
         @Index(name="VOUSER_EML_IDX", members={"email"}),
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
@@ -333,102 +333,102 @@ public class VoUser extends GeoLocation {
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;*/
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Long address;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int birthday;
 
-    @Persistent(table = "usergroups")
+    @Persistent(table = "usergroups", defaultFetchGroup = "true")
     @Join(column = "id")
     @Element(column = "group")
 	private List<Long> groups;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int registered;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String name;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String lastName;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int gender;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String email;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String password;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int messagesNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int topicsNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int likesNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int unlikesNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private long confirmCode;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private boolean emailConfirmed;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String avatarMessage;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String avatarTopic;
 
 	@Persistent
 	private String avatarProfile;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String avatarProfileShort;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String interests;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String job;
 
-	@Persistent(serialized = "true")
+	@Persistent(serialized = "true", defaultFetchGroup = "true")
 	private UserFamily userFamily;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String mobilePhone;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private RelationsType relations;
 
-	@Persistent(serialized = "true")
+	@Persistent(serialized = "true",defaultFetchGroup = "true")
 	private UserPrivacy privacy;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int notificationsFreq;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int importancy;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int popularuty;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int lastNotified;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Set<Long> moderationGroups;
 	
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private long rootGroup;
 	
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
     @Serialized
 	private Set<ServiceType> services;
 	

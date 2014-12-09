@@ -1,6 +1,7 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import org.apache.log4j.Logger;
@@ -37,7 +38,8 @@ public class ConfirmEmailServlet extends HttpServlet {
 					if((""+ confirmCode).equals(uidAndConfCode[1])){
 						user.setEmailConfirmed(true);
 						user.setConfirmCode(System.currentTimeMillis()*System.currentTimeMillis()); //just to reset
-						serviceImpl.saveUserInSession(serviceImpl.initCurrentSession(req), pm, user);
+						String sessId = serviceImpl.initCurrentSession(req);
+						serviceImpl.saveUserInSession(pm.getObjectById(VoSession.class,sessId), pm, user);
 						logger.info("USer:"+user.getName()+" "+user.getLastName()+" email:"+user.getEmail()+" confirmed the email.");
 						//getUser by Email info@vmesteonline.ru
 						sendPersonalWelcomeMessage(user, pm);

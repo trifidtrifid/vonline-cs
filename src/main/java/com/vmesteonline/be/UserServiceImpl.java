@@ -9,8 +9,11 @@ import com.vmesteonline.be.thrift.userservice.FullAddressCatalogue;
 import com.vmesteonline.be.thrift.userservice.GroupLocation;
 import com.vmesteonline.be.thrift.userservice.UserService;
 import com.vmesteonline.be.utils.Defaults;
+import com.vmesteonline.be.utils.ImageConverterVersionCreator;
 import com.vmesteonline.be.utils.Pair;
 import com.vmesteonline.be.utils.VoHelper;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.thrift.TException;
 
 import javax.jdo.Extent;
@@ -19,10 +22,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractCrop;
+import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractScale;
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
@@ -462,9 +468,38 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		VoUser voUser = getCurrentUser(pm);
 
-		voUser.setAvatarTopic(url);
-		voUser.setAvatarMessage(url);
-		voUser.setAvatarProfileShort(url);
+		String smallPicUrl = url;
+		try {
+			Map<String,String[]> params = new HashMap<>();
+			URI uri = new URI(url);
+			List<NameValuePair> nvp = URLEncodedUtils.parse(uri, "UTF-8");
+			for (int iin = 0; iin < nvp.size(); iin++) {
+                NameValuePair nv = nvp.get(iin);
+                params.put( nv.getName(), new String[]{ nv.getValue()});
+            }
+
+			ImageConverterVersionCreator.Scale scale = extractScale( params );
+			ImageConverterVersionCreator.Crop crop = extractCrop(params);
+
+			//create 100x100 bounded avatar
+			int x = crop.Xrb - crop.Xlt;
+			int y = crop.Yrb - crop.Ylt;
+
+			float k = x > y ?
+                    x > 50 ? 50.0F / (float)x : 1.0F :
+                    y > 50 ? 50.0F / (float)y : 1.0F ;
+
+			smallPicUrl = uri.getPath()+
+                    "?w="+ (int)(scale.x * k)+
+                    "&h="+ (int)(scale.y * k)+
+                    "&s="+ (int)(crop.Xlt * k)+"," + (int)(crop.Ylt * k)+","+(int)(crop.Xrb * k)+","+(int)(crop.Yrb * k);
+		} catch (Exception e) {
+			logger.warning("Failed to create thumb for the avatar '"+url+"'"+e.getMessage());
+		}
+
+		voUser.setAvatarTopic(smallPicUrl);
+		voUser.setAvatarMessage(smallPicUrl);
+		voUser.setAvatarProfileShort(smallPicUrl);
 		voUser.setAvatarProfile(url);
 		pm.makePersistent(voUser);
 
