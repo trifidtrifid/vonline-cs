@@ -39,17 +39,19 @@ public class OAuthServlet extends HttpServlet {
 		String domain = "https://" + new URL(req.getRequestURL().toString()).getHost() + "/";
 		String inviteCode = req.getParameter("state");
 
-		logger.info("request " + req.toString() + "try authorize in " + inviteCode + " with code=" + authCode);
+		logger.info("request " + req.toString() + ". try authorize in " + inviteCode + " with code=" + authCode);
 		try {
 			String response = runUrl(new URL("https://oauth.vk.com/access_token?client_id=4429306&redirect_uri=" + domain
 					+ "oauth&client_secret=oQBV8uO3tHyBONHcNsxe&code=" + authCode));
 
+			logger.info("run: " + "https://oauth.vk.com/access_token?client_id=4429306&redirect_uri=" + domain
+					+ "oauth&client_secret=oQBV8uO3tHyBONHcNsxe&code=" + authCode + ". return response: " + response.toString());
 			JSONObject jsonObj = new JSONObject(response.toString());
+			String email = jsonObj.getString("email");
+			logger.info(email + "find");
 
 			AuthServiceImpl authServiceImpl = new AuthServiceImpl();
 			authServiceImpl.setSession(req.getSession());
-			String email = jsonObj.getString("email");
-			logger.info(email + "find");
 
 			if (inviteCode == null || inviteCode.isEmpty()) {
 				try {
