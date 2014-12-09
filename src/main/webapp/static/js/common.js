@@ -24,7 +24,7 @@ var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(pr
 
 var isLogin = authClient.checkIfAuthorized();
 console.log(isLogin);
-//if(!isLogin) document.location.replace('/login.html');
+if(!isLogin) document.location.replace('/login');
 
 transport = new Thrift.Transport("/thrift/DialogService");
 protocol = new Thrift.Protocol(transport);

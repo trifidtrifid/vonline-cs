@@ -961,7 +961,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             try {
                 timeStamp = messageClient.checkUpdates(timeStamp);
             }catch(e){
-                document.location.replace('login.jsp');
+                document.location.replace('/login');
                 //document.location.replace('login.jsp');
             }
 

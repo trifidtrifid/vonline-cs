@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/login.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/login.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.ipr" afterPath="$PROJECT_DIR$/vonline-cs.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,7 +72,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="59" selection-start="502" selection-end="502" vertical-scroll-proportion="-0.7831094" vertical-offset="663" max-vertical-offset="7718">
+            <state line="280" column="0" selection-start="8816" selection-end="8816" vertical-scroll-proportion="0.6199616" vertical-offset="4437" max-vertical-offset="7684">
               <folding />
             </state>
           </provider>
@@ -460,10 +461,6 @@
       <option name="usbDebugPort" value="7936" />
       <method />
     </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
-      <method />
-    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -482,6 +479,10 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
       <method />
     </configuration>
     <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
@@ -508,6 +509,21 @@
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -663,21 +679,6 @@
       </server-settings>
       <predefined_log_file id="Jetty" enabled="true" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1006,6 +1007,7 @@
       <workItem from="1418068008305" duration="1993000" />
       <workItem from="1418077935079" duration="7000" />
       <workItem from="1418155152045" duration="2587000" />
+      <workItem from="1418158562414" duration="985000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1039,7 +1041,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="338631000" />
+    <option name="totallyTimeSpent" value="339616000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1105,6 +1107,20 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="152" column="54" selection-start="5245" selection-end="5245" vertical-scroll-proportion="0.0" vertical-offset="2142" max-vertical-offset="4216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="4" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="46" selection-start="794" selection-end="794" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="748">
@@ -1308,11 +1324,6 @@
         <state line="4" column="27" selection-start="142" selection-end="142" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="3434" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/UnconfirmedCtrl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="42" selection-start="137" selection-end="137" vertical-scroll-proportion="0.096408315" vertical-offset="0" max-vertical-offset="529" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.096408315" vertical-offset="153" max-vertical-offset="1972" />
@@ -1321,11 +1332,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/neighbours.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="79" selection-start="80" selection-end="80" vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="663" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/unconfirm.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="61" selection-start="349" selection-end="349" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="408" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/main.html">
@@ -1373,7 +1379,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="59" selection-start="502" selection-end="502" vertical-scroll-proportion="-0.7831094" vertical-offset="663" max-vertical-offset="7718">
+        <state line="280" column="0" selection-start="8816" selection-end="8816" vertical-scroll-proportion="0.6199616" vertical-offset="4437" max-vertical-offset="7684">
           <folding />
         </state>
       </provider>
