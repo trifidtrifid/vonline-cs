@@ -1,14 +1,20 @@
 var forumControllers = angular.module('forum.controllers', ['ui.select2','infinite-scroll','ngSanitize','yaMap','ui.bootstrap']);
 
-forumControllers.controller('baseController',function($rootScope,$state,$filter) {
+forumControllers.controller('baseController',function($scope,$rootScope,$state,$filter,$location) {
 
     $rootScope.isTopSearchShow = true;
         var base = this;
+        base.url = $location.url();
         base.neighboursLoadStatus = "";
         base.privateMessagesLoadStatus = "";
         base.profileLoadStatus = "";
         base.settingsLoadStatus = "";
         base.mapsLoadStatus = "";
+
+    $scope.$on('$locationChangeSuccess', function($event,newState,oldState){
+        //console.log(newState,oldState);
+        if (newState.indexOf('blog') == -1) base.url = $location.url();
+    });
 
         base.mainContentTopIsHide = false;
         base.createTopicIsHide = true;

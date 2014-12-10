@@ -98,11 +98,12 @@ main.config(function($stateProvider, $urlRouterProvider) {
             url: "/important",
             templateUrl: "/static/partials/important.html",
             controller: 'importantController as important'
-        });
-        /*.state('blog', {
-            url: "/blog",
-            templateUrl: "partials/blog.html",
-            controller: 'BlogController as bl*/
+        })
+        .state('blog', {
+            url: "/blog"
+            //templateUrl: "/static/partials/blog.html",
+            //controller: 'blogController as blog'
+        })
 });
 
 main.config(function($locationProvider){
