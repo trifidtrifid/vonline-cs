@@ -468,6 +468,17 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		VoUser voUser = getCurrentUser(pm);
 
+
+
+		voUser.setAvatarTopic(createThumbnailURL(url,80));
+		voUser.setAvatarMessage(createThumbnailURL(url,48));
+		voUser.setAvatarProfileShort(createThumbnailURL(url,80));
+		voUser.setAvatarProfile(url);
+		pm.makePersistent(voUser);
+
+	}
+
+	public String createThumbnailURL(String url, int size) {
 		String smallPicUrl = url;
 		try {
 			Map<String,String[]> params = new HashMap<>();
@@ -486,8 +497,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			int y = crop.Yrb - crop.Ylt;
 
 			float k = x > y ?
-                    x > 50 ? 50.0F / (float)x : 1.0F :
-                    y > 50 ? 50.0F / (float)y : 1.0F ;
+                    x > size ? (float)size / (float)x : 1.0F :
+                    y > size ? (float)size / (float)y : 1.0F ;
 
 			smallPicUrl = uri.getPath()+
                     "?w="+ (int)(scale.x * k)+
@@ -496,13 +507,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		} catch (Exception e) {
 			logger.warning("Failed to create thumb for the avatar '"+url+"'"+e.getMessage());
 		}
-
-		voUser.setAvatarTopic(smallPicUrl);
-		voUser.setAvatarMessage(smallPicUrl);
-		voUser.setAvatarProfileShort(smallPicUrl);
-		voUser.setAvatarProfile(url);
-		pm.makePersistent(voUser);
-
+		return smallPicUrl;
 	}
 
 	@Override

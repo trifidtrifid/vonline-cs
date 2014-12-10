@@ -111,6 +111,12 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.tuckey</groupId>
+            <artifactId>urlrewritefilter</artifactId>
+            <version>4.0.3</version>
+        </dependency>
     </dependencies>
     <build>
 
@@ -203,7 +209,7 @@
                             <workingDirectory>${project.basedir}/thrift/</workingDirectory>
                         </configuration>
                         <id>do-generate-thrift</id>
-                        <phase>post-clean</phase>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>

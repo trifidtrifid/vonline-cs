@@ -177,7 +177,6 @@ $(document).ready(function(){
             var loginResult = authClient.login($("#uname").val(), $("#password").val());
             if (loginResult == 1) {
                 $('.login-error').hide();
-
                 document.location.replace(toURL);
             } else if(loginResult == 3){
                 $('.login-error').text('Ваш email не подтвержден').removeClass('info-good').show();

@@ -961,7 +961,7 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             try {
                 timeStamp = messageClient.checkUpdates(timeStamp);
             }catch(e){
-                document.location.replace('login.jsp');
+                document.location.replace('/login');
                 //document.location.replace('login.jsp');
             }
 
@@ -971,7 +971,12 @@ forumControllers.controller('baseController',function($rootScope,$state,$filter)
             console.log('timestemp '+timeStamp);
 
             if(timeStamp == 0){
-                updateMap = messageClient.getDialogUpdates();
+                try {
+                    updateMap = messageClient.getDialogUpdates();
+                }catch(e){
+                    document.location.replace('/login');
+                }
+
                 var temp = 0,
                     currentDialogId = $rootScope.base.currentDialogId,
                     counter = 0;
