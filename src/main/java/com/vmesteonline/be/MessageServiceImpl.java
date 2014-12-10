@@ -249,7 +249,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			ug = pm.getObjectById(VoUserGroup.class, groupId);
 
 			if ( type != MessageType.BLOG && !"info@vmesteonline.ru".equalsIgnoreCase( user.getEmail()) ) {
-				if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
+				if( null!=userGroups && userGroups.size() >= Defaults.getDefaultGroups().size() ){
                     filter += " ( ";
                     for( int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx ++){
                         int groupTypeValue = GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue();
@@ -465,6 +465,26 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	@Override
+	public TopicListPart getBusinessTopics(long lastLoadedTopicId, int length) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+
+		List<VoTopic> topics = getTopics(0, null, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, null);
+		TopicListPart mlp = new TopicListPart();
+		mlp.totalSize = topics.size();
+		for (VoTopic voTopic : topics) {
+			Topic tpc = voTopic.getTopic(0, pm);
+			mlp.addToTopics(tpc);
+		}
+		return mlp;
+	}
+
+	@Override
+	public Message postBusinessTopics(Message msg) throws InvalidOperation, TException {
+		msg.setType( MessageType.BUSINESS_PAGE);
+		return  postMessage(msg) ;
+	}
+
+	@Override
 	public Message postMessage(Message msg) throws InvalidOperation {
 		long userId = getCurrentUserId();
 		msg.setAuthorId(userId);
@@ -485,8 +505,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg,currentUser );
 				}
-
-
 
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -258,8 +258,8 @@ public class VoUser extends GeoLocation {
 		latitude = building.getLatitude().toPlainString();
 
 		Vector<Long> groups = new Vector<>();
-		for ( int gid = Defaults.defaultGroups.size(); gid>0; gid--  ) {
-			VoGroup group = Defaults.defaultGroups.get( gid - 1 );
+		for ( int gid = Defaults.getDefaultGroups().size(); gid>0; gid--  ) {
+			VoGroup group = Defaults.getDefaultGroups().get(gid - 1);
 			VoUserGroup ug = VoUserGroup.createVoUserGroup(building.getLongitude(), building.getLatitude(), 
 					group.getRadius(), userAddress.getStaircase(), userAddress.getFloor(),
 					group.getVisibleName(), group.getImportantScore(), group.getGroupType(), pm);

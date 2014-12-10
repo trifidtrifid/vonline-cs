@@ -40,7 +40,7 @@ public class NewTopicsNotification extends Notification {
 		for( VoTopic topic: newTopics ){
 			if( topic.getType() == MessageType.BLOG )
 				continue;
-			VoGroup voGroup = Defaults.defaultGroups.get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
+			VoGroup voGroup = Defaults.getDefaultGroups().get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
 			int radius = voGroup.getRadius();
 			String ufilter;
 			if( voGroup.getGroupType() <= GroupType.BUILDING.getValue() )
@@ -70,7 +70,7 @@ public class NewTopicsNotification extends Notification {
 		for (VoUser u : userTopics.keySet()) {
 			String body = "<p><b>Близкие события</b></p>";
 			boolean somethingToSend = false;
-			for ( VoGroup ug: Defaults.defaultGroups ) {
+			for ( VoGroup ug: Defaults.getDefaultGroups()) {
 				List topicsList = userTopics.get(u)[ug.getGroupType()];
 				if (topicsList != null) {
 					String tc = createGroupContent(pm, ug, topicsList);

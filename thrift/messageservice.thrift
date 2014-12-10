@@ -2,7 +2,7 @@ include "bedata.thrift"
 include "error.thrift"
 namespace * com.vmesteonline.be.thrift.messageservice
 
-enum MessageType { BASE=1, DIALOG=2, SHOP=3, NEWS=4, WALL=5, ADVERT=6, BLOG=7 }
+enum MessageType { BASE=1, DIALOG=2, SHOP=3, NEWS=4, WALL=5, ADVERT=6, BLOG=7, BUSINESS_PAGE=8 }
 
 struct MessageLink {
 	1: MessageType linkType,
@@ -166,6 +166,8 @@ service MessageService {
 	
 	TopicListPart getBlog(2:i64 lastLoadedTopicId, 3:i32 length) throws (1:error.InvalidOperation exc),
 	Message postBlogMessage( 1:Message msg ) throws (1:error.InvalidOperation exc),
+	TopicListPart getBusinessTopics(2:i64 lastLoadedTopicId, 3:i32 length) throws (1:error.InvalidOperation exc),
+	Message postBusinessTopics( 1:Message msg ) throws (1:error.InvalidOperation exc),
 
 	TopicListPart getAdverts( 1:i64 groupId, 2:i64 lastLoadedTopicId, 3:i32 length) throws (1:error.InvalidOperation exc),
 	TopicListPart getTopics( 1:i64 groupId , 2:i64 rubricId, 3:i32 commmunityId, 4:i64 lastLoadedTopicId, 5:i32 length) throws (1:error.InvalidOperation exc),

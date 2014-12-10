@@ -1,12 +1,14 @@
 package com.vmesteonline.be.utils;
 
 import com.vmesteonline.be.AuthServiceImpl;
-import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
-import com.vmesteonline.be.thrift.*;
+import com.vmesteonline.be.thrift.GroupType;
+import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.ServiceType;
+import com.vmesteonline.be.thrift.VoError;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -20,8 +22,8 @@ public class Defaults {
 
     public static final String CITY = "Санкт Петербург";
     public static final String COUNTRY = "Россия";
-	public static List<VoGroup> defaultGroups;
-	public static List<VoRubric> defaultRubrics;
+	private static List<VoGroup> defaultGroups;
+	private static List<VoRubric> defaultRubrics;
 
 	public static Long user1id = null;
 	public static Long user2id = null;
@@ -77,21 +79,15 @@ public class Defaults {
 	 * public static int radiusMedium = 1500; public static int radiusLarge = 5000;
 	 */
 	public static String defaultAvatarTopicUrl = "/data/da.gif";
-	public static String defaultAvatarMessageUrl = "/data/da.gif";
 	public static String defaultAvatarProfileUrl = "/data/da.gif";
 	public static String defaultAvatarShortProfileUrl = "/data/da.gif";
 
-	public static VoPostalAddress[] addresses;
-	static {
-		PersistenceManager pm = PMF.getPm();
-		initializeGroups(pm);
-	}
-
 	public static boolean isItTests = false;
 
+	public static VoPostalAddress[] addresses;
 	public static boolean initDefaultData(PersistenceManager pm, boolean loadInviteCodes) {
 
-		defaultRubrics = new ArrayList<VoRubric>();
+		setDefaultRubrics(new ArrayList<>());
 		try {
 			clearLocations(pm);
 			clearMulticastMesssages(pm);
@@ -100,7 +96,7 @@ public class Defaults {
 			clearFiles(pm);
 			pm.flush();
 			
-			initializeGroups(pm);
+			initializeGroups();
 			List<String> locCodes = initializeTestLocations(loadInviteCodes, pm);
 			initializeUsers(locCodes, pm);
 
@@ -145,14 +141,13 @@ public class Defaults {
 	private static void clearUsers(PersistenceManager pm) {
 		deletePersistentAll(pm, VoTopic.class);
 		deletePersistentAll(pm, VoMessage.class);
-		deletePersistentAll(pm, VoUser.class);
-		deletePersistentAll(pm, VoInviteCode.class);
+		deletePersistentAll(pm, VoSession.class);
 		deletePersistentAll(pm, VoDialog.class);
 		deletePersistentAll(pm, VoDialogMessage.class);
+		deletePersistentAll(pm, VoUser.class);
+		deletePersistentAll(pm, VoInviteCode.class);
 		deletePersistentAll(pm, VoPoll.class);
-		deletePersistentAll(pm, VoSession.class);
 		deletePersistentAll(pm, VoRubric.class);
-		
 	}
 
 	// ======================================================================================================================
@@ -175,13 +170,13 @@ public class Defaults {
 	}
 
 	// ======================================================================================================================
-	private static void initializeGroups(PersistenceManager pm) {
-		if( null==defaultGroups)
-			defaultGroups = new ArrayList<VoGroup>();
+	private static void initializeGroups() {
+		if( null== defaultGroups)
+			defaultGroups = new ArrayList<>();
 		
-		if (defaultGroups.isEmpty()){
+		if (getDefaultGroups().isEmpty()){
 			Iterator<Integer> impIterator = Arrays.asList( new Integer[]{ 101, 200, 500, 1000, 5000 }).iterator();
-			defaultGroups = new ArrayList<VoGroup>();
+			setDefaultGroups(new ArrayList<VoGroup>());
 			for (VoGroup dg : new VoGroup[] { 
 					new VoGroup("Мой этаж", radiusZero, GroupType.FLOOR, true), 
 					new VoGroup("Моя парадная", radiusZero, GroupType.STAIRCASE, true),
@@ -189,7 +184,7 @@ public class Defaults {
 					new VoGroup("Соседние дома", radiusNeighbors, GroupType.NEIGHBORS, true), 
 					}) {
 				dg.setImportantScore( impIterator.next() );
-				defaultGroups.add(dg);
+				getDefaultGroups().add(dg);
 			}
 		} 
 	}
@@ -281,5 +276,23 @@ public class Defaults {
 			throw new InvalidOperation(VoError.GeneralError, "Failed to initTestLocations. "
 					+ (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage()));
 		}
+	}
+
+	public static List<VoGroup> getDefaultGroups() {
+		if( null == defaultGroups )
+			initializeGroups( );
+		return defaultGroups;
+	}
+
+	public static void setDefaultGroups(List<VoGroup> defaultGroups) {
+		Defaults.defaultGroups = defaultGroups;
+	}
+
+	public static List<VoRubric> getDefaultRubrics() {
+		return defaultRubrics;
+	}
+
+	public static void setDefaultRubrics(List<VoRubric> defaultRubrics) {
+		Defaults.defaultRubrics = defaultRubrics;
 	}
 }
