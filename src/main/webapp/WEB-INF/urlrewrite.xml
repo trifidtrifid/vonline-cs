@@ -18,6 +18,10 @@
         <to>/login.html</to>
     </rule>
     <rule>
+        <from>/about</from>
+        <to>/about.html</to>
+    </rule>
+    <rule>
         <from>/blog</from>
         <to>/blog.html</to>
     </rule>

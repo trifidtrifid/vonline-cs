@@ -44,6 +44,10 @@ public class VoTopic extends VoBaseMessage {
 		authorId = author.getId();
 	}
 
+	public void setUserGroupType(int userGroupType) {
+		this.userGroupType = userGroupType;
+	}
+
 	public Topic getTopic(long userId, PersistenceManager pm) {
 
 		List<Attach> imgs = new ArrayList<>();

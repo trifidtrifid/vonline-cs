@@ -123,10 +123,13 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				throw new InvalidOperation(VoError.GeneralError, "can't find user bu id");
 			}
 			List<Group> groups = new ArrayList<Group>();
-			for (Long group : uGroups) {
-				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, group);
+			for (Long groupId : uGroups) {
+				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
 				logger.info("return group " + ug.getName());
-				groups.add( ug.createGroup());
+				Group group = ug.createGroup();
+				if( ug.getGroupType() == GroupType.STAIRCASE.getValue() && ug.getStaircase() == 0 ) group.setId(0);
+				else if( ug.getGroupType() == GroupType.FLOOR.getValue() && ug.getFloor() == 0 ) group.setId(0);
+				groups.add(group);
 			}
 			Collections.sort(groups, new Comparator<Group>(){
 

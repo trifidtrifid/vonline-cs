@@ -633,6 +633,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			theTopic.setUserGroupId(newGroupId);
 			theTopic.setLatitude(newGroup.getLatitude());
 			theTopic.setLongitude(newGroup.getLongitude());
+			theTopic.setUserGroupType(newGroup.getGroupType());
 		}
 	}
 
