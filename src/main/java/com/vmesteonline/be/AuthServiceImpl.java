@@ -39,10 +39,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 
     @Override
     public boolean checkIfAuthorized() throws InvalidOperation {
-        if ( null == getCurrentSession().getUser()){
-            throw  new InvalidOperation(VoError.NotAuthorized, "Not authorized yet.");
-        }
-        return true;
+        return null != getCurrentSession().getUser();
     }
 
     public static void checkIfAuthorised(HttpServletRequest req) throws InvalidOperation {

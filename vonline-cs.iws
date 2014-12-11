@@ -7,7 +7,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/i/alexey.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/i/anton.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/i/len_5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/i/leninskii_72.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/i/pak.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/blogController.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/post1.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/post2.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/post3.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/posts/post4.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java" afterPath="$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java" />
     </list>
     <list id="a266c5a0-169a-4e26-b4a5-b258815120dd" name="Failed commit: Default" comment="Merge branch 'FE' of https://github.com/vobrozer/vonline-cs&#10;&#10;" />
     <ignored path="vonline-cs.iws" />
@@ -74,16 +85,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="urlrewrite.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/urlrewrite.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="88" max-vertical-offset="629">
-              <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="HowToDeploy.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HowToDeploy.txt">
           <provider selected="true" editor-type-id="text-editor">
@@ -94,10 +95,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageServiceImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MessageServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36734694" vertical-offset="6637" max-vertical-offset="17340">
+            <state vertical-scroll-proportion="0.0" vertical-offset="6637" max-vertical-offset="17340">
               <caret line="426" column="44" selection-start-line="426" selection-start-column="44" selection-end-line="426" selection-end-column="44" />
               <folding />
             </state>
@@ -150,6 +151,26 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="AuthServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="6239">
+              <caret line="54" column="45" selection-start-line="54" selection-start-column="45" selection-end-line="54" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AuthServiceImplTests.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.500994" vertical-offset="598" max-vertical-offset="3009">
+              <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="jetty-web.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jetty-web.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -165,16 +186,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="3815" max-vertical-offset="4879">
               <caret line="211" column="47" selection-start-line="211" selection-start-column="47" selection-end-line="211" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.090909" vertical-offset="2180" max-vertical-offset="5321">
-              <caret line="135" column="66" selection-start-line="135" selection-start-column="66" selection-end-line="135" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -207,7 +218,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/EMailHelper.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/vmesteonline/be/TestWorkAround.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/PersistenceInitFilter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthSericeServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/OAuthServlet.java" />
@@ -225,7 +235,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/ImageConverterVersionCreator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/VoServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/ConfirmEmailServlet.java" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
@@ -245,6 +254,8 @@
         <option value="$PROJECT_DIR$/HowToDeploy.txt" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java" />
       </list>
     </option>
   </component>
@@ -744,7 +755,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MessageServiceImpl" />
+              <option name="myItemId" value="UserServiceImpl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vonline-cs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="be" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AuthServiceImpl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1837,7 +1878,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="354256000" />
+    <option name="totallyTimeSpent" value="354442000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -2345,24 +2386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="598" max-vertical-offset="3009">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="517" max-vertical-offset="6732">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/vmesteonline/be/MessageServiceTests.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="9612" max-vertical-offset="13464">
@@ -2451,8 +2474,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36734694" vertical-offset="6637" max-vertical-offset="17340">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6637" max-vertical-offset="17340">
           <caret line="426" column="44" selection-start-line="426" selection-start-column="44" selection-end-line="426" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vmesteonline/be/AuthServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="6239">
+          <caret line="54" column="45" selection-start-line="54" selection-start-column="45" selection-end-line="54" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vmesteonline/be/AuthServiceImplTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.500994" vertical-offset="598" max-vertical-offset="3009">
+          <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
           <folding />
         </state>
       </provider>

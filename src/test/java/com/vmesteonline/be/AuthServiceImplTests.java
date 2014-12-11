@@ -61,10 +61,10 @@ public class AuthServiceImplTests extends TestWorkAround{
                 asi.logout();
             } catch (TException e) {
             }
-            new AuthServiceImpl().checkIfAuthorized();
-            fail("session should throw exception");
+            assertFalse(new AuthServiceImpl().checkIfAuthorized());
+
         } catch (InvalidOperation e) {
-            assertEquals(VoError.NotAuthorized, e.what);
+            fail(e.getWhy());
         }
     }
 
