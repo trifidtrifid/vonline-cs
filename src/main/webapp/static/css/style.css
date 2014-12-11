@@ -286,6 +286,7 @@ h1 {
   background-color: transparent !important;
   border-top-width: 0 !important;
   border-bottom: 2px solid transparent !important;
+  outline: none;
 }
 .submenu .border-pink {
   border-color: #d6487e !important;

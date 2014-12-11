@@ -24,6 +24,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
     var hasStart = false;
 
     function start(){
+        console.log('base');
         hasStart = true;
         $rootScope.isTopSearchShow = true;
         base.neighboursLoadStatus = "";
