@@ -10,7 +10,7 @@
 -->
 <urlrewrite>
     <rule>
-        <from>/(null|profile/.*|main|wall-single/.*|talks|talks-single/.*|profit|profit-single/.*|dialogs|dialog-single/.*|neighbours|profile.change-avatar|settings|maps|set-info|counters|counters-history/.*|important)</from>
+        <from>^/(null|profile/.*|blog|main|wall-single/.*|talks|talks-single/.*|profit|profit-single/.*|dialogs|dialog-single/.*|neighbours|profile.change-avatar|settings|maps|set-info|counters|counters-history/.*|important)$</from>
         <to>/main.html</to>
     </rule>
     <rule>
@@ -20,10 +20,6 @@
     <rule>
         <from>/about</from>
         <to>/about.html</to>
-    </rule>
-    <rule>
-        <from>/blog</from>
-        <to>/blog.html</to>
     </rule>
     <rule>
         <from>/contacts</from>

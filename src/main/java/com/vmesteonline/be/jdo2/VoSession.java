@@ -21,6 +21,7 @@ public class VoSession {
         if (null != user) {
             setName(user.getName());
             setLastName(user.getLastName());
+
         } else {
             setName("");
             setLastName("Гость");
