@@ -7,27 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\i\alexey.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\i\anton.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\i\len_5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\i\leninskii_72.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\i\pak.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\post1.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\post2.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\post3.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\work\workspace\idea\vonline-cs\src\main\webapp\blog\post4.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HowToDeploy.txt" afterPath="$PROJECT_DIR$/HowToDeploy.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/MessageServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" afterPath="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoSession.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/blog.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/blog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/urlrewrite.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/urlrewrite.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <list id="a266c5a0-169a-4e26-b4a5-b258815120dd" name="Failed commit: Default" comment="Merge branch 'FE' of https://github.com/vobrozer/vonline-cs&#10;&#10;" />
@@ -1848,11 +1827,17 @@
       <option name="project" value="LOCAL" />
       <updated>1418235225280</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="update">
+      <created>1418262062901</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1418262062901</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="354186000" />
+    <option name="totallyTimeSpent" value="354256000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1979,7 +1964,8 @@
     <MESSAGE value="session refactoring logout fix" />
     <MESSAGE value="version without JSP" />
     <MESSAGE value="registration without floor fixed on BE" />
-    <option name="LAST_COMMIT_MESSAGE" value="registration without floor fixed on BE" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
