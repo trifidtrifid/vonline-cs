@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -106,7 +107,9 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "user==" + vu.getId()) );
+		Query q = pm.newQuery(VoSession.class, "user==u");
+		q.declareParameters("VoUser u");
+		List<VoSession> uSessionsConst = executeQuery(q,vu);
 		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
 		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);

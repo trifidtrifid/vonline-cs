@@ -57,6 +57,10 @@ public class AuthServiceImplTests extends TestWorkAround{
     @Test
     public void testGetSessionNotAuthorized() {
         try {
+            try {
+                asi.logout();
+            } catch (TException e) {
+            }
             new AuthServiceImpl().checkIfAuthorized();
             fail("session should throw exception");
         } catch (InvalidOperation e) {

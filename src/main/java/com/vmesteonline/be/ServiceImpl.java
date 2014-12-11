@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import javax.cache.Cache;
 import javax.cache.CacheException;
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
@@ -130,10 +131,12 @@ public class ServiceImpl {
 	}
 
 	public VoUser getCurrentUser(PersistenceManager pm) throws InvalidOperation {
-		VoSession voSession = pm.getObjectById(VoSession.class, currentSessionTL.get());
-		if (null == voSession)
+		VoSession voSession = null;
+		try {
+			voSession = pm.getObjectById(VoSession.class, currentSessionTL.get());
+		} catch (JDOObjectNotFoundException e) {
 			throw new InvalidOperation(VoError.GeneralError, "Failed to process request. No session set.");
-
+		}
 		if (voSession.getUser() == null )
 			throw new InvalidOperation(VoError.NotAuthorized, "can't get current user id");
 		return voSession.getUser();
