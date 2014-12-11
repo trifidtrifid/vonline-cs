@@ -24,7 +24,7 @@ var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(pr
 
 var isLogin = authClient.checkIfAuthorized();
 var path = document.location.pathname;
-if(!isLogin && path != '/blog') document.location.replace('/login');
+if(!isLogin && path != '/blog' && path != '/about' && path != '/contacts') document.location.replace('/login');
 
 transport = new Thrift.Transport("/thrift/DialogService");
 protocol = new Thrift.Protocol(transport);
@@ -34,7 +34,7 @@ transport = new Thrift.Transport("/thrift/UserService");
 protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
-if(path != '/blog') {
+if(path != '/blog' && path != '/about' && path != '/contacts') {
     var userClientGroups = userClient.getUserGroups();
     if (userClientGroups.length == 0) document.location.replace('/login');
 

@@ -101,8 +101,12 @@ main.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('blog', {
             url: "/blog"
-            //templateUrl: "/static/partials/blog.html",
-            //controller: 'blogController as blog'
+        })
+        .state('about', {
+            url: "/about"
+        })
+        .state('contacts', {
+            url: "/contacts"
         })
 });
 

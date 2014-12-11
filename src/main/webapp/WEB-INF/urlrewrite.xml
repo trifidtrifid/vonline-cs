@@ -18,14 +18,6 @@
         <to>/login.html</to>
     </rule>
     <rule>
-        <from>/about</from>
-        <to>/about.html</to>
-    </rule>
-    <rule>
-        <from>/contacts</from>
-        <to>/contacts.html</to>
-    </rule>
-    <rule>
         <from>/login.jsp</from>
         <to>/login.html</to>
     </rule>

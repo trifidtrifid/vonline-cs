@@ -6,7 +6,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         base.url = $location.url();
         $scope.$on('$locationChangeSuccess', function($event,newState,oldState){
             console.log('change');
-            if (newState.indexOf('blog') == -1) {
+            if (newState.indexOf('blog') == -1 && newState.indexOf('about') == -1 && newState.indexOf('contacts') == -1) {
                 var isLogin = authClient.checkIfAuthorized();
                 if(!isLogin) document.location.replace('/login');
 
@@ -18,12 +18,13 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         });
 
     console.log(base.url);
-    if(base.url != '/blog') {
+    if(base.url != '/blog' && base.url != '/about' && base.url != '/contacts') {
         if(!hasStart) start();
     }
     var hasStart = false;
 
     function start(){
+        console.log('base');
         hasStart = true;
         $rootScope.isTopSearchShow = true;
         base.neighboursLoadStatus = "";
