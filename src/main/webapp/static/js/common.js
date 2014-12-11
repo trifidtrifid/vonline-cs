@@ -23,8 +23,8 @@ protocol = new Thrift.Protocol(transport);
 var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
 
 var isLogin = authClient.checkIfAuthorized();
-console.log(isLogin);
-if(!isLogin) document.location.replace('/login');
+var path = document.location.pathname;
+if(!isLogin && path != '/blog' && path != '/about' && path != '/contacts') document.location.replace('/login');
 
 transport = new Thrift.Transport("/thrift/DialogService");
 protocol = new Thrift.Protocol(transport);
@@ -34,13 +34,17 @@ transport = new Thrift.Transport("/thrift/UserService");
 protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
-var userClientGroups = userClient.getUserGroups();
-var shortUserInfo = userClient.getShortUserInfo();
+if(path != '/blog' && path != '/about' && path != '/contacts') {
+    var userClientGroups = userClient.getUserGroups();
+    if (userClientGroups.length == 0) document.location.replace('/login');
 
-var servicesStr = shortUserInfo.services.join(';');
-if(servicesStr.indexOf('10') != -1) shortUserInfo.countersEnabled = true;
-if(servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
-if(servicesStr.indexOf('12') != -1) shortUserInfo.countersNotification = true;
+    var shortUserInfo = userClient.getShortUserInfo();
+
+    var servicesStr = shortUserInfo.services.join(';');
+    if (servicesStr.indexOf('10') != -1) shortUserInfo.countersEnabled = true;
+    if (servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
+    if (servicesStr.indexOf('12') != -1) shortUserInfo.countersNotification = true;
+}
 
 transport = new Thrift.Transport("/thrift/UtilityService");
 protocol = new Thrift.Protocol(transport);

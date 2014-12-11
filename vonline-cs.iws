@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="BE" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\i\alexey.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\i\anton.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\i\len_5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\i\leninskii_72.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\i\pak.jpg" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\post1.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\post2.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\post3.html" afterPath="" />
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog\post4.html" afterPath="" />
+      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/partials/blog.html" afterPath="$PROJECT_DIR$/src/main/webapp/static/partials/blog.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/main.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
@@ -84,29 +81,8 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="285" column="0" selection-start="9107" selection-end="9107" vertical-scroll-proportion="-0.0" vertical-offset="4845" max-vertical-offset="7684">
+            <state line="286" column="25" selection-start="9133" selection-end="9133" vertical-scroll-proportion="-187.0" vertical-offset="0" max-vertical-offset="7684">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="blog.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/blog.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="124" column="8" selection-start="4707" selection-end="15121" vertical-scroll-proportion="-7.076923" vertical-offset="1635" max-vertical-offset="3553">
-              <folding>
-                <element signature="tag#div#3;tag#div#0;tag#div#1;tag#div#0;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="e#5834#8877#0" expanded="false" />
-                <element signature="e#8927#9206#0" expanded="false" />
-                <element signature="e#9317#9700#0" expanded="false" />
-                <element signature="e#9741#9864#0" expanded="false" />
-                <element signature="e#9941#12812#0" expanded="false" />
-                <element signature="e#12858#14469#0" expanded="false" />
-                <element signature="e#14543#15016#0" expanded="false" />
-                <marker date="1418158483747" expanded="true" signature="626:847" placeholder="..." />
-                <marker date="1418158483747" expanded="false" signature="7843:7865" placeholder="..." />
-                <marker date="1418158483747" expanded="false" signature="11550:11572" placeholder="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -114,12 +90,11 @@
       <file leaf-file-name="main.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="0" selection-start="4191" selection-end="4191" vertical-scroll-proportion="0.335206" vertical-offset="841" max-vertical-offset="3434">
+            <state line="41" column="9" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.8780488" vertical-offset="445" max-vertical-offset="4403">
               <folding>
-                <element signature="tag#div#1;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="tag#aside#0;tag#div#1;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-                <marker date="1418253215627" expanded="true" signature="913:1134" placeholder="..." />
+                <element signature="tag#div#0;tag#div#3;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#script#61;tag#body#0;tag#html#0" expanded="false" />
+                <marker date="1418322242324" expanded="true" signature="913:1134" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -128,7 +103,7 @@
       <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="47" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="3247">
+            <state line="18" column="43" selection-start="591" selection-end="591" vertical-scroll-proportion="25.5" vertical-offset="969" max-vertical-offset="3247">
               <folding />
             </state>
           </provider>
@@ -302,7 +277,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
+    <option name="STATE" value="1" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1" splitterProportion="0.5">
@@ -499,10 +474,6 @@
       <option name="usbDebugPort" value="7936" />
       <method />
     </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
-      <method />
-    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -521,6 +492,10 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
       <method />
     </configuration>
     <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
@@ -547,6 +522,21 @@
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -702,21 +692,6 @@
       </server-settings>
       <predefined_log_file id="Jetty" enabled="true" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1047,6 +1022,7 @@
       <workItem from="1418155152045" duration="2587000" />
       <workItem from="1418158562414" duration="3931000" />
       <workItem from="1418244908200" duration="4170000" />
+      <workItem from="1418254472018" duration="4280000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1080,7 +1056,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="346732000" />
+    <option name="totallyTimeSpent" value="351012000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1100,6 +1076,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.24102564" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41638225" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23380727" sideWeight="0.24169184" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973376" sideWeight="0.4993046" order="1" side_tool="false" content_ui="tabs" />
@@ -1107,13 +1084,12 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19724771" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.75641024" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4215017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4215017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5159453" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41725352" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1144,6 +1120,10 @@
       </breakpoints-dialog>
       <option name="time" value="52" />
     </breakpoint-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
@@ -1381,13 +1361,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="47" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="3247">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="4" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="748">
@@ -1395,47 +1368,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="285" column="0" selection-start="9107" selection-end="9107" vertical-scroll-proportion="0.0" vertical-offset="4845" max-vertical-offset="7684">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/remember_passw.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="0" selection-start="5990" selection-end="5990" vertical-scroll-proportion="3.941061" vertical-offset="153" max-vertical-offset="2805">
+        <state line="127" column="0" selection-start="5990" selection-end="5990" vertical-scroll-proportion="3.941061" vertical-offset="153" max-vertical-offset="2805" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="286" column="25" selection-start="9133" selection-end="9133" vertical-scroll-proportion="-187.0" vertical-offset="0" max-vertical-offset="7684">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/blog.html">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="8" selection-start="4707" selection-end="15121" vertical-scroll-proportion="-7.076923" vertical-offset="1635" max-vertical-offset="3553">
-          <folding>
-            <element signature="tag#div#3;tag#div#0;tag#div#1;tag#div#0;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="e#5834#8877#0" expanded="false" />
-            <element signature="e#8927#9206#0" expanded="false" />
-            <element signature="e#9317#9700#0" expanded="false" />
-            <element signature="e#9741#9864#0" expanded="false" />
-            <element signature="e#9941#12812#0" expanded="false" />
-            <element signature="e#12858#14469#0" expanded="false" />
-            <element signature="e#14543#15016#0" expanded="false" />
-            <marker date="1418158483747" expanded="true" signature="626:847" placeholder="..." />
-            <marker date="1418158483747" expanded="false" signature="7843:7865" placeholder="..." />
-            <marker date="1418158483747" expanded="false" signature="11550:11572" placeholder="..." />
-          </folding>
+        <state line="18" column="43" selection-start="591" selection-end="591" vertical-scroll-proportion="25.5" vertical-offset="969" max-vertical-offset="3247">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="0" selection-start="4191" selection-end="4191" vertical-scroll-proportion="0.335206" vertical-offset="841" max-vertical-offset="3434">
+        <state line="41" column="9" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.8780488" vertical-offset="445" max-vertical-offset="4403">
           <folding>
-            <element signature="tag#div#1;tag#div#0;tag#div#0;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#aside#0;tag#div#1;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#div#0;tag#div#1;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <marker date="1418253215627" expanded="true" signature="913:1134" placeholder="..." />
+            <element signature="tag#div#0;tag#div#3;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#script#61;tag#body#0;tag#html#0" expanded="false" />
+            <marker date="1418322242324" expanded="true" signature="913:1134" placeholder="..." />
           </folding>
         </state>
       </provider>
