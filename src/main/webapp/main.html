@@ -131,15 +131,16 @@
                         <li><a ui-sref="main"> <span class="menu-text">Новости</span> </a></li>
                         <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> <!-- ng-click="setTab($event,2)" -->
                         <li><a ui-sref="profit"> <span class="menu-text">Услуги и объявления</span> </a></li>
+                        <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>
 
 					</ul>
                     <div class="footer footer-left" ng-hide="base.isFooterBottom">
                         <span class="copypast">&copy;</span> ВместеОнлайн 2014
                         <!-- временная обработка ссылок пока не адаптирован блог, о нас и контакты под ангуляр -->
                         <ul>
-                            <li><a href="about" onclick="document.location.replace('about');">О сайте</a></li>
+                            <li><a href="about" onclick="document.location.replace('./about');">О сайте</a></li>
                             <li><a href="blog" onclick="document.location.replace('./blog');">Блог</a></li>
-                            <li><a href="contacts" onclick="document.location.replace('contacts');">Контакты</a></li>
+                            <li><a href="contacts" onclick="document.location.replace('./contacts');">Контакты</a></li>
                         </ul>
                     </div>
 				</aside>
@@ -189,9 +190,9 @@
             <div class="pull-left"><span class="copypast">&copy;</span> ВместеОнлайн 2014</div>
             <div class="pull-right">
                 <ul>
-                    <li><a href="about" onclick="document.location.replace('about');">О сайте</a></li>
-                    <li><a href="blog" onclick="document.location.replace('blog');">Блог</a></li>
-                    <li><a href="contacts" onclick="document.location.replace('contacts');">Контакты</a></li>
+                    <li><a href="about" onclick="document.location.replace('./about');">О сайте</a></li>
+                    <li><a href="blog" onclick="document.location.replace('./blog');">Блог</a></li>
+                    <li><a href="contacts" onclick="document.location.replace('./contacts');">Контакты</a></li>
                 </ul>
             </div>
         </div>
@@ -268,6 +269,8 @@
 <script src="/static/js/controllers/blogController.js"></script>
 <script src="/static/js/controllers/contactsCtrl.js"></script>
 <script src="/static/js/controllers/aboutCtrl.js"></script>
+<script src="/static/js/controllers/nearbyCtrl.js"></script>
+<script src="/static/js/controllers/nearbySingleCtrl.js"></script>
 
 <script src="/static/js/angular/angular-ui-router.js"></script>
 <script src="/static/js/angular/sanitize.js"></script>

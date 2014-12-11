@@ -7,11 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\workspace\projects\vonline-cs\src\main\webapp\blog.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/baseController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/common.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/leftbarController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/leftbarController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/main.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/mainContentTopController.js" afterPath="$PROJECT_DIR$/src/main/webapp/static/js/controllers/mainContentTopController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.styl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
@@ -78,23 +78,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="286" column="25" selection-start="9133" selection-end="9133" vertical-scroll-proportion="-187.0" vertical-offset="0" max-vertical-offset="7684">
+            <state line="287" column="51" selection-start="9185" selection-end="9185" vertical-scroll-proportion="0.40120968" vertical-offset="4680" max-vertical-offset="7718">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="9" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.8780488" vertical-offset="445" max-vertical-offset="4403">
+            <state line="154" column="26" selection-start="7481" selection-end="7481" vertical-scroll-proportion="-0.60784316" vertical-offset="1907" max-vertical-offset="4386">
               <folding>
-                <element signature="tag#div#0;tag#div#3;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-                <element signature="tag#script#61;tag#body#0;tag#html#0" expanded="false" />
-                <marker date="1418322242324" expanded="true" signature="913:1134" placeholder="..." />
+                <element signature="tag#aside#0;tag#div#3;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#script#63;tag#body#0;tag#html#0" expanded="false" />
+                <marker date="1418328217093" expanded="true" signature="913:1134" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -122,6 +122,24 @@
         <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
           <provider selected="true" editor-type-id="text-editor">
             <state line="19" column="4" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="748">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userservice.thrift" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/thrift/userservice.thrift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="64" column="48" selection-start="3106" selection-end="3106" vertical-scroll-proportion="0.0" vertical-offset="868" max-vertical-offset="1428">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bedata.thrift" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="23" selection-start="814" selection-end="814" vertical-scroll-proportion="-6.8" vertical-offset="663" max-vertical-offset="2992">
               <folding />
             </state>
           </provider>
@@ -189,8 +207,8 @@
         <option value="$PROJECT_DIR$/src/main/webapp/blog.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/backoffice.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/.htaccess" />
-        <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/main.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
       </list>
     </option>
   </component>
@@ -1022,7 +1040,7 @@
       <workItem from="1418155152045" duration="2587000" />
       <workItem from="1418158562414" duration="3931000" />
       <workItem from="1418244908200" duration="4170000" />
-      <workItem from="1418254472018" duration="4280000" />
+      <workItem from="1418254472018" duration="7955000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1056,10 +1074,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="351012000" />
+    <option name="totallyTimeSpent" value="354687000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1084,7 +1102,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19724771" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.75641024" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4215017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4215017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1279,11 +1297,6 @@
         <state line="35" column="0" selection-start="2431" selection-end="2431" vertical-scroll-proportion="0.0" vertical-offset="517" max-vertical-offset="1989" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/thrift/userservice.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="1" selection-start="261" selection-end="261" vertical-scroll-proportion="0.0" vertical-offset="886" max-vertical-offset="1428" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/coming-soon.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="0" selection-start="442" selection-end="442" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1887" />
@@ -1302,11 +1315,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/controllers/navbarController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="35" selection-start="226" selection-end="226" vertical-scroll-proportion="0.4375" vertical-offset="0" max-vertical-offset="408" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="20" selection-start="745" selection-end="758" vertical-scroll-proportion="0.2080537" vertical-offset="720" max-vertical-offset="2992" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/js/login.js">
@@ -1361,23 +1369,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="4" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="748">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/remember_passw.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="127" column="0" selection-start="5990" selection-end="5990" vertical-scroll-proportion="3.941061" vertical-offset="153" max-vertical-offset="2805" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="286" column="25" selection-start="9133" selection-end="9133" vertical-scroll-proportion="-187.0" vertical-offset="0" max-vertical-offset="7684">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
@@ -1387,14 +1381,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="4" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="748">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/userservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="48" selection-start="3106" selection-end="3106" vertical-scroll-proportion="0.0" vertical-offset="868" max-vertical-offset="1428">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="23" selection-start="814" selection-end="814" vertical-scroll-proportion="-6.8" vertical-offset="663" max-vertical-offset="2992">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="9" selection-start="1755" selection-end="1755" vertical-scroll-proportion="0.8780488" vertical-offset="445" max-vertical-offset="4403">
+        <state line="154" column="26" selection-start="7481" selection-end="7481" vertical-scroll-proportion="-0.60784316" vertical-offset="1907" max-vertical-offset="4386">
           <folding>
-            <element signature="tag#div#0;tag#div#3;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
-            <element signature="tag#script#61;tag#body#0;tag#html#0" expanded="false" />
-            <marker date="1418322242324" expanded="true" signature="913:1134" placeholder="..." />
+            <element signature="tag#aside#0;tag#div#3;tag#div#0;tag#div#1;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#script#63;tag#body#0;tag#html#0" expanded="false" />
+            <marker date="1418328217093" expanded="true" signature="913:1134" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="287" column="51" selection-start="9185" selection-end="9185" vertical-scroll-proportion="0.40120968" vertical-offset="4680" max-vertical-offset="7718">
+          <folding />
         </state>
       </provider>
     </entry>

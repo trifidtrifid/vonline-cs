@@ -30,7 +30,6 @@ forumControllers.controller('mainContentTopController',function($rootScope, $sta
 
                 group.selected = true;
 
-
                 $rootScope.currentGroup = group;
                 $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);
 

@@ -35,6 +35,12 @@ forumControllers.controller('leftBarController',function($rootScope) {
                 $rootScope.currentPage = 'important';
                 $rootScope.base.pageTitle = "Важные сообщения";
                 break;
+            case 5:
+                $rootScope.base.mainContentTopIsHide = false;
+                $rootScope.base.importantIsActive = true;
+                $rootScope.currentPage = 'nearby';
+                $rootScope.base.pageTitle = "Рядом";
+                break;
             default :
                 break;
         }
