@@ -15,7 +15,7 @@ import javax.jdo.annotations.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-@PersistenceCapable(detachable = "true")
+@PersistenceCapable
 @Indices({
         @Index(name="VOUSER_EML_IDX", members={"email"}),
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
@@ -220,6 +220,7 @@ public class VoUser extends GeoLocation {
 		try {
 			VoPostalAddress userAddress = pm.getObjectById(VoPostalAddress.class, locCode);
 			setCurrentPostalAddress(userAddress, pm);
+			setAddressConfirmed(true);
 			return userAddress;
 		} catch (JDOObjectNotFoundException eonf) {
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Location not found by CODE=" + locCode);

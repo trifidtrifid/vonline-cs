@@ -114,6 +114,7 @@ public abstract class Notification {
 			return null;
 		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
 		Collections.sort(uSessions, lastActivityComparator);
+		Collections.sort(uSessions, lastActivityComparator);
 		VoSession lastSession = uSessions.get(uSessions.size() - 1);
 		for (VoSession ns : uSessions) {
 			if (lastSession != ns && ns.getLastActivityTs() < sessionDeadLine) // пора удалять неактивную сессию
@@ -125,7 +126,7 @@ public abstract class Notification {
 	}
 
 	private void addUserToNotificationIst(List<VoUser> userList, int now, VoUser vu) {
-		int timeAgo = (int) now - vu.getLastNotified();
+		int timeAgo =  now - vu.getLastNotified();
 		NotificationFreq nf = vu.getNotificationFreq().freq;
 		if (NotificationFreq.DAYLY == nf && timeAgo >= 86400 || NotificationFreq.TWICEAWEEK == nf && timeAgo >= 3 * 86400
 				|| NotificationFreq.WEEKLY == nf && timeAgo >= 7 * 86400) {

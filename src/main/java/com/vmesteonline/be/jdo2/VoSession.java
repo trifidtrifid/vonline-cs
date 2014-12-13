@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 //extends GeoLocation
 
-@PersistenceCapable( detachable = "true" )
+@PersistenceCapable
 @Indices({@Index(name="usd_idx",members = {"user"})})
 public class VoSession {
 
