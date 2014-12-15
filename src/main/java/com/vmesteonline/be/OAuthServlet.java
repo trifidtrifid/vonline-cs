@@ -39,17 +39,19 @@ public class OAuthServlet extends HttpServlet {
 		String domain = "https://" + new URL(req.getRequestURL().toString()).getHost() + "/";
 		String inviteCode = req.getParameter("state");
 
-		logger.info("request " + req.toString() + "try authorize in " + inviteCode + " with code=" + authCode);
+		logger.info("request " + req.toString() + ". try authorize in " + inviteCode + " with code=" + authCode);
 		try {
 			String response = runUrl(new URL("https://oauth.vk.com/access_token?client_id=4429306&redirect_uri=" + domain
 					+ "oauth&client_secret=oQBV8uO3tHyBONHcNsxe&code=" + authCode));
 
+			logger.info("run: " + "https://oauth.vk.com/access_token?client_id=4429306&redirect_uri=" + domain
+					+ "oauth&client_secret=oQBV8uO3tHyBONHcNsxe&code=" + authCode + ". return response: " + response.toString());
 			JSONObject jsonObj = new JSONObject(response.toString());
+			String email = jsonObj.getString("email");
+			logger.info(email + "find");
 
 			AuthServiceImpl authServiceImpl = new AuthServiceImpl();
 			authServiceImpl.initCurrentSession(req);
-			String email = jsonObj.getString("email");
-			logger.info(email + "find");
 
 			if (inviteCode == null || inviteCode.isEmpty()) {
 				try {
@@ -74,9 +76,12 @@ public class OAuthServlet extends HttpServlet {
 						+ jsonObj.getString("access_token") + "&fields=first_name,last_name,sex,bdate,photo_medium");
 
 				String resp2 = runUrl(url);
+				logger.info("run: " + "https://api.vk.com/method/users.get?user_id=" + jsonObj.getString("user_id") + "&v=5.23&access_token="
+						+ jsonObj.getString("access_token") + "&fields=first_name,last_name,sex,bdate,photo_medium. return resp: " + resp2);
+
 				JSONObject jsonObj2 = new JSONObject(resp2);
 
-				resp.getWriter().println("<br><br>  sdfsdf " + resp2 + " access token " + jsonObj.getString("access_token") + " req " + url.toString());
+				logger.info("response " + resp2 + " access token " + jsonObj.getString("access_token") + " req " + url.toString());
 
 				JSONArray vkResp = jsonObj2.getJSONArray("response");
 				JSONObject o = (JSONObject) vkResp.get(0);
