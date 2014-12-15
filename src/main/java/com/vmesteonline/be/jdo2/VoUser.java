@@ -56,6 +56,7 @@ public class VoUser extends GeoLocation {
 		this.likesNum = 0;
 		this.unlikesNum = 0;
 		this.confirmCode = 0;
+		this.confirmMailCode = 0;
 		this.emailConfirmed = false;
 		this.avatarMessage = Defaults.defaultAvatarTopicUrl;
 		this.avatarTopic = Defaults.defaultAvatarTopicUrl;
@@ -204,10 +205,17 @@ public class VoUser extends GeoLocation {
 		return 0 == confirmCode ? confirmCode = System.currentTimeMillis() % 98765 : confirmCode;
 	}
 
+	public long getConfirmMailCode() {
+		return 0 == confirmMailCode ? confirmMailCode = System.currentTimeMillis() % 897546 : confirmMailCode;
+	}
+
 	public void setConfirmCode(long confirmCode) {
 		this.confirmCode = confirmCode;
 	}
 
+	public void setConfirmMailCode(long confirmMailCode) {
+		this.confirmMailCode = confirmMailCode;
+	}
 	public int getLastNotified() {
 		return lastNotified;
 	}
@@ -377,6 +385,9 @@ public class VoUser extends GeoLocation {
 
 	@Persistent(defaultFetchGroup = "true")
 	private long confirmCode;
+
+	@Persistent(defaultFetchGroup = "true")
+	private long confirmMailCode;
 
 	@Persistent(defaultFetchGroup = "true")
 	private boolean emailConfirmed;

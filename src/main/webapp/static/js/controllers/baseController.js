@@ -999,8 +999,10 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                     document.location.replace('/login');
                 }
                 var temp = 0,
-                    currentDialogId = $rootScope.base.currentDialogId,
+                    currentDialogId,
                     counter = 0;
+
+                if($rootScope.base && $rootScope.base.currentDialogId)currentDialogId = $rootScope.base.currentDialogId;
 
                 $rootScope.newMessages = [];
 

@@ -26,6 +26,10 @@ import java.util.List;
 		@Index(name="createDate_IDX", members={"createDate"})
 })
 public class VoTopic extends VoBaseMessage {
+	public String getSubject() {
+		return subject;
+	}
+
 	// id, message, messageNum, viewers, usersNum, lastUpdate, likes, unlikes,
 	// rubricId
 	public VoTopic(Topic topic, VoUser author, PersistenceManager pm) throws InvalidOperation, IOException {
@@ -43,6 +47,7 @@ public class VoTopic extends VoBaseMessage {
 		longitude = author.getLongitude().toPlainString();
 		authorId = author.getId();
 	}
+
 
 	public void setUserGroupType(int userGroupType) {
 		this.userGroupType = userGroupType;
@@ -65,11 +70,11 @@ public class VoTopic extends VoBaseMessage {
 
 		Message msg = new Message(id, 0L, type, getId(), userGroupId, authorId, createdAt, editedAt, getContent(), getLikes(), 0,
 				null, null, null, 0, null, imgs, docs, null,
-					isImportant ? Mark.POSITIVE : isImportant(userId), isLiked(userId),getChildMessageNum());
+					isImportant ? Mark.POSITIVE : isImportant(userId), isLiked(userId),getChildMessageNum(), false);
 
 
 		Topic tpc = new Topic(getId(), subject, msg, getMessageNum(), getViewers(), getUsersNum(), getLastUpdate(), getLikes(), 0, null,
-				null, null, GroupType.findByValue(userGroupType));
+				null, null, GroupType.findByValue(userGroupType), false);
 
 		if (pollId != 0) {
 			try {

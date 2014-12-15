@@ -48,6 +48,7 @@ struct Message {
 	22: Mark important,
 	23: Mark like,
 	24: i32 childCount,
+	25: bool canChange
 } // 'сообщение';
 		
 
@@ -69,7 +70,6 @@ struct Poll {
 	5:	bool alreadyPoll
 }
 
-
 struct Topic {
 	1: i64 id,
 	2: string subject, 
@@ -85,7 +85,8 @@ struct Topic {
 	12: UserTopic usertTopic,
 	13: bedata.ShortUserInfo userInfo,
 	14: Poll poll, 	
-	15: bedata.GroupType groupType,	
+	15: bedata.GroupType groupType,
+	16: bool canChange
 }
 
 struct TopicListPart {
@@ -197,5 +198,6 @@ service MessageService {
 	//В адресе должен быть определен как минимум id дома, если подъезд не определен = 0, то на весь подъезо  
 	void sendGroupMulticastMessage( 1:list<i64> visibleGroups, 2:string message, 3:i32 startDate, 4:i32 expireDate) throws (1:error.InvalidOperation exc),
 	void sendAddressMulticastMessage( 1:list<bedata.PostalAddress> addresses, 2:string message, 3:i32 startDate, 4:i32 expireDate) throws (1:error.InvalidOperation exc),
-		
+
+	Topic moveTopic( 1:i64 id, 2:i64 groupId, 3:string longitude, 4:string latitude, 5:bedata.GroupType groupType, 6:MessageType msgType ) throws (1:error.InvalidOperation exc),
 }
