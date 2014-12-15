@@ -234,7 +234,7 @@
             </plugin>
 
         </plugins>
-        <finalName>vonline</finalName>
+        <finalName>demo.vonline</finalName>
         <!--finalName>demo.vonline</finalName-->
         <pluginManagement>
         	<plugins>

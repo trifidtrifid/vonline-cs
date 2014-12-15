@@ -76,9 +76,12 @@ public class OAuthServlet extends HttpServlet {
 						+ jsonObj.getString("access_token") + "&fields=first_name,last_name,sex,bdate,photo_medium");
 
 				String resp2 = runUrl(url);
+				logger.info("run: " + "https://api.vk.com/method/users.get?user_id=" + jsonObj.getString("user_id") + "&v=5.23&access_token="
+						+ jsonObj.getString("access_token") + "&fields=first_name,last_name,sex,bdate,photo_medium. return resp: " + resp2);
+
 				JSONObject jsonObj2 = new JSONObject(resp2);
 
-				resp.getWriter().println("<br><br>  sdfsdf " + resp2 + " access token " + jsonObj.getString("access_token") + " req " + url.toString());
+				logger.info("response " + resp2 + " access token " + jsonObj.getString("access_token") + " req " + url.toString());
 
 				JSONArray vkResp = jsonObj2.getJSONArray("response");
 				JSONObject o = (JSONObject) vkResp.get(0);
