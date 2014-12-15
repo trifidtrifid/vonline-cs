@@ -1,35 +1,3 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ page import="com.vmesteonline.be.AuthServiceImpl"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.vmesteonline.be.UserServiceImpl"%>
-<%@ page import="com.vmesteonline.be.MessageServiceImpl"%>
-<%@ page import="com.vmesteonline.be.thrift.InvalidOperation"%>
-
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<%
-	HttpSession sess = request.getSession();
-    pageContext.setAttribute("auth",true);
-
-	try {
-	 	new AuthServiceImpl(request);
-        UserServiceImpl userService = new UserServiceImpl(request);
-
-        MessageServiceImpl messageService = new MessageServiceImpl(request);
-
-        session.setAttribute("toURL","");
-
-	} catch (InvalidOperation ioe) {
-        pageContext.setAttribute("auth",false);
-        session.setAttribute("toURL", request.getRequestURL());
-		response.sendRedirect("/login");
-		return;
-	}
-
-
-%>
-
 <!DOCTYPE html>
 <html ng-app="forum">
 <head>
@@ -44,7 +12,6 @@
 <link rel="stylesheet" href="/static/css/lib/jquery.Jcrop.css"/>
 <link rel="stylesheet" href="/static/js/bower_components/select2/select2.css"/>
 
-<%--<script src="/static/js/lib/jquery-2.1.1.min.js"></script>--%>
     <script type="text/javascript" src="//api-maps.yandex.ru/2.1/?load=package.full&lang=ru_RU&coordorder=longlat"></script>
 
 
@@ -82,7 +49,7 @@
             </a>
         </div>
 
-        <div class="navbar-header pull-right" role="navigation">
+        <div class="navbar-header pull-right" role="navigation" ng-if="base.url != '/blog' && base.url != '/about' && base.url != '/contacts'">
             <ul class="nav ace-nav">
                 <li ng-class="navbar.mapsBtnStatus" ng-if="base.me.addressConfirmed"><a class="btn btn-info no-border private-messages-link"
                                                                   ui-sref="maps">Карты</a></li>
@@ -127,7 +94,14 @@
 	<div class="container">
 
 		<div class="main-container" id="main-container">
-			<div class="main-container-inner">
+
+            <div ng-if="base.url == '/blog'" ng-include="'/static/partials/blog.html'"></div>
+
+            <div ng-if="base.url == '/about'" ng-include="'/static/partials/about.html'"></div>
+
+            <div ng-if="base.url == '/contacts'" ng-include="'/static/partials/contacts.html'"></div>
+
+			<div class="main-container-inner" ng-if="base.url != '/blog' && base.url != '/about' && base.url != '/contacts'">
 
 				<aside class="sidebar" id="sidebar" ng-if="!base.hideSidebar" ng-controller="leftBarController as leftbar">
 					<script type="text/javascript">
@@ -152,7 +126,7 @@
                                     <span class="new-message-count bold" ng-if="base.newPrivateMessagesCount">+{{base.newPrivateMessagesCount}}</span>
                                 </span>
                             </a>
-                            <%--<a ui-sref="dialog-single({dialogId: {{ base.biggestCountDialogId }} })" class="new-private-message-count" ng-if="base.newPrivateMessagesCount">{{base.newPrivateMessagesCount}}</a>--%>
+
                         </li>
                         <li><a ui-sref="main"> <span class="menu-text">Новости</span> </a></li>
                         <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> <!-- ng-click="setTab($event,2)" -->
@@ -164,7 +138,7 @@
                         <!-- временная обработка ссылок пока не адаптирован блог, о нас и контакты под ангуляр -->
                         <ul>
                             <li><a href="about" onclick="document.location.replace('about');">О сайте</a></li>
-                            <li><a href="blog" onclick="document.location.replace('blog');">Блог</a></li>
+                            <li><a href="blog" onclick="document.location.replace('./blog');">Блог</a></li>
                             <li><a href="contacts" onclick="document.location.replace('contacts');">Контакты</a></li>
                         </ul>
                     </div>
@@ -230,7 +204,6 @@
     <script src="/static/js/lib/jquery-ui-1.10.3.full.min.js"></script>
     <script src="/static/js/lib/jquery.ui.datepicker-ru.js"></script>
 	<script src="/static/js/lib/ace-extra.min.js"></script>
-	<%--<script src="/static/js/lib/ace-elements.min.js"></script>--%>
 	<script src="/static/js/ace-elements.js"></script>
 
     <script src="/static/js/lib/jquery.fancybox.js"></script>
@@ -268,7 +241,6 @@
 <script src="/static/js/common.js"></script>
 <script src="/static/js/directives.js"></script>
 <script src="/static/js/services.js"></script>
-<%--<script src="/static/js/controllers.js"></script>--%>
 
 <script src="/static/js/controllers/baseController.js"></script>
 <script src="/static/js/controllers/mainContentTopController.js"></script>
@@ -293,6 +265,9 @@
 <script src="/static/js/controllers/CountersHistoryController.js"></script>
 <script src="/static/js/controllers/importantController.js"></script>
 <script src="/static/js/controllers/UnconfirmedCtrl.js"></script>
+<script src="/static/js/controllers/blogController.js"></script>
+<script src="/static/js/controllers/contactsCtrl.js"></script>
+<script src="/static/js/controllers/aboutCtrl.js"></script>
 
 <script src="/static/js/angular/angular-ui-router.js"></script>
 <script src="/static/js/angular/sanitize.js"></script>

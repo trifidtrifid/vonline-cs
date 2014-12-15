@@ -56,6 +56,7 @@ public class VoUser extends GeoLocation {
 		this.likesNum = 0;
 		this.unlikesNum = 0;
 		this.confirmCode = 0;
+		this.confirmMailCode = 0;
 		this.emailConfirmed = false;
 		this.avatarMessage = Defaults.defaultAvatarTopicUrl;
 		this.avatarTopic = Defaults.defaultAvatarTopicUrl;
@@ -204,10 +205,17 @@ public class VoUser extends GeoLocation {
 		return 0 == confirmCode ? confirmCode = System.currentTimeMillis() % 98765 : confirmCode;
 	}
 
+	public long getConfirmMailCode() {
+		return 0 == confirmMailCode ? confirmMailCode = System.currentTimeMillis() % 897546 : confirmMailCode;
+	}
+
 	public void setConfirmCode(long confirmCode) {
 		this.confirmCode = confirmCode;
 	}
 
+	public void setConfirmMailCode(long confirmMailCode) {
+		this.confirmMailCode = confirmMailCode;
+	}
 	public int getLastNotified() {
 		return lastNotified;
 	}
@@ -220,6 +228,7 @@ public class VoUser extends GeoLocation {
 		try {
 			VoPostalAddress userAddress = pm.getObjectById(VoPostalAddress.class, locCode);
 			setCurrentPostalAddress(userAddress, pm);
+			setAddressConfirmed(true);
 			return userAddress;
 		} catch (JDOObjectNotFoundException eonf) {
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Location not found by CODE=" + locCode);
@@ -258,8 +267,8 @@ public class VoUser extends GeoLocation {
 		latitude = building.getLatitude().toPlainString();
 
 		Vector<Long> groups = new Vector<>();
-		for ( int gid = Defaults.defaultGroups.size(); gid>0; gid--  ) {
-			VoGroup group = Defaults.defaultGroups.get( gid - 1 );
+		for ( int gid = Defaults.getDefaultGroups().size(); gid>0; gid--  ) {
+			VoGroup group = Defaults.getDefaultGroups().get(gid - 1);
 			VoUserGroup ug = VoUserGroup.createVoUserGroup(building.getLongitude(), building.getLatitude(), 
 					group.getRadius(), userAddress.getStaircase(), userAddress.getFloor(),
 					group.getVisibleName(), group.getImportantScore(), group.getGroupType(), pm);
@@ -333,102 +342,105 @@ public class VoUser extends GeoLocation {
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;*/
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Long address;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int birthday;
 
-    @Persistent(table = "usergroups")
+    @Persistent(table = "usergroups", defaultFetchGroup = "true")
     @Join(column = "id")
     @Element(column = "group")
 	private List<Long> groups;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int registered;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String name;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String lastName;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int gender;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String email;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String password;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int messagesNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int topicsNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int likesNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int unlikesNum;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private long confirmCode;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
+	private long confirmMailCode;
+
+	@Persistent(defaultFetchGroup = "true")
 	private boolean emailConfirmed;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String avatarMessage;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String avatarTopic;
 
 	@Persistent
 	private String avatarProfile;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String avatarProfileShort;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String interests;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String job;
 
-	@Persistent(serialized = "true")
+	@Persistent(serialized = "true", defaultFetchGroup = "true")
 	private UserFamily userFamily;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private String mobilePhone;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private RelationsType relations;
 
-	@Persistent(serialized = "true")
+	@Persistent(serialized = "true",defaultFetchGroup = "true")
 	private UserPrivacy privacy;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int notificationsFreq;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int importancy;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int popularuty;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private int lastNotified;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Set<Long> moderationGroups;
 	
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private long rootGroup;
 	
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
     @Serialized
 	private Set<ServiceType> services;
 	

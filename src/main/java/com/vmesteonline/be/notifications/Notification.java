@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -106,10 +107,13 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "user==" + vu.getId()) );
+		Query q = pm.newQuery(VoSession.class, "user==u");
+		q.declareParameters("VoUser u");
+		List<VoSession> uSessionsConst = executeQuery(q,vu);
 		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
 		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
+		Collections.sort(uSessions, lastActivityComparator);
 		Collections.sort(uSessions, lastActivityComparator);
 		VoSession lastSession = uSessions.get(uSessions.size() - 1);
 		for (VoSession ns : uSessions) {
@@ -122,7 +126,7 @@ public abstract class Notification {
 	}
 
 	private void addUserToNotificationIst(List<VoUser> userList, int now, VoUser vu) {
-		int timeAgo = (int) now - vu.getLastNotified();
+		int timeAgo =  now - vu.getLastNotified();
 		NotificationFreq nf = vu.getNotificationFreq().freq;
 		if (NotificationFreq.DAYLY == nf && timeAgo >= 86400 || NotificationFreq.TWICEAWEEK == nf && timeAgo >= 3 * 86400
 				|| NotificationFreq.WEEKLY == nf && timeAgo >= 7 * 86400) {
@@ -249,7 +253,7 @@ public abstract class Notification {
 		body += "<br/> Мы создали этот сайт, чтобы Ваша жизнь стала чуть комфортней, от того что вы будете в курсе что происходит в вашем доме. <br/><br/>";
 		if (!newUser.isEmailConfirmed()) {
 			body += "Для доступа к сайту, подтвердите ваш email перейдя по <a href=\"https://" + host + "/confirm/profile/" + newUser.getId() + ","
-					+ newUser.getConfirmCode() + "\">этой ссылке</a><br/></br>";
+					+ newUser.getConfirmMailCode() + "\">этой ссылке</a><br/></br>";
 			pm.makePersistent(newUser);// to save confirm code
 		}
 

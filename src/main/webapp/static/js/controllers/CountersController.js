@@ -1,6 +1,7 @@
 
-forumControllers.controller('CountersController',function($rootScope, $modal,$counters) {
+forumControllers.controller('CountersController',function($rootScope,$modal,$counters) {
         var counters = this;
+        //counters = $scope;
 
         $rootScope.base.mainContentTopIsHide = true;
         $rootScope.base.pageTitle = "Счетчики";

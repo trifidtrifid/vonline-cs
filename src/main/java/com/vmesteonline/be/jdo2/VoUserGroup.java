@@ -130,10 +130,6 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	@Persistent
 	private int groupType;
 
-	@Persistent
-    @Serialized
-	private List<Long> upperLevelGroups;
-
 	public int getImportantScore() {
 		return importantScore;
 	}

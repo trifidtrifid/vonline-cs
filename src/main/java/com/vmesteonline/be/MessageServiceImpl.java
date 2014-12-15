@@ -70,6 +70,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
 					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+					tpc.setCanChange(true);
 				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				MessageListPart mlp = getMessagesAsList(tpc.id, MessageType.BASE, 0, false, 10000);
@@ -249,7 +250,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			ug = pm.getObjectById(VoUserGroup.class, groupId);
 
 			if ( type != MessageType.BLOG && !"info@vmesteonline.ru".equalsIgnoreCase( user.getEmail()) ) {
-				if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
+				if( null!=userGroups && userGroups.size() >= Defaults.getDefaultGroups().size() ){
                     filter += " ( ";
                     for( int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx ++){
                         int groupTypeValue = GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue();
@@ -329,6 +330,11 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		for (VoTopic voTopic : topics) {
 			Topic tpc = voTopic.getTopic(0, pm);
 			mlp.addToTopics(tpc);
+			try {
+				if( getCurrentUser().getEmail().equalsIgnoreCase("info@vmesteonline.ru") )
+					tpc.setCanChange(true);
+			} catch (InvalidOperation invalidOperation) {
+			}
 		}
 		return mlp;
 	}
@@ -363,6 +369,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
 					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+					tpc.setCanChange(true);
 				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				tpc.setMessageNum(voTopic.getMessageNum());
@@ -426,6 +433,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public int checkUpdates(int lastRequest) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		VoSession sess = getCurrentSession(pm);
+		if( null == sess.getUser() )
+			throw new InvalidOperation(VoError.NotAuthorized, "Not authorized now.");
+
 		int now = (int) (System.currentTimeMillis() / 1000L);
 		if (now - sess.getLastActivityTs() > 60) { /*
 																								 * Update last Activity once per
@@ -465,6 +475,31 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	@Override
+	public TopicListPart getBusinessTopics(long lastLoadedTopicId, int length) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+
+		List<VoTopic> topics = getTopics(0, null, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, null);
+		TopicListPart mlp = new TopicListPart();
+		mlp.totalSize = topics.size();
+		for (VoTopic voTopic : topics) {
+			Topic tpc = voTopic.getTopic(0, pm);
+			mlp.addToTopics(tpc);
+			try {
+				if( getCurrentUser().getEmail().equalsIgnoreCase("info@vmesteonline.ru") )
+                    tpc.setCanChange(true);
+			} catch (InvalidOperation invalidOperation) {
+			}
+		}
+		return mlp;
+	}
+
+	@Override
+	public Message postBusinessTopics(Message msg) throws InvalidOperation, TException {
+		msg.setType( MessageType.BUSINESS_PAGE);
+		return  postMessage(msg) ;
+	}
+
+	@Override
 	public Message postMessage(Message msg) throws InvalidOperation {
 		long userId = getCurrentUserId();
 		msg.setAuthorId(userId);
@@ -485,8 +520,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg,currentUser );
 				}
-
-
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -532,6 +565,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		mlp.totalSize = lst.size();
 		for (VoMessage voMessage : lst) {
 			Message msg = voMessage.getMessage(userId, pm);
+			if( null!=user && "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail()))
+				msg.setCanChange(true);
 			if (voMessage.getAuthorId() != null)
 				msg.userInfo = UserServiceImpl.getShortUserInfo(user, voMessage.getAuthorId(), pm);
 			mlp.addToMessages(msg);
@@ -633,6 +668,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			theTopic.setUserGroupId(newGroupId);
 			theTopic.setLatitude(newGroup.getLatitude());
 			theTopic.setLongitude(newGroup.getLongitude());
+			theTopic.setUserGroupType(newGroup.getGroupType());
 		}
 	}
 
@@ -1000,7 +1036,35 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
         sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
     }
 
-    @Override
+	@Override
+	public Topic moveTopic(long id, long groupId, String longitude, String latitude, GroupType groupType, MessageType msgType) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		VoTopic voTopic = pm.getObjectById(VoTopic.class, id);
+		VoUser currentUser = getCurrentUser(pm);
+		if( "info@vmesteonline.ru".equalsIgnoreCase(currentUser.getEmail())) {
+
+			voTopic.setUserGroupType(groupType.getValue());
+			voTopic.setType(msgType);
+			if( voTopic.getSubject() == null ) {
+				int minSLen = Math.min(25, voTopic.getContent().length());
+				minSLen = voTopic.getContent().length() == minSLen ? minSLen : voTopic.getContent().indexOf(' ',minSLen);
+				voTopic.setSubject( voTopic.getContent().substring(0, minSLen) + "...");
+			}
+			if( 0==groupId ) {
+				voTopic.setLongitude(new BigDecimal(longitude));
+				voTopic.setLatitude(new BigDecimal(latitude));
+			} else {
+				VoUserGroup voGroup = pm.getObjectById(VoUserGroup.class, groupId);
+				voTopic.setLongitude(voGroup.getLongitude());
+				voTopic.setLatitude(voGroup.getLatitude());
+				voTopic.setUserGroupType(voGroup.getGroupType());
+			}
+			pm.makePersistent( voTopic );
+		}
+		return voTopic.getTopic( currentUser.getId(), pm);
+	}
+
+	@Override
     public List<WallItem> getImportantNews(long groupId, long rubricId, int commmunityId, int length) throws InvalidOperation {
         TopicListPart topics = getTopics(groupId, rubricId, commmunityId, 0, 1000, MessageType.WALL, true);
 

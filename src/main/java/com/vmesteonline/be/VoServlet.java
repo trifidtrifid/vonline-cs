@@ -76,7 +76,7 @@ public class VoServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		VoSession sess = serviceImpl.initCurrentSession( request );
+		serviceImpl.initCurrentSession( request );
 		TTransport inTransport;
 		TTransport outTransport;
 		try {
@@ -125,6 +125,7 @@ public class VoServlet extends HttpServlet {
 			readerSniffer.close();
             String req = readBaos.toString();
             if( !req.matches(disabledThriftLoggingPatterns)) {
+				VoSession sess = serviceImpl.getCurrentSession();
 				String name = sess.getName()+" "+sess.getLastName();
 				logger.debug("THRIFT["+sess.getId()+":"+name+"] request: '" + req + "'");
 				logger.debug("THRIFT["+sess.getId()+":"+name+"] response: '" + writeBaos.toString() + "'");

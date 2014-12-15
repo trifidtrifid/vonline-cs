@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 @Index(name="locIdx", members={"longitude","latitude"})
-public abstract class GeoLocation {
+public class GeoLocation {
 
 	public GeoLocation() {
 		longitude = "0";

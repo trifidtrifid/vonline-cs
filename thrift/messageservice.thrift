@@ -2,7 +2,7 @@ include "bedata.thrift"
 include "error.thrift"
 namespace * com.vmesteonline.be.thrift.messageservice
 
-enum MessageType { BASE=1, DIALOG=2, SHOP=3, NEWS=4, WALL=5, ADVERT=6, BLOG=7 }
+enum MessageType { BASE=1, DIALOG=2, SHOP=3, NEWS=4, WALL=5, ADVERT=6, BLOG=7, BUSINESS_PAGE=8 }
 
 struct MessageLink {
 	1: MessageType linkType,
@@ -48,6 +48,7 @@ struct Message {
 	22: Mark important,
 	23: Mark like,
 	24: i32 childCount,
+	25: bool canChange
 } // 'сообщение';
 		
 
@@ -69,7 +70,6 @@ struct Poll {
 	5:	bool alreadyPoll
 }
 
-
 struct Topic {
 	1: i64 id,
 	2: string subject, 
@@ -85,7 +85,8 @@ struct Topic {
 	12: UserTopic usertTopic,
 	13: bedata.ShortUserInfo userInfo,
 	14: Poll poll, 	
-	15: bedata.GroupType groupType,	
+	15: bedata.GroupType groupType,
+	16: bool canChange
 }
 
 struct TopicListPart {
@@ -166,6 +167,8 @@ service MessageService {
 	
 	TopicListPart getBlog(2:i64 lastLoadedTopicId, 3:i32 length) throws (1:error.InvalidOperation exc),
 	Message postBlogMessage( 1:Message msg ) throws (1:error.InvalidOperation exc),
+	TopicListPart getBusinessTopics(2:i64 lastLoadedTopicId, 3:i32 length) throws (1:error.InvalidOperation exc),
+	Message postBusinessTopics( 1:Message msg ) throws (1:error.InvalidOperation exc),
 
 	TopicListPart getAdverts( 1:i64 groupId, 2:i64 lastLoadedTopicId, 3:i32 length) throws (1:error.InvalidOperation exc),
 	TopicListPart getTopics( 1:i64 groupId , 2:i64 rubricId, 3:i32 commmunityId, 4:i64 lastLoadedTopicId, 5:i32 length) throws (1:error.InvalidOperation exc),
@@ -195,5 +198,6 @@ service MessageService {
 	//В адресе должен быть определен как минимум id дома, если подъезд не определен = 0, то на весь подъезо  
 	void sendGroupMulticastMessage( 1:list<i64> visibleGroups, 2:string message, 3:i32 startDate, 4:i32 expireDate) throws (1:error.InvalidOperation exc),
 	void sendAddressMulticastMessage( 1:list<bedata.PostalAddress> addresses, 2:string message, 3:i32 startDate, 4:i32 expireDate) throws (1:error.InvalidOperation exc),
-		
+
+	Topic moveTopic( 1:i64 id, 2:i64 groupId, 3:string longitude, 4:string latitude, 5:bedata.GroupType groupType, 6:MessageType msgType ) throws (1:error.InvalidOperation exc),
 }

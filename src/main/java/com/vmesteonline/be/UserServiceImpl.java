@@ -9,8 +9,11 @@ import com.vmesteonline.be.thrift.userservice.FullAddressCatalogue;
 import com.vmesteonline.be.thrift.userservice.GroupLocation;
 import com.vmesteonline.be.thrift.userservice.UserService;
 import com.vmesteonline.be.utils.Defaults;
+import com.vmesteonline.be.utils.ImageConverterVersionCreator;
 import com.vmesteonline.be.utils.Pair;
 import com.vmesteonline.be.utils.VoHelper;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.thrift.TException;
 
 import javax.jdo.Extent;
@@ -19,10 +22,13 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractCrop;
+import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractScale;
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
@@ -117,10 +123,13 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				throw new InvalidOperation(VoError.GeneralError, "can't find user bu id");
 			}
 			List<Group> groups = new ArrayList<Group>();
-			for (Long group : uGroups) {
-				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, group);
+			for (Long groupId : uGroups) {
+				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
 				logger.info("return group " + ug.getName());
-				groups.add( ug.createGroup());
+				Group group = ug.createGroup();
+				if( ug.getGroupType() == GroupType.STAIRCASE.getValue() && ug.getStaircase() == 0 ) group.setId(0);
+				else if( ug.getGroupType() == GroupType.FLOOR.getValue() && ug.getFloor() == 0 ) group.setId(0);
+				groups.add(group);
 			}
 			Collections.sort(groups, new Comparator<Group>(){
 
@@ -462,12 +471,46 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		VoUser voUser = getCurrentUser(pm);
 
-		voUser.setAvatarTopic(url);
-		voUser.setAvatarMessage(url);
-		voUser.setAvatarProfileShort(url);
+
+
+		voUser.setAvatarTopic(createThumbnailURL(url,80));
+		voUser.setAvatarMessage(createThumbnailURL(url,48));
+		voUser.setAvatarProfileShort(createThumbnailURL(url,80));
 		voUser.setAvatarProfile(url);
 		pm.makePersistent(voUser);
 
+	}
+
+	public String createThumbnailURL(String url, int size) {
+		String smallPicUrl = url;
+		try {
+			Map<String,String[]> params = new HashMap<>();
+			URI uri = new URI(url);
+			List<NameValuePair> nvp = URLEncodedUtils.parse(uri, "UTF-8");
+			for (int iin = 0; iin < nvp.size(); iin++) {
+                NameValuePair nv = nvp.get(iin);
+                params.put( nv.getName(), new String[]{ nv.getValue()});
+            }
+
+			ImageConverterVersionCreator.Scale scale = extractScale( params );
+			ImageConverterVersionCreator.Crop crop = extractCrop(params);
+
+			//create 100x100 bounded avatar
+			int x = crop.Xrb - crop.Xlt;
+			int y = crop.Yrb - crop.Ylt;
+
+			float k = x > y ?
+                    x > size ? (float)size / (float)x : 1.0F :
+                    y > size ? (float)size / (float)y : 1.0F ;
+
+			smallPicUrl = uri.getPath()+
+                    "?w="+ (int)(scale.x * k)+
+                    "&h="+ (int)(scale.y * k)+
+                    "&s="+ (int)(crop.Xlt * k)+"," + (int)(crop.Ylt * k)+","+(int)(crop.Xrb * k)+","+(int)(crop.Yrb * k);
+		} catch (Exception e) {
+			logger.warning("Failed to create thumb for the avatar '"+url+"'"+e.getMessage());
+		}
+		return smallPicUrl;
 	}
 
 	@Override

@@ -21,4 +21,17 @@ vonline-cs\src\main\webapp\WEB-INF\demo-jetty-web.xml -> jetty-web.xml
 запустить mvn clean package
 Скопировать полученый target\vonline.war в /opt/jetty-demo/webapp/
 
+-------------------------------------------------
+Обновление блога в 2 апдейта для замены select CAST(CONTENT as CHAR(255)) FROM VOTOPIC WHERE TYPE='BLOG';:
+blog/post1.html
+/blog/post2.html
+/blog/post3.html
+/blog/post4.html
+на
+posts/post1.html
+/posts/post2.html
+/posts/post3.html
+/posts/post4.html
 
+UPDATE VOTOPIC SET CONTENT=CONCAT('posts/',SUBSTRING(CAST(CONTENT as CHAR(255)),6)) WHERE TYPE='BLOG';
+update VOTOPIC SET CONTENT=CONCAT('/posts',SUBSTRING(CAST(CONTENT as CHAR(255)),7)) WHERE TYPE='BLOG' AND SUBSTRING(CAST(CONTENT as CHAR(255)),5) LIKE '%//%';
