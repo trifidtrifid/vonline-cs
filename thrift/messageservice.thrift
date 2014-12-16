@@ -199,5 +199,11 @@ service MessageService {
 	void sendGroupMulticastMessage( 1:list<i64> visibleGroups, 2:string message, 3:i32 startDate, 4:i32 expireDate) throws (1:error.InvalidOperation exc),
 	void sendAddressMulticastMessage( 1:list<bedata.PostalAddress> addresses, 2:string message, 3:i32 startDate, 4:i32 expireDate) throws (1:error.InvalidOperation exc),
 
-	Topic moveTopic( 1:i64 id, 2:i64 groupId, 3:string longitude, 4:string latitude, 5:bedata.GroupType groupType, 6:MessageType msgType ) throws (1:error.InvalidOperation exc),
+	//Метод перемещает заданный топик в группу groupId или, если она не задана, перемещает в координату с определением радиуса в соответсвии с типом группы.
+	//Так же метод меняет тип топика
+	//Любой из аргуметнов кроме первого, может быть не определен - null
+	Topic moveTopic( 1:i64 id, //идентификатор топика
+		2: i64 groupId, //группа в которую он должен быть перемещен. если группа задана, то следующие аргуметы широта, долгота и тип группы - не используются
+		3: string longitude, 4: string latitude, 5: bedata.GroupType groupType, // определение местоположения и радиуса
+		6: MessageType msgType ) throws (1:error.InvalidOperation exc), //изменение типа, null если не требуется изменения
 }

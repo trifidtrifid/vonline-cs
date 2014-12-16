@@ -67,7 +67,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm, user);
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
-				if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
+				if (isHeTheBigBro(user)){
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
 					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
 					tpc.setCanChange(true);
@@ -245,21 +245,24 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		List<VoTopic> topics = new ArrayList<>();
 		Exception e = null;
 		VoUserGroup ug = null;
+		boolean bigBro = isHeTheBigBro(user);
+
 		if( 0!=groupId) {
-
 			ug = pm.getObjectById(VoUserGroup.class, groupId);
-
-			if ( type != MessageType.BLOG && !"info@vmesteonline.ru".equalsIgnoreCase( user.getEmail()) ) {
+			if ( type != MessageType.BLOG && !bigBro) {
 				if( null!=userGroups && userGroups.size() >= Defaults.getDefaultGroups().size() ){
                     filter += " ( ";
                     for( int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx ++){
                         int groupTypeValue = GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue();
-                        filter += "userGroupType=="+ groupTypeValue + " && ";
+                        filter += "userGroupType>="+ groupTypeValue + " && ";
                         if( groupTypeValue > GroupType.BUILDING.getValue() ) {
-                            BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), ug.getRadius());
-                            BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), ug.getRadius());
-                            BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
-                            BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
+							//int radius = ug.getRadius();
+							int radius = 3000; //set radius 3KM and filter messages later
+
+							BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), radius);
+                            BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), radius);
+                            BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), radius);
+                            BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), radius);
                             filter += "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
                                     "' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "')";
                         }
@@ -296,6 +299,16 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			q.setOrdering("lastUpdate DESC");
 			allTopics = executeQuery(q);
 
+			if( null != ug && ug.getGroupType() > GroupType.BUILDING.getValue() && !bigBro){
+				ArrayList<VoTopic> allTopicsFiltered = new ArrayList<>(  );
+				for( VoTopic tpc: allTopics){
+					if( VoHelper.calculateRadius( ug, tpc ) <= Defaults.radiusByType[ tpc.getUserGroupType()]) {
+						allTopicsFiltered.add( tpc );
+					}
+				}
+				allTopics = allTopicsFiltered;
+			}
+
 			boolean addTopic = 0 == lastLoadedTopicId ? true : false;
 			for (VoTopic topic : allTopics) {
 
@@ -317,6 +330,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				+ topics.size() + (null != e ? " exception:" + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage()) : ""));
 
 		return topics;
+	}
+
+	public static boolean isHeTheBigBro(VoUser user) {
+		return "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail());
 	}
 
 	@Override
@@ -366,7 +383,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
-				if ( "info@vmesteonline.ru".equalsIgnoreCase( user.getEmail())){
+				if (isHeTheBigBro(user)){
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
 					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
 					tpc.setCanChange(true);
@@ -565,7 +582,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		mlp.totalSize = lst.size();
 		for (VoMessage voMessage : lst) {
 			Message msg = voMessage.getMessage(userId, pm);
-			if( null!=user && "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail()))
+			if( null!=user && isHeTheBigBro(user))
 				msg.setCanChange(true);
 			if (voMessage.getAuthorId() != null)
 				msg.userInfo = UserServiceImpl.getShortUserInfo(user, voMessage.getAuthorId(), pm);
@@ -1038,26 +1055,27 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	@Override
 	public Topic moveTopic(long id, long groupId, String longitude, String latitude, GroupType groupType, MessageType msgType) throws TException {
+
 		PersistenceManager pm = PMF.getPm();
 		VoTopic voTopic = pm.getObjectById(VoTopic.class, id);
 		VoUser currentUser = getCurrentUser(pm);
-		if( "info@vmesteonline.ru".equalsIgnoreCase(currentUser.getEmail())) {
-
-			voTopic.setUserGroupType(groupType.getValue());
-			voTopic.setType(msgType);
+		if(isHeTheBigBro(currentUser)) {
+			if( null!=msgType ) voTopic.setType(msgType);
 			if( voTopic.getSubject() == null ) {
 				int minSLen = Math.min(25, voTopic.getContent().length());
 				minSLen = voTopic.getContent().length() == minSLen ? minSLen : voTopic.getContent().indexOf(' ',minSLen);
 				voTopic.setSubject( voTopic.getContent().substring(0, minSLen) + "...");
 			}
 			if( 0==groupId ) {
-				voTopic.setLongitude(new BigDecimal(longitude));
-				voTopic.setLatitude(new BigDecimal(latitude));
+				if( null!=groupType ) voTopic.setUserGroupType(groupType.getValue());
+				if( null!=longitude ) voTopic.setLongitude(new BigDecimal(longitude));
+				if( null!=latitude ) voTopic.setLatitude(new BigDecimal(latitude));
 			} else {
 				VoUserGroup voGroup = pm.getObjectById(VoUserGroup.class, groupId);
 				voTopic.setLongitude(voGroup.getLongitude());
 				voTopic.setLatitude(voGroup.getLatitude());
 				voTopic.setUserGroupType(voGroup.getGroupType());
+				voTopic.setUserGroupId(groupId);
 			}
 			pm.makePersistent( voTopic );
 		}
