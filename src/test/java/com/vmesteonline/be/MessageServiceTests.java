@@ -803,6 +803,7 @@ public class MessageServiceTests extends TestWorkAround {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			fail(e.toString());
 		}
 	}
 }
