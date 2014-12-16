@@ -3,8 +3,8 @@ run
 /src/main/java/com/vmesteonline/be/thrift/
 /src/main/webapp/static/.idea
 **/*.class
-target/*
 .classpath
 .project
 .settings/
-
+datanucleus.log
+/target/
