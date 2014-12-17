@@ -99,6 +99,16 @@ main.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "/static/partials/important.html",
             controller: 'importantController as important'
         })
+        .state('nearby', {
+            url: "/nearby",
+            templateUrl: "/static/partials/nearby.html",
+            controller: 'nearbyCtrl as nearby'
+        })
+        .state('nearby-single', {
+            url: "/nearby-single/:nearbyId",
+            templateUrl: "/static/partials/nearby-single.html",
+            controller: 'nearbySingleCtrl as nearby'
+        })
         .state('blog', {
             url: "/blog"
         })

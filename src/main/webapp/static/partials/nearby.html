@@ -1,0 +1,32 @@
+
+<section class="profit nearby page ng-cloak">
+
+    <section class="talks-title-block">
+
+        <div class="talks-title" ng-repeat="advert in nearby.topics" id="{{advert.id}}">
+
+            <div class="talks-title-left load-talk nearby-short-descr">
+                <a ui-sref="profile({ userId : {{advert.userInfo.id}} })"
+                   class="avatar big pull-left" style="background-image: url('{{ advert.userInfo.avatar }}')"></a>
+
+                <div class="talks-title-links">
+                    <a ui-sref="nearby-single({ advertId : {{advert.id}} })">Евразия</a>
+
+                    <p>Суши для всех !</p>
+                    <p>Дешево</p>
+                    <p>Часы работы: 9.00-23.00 </p>
+                    <p>Средний чек: 450р</p>
+                    <p>Адрес: Ленинский 76 к 1</p>
+                    <p></p>
+                </div>
+
+                <a  ui-sref="nearby-single({ advertId : {{advert.id}} })" class="pull-right nearby-more">Подробнее</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+

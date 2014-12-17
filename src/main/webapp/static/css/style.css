@@ -1796,6 +1796,21 @@ h1 {
   font-size: 18px;
   font-weight: bold;
 }
+/* nearby */
+.talks-title .nearby-short-descr {
+  padding-right: 0;
+}
+.talks-title .nearby-short-descr .talks-title-links {
+  margin-left: 165px;
+}
+.talks-title .nearby-short-descr .talks-title-links p {
+  line-height: 16px;
+}
+.talks-title .nearby-short-descr .nearby-more {
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: -26px;
+}
 /* --- */
 .unconfirm {
   padding: 15px;

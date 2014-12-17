@@ -1004,6 +1004,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
                 if($rootScope.base && $rootScope.base.currentDialogId)currentDialogId = $rootScope.base.currentDialogId;
 
+
                 $rootScope.newMessages = [];
 
                 for (var dialogId in updateMap) {
