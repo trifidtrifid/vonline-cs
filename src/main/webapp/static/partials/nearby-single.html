@@ -1,4 +1,5 @@
 
+<!--
 <section class="talks-block adverts-block ng-cloak">
 
     <section class="forum adverts-single" infinite-scroll="adverts.addMoreItems()" ng-if="adverts.fullTalkTopic.id">
@@ -21,7 +22,7 @@
                                 <div class="topic-right text-container">
 
                                     <div class="message-tools pull-right" ng-show="adverts.fullTalkTopic.userInfo.id == base.me.id">
-                                        <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(adverts.fullTalkTopic,adverts.topics,true,false)">&times;</a>
+                                        <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(adverts.fullTalkTopic,adverts.topics,true,false)"></a>
                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,adverts.fullTalkTopic)" class="fa fa-pencil pull-right"></a>
                                     </div>
 
@@ -80,7 +81,6 @@
 
                                         </div>
 
-                                        <!-- -->
 
                                         <div class="poll-results" ng-switch-when="true">
 
@@ -139,7 +139,7 @@
                                         <div class="topic-right text-container">
 
                                             <div class="message-tools pull-right" ng-show="firstMessage.userInfo.id == base.me.id">
-                                                <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(firstMessage,adverts.fullTalkFirstMessages,false,false)">&times;</a>
+                                                <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(firstMessage,adverts.fullTalkFirstMessages,false,false)"></a>
                                                 <a href="#" title="Редактировать" ng-click="base.setEdit($event,firstMessage,true)" class="fa fa-pencil pull-right"></a>
                                             </div>
 
@@ -196,7 +196,7 @@
                             <ol class="dd-list" ng-show="firstMessage.isTreeOpen">
 
                                 <li class="dd-item dd2-item topic-item" ng-repeat="message in adverts.fullTalkMessages[firstMessage.id]"
-                                    ng-style="{'margin-left': {{message.offset*30-30}}}" ng-show="message.isOpen && message.isParentOpen">
+                                    ng-style="{'margin-left': {{message.offset*30-30}} }" ng-show="message.isOpen && message.isParentOpen">
                                     <div class="dd2-content widget-box topic-descr">
                                         <div class="widget-body">
                                             <div class="widget-main">
@@ -212,7 +212,7 @@
                                                 </div>
                                                 <div class="topic-right text-container">
                                                     <div class="message-tools pull-right" ng-show="message.userInfo.id == base.me.id">
-                                                        <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(message,adverts.fullTalkMessages[firstMessage.id],false,false)">&times;</a>
+                                                        <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(message,adverts.fullTalkMessages[firstMessage.id],false,false)"></a>
                                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,message,true)" class="fa fa-pencil pull-right"></a>
                                                     </div>
 
@@ -280,4 +280,58 @@
 
     </section>
 
-</section>
+</section>-->
+
+<div class="wallitem-message blog">
+
+    <div class="post">
+        <div class="topic">
+            <div ng-include="post.full"></div>
+        </div>
+        <div class="topic-stuff">
+            <a href="#" class="show-comment" ng-click="nearby.toggleComm($event,post)">
+                <span ng-show="post.isCommentShow">Скрыть комментарии</span>
+                <span ng-show="!post.isCommentShow">Показать комментарии</span>
+            </a> |
+            <a href="#" class="make-comment" ng-click="nearby.toggleInput($event,post)">Комментировать</a>
+        </div>
+
+        <div class="dialogs">
+            <div class="itemdiv dialogdiv new" ng-repeat="comm in post.comments" ng-show="post.isCommentShow">
+                <a ui-href="profile-{{comm.userInfo.id}}" class="user" ng-class="{'no-link': !comm.userInfo}">
+                    <div class="avatar short2" style="background-image: url({{comm.userInfo.avatar}})"></div>
+                </a>
+                <div class="body">
+                    <div class="name">
+                        <a ui-href="profile-{{comm.userInfo.id}}" ng-class="{'no-link': !comm.userInfo}">{{comm.userInfo.firstName+" "+comm.userInfo.lastName}}</a>
+                    </div>
+                    <div class="text">{{comm.content}}</div>
+                    <div class="lenta-item-bottom">
+                        <span>{{nearby.getTiming(comm.created)}}</span>
+                        <a href="#" ng-click="nearby.toggleInput($event,post)"> Ответить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group" ng-show="post.isInputShow">
+
+            <input type="text" class="anonName" placeholder="Имя Фамилия" ng-if="!nearby.isAuth" ng-model="post.anonName"/>
+
+            <textarea class="message-textarea" ng-focus="true" ng-model="post.commenting"
+                      onblur="if(this.value=='') this.value='Ваш ответ';"
+                      onfocus="if(this.value=='Ваш ответ') this.value='';" ></textarea>
+
+
+            <span class="input-group-btn">
+                <button class="btn btn-sm btn-info no-radius no-border send-in-blog" type="button" ng-click="nearby.sendComm($event,post)">
+                    <i class="icon-share-alt"></i>
+                    Комментировать
+                </button>
+                <span class="error-info"></span>
+
+            </span>
+        </div>
+
+    </div>
+</div>
