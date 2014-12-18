@@ -63,6 +63,16 @@
 
                 <button class="btn no-border btn-sm btn-primary send-post">Отправить</button>
 
+                <div class="bo-business">
+                    <h2>Добавить Business-page</h2>
+                    <div><input placeholder="Ссылка на краткое описание" class="bus-short-url" type="text"/></div>
+                    <p></p>
+                    <div><input placeholder="Ссылка на полное описание" class="bus-full-url" type="text"/></div>
+                    <p></p>
+
+                    <button class="btn no-border btn-sm btn-primary send-business">Отправить</button>
+                </div>
+
                 <div class="broadcast">
                     <br/>
                     <h2>Отправить уведомление пользователям.</h2>
@@ -146,6 +156,32 @@
             newTopic.id = 0;
 
             messageClient.postTopic(newTopic);
+        });
+
+        $('.send-business').click(function(e){
+            e.preventDefault();
+            var groups = userClient.getUserGroups(),
+                shortUrl = $('.bus-short-url').val(),
+                fullUrl = $('.bus-full-url').val();
+
+            console.log('bus-page');
+            if(shortUrl && fullUrl){
+                var newTopic = new com.vmesteonline.be.thrift.messageservice.Topic();
+                newTopic.message = new com.vmesteonline.be.thrift.messageservice.Message();
+                newTopic.message.groupId = groups[0].id;
+                //newTopic.message.topicId = 0;
+                newTopic.message.type = 8; // business page
+                newTopic.message.content = shortUrl+";"+fullUrl;
+                newTopic.message.id = 0;
+                newTopic.message.created = Date.parse(new Date())/1000;
+
+                newTopic.subject = "123";
+                newTopic.id = 0;
+
+                console.log('bus-page',newTopic.message.content);
+                var t = messageClient.postTopic(newTopic);
+                console.log('bus-page',t);
+            }
         });
 
         $('.send-broadcast').click(function(){
