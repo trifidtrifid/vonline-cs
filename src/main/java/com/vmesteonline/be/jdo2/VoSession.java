@@ -63,28 +63,28 @@ public class VoSession {
     @Persistent(defaultFetchGroup = "true")
     private String lastName;
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent(nullValue=NullValue.DEFAULT)
     private VoUser user;
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent
     private int lastActivityTs; //дата последнего действия пользователя
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent
     private int lastUpdateTs; //дата последнего запроса обновления
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent
     @Serialized
     private Map<Integer, Long> curAttrMap;
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent
     private boolean newBroadcastMessage;
 
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent
     private int newImportantMessages;
     /**
      * Map that contains quantity of mew messages in dialogs that are not opened by user recently
      */
-    @Persistent(defaultFetchGroup = "true")
+    @Persistent
     @Serialized
     private Map<Long, Integer> newDialogMessages;
 

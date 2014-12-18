@@ -31,6 +31,10 @@ public class VoInviteCode {
 	public long getId() {
 		return id;
 	}
+	
+	public String getCode(){
+		return code;
+	}
 
 	@SuppressWarnings("unchecked")
 	public static VoInviteCode getInviteCode(String inviteCode, PersistenceManager pm) throws InvalidOperation {

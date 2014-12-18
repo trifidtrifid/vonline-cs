@@ -14,6 +14,8 @@ import com.vmesteonline.be.thrift.authservice.AuthService;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
+import com.vmesteonline.be.utils.VoHelper;
+
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
@@ -21,6 +23,7 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
@@ -222,11 +225,12 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
         user.setEmailConfirmed(false);
         user.setCurrentPostalAddress( pa, pm );
         user.setAddressConfirmed(false);
+        VoInviteCode ic = VoHelper.createNewInviteCode(3, 3, pa, null, pm);
         pm.makePersistent(user);
 
         try {
             EMailHelper.sendSimpleEMail("trifid@gmail.com", "Wants to register: "+addressString,
-                    "ID:" + user.getId() + " <br/>Full name:" +user.getName() + " " + user.getLastName() + "<br/>email:" + user.getEmail() + "<br/>Address: " + addressString);
+                    "ID:" + user.getId() + " <br/>Full name:" +user.getName() + " " + user.getLastName() + "<br/>email:" + user.getEmail() + "<br/>Address: " + addressString+"<br/>Code: "+ic.getCode());
         } catch (Exception e) {
             e.printStackTrace();
         }

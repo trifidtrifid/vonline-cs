@@ -22,6 +22,8 @@ import java.util.*;
         @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
 
 public class VoUser extends GeoLocation {
+	
+	
 
 	public static int BASE_USER_SCORE = 100;
 

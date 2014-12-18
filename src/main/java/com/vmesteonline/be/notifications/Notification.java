@@ -9,12 +9,14 @@ import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -232,10 +234,10 @@ public abstract class Notification {
 		String body = newUser.getName() + " " + newUser.getLastName() + ", добро пожаловать на сайт Вашего дома!<br/><br/> ";
 
 		body += "Ваш логин: " + newUser.getEmail() + "<br/>Пароль:    " + newUser.getPassword() + "<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
-		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		userSet.addAll(executeQuery(pm.newQuery(VoUser.class, "")));
-
-		body += "На сайте уже зарегистрировано: " + userSet.size() + " пользователей<br/>";
+		//body.Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
+		List res = executeQuery(pm.newQuery("SQL", "SELECT COUNT(*) FROM VOUSER"));
+		
+		body += "На сайте уже зарегистрировано: " + res.get(0) + " пользователей<br/>";
 
 		List<VoUser> ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.NEIGHBORS, pm), pm);
 		if (0 != ul.size()) body += "В соседних домах: " + ul.size() + "<br/>";
