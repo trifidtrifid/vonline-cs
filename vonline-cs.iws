@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="" />
+    <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/backoffice.html" afterPath="$PROJECT_DIR$/src/main/webapp/backoffice.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
+    </list>
     <ignored path="vonline-cs.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -69,29 +72,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="12" selection-start="515" selection-end="515" vertical-scroll-proportion="0.99270076" vertical-offset="0" max-vertical-offset="7718">
+            <state line="10" column="0" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="7718">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="request.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/request.html">
+      <file leaf-file-name="backoffice.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="146" column="73" selection-start="6209" selection-end="6209" vertical-scroll-proportion="0.0" vertical-offset="2482" max-vertical-offset="4845">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registration.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/registration.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="76" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="2907">
-              <folding />
+            <state line="116" column="27" selection-start="4757" selection-end="4757" vertical-scroll-proportion="0.53932583" vertical-offset="1684" max-vertical-offset="5032">
+              <folding>
+                <marker date="1418859987166" expanded="true" signature="584:805" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,8 +95,10 @@
       <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="151" column="26" selection-start="7290" selection-end="7290" vertical-scroll-proportion="0.0" vertical-offset="2567" max-vertical-offset="5423">
-              <folding />
+            <state line="66" column="55" selection-start="3231" selection-end="3231" vertical-scroll-proportion="0.0" vertical-offset="902" max-vertical-offset="5474">
+              <folding>
+                <marker date="1418856608781" expanded="true" signature="913:1134" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -141,6 +139,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="messageservice.thrift" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="163" column="8" selection-start="5197" selection-end="5197" vertical-scroll-proportion="0.0" vertical-offset="2605" max-vertical-offset="3638">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="bedata.thrift" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
           <provider selected="true" editor-type-id="text-editor">
@@ -163,7 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUserGroup.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoUser.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/jdo2/VoFileAccessRecord.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/vmesteonline/be/utils/StorageHelper.java" />
@@ -214,6 +220,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/.htaccess" />
         <option value="$PROJECT_DIR$/src/main/webapp/main.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/backoffice.html" />
       </list>
     </option>
   </component>
@@ -300,7 +307,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
+    <option name="STATE" value="2" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1" splitterProportion="0.5">
@@ -497,10 +504,6 @@
       <option name="usbDebugPort" value="7936" />
       <method />
     </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
-      <method />
-    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -519,6 +522,10 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
       <method />
     </configuration>
     <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
@@ -545,6 +552,21 @@
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -700,21 +722,6 @@
       </server-settings>
       <predefined_log_file id="Jetty" enabled="true" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1048,7 +1055,8 @@
       <workItem from="1418254472018" duration="8646000" />
       <workItem from="1418408713573" duration="4392000" />
       <workItem from="1418762474541" duration="13000" />
-      <workItem from="1418856237053" duration="95000" />
+      <workItem from="1418856237053" duration="4080000" />
+      <workItem from="1418922342064" duration="111000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1082,7 +1090,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="359878000" />
+    <option name="totallyTimeSpent" value="363974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1109,7 +1117,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19724771" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32922536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27599388" sideWeight="0.75641024" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4215017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4215017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1152,13 +1160,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="23" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="2992">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/thrift/authservice.thrift">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="46" selection-start="794" selection-end="794" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="748">
@@ -1265,11 +1266,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/important.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="23" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="3893" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="183" column="65" selection-start="6924" selection-end="6924" vertical-scroll-proportion="4.699659" vertical-offset="1734" max-vertical-offset="3468" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/static/partials/dialogs.html">
@@ -1400,25 +1396,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="26" selection-start="7290" selection-end="7290" vertical-scroll-proportion="0.0" vertical-offset="2567" max-vertical-offset="5423">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/registration.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="76" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="2907">
-          <folding />
-        </state>
+        <state line="26" column="76" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="2907" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/request.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="73" selection-start="6209" selection-end="6209" vertical-scroll-proportion="0.0" vertical-offset="2482" max-vertical-offset="4845">
-          <folding />
-        </state>
+        <state line="146" column="73" selection-start="6209" selection-end="6209" vertical-scroll-proportion="0.0" vertical-offset="2482" max-vertical-offset="4845" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
@@ -1430,8 +1415,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="12" selection-start="515" selection-end="515" vertical-scroll-proportion="0.99270076" vertical-offset="0" max-vertical-offset="7718">
+        <state line="10" column="0" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="7718">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="163" column="8" selection-start="5197" selection-end="5197" vertical-scroll-proportion="0.0" vertical-offset="2605" max-vertical-offset="3638">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="55" selection-start="3231" selection-end="3231" vertical-scroll-proportion="0.0" vertical-offset="902" max-vertical-offset="5474">
+          <folding>
+            <marker date="1418856608781" expanded="true" signature="913:1134" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="116" column="27" selection-start="4757" selection-end="4757" vertical-scroll-proportion="0.53932583" vertical-offset="1684" max-vertical-offset="5032">
+          <folding>
+            <marker date="1418859987166" expanded="true" signature="584:805" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
