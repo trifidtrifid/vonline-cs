@@ -259,15 +259,13 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
     @SuppressWarnings("unchecked")
     public static VoUser getUserByEmail(String email, PersistenceManager pm) {
 
-        Query q = pm.newQuery(VoUser.class);
-        q.setFilter("email == eml");
-        q.declareParameters("String eml");
-        List<VoUser> users = executeQuery(q, email.toLowerCase().trim());
+        Query q = pm.newQuery("SQL","SELECT ID FROM VOUSER where EMAIL='"+email.toLowerCase().trim()+"'");
+        List<Long> users = executeQuery( q );
         if (users.isEmpty())
             return null;
         if (users.size() != 1)
             logger.error("has more than one user with email " + email);
-        return users.get(0);
+        return pm.getObjectById(VoUser.class, users.get(0));
     }
 
     private static Logger logger = Logger.getLogger("com.vmesteonline.be.AuthServiceImpl");
