@@ -14,6 +14,7 @@ import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.VoHelper;
+
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
@@ -21,6 +22,7 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -280,20 +282,21 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		try {
 
-            if( type == MessageType.BLOG ) {
-				filter = "type=='"+MessageType.BLOG.name()+"'";
+       if( type == MessageType.BLOG ) {
+      	 filter = "type=='"+MessageType.BLOG.name()+"'";
 
-            } else {
-				if (importantOnly) {
-					int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
-					filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& " + filter;
-				}
-
-				if (type == MessageType.WALL)
-					filter += "&& (type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' )"; //|| type=='" + MessageType.ADVERT+"')";
-				else
-					filter += "&& type=='" + type + "'";
-			}
+       } else {
+					if (importantOnly) {
+						int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
+						filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& " + filter;
+					}
+					
+					if (type == MessageType.WALL)
+						filter += filter.length() > 0 ? "&& (type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' )" :
+							"(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' )"; //|| type=='" + MessageType.ADVERT+"')";
+					else
+						filter += filter.length() > 0 ? "&& type=='" + type + "'" : "type=='" + type + "'";
+       }
 
 			Query q = pm.newQuery(VoTopic.class, filter);
 			q.setOrdering("lastUpdate DESC");
@@ -333,7 +336,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	public static boolean isHeTheBigBro(VoUser user) {
-		return "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail());
+		return null!=user && "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail());
 	}
 
 	@Override
@@ -495,17 +498,15 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public TopicListPart getBusinessTopics(long lastLoadedTopicId, int length) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 
-		List<VoTopic> topics = getTopics(0, null, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, null);
+		VoUser currentUser = getCurrentUser();
+		List<VoTopic> topics = getTopics(0, null, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, currentUser);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
 		for (VoTopic voTopic : topics) {
 			Topic tpc = voTopic.getTopic(0, pm);
 			mlp.addToTopics(tpc);
-			try {
-				if( getCurrentUser().getEmail().equalsIgnoreCase("info@vmesteonline.ru") )
-                    tpc.setCanChange(true);
-			} catch (InvalidOperation invalidOperation) {
-			}
+			if( currentUser.getEmail().equalsIgnoreCase("info@vmesteonline.ru") )
+                  tpc.setCanChange(true);
 		}
 		return mlp;
 	}
