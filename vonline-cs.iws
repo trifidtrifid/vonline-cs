@@ -8,6 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a8dced6f-65d7-4964-b36f-f62f4360e53d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/backoffice.html" afterPath="$PROJECT_DIR$/src/main/webapp/backoffice.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vonline-cs.iws" afterPath="$PROJECT_DIR$/vonline-cs.iws" />
     </list>
     <ignored path="vonline-cs.iws" />
@@ -84,9 +85,9 @@
       <file leaf-file-name="backoffice.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="116" column="27" selection-start="4757" selection-end="4757" vertical-scroll-proportion="0.53932583" vertical-offset="1684" max-vertical-offset="5032">
+            <state line="236" column="66" selection-start="10449" selection-end="10449" vertical-scroll-proportion="0.23595506" vertical-offset="3886" max-vertical-offset="5389">
               <folding>
-                <marker date="1418859987166" expanded="true" signature="584:805" placeholder="..." />
+                <marker date="1418931387505" expanded="true" signature="307:528" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -95,9 +96,9 @@
       <file leaf-file-name="main.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="55" selection-start="3231" selection-end="3231" vertical-scroll-proportion="0.0" vertical-offset="902" max-vertical-offset="5474">
+            <state line="221" column="4" selection-start="10701" selection-end="10750" vertical-scroll-proportion="-9.769231" vertical-offset="3503" max-vertical-offset="5474">
               <folding>
-                <marker date="1418856608781" expanded="true" signature="913:1134" placeholder="..." />
+                <marker date="1418922498921" expanded="true" signature="913:1134" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -142,7 +143,7 @@
       <file leaf-file-name="messageservice.thrift" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="163" column="8" selection-start="5197" selection-end="5197" vertical-scroll-proportion="0.0" vertical-offset="2605" max-vertical-offset="3638">
+            <state line="206" column="68" selection-start="8998" selection-end="9007" vertical-scroll-proportion="0.0" vertical-offset="3091" max-vertical-offset="3638">
               <folding />
             </state>
           </provider>
@@ -151,7 +152,7 @@
       <file leaf-file-name="bedata.thrift" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="23" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="2992">
+            <state line="43" column="65" selection-start="595" selection-end="603" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="2992">
               <folding />
             </state>
           </provider>
@@ -307,7 +308,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="2" />
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1" splitterProportion="0.5">
@@ -504,6 +505,10 @@
       <option name="usbDebugPort" value="7936" />
       <method />
     </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -522,10 +527,6 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
-    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner />
       <method />
     </configuration>
     <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
@@ -552,21 +553,6 @@
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
@@ -722,6 +708,21 @@
       </server-settings>
       <predefined_log_file id="Jetty" enabled="true" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1057,6 +1058,7 @@
       <workItem from="1418762474541" duration="13000" />
       <workItem from="1418856237053" duration="4080000" />
       <workItem from="1418922342064" duration="111000" />
+      <workItem from="1418922537410" duration="3107000" />
     </task>
     <task id="LOCAL-00001" summary="more fixes">
       <created>1414599484537</created>
@@ -1090,7 +1092,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="363974000" />
+    <option name="totallyTimeSpent" value="367081000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1389,13 +1391,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="23" selection-start="814" selection-end="814" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="2992">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/registration.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="76" selection-start="972" selection-end="972" vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="2907" />
@@ -1420,27 +1415,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="221" column="4" selection-start="10701" selection-end="10750" vertical-scroll-proportion="-9.769231" vertical-offset="3503" max-vertical-offset="5474">
+          <folding>
+            <marker date="1418922498921" expanded="true" signature="913:1134" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/thrift/messageservice.thrift">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="163" column="8" selection-start="5197" selection-end="5197" vertical-scroll-proportion="0.0" vertical-offset="2605" max-vertical-offset="3638">
+        <state line="206" column="68" selection-start="8998" selection-end="9007" vertical-scroll-proportion="0.0" vertical-offset="3091" max-vertical-offset="3638">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
+    <entry file="file://$PROJECT_DIR$/thrift/bedata.thrift">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="55" selection-start="3231" selection-end="3231" vertical-scroll-proportion="0.0" vertical-offset="902" max-vertical-offset="5474">
-          <folding>
-            <marker date="1418856608781" expanded="true" signature="913:1134" placeholder="..." />
-          </folding>
+        <state line="43" column="65" selection-start="595" selection-end="603" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="2992">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/backoffice.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="27" selection-start="4757" selection-end="4757" vertical-scroll-proportion="0.53932583" vertical-offset="1684" max-vertical-offset="5032">
+        <state line="236" column="66" selection-start="10449" selection-end="10449" vertical-scroll-proportion="0.23595506" vertical-offset="3886" max-vertical-offset="5389">
           <folding>
-            <marker date="1418859987166" expanded="true" signature="584:805" placeholder="..." />
+            <marker date="1418931387505" expanded="true" signature="307:528" placeholder="..." />
           </folding>
         </state>
       </provider>
