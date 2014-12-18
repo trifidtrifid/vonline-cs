@@ -73,6 +73,56 @@
                     <button class="btn no-border btn-sm btn-primary send-business">Отправить</button>
                 </div>
 
+                <div class="bo-edit">
+                    <h2>Редактирование сообщения</h2>
+                    <div><input placeholder="id" class="bus-short-url" type="text"/></div>
+                    <p></p>
+                    <div>
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            Тип сообщения
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li><a ui-sref="profile({ userId : 0})"> <i class="icon-user"></i>
+                                Профиль
+                            </a></li>
+                            <li ng-if="base.me.countersEnabled"><a ui-sref="counters"> <i class="icon-fa fa fa-tachometer"></i>
+                                Счетчики
+                            </a></li>
+
+                            <li><a ui-sref="settings"> <i class="icon-cog"></i> <!--   -->
+                                Настройки
+                            </a></li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <div>
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                            Группа
+                        </a>
+
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li><a ui-sref="profile({ userId : 0})"> <i class="icon-user"></i>
+                                Профиль
+                            </a></li>
+                            <li ng-if="base.me.countersEnabled"><a ui-sref="counters"> <i class="icon-fa fa fa-tachometer"></i>
+                                Счетчики
+                            </a></li>
+
+                            <li><a ui-sref="settings"> <i class="icon-cog"></i> <!--   -->
+                                Настройки
+                            </a></li>
+                        </ul>
+                    </div>
+                    <p></p>
+                    <div>
+                        <div><input placeholder="широта" type="text"/></div>
+                        <div><input placeholder="долгота" type="text"/></div>
+                    </div>
+
+                    <button class="btn no-border btn-sm btn-primary send-business">Отправить</button>
+                </div>
+
                 <div class="broadcast">
                     <br/>
                     <h2>Отправить уведомление пользователям.</h2>
