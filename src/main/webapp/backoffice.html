@@ -6,11 +6,7 @@
     <link rel="stylesheet" href="/static/css/lib/jquery-ui-1.10.3.full.min.css" />
 <link rel="stylesheet" href="/static/css/style.css" />
 <link rel="stylesheet" href="/static/css/backoffice.css" />
-<link rel="stylesheet" href="/static/css/lib/fancybox/jquery.fancybox.css"/>
-<link rel="stylesheet" href="/static/css/lib/jquery.Jcrop.css"/>
-<link rel="stylesheet" href="/static/js/bower_components/select2/select2.css"/>
 
-<script src="/static/js/lib/jquery-2.0.3.js"></script>
 <!--[if lt IE 9]>
     <script>
         document.createElement('header');
@@ -73,6 +69,53 @@
                     <button class="btn no-border btn-sm btn-primary send-business">Отправить</button>
                 </div>
 
+                <div class="bo-edit">
+                    <h2>Редактирование сообщения</h2>
+                    <div><input placeholder="id" class="msg-id" type="text"/></div>
+                    <p></p>
+                    <div>
+                        <input placeholder="groupId" class="groupId" type="text"/>
+                    </div>
+                    <p></p>
+                    <div>
+                        <div class="dropdown">
+                            <button id="msgType" type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                                Тип сообщения
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="msgType">
+                                <li data-param="5">Wall</li>
+                                <li data-param="1">Talks</li>
+                                <li data-param="6">Advert</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div>
+                        <div class="dropdown">
+                            <button id="groupType" type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">
+                                Тип группы
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="groupType">
+                                <li data-param="0">Nobody</li>
+                                <li data-param="2">Floor</li>
+                                <li data-param="3">Staircase</li>
+                                <li data-param="4">Building</li>
+                                <li data-param="5">Neighbours</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div>
+                        <div><input placeholder="широта" class="msg-lat" type="text"/></div>
+                        <div><input placeholder="долгота" class="msg-long" type="text"/></div>
+                    </div>
+                    <p></p>
+
+                    <button class="btn no-border btn-sm btn-primary edit-message">Отправить</button>
+                </div>
+
                 <div class="broadcast">
                     <br/>
                     <h2>Отправить уведомление пользователям.</h2>
@@ -113,7 +156,11 @@
 
 	</div>
 
-
+<script src="/static/js/lib/jquery-2.0.3.js"></script>
+<script src="/static/js/lib/bootstrap.min.js"></script>
+<script src="/static/js/lib/ace.min.js"></script>
+<script src="/static/js/lib/ace-extra.min.js"></script>
+<script src="/static/js/ace-elements.js"></script>
 <!-- файлы thrift -->
 <script src="/static/js/thrift.js" type="text/javascript"></script>
 <script src="/gen-js/bedata_types.js" type="text/javascript"></script>
@@ -124,6 +171,8 @@
 <script src="/gen-js/utilityservces_types.js" type="text/javascript"></script>
 <script src="/gen-js/UtilityService.js" type="text/javascript"></script>
 <!-- -->
+
+
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -182,6 +231,32 @@
                 var t = messageClient.postTopic(newTopic);
                 console.log('bus-page',t);
             }
+        });
+
+        $('.dropdown-menu li').click(function(){
+            var text = $(this).text()+'<span class="caret"></span>',
+                param = $(this).attr('data-param'),
+                header = $(this).closest('.dropdown').find('.dropdown-toggle');
+
+            console.log(param);
+            header.html(text).attr('data-param',param);
+            console.log(header.attr('data-param'));
+        });
+
+        $('.edit-message').click(function(e){
+            e.preventDefault();
+
+            var id = $('.msg-id').val(),
+                groupId = $('.groupId').val() || null,
+                long = $('#msg-long').val() || null,
+                lat = $('#msg-lat').val() || null,
+                msgType = $('#msgType').attr('data-param'),
+                groupType = $('#groupType').attr('data-param');
+
+            console.log($('#msgType').length,msgType,groupType);
+
+            messageClient.moveTopic(id,groupId,long,lat,groupType,msgType);
+
         });
 
         $('.send-broadcast').click(function(){
