@@ -12,7 +12,7 @@
                     <div ng-include="'/static/partials/empty/empty-main.html'"></div>
                 </div>
                 <div class="lenta-item" ng-repeat="wallItem in lenta.wallItems"
-                        ng-switch on="wallItem.topic.message.type">
+                        ng-switch on="wallItem.topic.message.type" id="{{wallItem.topic.id}}">
 
                     <div class="wallitem-message" ng-switch-when="5">
 
