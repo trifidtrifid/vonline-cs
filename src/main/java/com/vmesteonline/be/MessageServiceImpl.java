@@ -1058,7 +1058,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		VoUser currentUser = getCurrentUser(pm);
 		if(VoUser.isHeTheBigBro(currentUser)) {
 			if( null!=msgType ) voTopic.setType(msgType);
-			if( voTopic.getSubject() == null ) {
+			if( voTopic.getSubject() == null || voTopic.getSubject().trim().length() == 0 ) {
 				int minSLen = Math.min(25, voTopic.getContent().length());
 				minSLen = voTopic.getContent().length() == minSLen ? minSLen : voTopic.getContent().indexOf(' ',minSLen);
 				voTopic.setSubject( voTopic.getContent().substring(0, minSLen) + "...");
