@@ -131,6 +131,12 @@
                     <webApp>
                         <descriptor>${project.basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
                         <contextPath>/</contextPath>
+                        <sessionHandler implementation="org.eclipse.jetty.server.session.SessionHandler">
+				        <sessionManager implementation="org.eclipse.jetty.server.session.HashSessionManager">
+				          <storeDirectory>${basedir}/target/jetty-sessions</storeDirectory>
+				          <idleSavePeriod>1</idleSavePeriod>
+				        </sessionManager>
+			      </sessionHandler>
                     </webApp>
                     <jettyXml>${project.basedir}/src/main/webapp/WEB-INF/jetty-web.xml,${project.basedir}/src/main/webapp/WEB-INF/jetty-ssl.xml</jettyXml>
                     <stopPort>12345</stopPort>
@@ -237,11 +243,10 @@
                         <phase>none</phase>
                     </execution>
                 </executions>
-            </plugin>
-
+            </plugin>			
         </plugins>
         <finalName>vonline</finalName>
-        <!-- finalName>demo.vonline</finalName-->
+        <!--finalName>demo.vonline</finalName-->
         <pluginManagement>
         	<plugins>
         		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
