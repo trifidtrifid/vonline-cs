@@ -656,4 +656,24 @@ public class VoUser extends GeoLocation {
 		else
 			moderationGroups.remove(groupId);
 	}
+	
+	protected void determineLocation() {
+		if( address == 0 ){
+			super.determineLocation();
+			return; 
+		}
+		
+		PersistenceManager pm = PMF.getPm();
+		VoBuilding building;
+		
+		try {
+			building = pm.getObjectById(VoBuilding.class, pm.getObjectById(VoPostalAddress.class, address).getBuilding());
+			longitude = building.getLongitude().toString();
+			latitude = building.getLatitude().toString();
+		} catch (Exception e) {
+			super.determineLocation();
+			return;
+		}
+		
+	}
 }
