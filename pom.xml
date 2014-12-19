@@ -240,7 +240,7 @@
             </plugin>
 
         </plugins>
-        <!--finalName>demo.vonline</finalName-->
+        <!--finalName>vonline</finalName-->
         <finalName>demo.vonline</finalName>
         <pluginManagement>
         	<plugins>
