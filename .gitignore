@@ -8,3 +8,5 @@ run
 .settings/
 datanucleus.log
 /target/
+/target/
+/target/

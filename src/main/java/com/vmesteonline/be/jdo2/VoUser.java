@@ -676,4 +676,12 @@ public class VoUser extends GeoLocation {
 		}
 		
 	}
+
+	public static boolean isHeTheBigBro(VoUser user) {
+		return null!=user && "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail());
+	}
+
+	public boolean isTheBigBro() {
+		return isHeTheBigBro(this);
+	}
 }

@@ -69,7 +69,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm, user);
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
-				if (isHeTheBigBro(user)){
+				if (VoUser.isHeTheBigBro(user)){
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
 					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
 					tpc.setCanChange(true);
@@ -247,7 +247,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		List<VoTopic> topics = new ArrayList<>();
 		Exception e = null;
 		VoUserGroup ug = null;
-		boolean bigBro = isHeTheBigBro(user);
+		boolean bigBro = VoUser.isHeTheBigBro(user);
 
 		if( 0!=groupId) {
 			ug = pm.getObjectById(VoUserGroup.class, groupId);
@@ -335,10 +335,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		return topics;
 	}
 
-	public static boolean isHeTheBigBro(VoUser user) {
-		return null!=user && "info@vmesteonline.ru".equalsIgnoreCase(user.getEmail());
-	}
-
 	@Override
 	public TopicListPart getBlog(long lastLoadedTopicId, int length) throws InvalidOperation {
 
@@ -386,7 +382,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
-				if (isHeTheBigBro(user)){
+				if (VoUser.isHeTheBigBro(user)){
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
 					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
 					tpc.setCanChange(true);
@@ -583,7 +579,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		mlp.totalSize = lst.size();
 		for (VoMessage voMessage : lst) {
 			Message msg = voMessage.getMessage(userId, pm);
-			if( null!=user && isHeTheBigBro(user))
+			if( null!=user && VoUser.isHeTheBigBro(user))
 				msg.setCanChange(true);
 			if (voMessage.getAuthorId() != null)
 				msg.userInfo = UserServiceImpl.getShortUserInfo(user, voMessage.getAuthorId(), pm);
@@ -1060,7 +1056,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		VoTopic voTopic = pm.getObjectById(VoTopic.class, id);
 		VoUser currentUser = getCurrentUser(pm);
-		if(isHeTheBigBro(currentUser)) {
+		if(VoUser.isHeTheBigBro(currentUser)) {
 			if( null!=msgType ) voTopic.setType(msgType);
 			if( voTopic.getSubject() == null ) {
 				int minSLen = Math.min(25, voTopic.getContent().length());

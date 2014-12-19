@@ -194,7 +194,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 		try {
 			VoUser currentUser = getCurrentUser(pm);
-			if (userId == 0) {
+			if (userId == 0 || currentUser.isTheBigBro()) {
 				UserProfile up = currentUser.getUserProfile();
 				try {
 					up.contacts.homeAddress = pm.getObjectById( VoPostalAddress.class, currentUser.getAddress()).getPostalAddress();
@@ -250,7 +250,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	private GroupType determineProvacyByAddresses(VoUser currentUser, VoUser user, PersistenceManager pm) throws InvalidOperation {
-		/*//--------------- implementation faster then commented below but it requires that groups are in the same order and the same Type
+		
+		//--------------- is users have the same group
 
 		Iterator<Long> ugit = user.getGroups().iterator();
 		Iterator<Long> cugit = currentUser.getGroups().iterator();
@@ -260,9 +261,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				return GroupType.findByValue( pm.getObjectById(VoUserGroup.class, commonGroupId ).getGroupType());
 			}
 		}
-		return GroupType.TOWN;*/
 		
-	//---- Slower but reliable 
+		//---- relations by distance
 		GroupType relation = GroupType.TOWN;
 		
 		VoPostalAddress cuAddr = pm.getObjectById( VoPostalAddress.class, currentUser.getAddress());
@@ -272,7 +272,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			relation = GroupType.TOWN;
 
 		} else if ( null!=(uAddr = pm.getObjectById(VoPostalAddress.class, uAddrId))
-				&& cuAddr.getBuilding() == uAddr.getBuilding() && 0 != cuAddr.getBuilding()) { // the same building
+				&& cuAddr.getBuilding() == uAddr.getBuilding() && 0 != cuAddr.getBuilding()) { // the same building, not possible!
 
 			relation = GroupType.BUILDING;
 
@@ -752,15 +752,13 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"'";
 			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
 			users = new ArrayList<>(ulist);
-			try {
-				VoUserGroup lowerLevelGroup = VoUserGroup.createVoUserGroup ( group.getLongitude(), group.getLongitude(), Defaults.radiusByType[ group.getGroupType() - 1],
-                        group.getStaircase(), group.getFloor(), "", 0, group.getGroupType() - 1, pm);
-				users.removeAll( getUsersByLocation( lowerLevelGroup, pm));
-
-			} catch (InvalidOperation invalidOperation) {
-
-			}
-
+			
+			List<Long> pgids = executeQuery(pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP WHERE longitude='"
+					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1)));
+			
+			if( pgids.size() > 0 )
+				users.removeAll( getUsersByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm));
+			
 		}
 		Collections.sort(users,uIdCOmp);
 		return users;

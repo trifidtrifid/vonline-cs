@@ -300,7 +300,7 @@ public abstract class Notification {
 			String body = user.getName() + " " + user.getLastName() + ", <br/>"
 					+ "<p>На сайте Вашего дома было запрошено восстановление пароля доступа для адреса вашей электронной почты. "
 					+ "Если вы хотите выполнить это действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
-					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">ссылкой</a>.</p>"
+					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8").replace("-", "%2D") + "\">ссылкой</a>.</p>"
 					+ "<p>Если у вас возникли трудности с доступом к сайту или есть вопросы, вы можете задать их нам в ответном письме.</p>";
 			decorateAndSendMessage(user, "восстановление пароля", body);
 
