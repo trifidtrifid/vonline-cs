@@ -194,7 +194,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 		try {
 			VoUser currentUser = getCurrentUser(pm);
-			if (userId == 0 || currentUser.isTheBigBro()) {
+			if (userId == 0) {
 				UserProfile up = currentUser.getUserProfile();
 				try {
 					up.contacts.homeAddress = pm.getObjectById( VoPostalAddress.class, currentUser.getAddress()).getPostalAddress();
@@ -208,6 +208,17 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoUser user;
 			try {
 				user = pm.getObjectById(VoUser.class, userId);
+				
+				if(currentUser.isTheBigBro()){
+					UserProfile up = user.getUserProfile();
+					try {
+						up.contacts.homeAddress = pm.getObjectById( VoPostalAddress.class, user.getAddress()).getPostalAddress();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					up.setNotifications(user.getNotificationFreq());
+					return up;
+				}
 
 			} catch (JDOObjectNotFoundException e) {
 				throw new InvalidOperation(VoError.IncorrectParametrs, "No user found by ID: " + userId);
