@@ -235,10 +235,12 @@
 
         $('.dropdown-menu li').click(function(){
             var text = $(this).text()+'<span class="caret"></span>',
-                param = $(this).attr('param'),
+                param = $(this).attr('data-param'),
                 header = $(this).closest('.dropdown').find('.dropdown-toggle');
 
+            console.log(param);
             header.html(text).attr('data-param',param);
+            console.log(header.attr('data-param'));
         });
 
         $('.edit-message').click(function(e){
@@ -248,8 +250,10 @@
                 groupId = $('.groupId').val() || null,
                 long = $('#msg-long').val() || null,
                 lat = $('#msg-lat').val() || null,
-                msgType = $('#msg-type').attr('param') || null,
-                groupType = $('#groupType').attr('param') || null;
+                msgType = $('#msgType').attr('data-param'),
+                groupType = $('#groupType').attr('data-param');
+
+            console.log($('#msgType').length,msgType,groupType);
 
             messageClient.moveTopic(id,groupId,long,lat,groupType,msgType);
 
