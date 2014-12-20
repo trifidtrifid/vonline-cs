@@ -286,18 +286,18 @@
 
     <div class="post">
         <div class="topic">
-            <div ng-include="post.full"></div>
+            <div ng-include="nearby.post.fullLink"></div>
         </div>
         <div class="topic-stuff">
-            <a href="#" class="show-comment" ng-click="nearby.toggleComm($event,post)">
-                <span ng-show="post.isCommentShow">Скрыть комментарии</span>
-                <span ng-show="!post.isCommentShow">Показать комментарии</span>
+            <a href="#" class="show-comment" ng-click="nearby.toggleComm($event,nearby.post)">
+                <span ng-show="nearby.post.isCommentShow">Скрыть комментарии</span>
+                <span ng-show="!nearby.post.isCommentShow">Показать комментарии</span>
             </a> |
-            <a href="#" class="make-comment" ng-click="nearby.toggleInput($event,post)">Комментировать</a>
+            <a href="#" class="make-comment" ng-click="nearby.toggleInput($event,nearby.post)">Комментировать</a>
         </div>
 
         <div class="dialogs">
-            <div class="itemdiv dialogdiv new" ng-repeat="comm in post.comments" ng-show="post.isCommentShow">
+            <div class="itemdiv dialogdiv new" ng-repeat="comm in nearby.post.comments" ng-show="nearby.post.isCommentShow">
                 <a ui-href="profile-{{comm.userInfo.id}}" class="user" ng-class="{'no-link': !comm.userInfo}">
                     <div class="avatar short2" style="background-image: url({{comm.userInfo.avatar}})"></div>
                 </a>
@@ -308,23 +308,23 @@
                     <div class="text">{{comm.content}}</div>
                     <div class="lenta-item-bottom">
                         <span>{{nearby.getTiming(comm.created)}}</span>
-                        <a href="#" ng-click="nearby.toggleInput($event,post)"> Ответить</a>
+                        <a href="#" ng-click="nearby.toggleInput($event,nearby.post)"> Ответить</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="input-group" ng-show="post.isInputShow">
+        <div class="input-group" ng-show="nearby.post.isInputShow">
 
-            <input type="text" class="anonName" placeholder="Имя Фамилия" ng-if="!nearby.isAuth" ng-model="post.anonName"/>
+            <input type="text" class="anonName" placeholder="Имя Фамилия" ng-if="!nearby.isAuth" ng-model="nearby.post.anonName"/>
 
-            <textarea class="message-textarea" ng-focus="true" ng-model="post.commenting"
+            <textarea class="message-textarea" ng-focus="true" ng-model="nearby.post.commenting"
                       onblur="if(this.value=='') this.value='Ваш ответ';"
                       onfocus="if(this.value=='Ваш ответ') this.value='';" ></textarea>
 
 
             <span class="input-group-btn">
-                <button class="btn btn-sm btn-info no-radius no-border send-in-blog" type="button" ng-click="nearby.sendComm($event,post)">
+                <button class="btn btn-sm btn-info no-radius no-border send-in-blog" type="button" ng-click="nearby.sendComm($event,nearby.post)">
                     <i class="icon-share-alt"></i>
                     Комментировать
                 </button>
