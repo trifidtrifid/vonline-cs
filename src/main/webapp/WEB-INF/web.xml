@@ -116,6 +116,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/contacts</url-pattern>
         <url-pattern>/login</url-pattern>
         <url-pattern>/blog</url-pattern>
+        <url-pattern>/nearby</url-pattern>
+        <url-pattern>/nearby-single</url-pattern>
         <url-pattern>/backoffice</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
