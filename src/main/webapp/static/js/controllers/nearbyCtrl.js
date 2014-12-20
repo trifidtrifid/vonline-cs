@@ -191,6 +191,7 @@ forumControllers.controller('nearbyCtrl', function($rootScope) {
         return timing;
     };
 
+    angular.element($('.nearby')).css({'min-height': $(window).height()-175});
 
     $('.ng-cloak').removeClass('ng-cloak');
 

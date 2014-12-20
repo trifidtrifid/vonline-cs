@@ -3,9 +3,11 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
     var nearby = this,
         postId;
 
-    if ($stateParams.postId && $stateParams.postId != 0){
-        postId = $stateParams.postId;
+    if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
+        postId = $stateParams.nearbyId;
     }
+
+    console.log('postId',postId,$stateParams);
 
     $rootScope.base.isFooterBottom = true;
 
@@ -21,12 +23,15 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
     if(nearby.posts.topics) {
         var len = nearby.posts.topics.length;
         for (var i = 0; i < len; i++) {
-            if(nearby.posts.topics[i].id == postId){
+            console.log(nearby.posts.topics[i].id,parseInt(postId));
+            if(nearby.posts.topics[i].id == parseInt(postId)){
                 nearby.posts.topics[i].isCommentShow = false;
                 nearby.posts.topics[i].isInputShow = false;
                 nearby.posts.topics[i].full = nearby.posts.topics[i].message.content.split(';')[1];
 
                 nearby.post = nearby.posts.topics[i];
+                nearby.post.fullLink = '/'+nearby.posts.topics[i].full;
+                console.log(nearby.post);
             }
         }
     }
