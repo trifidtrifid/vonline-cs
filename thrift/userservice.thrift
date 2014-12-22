@@ -22,6 +22,8 @@ service UserService {
 	list<bedata.Group> getUserGroups() throws (1:error.InvalidOperation exc),
 	list<bedata.Rubric> getUserRubrics() throws (1:error.InvalidOperation exc),	
 	
+	bool confirmUserAddress( 1:string code )throws (1:error.InvalidOperation exc),
+	
 	bool setUserAddress( 1:bedata.PostalAddress newAddress )throws (1:error.InvalidOperation exc),
 	bool addUserAddress( 1:bedata.PostalAddress newAddress )throws (1:error.InvalidOperation exc),
 	void deleteUserAddress(1:bedata.PostalAddress newAddress) throws (1:error.InvalidOperation exc),
