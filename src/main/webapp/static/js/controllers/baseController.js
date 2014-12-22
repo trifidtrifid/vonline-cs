@@ -24,7 +24,6 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
     var hasStart = false;
 
     function start(){
-        console.log('base');
         hasStart = true;
         $rootScope.isTopSearchShow = true;
         base.neighboursLoadStatus = "";
@@ -606,7 +605,12 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 ctrl.isCreateMessageError = true;
                 ctrl.createMessageErrorText = "Вы не указали данные для опроса";
 
-            } else {
+            } else if(!ctrl.selectedGroup){
+
+                ctrl.isCreateMessageError = true;
+                ctrl.createMessageErrorText = "Вы не указали группу.";
+
+            }else{
 
                 if (ctrl.message.content == TEXT_DEFAULT_1 && (ctrl.attachedImages || ctrl.attachedDocs || ctrl.isPollShow)) {
                     ctrl.message.content = "";

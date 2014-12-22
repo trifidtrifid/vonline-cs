@@ -13,7 +13,7 @@
                             </a>
 
                             <div class="body text-container"> <!--  ng-switch on="wallSingle.wallItem.topic.metaType" -->
-                                <div class="message-tools pull-right" ng-show="wallSingle.wallItem.topic.userInfo.id == base.me.id">
+                                <div class="message-tools pull-right" ng-show="wallSingle.wallItem.topic.userInfo.id == base.me.id || wallSingle.wallItem.topic.canChange">
                                     <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(wallSingle.wallItem.topic,wallSingle.wallItems,true,true)">&times;</a>
                                     <a href="#" title="Редактировать" ng-click="base.setEdit($event,wallSingle.wallItem.topic,false)" class="fa fa-pencil pull-right"></a>
                                 </div>
@@ -101,7 +101,7 @@
                                 </a>
 
                                 <div class="body text-container">
-                                    <div class="message-tools pull-right" ng-show="wallMessage.userInfo.id == base.me.id">
+                                    <div class="message-tools pull-right" ng-show="wallMessage.userInfo.id == base.me.id || wallMessage.canChange">
                                         <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(wallMessage,wallSingle.wallItem.messages,false)">&times;</a>
                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,wallMessage)" class="fa fa-pencil pull-right"></a>
                                     </div>

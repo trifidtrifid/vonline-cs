@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="topic-right text-container">
 
-                                    <div class="message-tools pull-right" ng-show="adverts.fullTalkTopic.userInfo.id == base.me.id">
+                                    <div class="message-tools pull-right" ng-show="adverts.fullTalkTopic.userInfo.id == base.me.id || adverts.fullTalkTopic.canChange">
                                         <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(adverts.fullTalkTopic,adverts.topics,true,false)">&times;</a>
                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,adverts.fullTalkTopic)" class="fa fa-pencil pull-right"></a>
                                     </div>
@@ -138,7 +138,7 @@
                                         </div>
                                         <div class="topic-right text-container">
 
-                                            <div class="message-tools pull-right" ng-show="firstMessage.userInfo.id == base.me.id">
+                                            <div class="message-tools pull-right" ng-show="firstMessage.userInfo.id == base.me.id || firstMessage.canChange">
                                                 <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(firstMessage,adverts.fullTalkFirstMessages,false,false)">&times;</a>
                                                 <a href="#" title="Редактировать" ng-click="base.setEdit($event,firstMessage,true)" class="fa fa-pencil pull-right"></a>
                                             </div>
@@ -211,7 +211,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="topic-right text-container">
-                                                    <div class="message-tools pull-right" ng-show="message.userInfo.id == base.me.id">
+                                                    <div class="message-tools pull-right" ng-show="message.userInfo.id == base.me.id || message.canChange">
                                                         <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(message,adverts.fullTalkMessages[firstMessage.id],false,false)">&times;</a>
                                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,message,true)" class="fa fa-pencil pull-right"></a>
                                                     </div>
