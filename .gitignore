@@ -8,4 +8,5 @@ run
 .settings/
 datanucleus.log
 /target/
+/.idea
 

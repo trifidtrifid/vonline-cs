@@ -9,7 +9,6 @@ forumControllers.controller('LentaController',function($rootScope) {
     lenta.isOpenMessageBar = false;
 
     lenta.showGroups = function(){
-        console.log('show',lenta.isGroupsInMessShow);
         lenta.isGroupsInMessShow ? lenta.isGroupsInMessShow = false : lenta.isGroupsInMessShow = true
     };
 
@@ -63,6 +62,7 @@ forumControllers.controller('LentaController',function($rootScope) {
 
         lenta.attachId = "0";
         $rootScope.base.initStartParamsForCreateTopic(lenta);
+        lenta.selectedGroup = null;
 
         lenta.message = {};
 
