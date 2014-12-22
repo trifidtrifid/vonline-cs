@@ -22,33 +22,37 @@ public class NotificationServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse rsp) throws ServletException, IOException {
-		try {
-			String reqType = req.getParameter("rt");
-			if( "swm".equals(reqType)){
-				sendWelcomeMsg(req);
-			
-			} else if( "mbi".equals(reqType)){
-				sendNewImportantMsg(req);
-			
-			} else if( "ndm".equals(reqType)){
-				sendNewDialogMsg(req);
-			
-			} else if( "news".equals(reqType)){
-				new NewsNotification().sendNotifications();
-		
-			} else if( "pwdrem".equals(reqType)){
-				sendRemindPasswordMsg(req);
-			
-			}  
-			rsp.setStatus(HttpServletResponse.SC_OK);
-		} catch (InvalidOperation e) {
+		if( req.getLocalAddr().equalsIgnoreCase("localhost")) {
+			try {
+				String reqType = req.getParameter("rt");
+				if ("swm".equals(reqType)) {
+					sendWelcomeMsg(req);
 
-			e.printStackTrace();
-			rsp.setStatus(HttpServletResponse.SC_OK, e.why);
-		} catch (Exception e) {
-			e.printStackTrace();
-			rsp.setStatus(HttpServletResponse.SC_OK, e.getMessage());
-		} 
+				} else if ("mbi".equals(reqType)) {
+					sendNewImportantMsg(req);
+
+				} else if ("ndm".equals(reqType)) {
+					sendNewDialogMsg(req);
+
+				} else if ("news".equals(reqType)) {
+					new NewsNotification().sendNotifications();
+
+				} else if ("pwdrem".equals(reqType)) {
+					sendRemindPasswordMsg(req);
+
+				}
+				rsp.setStatus(HttpServletResponse.SC_OK);
+			} catch (InvalidOperation e) {
+
+				e.printStackTrace();
+				rsp.setStatus(HttpServletResponse.SC_OK, e.why);
+			} catch (Exception e) {
+				e.printStackTrace();
+				rsp.setStatus(HttpServletResponse.SC_OK, e.getMessage());
+			}
+		} else {
+			rsp.setStatus(HttpServletResponse.SC_OK, "OK");
+		}
 	}
 
 	//=============================================================================================================

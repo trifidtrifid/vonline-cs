@@ -4,17 +4,16 @@ import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
-import com.vmesteonline.be.thrift.Group;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
+import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.utils.Defaults;
 import org.apache.thrift.TException;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.jdo.PersistenceManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -28,58 +27,10 @@ public class AuthServiceImplTests extends TestWorkAround{
 
     @Before
     public void setUp() throws Exception {
+        super.setUp();
         Defaults.initDefaultData(pm);
-        asi = new AuthServiceImpl(httpSessionId);
-        usi = new UserServiceImpl(httpSessionId);
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        pm.close();
-    }
-
-    @Test
-    public void testDefaultsUserGetGroups() {
-        try {
-            asi.login(Defaults.user1email, Defaults.user1pass);
-            List<Group> gs = usi.getUserGroups();
-            Assert.assertEquals("Республиканская 32/3", gs.get(0).getName());
-
-            asi.login(Defaults.user2email, Defaults.user2pass);
-            gs = usi.getUserGroups();
-            Assert.assertEquals("Республиканская 35", gs.get(0).getName());
-
-        } catch (InvalidOperation e) {
-            e.printStackTrace();
-            fail("exception: " + e.getMessage());
-        }
-    }
-
-    @Test
-    public void testDefaultsUserCreation() {
-        PersistenceManager pm = PMF.getPm();
-        try {
-
-            VoUser user = asi.getUserByEmail(Defaults.user1email, pm);
-            VoUserGroup ug0Id = pm.getObjectById( VoUserGroup.class, user.getGroups().get(0));
-            Assert.assertEquals(0, ug0Id.getRadius());
-            Assert.assertEquals("Парадная 1", ug0Id.getName());
-            Assert.assertEquals(Defaults.zan32k3Long + 0.000002F * 1, ug0Id.getLongitude(), 0F);
-            System.out.print("a: " + ug0Id.getLongitude());
-
-            user = asi.getUserByEmail(Defaults.user2email, pm);
-            Assert.assertEquals(0, ug0Id.getRadius());
-            Assert.assertEquals("Парадная 2", ug0Id.getName());
-            Assert.assertEquals(Defaults.zan32k3Long + 0.000002F * 2, ug0Id.getLongitude(), 0F);
-            System.out.print("b: " + ug0Id.getLongitude());
-
-            user = asi.getUserByEmail(Defaults.user3email, pm);
-            Assert.assertEquals(0, ug0Id.getRadius());
-            Assert.assertEquals("Парадная 1", ug0Id.getName());
-        } finally {
-            pm.close();
-        }
+        asi = new AuthServiceImpl();
+        usi = new UserServiceImpl();
     }
 
     @Test
@@ -96,7 +47,7 @@ public class AuthServiceImplTests extends TestWorkAround{
     public void testLoginSuccess() {
         try {
             asi.login(Defaults.user1email, Defaults.user1pass);
-            AuthServiceImpl.checkIfAuthorised(httpSessionId);
+            new AuthServiceImpl().checkIfAuthorized();
         } catch (InvalidOperation e) {
             fail("user a with pass a should be valid");
         }
@@ -106,53 +57,47 @@ public class AuthServiceImplTests extends TestWorkAround{
     @Test
     public void testGetSessionNotAuthorized() {
         try {
-            AuthServiceImpl.checkIfAuthorised("ttemptySession");
-            fail("session should throw exception");
+            try {
+                asi.logout();
+            } catch (TException e) {
+            }
+            assertFalse(new AuthServiceImpl().checkIfAuthorized());
+
         } catch (InvalidOperation e) {
-            assertEquals(VoError.NotAuthorized, e.what);
+            fail(e.getWhy());
         }
     }
 
     @Test
     public void testRegisterNewUser() {
-        List<String> locations;
-        try {
-            locations = UserServiceImpl.getLocationCodesForRegistration();
-        } catch (InvalidOperation e1) {
-            e1.printStackTrace();
-            fail(e1.getMessage());
-            return;
-        }
+
         try {
             PersistenceManager pm = PMF.getPm();
             long ret = asi.registerNewUser("testName", "testFamily", "testPassword", "test@eml", "1", 0);
             VoUser user = asi.getUserByEmail("test@eml", pm);
             assertEquals("testName", user.getName());
             assertEquals("testPassword", user.getPassword());
-			/*
-			 * Assert.assertNotNull(user.getHomeGroup()); assertEquals(0,
-			 * user.getHomeGroup().getRadius());
-			 */
 
             VoUser userByRet = pm.getObjectById(VoUser.class, ret);
             assertEquals(userByRet.getName(), user.getName());
             assertEquals(userByRet.getPassword(), user.getPassword());
 
-/*			BigDecimal longitude = postalAddress.getBuilding().getLongitude();
+            VoPostalAddress postalAddress = pm.getObjectById( VoPostalAddress.class, user.getAddress());
+            VoBuilding building = pm.getObjectById(VoBuilding.class, postalAddress.getBuilding());
+            BigDecimal longitude = building.getLongitude();
 			assertEquals(user.getLongitude(), longitude);
-			BigDecimal latitude = postalAddress.getBuilding().getLatitude();
+			BigDecimal latitude = building.getLatitude();
 			assertEquals(user.getLatitude(), latitude);
-			List<VoRubric> rubrics = user.getRubrics();
-			assertEquals(rubrics.isEmpty(), false);
-*/
+
 
             List<Long> groups = user.getGroups();
             assertEquals(groups.isEmpty(), false);
-/*			for (VoUserGroup ug : groups) {
-				assertEquals(ug.getLatitude(), latitude);
+			for (Long ugid : groups) {
+                VoUserGroup ug = pm.getObjectById(VoUserGroup.class, ugid);
+                assertEquals(ug.getLatitude(), latitude);
 				assertEquals(ug.getLongitude(), longitude);
 			}
-*/			assertEquals(true, asi.login("test@eml", "testPassword"));
+			assertEquals(LoginResult.EMAIL_NOT_CONFIRMED, asi.login("test@eml", "testPassword"));
 
         } catch (TException e) {
             e.printStackTrace();
@@ -166,7 +111,7 @@ public class AuthServiceImplTests extends TestWorkAround{
         String email = "aaa@bbb.com";
         assertFalse(asi.checkEmailRegistered(email));
         try {
-            asi.registerNewUser("testName", "testFamily", "testPassword", email, null, 0);
+            asi.registerNewUser("testName", "testFamily", "testPassword", email, "1", 0);
         } catch (InvalidOperation e) {
             e.printStackTrace();
             assertFalse(true);
@@ -179,7 +124,7 @@ public class AuthServiceImplTests extends TestWorkAround{
         String email = "brozer@pisem.net";
         assertFalse(asi.checkEmailRegistered(email));
         try {
-            long uid = asi.registerNewUser("testName", "testFamily", "testPassword", email, null, 0);
+            long uid = asi.registerNewUser("testName", "testFamily", "testPassword", email, "1", 0);
             asi.sendConfirmCode(email, "mailTemplates/changePasswordConfirm.html");
             PersistenceManager pm = PMF.getPm();
             try {

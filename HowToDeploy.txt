@@ -1,0 +1,37 @@
+ Выкат на продакшн:
+1. Скопировать содержимое файлов
+ vonline-cs\src\main\resources\META-INF\prod-persistence.xml -> persistence.xml
+vonline-cs\src\main\webapp\WEB-INF\prod-jetty-web.xml -> jetty-web.xml
+2. Задать имя war файла в vonline-cs\pom.xml
+Для продакшина  <finalName>vonline</finalName>
+
+запустить mvn clean package
+Скопировать полученый target\vonline.war в /opt/jetty/webapp/
+1. Залить в /tmp
+2. Выкатить в бекапом mv /opt/jetty/webapps/vonline.war /opt/jetty/webapps/vonline.war.`date +%y%m%d_%H%M%S`.back; mv /tmp/vonline.war /opt/jetty/webapps/
+
+
+ Выкат на демо:
+1. Скопировать содержимое файлов
+vonline-cs\src\main\resources\META-INF\demo-persistence.xml -> persistence.xml
+vonline-cs\src\main\webapp\WEB-INF\demo-jetty-web.xml -> jetty-web.xml
+2. Задать имя war файла в vonline-cs\pom.xml
+Для демо        <finalName>demo.vonline</finalName>
+
+запустить mvn clean package
+Скопировать полученый target\vonline.war в /opt/jetty-demo/webapp/
+
+-------------------------------------------------
+Обновление блога в 2 апдейта для замены select CAST(CONTENT as CHAR(255)) FROM VOTOPIC WHERE TYPE='BLOG';:
+blog/post1.html
+/blog/post2.html
+/blog/post3.html
+/blog/post4.html
+на
+posts/post1.html
+/posts/post2.html
+/posts/post3.html
+/posts/post4.html
+
+UPDATE VOTOPIC SET CONTENT=CONCAT('posts/',SUBSTRING(CAST(CONTENT as CHAR(255)),6)) WHERE TYPE='BLOG';
+update VOTOPIC SET CONTENT=CONCAT('/posts',SUBSTRING(CAST(CONTENT as CHAR(255)),7)) WHERE TYPE='BLOG' AND SUBSTRING(CAST(CONTENT as CHAR(255)),5) LIKE '%//%';

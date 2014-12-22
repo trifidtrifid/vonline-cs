@@ -1,0 +1,18 @@
+
+    <div ng-controller="UnconfirmedCtrl as ctrl" class="unconfirm">
+        <br/>
+        <h2>Отлично! теперь необходимо подтвердить Ваш адрес проживания</h2>
+        <p>Для того, чтобы создать доверенное и безопасное сообщество, все участники должны подтвердить адрес проживания.</p>
+        <p>Ваш адрес не будет виден никому из участников.</p>
+        <br/>
+        <p>Код доступа будет доставлен на указанный Вами адрес в течении 3-5 дней.</p>
+
+        <div class="col-md-4 col-sm-12 col-md-offset-4 code-block">
+            <br/>
+            <div><input type="text" ng-model="ctrl.code" class="form-control input-lg code-input" placeholder="Код доступа"/></div>
+            <br/>
+
+            <button type="submit" class="btn btn-primary no-border btn-lg" ng-click="unconfLogin()">Войти</button>
+        </div>
+    </div>
+

@@ -5,7 +5,13 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ AllTests.class, AuthServiceImplTests.class, MessageServiceTests.class })
+@SuiteClasses({
+        UserServiceImplTest.class,
+        VoGeocoderTest.class,
+        OauthServletTests.class,
+        MessagesTreeTests.class,
+        AuthServiceImplTests.class,
+        MessageServiceTests.class })
 public class AllTests {
 
 }

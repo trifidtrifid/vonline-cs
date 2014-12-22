@@ -4,14 +4,13 @@ import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
-import com.vmesteonline.be.thrift.messageservice.MessageType;
 import com.vmesteonline.be.utils.Defaults;
+import org.junit.After;
+import org.junit.Before;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
-import java.util.HashMap;
-import java.util.TreeMap;
 
 public class TestWorkAround {
 
@@ -21,27 +20,22 @@ public class TestWorkAround {
 	protected AuthServiceImpl asi;
 	protected UserServiceImpl usi;
 	protected MessageServiceImpl msi;
-	protected HashMap<MessageType, Long> noLinkedMessages = new HashMap<MessageType, Long>();
-	protected TreeMap<Long, String> noTags = new TreeMap<Long, String>();
-	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory("votest");
-	protected static final PersistenceManager pm;
-	static {
-		pif.databaseName = "votest";
-		pm = persistenceManagerFactory.getPersistenceManager();
-	}
 
+	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory("votest");
+	protected static PersistenceManager pm;
 	protected String topicSubject = "Test topic";
 
 	protected boolean init() {
 		try {
-			if (!Defaults.initDefaultData(pm,false))
+			Defaults.isItTests = true;
+			if (!Defaults.initDefaultData(pm, false))
 				return false;
 
-			asi = new AuthServiceImpl(sessionId);
+			asi = new AuthServiceImpl();
 			if (LoginResult.SUCCESS != asi.login(Defaults.user1email, Defaults.user1pass))
 				return false;
-			usi = new UserServiceImpl(sessionId);
-			msi = new MessageServiceImpl(sessionId);
+			usi = new UserServiceImpl();
+			msi = new MessageServiceImpl();
 
 			return true;
 
@@ -51,8 +45,9 @@ public class TestWorkAround {
 		}
 	}
 
-	void close() {
-		/*helper.tearDown();*/
+	@After
+	public void tearDown() throws Exception {
+		pm.close();
 	}
 
 	protected long getUserGroupId(String email, GroupType type) {
@@ -61,4 +56,10 @@ public class TestWorkAround {
 		return null == group ? 0L : group.getId();
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		Defaults.isItTests = true;
+		pif.databaseName = "votest";
+		pm = persistenceManagerFactory.getPersistenceManager();
+	}
 }

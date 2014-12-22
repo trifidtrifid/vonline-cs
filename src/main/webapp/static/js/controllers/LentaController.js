@@ -1,12 +1,35 @@
 
 forumControllers.controller('LentaController',function($rootScope) {
 
+    var lenta = this;
+
+    /**/
+
+    lenta.isGroupsInMessShow = false;
+    lenta.isOpenMessageBar = false;
+
+    lenta.showGroups = function(){
+        console.log('show',lenta.isGroupsInMessShow);
+        lenta.isGroupsInMessShow ? lenta.isGroupsInMessShow = false : lenta.isGroupsInMessShow = true
+    };
+
+    lenta.selectGroupNew = function(group){
+        lenta.isGroupsInMessShow = false;
+        lenta.selGroupName = group.visibleName;
+        $rootScope.base.selectGroupInDropdown(group.id,lenta);
+    };
+
+    lenta.isCreateMessageError = true;
+    lenta.createMessageErrorText = "Вы не указали группу";
+
+    /**/
+
+    $('.ng-cloak').removeClass('ng-cloak');
         $rootScope.setTab(1);
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;
 
-        var lenta = this,
-            lastLoadedId = 0,
+        var lastLoadedId = 0,
             loadedLength = 10;
 
         var len = userClientGroups.length;
@@ -16,8 +39,23 @@ forumControllers.controller('LentaController',function($rootScope) {
         }
         //lenta.isCreateNewsShow[] = false;
         $rootScope.COMMENTS_DEFAULT_COUNT = 4;
-        lenta.selectedGroupInTop = $rootScope.currentGroup =
-        $rootScope.base.bufferSelectedGroup = userClientGroups[3];
+
+        var ls_setInfo_groupId = localStorage.getItem('VO_setInfo_groupId'),
+            currentGroup = userClientGroups[3];
+
+        if(ls_setInfo_groupId){
+            var groupsLength = userClientGroups.length;
+            for (var i = 0; i < groupsLength; i++) {
+                if (userClientGroups[i].id == ls_setInfo_groupId) {
+                    currentGroup = userClientGroups[i];
+                }
+            }
+            localStorage.removeItem('VO_setInfo_groupId');
+        }
+
+    lenta.selectedGroupInTop = $rootScope.currentGroup =
+        $rootScope.base.bufferSelectedGroup = currentGroup;
+    //console.log('lenta',$rootScope.currentGroup.id);
 
         /*if(!$rootScope.importantIsLoadedFromTop)
         $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
@@ -75,6 +113,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         };
 
         $rootScope.wallChangeGroup = function(groupId){
+            //console.log('wall-change ',groupId);
 
             lenta.wallItems = messageClient.getWallItems(groupId, 0, loadedLength);
 
@@ -190,8 +229,9 @@ forumControllers.controller('LentaController',function($rootScope) {
             }
         };
 
-        initFancyBox($('.forum'));
 
-        $('.ng-cloak').removeClass('ng-cloak');
+    $rootScope.initCreateTopic(lenta);
+
+        initFancyBox($('.forum'));
 
     })

@@ -10,6 +10,7 @@ var main = angular.module('forum', [
 ]);
 
 main.config(function($stateProvider, $urlRouterProvider) {
+
     $urlRouterProvider.otherwise("/main");
 
     $stateProvider
@@ -97,11 +98,26 @@ main.config(function($stateProvider, $urlRouterProvider) {
             url: "/important",
             templateUrl: "/static/partials/important.html",
             controller: 'importantController as important'
-        });
-        /*.state('blog', {
-            url: "/blog",
-            templateUrl: "partials/blog.html",
-            controller: 'BlogController as bl*/
+        })
+        .state('nearby', {
+            url: "/nearby",
+            templateUrl: "/static/partials/nearby.html",
+            controller: 'nearbyCtrl as nearby'
+        })
+        .state('nearby-single', {
+            url: "/nearby-single/:nearbyId",
+            templateUrl: "/static/partials/nearby-single.html",
+            controller: 'nearbySingleCtrl as nearby'
+        })
+        .state('blog', {
+            url: "/blog"
+        })
+        .state('about', {
+            url: "/about"
+        })
+        .state('contacts', {
+            url: "/contacts"
+        })
 });
 
 main.config(function($locationProvider){

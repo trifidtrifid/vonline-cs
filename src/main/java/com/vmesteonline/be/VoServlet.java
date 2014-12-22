@@ -1,5 +1,6 @@
 package com.vmesteonline.be;
 
+import com.vmesteonline.be.jdo2.VoSession;
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
@@ -33,6 +34,7 @@ public class VoServlet extends HttpServlet {
 	private final TProtocolFactory inProtocolFactory;
 	private final TProtocolFactory outProtocolFactory;
 	protected ServiceImpl serviceImpl;
+
 	private final Collection<Map.Entry<String, String>> customHeaders;
 
 	public void setProcessor(TProcessor processor) {
@@ -47,14 +49,14 @@ public class VoServlet extends HttpServlet {
 		this.processor = processor;
 		this.inProtocolFactory = inProtocolFactory;
 		this.outProtocolFactory = outProtocolFactory;
-		this.customHeaders = new ArrayList<Map.Entry<String, String>>();
+		this.customHeaders = new ArrayList<>();
 	}
 
 	public VoServlet(TProtocolFactory inProtocolFactory, TProtocolFactory outProtocolFactory) {
 		super();
 		this.inProtocolFactory = inProtocolFactory;
 		this.outProtocolFactory = outProtocolFactory;
-		this.customHeaders = new ArrayList<Map.Entry<String, String>>();
+		this.customHeaders = new ArrayList<>();
 	}
 
 	/**
@@ -74,12 +76,9 @@ public class VoServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if( null==serviceImpl)
-			throw new IOException("serviceImpl not initialized.");
-		
-		serviceImpl.setSession(request.getSession());
-		TTransport inTransport = null;
-		TTransport outTransport = null;
+		serviceImpl.initCurrentSession( request );
+		TTransport inTransport;
+		TTransport outTransport;
 		try {
 			response.setContentType("application/x-thrift");
 
@@ -88,6 +87,8 @@ public class VoServlet extends HttpServlet {
 					response.addHeader(header.getKey(), header.getValue());
 				}
 			}
+			allowCrossdomainRequests(response);
+
 			final InputStream in = request.getInputStream();
 			final OutputStream out = response.getOutputStream();
 
@@ -124,12 +125,21 @@ public class VoServlet extends HttpServlet {
 			readerSniffer.close();
             String req = readBaos.toString();
             if( !req.matches(disabledThriftLoggingPatterns)) {
-                logger.debug("THRIFT request: '" + req + "'");
-				logger.debug("THRIFT response: '" + writeBaos.toString() + "'");
+				VoSession sess = serviceImpl.getCurrentSession();
+				String name = sess.getName()+" "+sess.getLastName();
+				logger.debug("THRIFT["+sess.getId()+":"+name+"] request: '" + req + "'");
+				logger.debug("THRIFT["+sess.getId()+":"+name+"] response: '" + writeBaos.toString() + "'");
             }
 		} catch (TException te) {
 			throw new ServletException(te);
 		}
+	}
+
+	private void allowCrossdomainRequests(HttpServletResponse response) {
+		response.addHeader("Access-Control-Allow-Origin","*");
+		response.addHeader("Access-Control-Allow-Methods","POST");
+		response.addHeader("Access-Control-Max-Age","10000");
+		response.addHeader("Access-Control-Allow-Headers","*");
 	}
 
 	/**

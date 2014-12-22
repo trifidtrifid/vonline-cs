@@ -29,4 +29,13 @@ detected.
             <Item>localhost</Item>
         </Array>
     </Set>
+    <Set name="sessionHandler">
+	    <New class="org.eclipse.jetty.server.session.SessionHandler">
+	      <Arg>
+	        <New class="org.eclipse.jetty.server.session.HashSessionManager">
+	          <Set name="storeDirectory">/opt/jetty/session-storage</Set>
+	        </New>
+	      </Arg>
+	    </New>
+	  </Set>
 </Configure>

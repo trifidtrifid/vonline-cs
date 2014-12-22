@@ -3,14 +3,18 @@ package com.vmesteonline.be.utils;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoInitKey;
+import com.vmesteonline.be.jdo2.VoInviteCode;
+import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.MatrixAsList;
 import com.vmesteonline.be.thrift.VoError;
+
 import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -486,5 +490,23 @@ public class VoHelper {
 				logger.warn("Got NPE on execute. Try again:"+tl--,e);
 			}
 		return null;
+	}
+
+	public static VoInviteCode createNewInviteCode(int letters, int digits, VoPostalAddress pa, Set<String> usedCodeSet, PersistenceManager pm) {
+		String passCode;
+		while (true) {
+			passCode = generateCode(2, 4).toUpperCase();
+			if (null!=usedCodeSet && usedCodeSet.contains(passCode))
+				continue;
+			List<VoInviteCode> list = executeQuery(pm.newQuery(VoInviteCode.class, "code=='" + passCode + "'"));
+			if (list.size() > 0)
+				continue;
+			break;
+		}
+		if (null!=usedCodeSet) 
+			usedCodeSet.add(passCode);
+		VoInviteCode ic = new VoInviteCode(passCode, pa.getId());
+		pm.makePersistent(ic);
+		return ic;
 	}
 }

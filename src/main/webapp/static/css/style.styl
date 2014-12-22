@@ -274,6 +274,7 @@ transform()
     background-color transparent !important
     border-top-width 0 !important
     border-bottom 2px solid transparent !important
+    outline none
   .border-pink
     border-color #d6487e !important
   .border-success
@@ -332,6 +333,8 @@ transform()
   border-right 1px solid #ccc;
   border-left 1px solid #ccc;
   min-height 100%
+  &.no-margin
+    margin-left 0
   //margin-right 190px
 
 .widget-main
@@ -498,6 +501,8 @@ transform()
 
 .dd-list .dd-list
   padding-left 37px
+  .topic-left
+    width 48px
 
 .dd-list .dd-list .topic-right //.topic-item
   margin-left 60px
@@ -641,9 +646,6 @@ transform()
   padding-right 0
 .btn.active:after
   border-bottom 0
-.btn-info.no-border.active
-  //background #4184AF !important
-  //border-color #4184AF !important
 .no-resize
   resize none
 
@@ -1392,8 +1394,10 @@ transform()
 
 .blog
   text-align left
+  width 760px
+  margin 0 auto
   .post
-    padding 15px 0 5px 0
+    padding 5px 0
     border-top 1px solid #ccc
     &:first-child
       border-top 0
@@ -1413,9 +1417,11 @@ transform()
           display block
           margin 0 auto
           margin-bottom 5px
-  .dialogs
-  .input-group
-    display none
+    .input-group
+      display block
+      .btn
+        display inline-block
+        margin-bottom 15px
   .dialogs
     padding 0
   .anonName
@@ -1544,6 +1550,70 @@ transform()
     margin-bottom 15px
     font-size 18px
     font-weight bold
+
+/* nearby */
+.nearby-more
+  font-size 14px
+  font-weight normal
+  margin-top -26px
+
+/* --- */
+.unconfirm
+  padding 15px
+  h2
+    margin-top 0
+.code-block
+  text-align center
+  float none !important
+
+/* new style createTopic */
+.create-wall-wrap
+  padding 10px
+  margin 0 10px 15px 10px
+  background-color #f3f5f3
+  textarea
+    width 100%
+    border 1px solid #b5b5b5
+  .write-mess-selectGroup
+    display block
+    color #000
+    padding 5px
+    font-size 14px
+    background-color #fff
+    border 1px solid #b5b5b5
+    border-bottom 0
+    &:hover
+      text-decoration none
+    .fa
+      margin-top 4px
+  .select-group-list
+    background-color #fff
+    margin 0
+    padding 5px 0 5px 15px
+    border 1px solid #b5b5b5
+    border-bottom 0
+    li
+      list-style none
+      display block
+      margin-bottom 5px
+      label
+        cursor pointer
+        display block
+      &:last-child
+        margin-bottom 0
+  .message-input-bottom
+    .btn-primary
+      margin 10px 0 0  10px
+    .attach-dropdown
+      margin-top 10px
+  .close-messageBar
+    display inline-block
+    text-transform uppercase
+    margin-top 18px
+    &:hover
+      text-decoration none
+  .error-info
+    top 14px
 
 /* backoffice */
 .backoffice

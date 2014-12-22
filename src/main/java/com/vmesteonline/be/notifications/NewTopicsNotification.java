@@ -40,7 +40,7 @@ public class NewTopicsNotification extends Notification {
 		for( VoTopic topic: newTopics ){
 			if( topic.getType() == MessageType.BLOG )
 				continue;
-			VoGroup voGroup = Defaults.defaultGroups.get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
+			VoGroup voGroup = Defaults.getDefaultGroups().get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
 			int radius = voGroup.getRadius();
 			String ufilter;
 			if( voGroup.getGroupType() <= GroupType.BUILDING.getValue() )
@@ -68,12 +68,12 @@ public class NewTopicsNotification extends Notification {
 
 		// create message for each user
 		for (VoUser u : userTopics.keySet()) {
-			String body = "<p><b>Близкие события</b></p>";
+			String body = "<p><b>Ваши соседи пишут</b></p>";
 			boolean somethingToSend = false;
-			for ( VoGroup ug: Defaults.defaultGroups ) {
+			for ( VoGroup ug: Defaults.getDefaultGroups()) {
 				List topicsList = userTopics.get(u)[ug.getGroupType()];
 				if (topicsList != null) {
-					String tc = createGroupContent(pm, ug, topicsList);
+					String tc = createGroupContent(pm, ug, u, topicsList);
 					if (tc != null) {
 						somethingToSend = true;
 						body += tc;
@@ -83,7 +83,7 @@ public class NewTopicsNotification extends Notification {
 			if(somethingToSend){
 				NotificationMessage mn = new NotificationMessage();
 				mn.message = body;
-				mn.subject = "Близкие события";
+				mn.subject = "Ваши соседи пишут";
 				mn.to = u.getEmail();
 				try {
 					sendMessage(mn, u);
@@ -96,19 +96,18 @@ public class NewTopicsNotification extends Notification {
 		}
 	}
 
-	private String createGroupContent(PersistenceManager pm, VoGroup ug, List<VoTopic> topics) {
+	private String createGroupContent(PersistenceManager pm, VoGroup ug, VoUser u, List<VoTopic> topics) {
 		try {
 			List<VoTopic> orderedTopics = new ArrayList<>( topics );
 			Collections.sort(orderedTopics, topicCreatedDateComp);
 			
-			int weekAgo = (int) (System.currentTimeMillis()/1000L) - 7 * 86400;
-			if( orderedTopics.get(0).getCreatedAt() < weekAgo )
+			if( orderedTopics.get(0).getCreatedAt() < u.getLastNotified() )
 				return null;
 			
-			String groupContent = "<p><b>Пишут в группе '" + ug.getVisibleName() + "'</b>";
+			String groupContent = "<p><b>В группе '" + ug.getVisibleName() + "'</b>";
 				
 			for (VoTopic tpc : orderedTopics) {
-				if( tpc.getCreatedAt() < weekAgo )
+				if( tpc.getCreatedAt() < u.getLastNotified() )
 					break;
 				String topicTxt = createTopicContent(pm, ug, tpc);
 				groupContent += topicTxt;

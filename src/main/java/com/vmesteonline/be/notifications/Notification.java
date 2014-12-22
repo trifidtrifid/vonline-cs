@@ -9,11 +9,14 @@ import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -106,10 +109,13 @@ public abstract class Notification {
 	}
 
 	private VoSession getTheLastSessionAndCeanOldOnes(VoUser vu, int sessionDeadLine, PersistenceManager pm) {
-		List<VoSession> uSessionsConst = executeQuery(  pm.newQuery(VoSession.class, "userId==" + vu.getId()) );
+		Query q = pm.newQuery(VoSession.class, "user==u");
+		q.declareParameters("VoUser u");
+		List<VoSession> uSessionsConst = executeQuery(q,vu);
 		if( null==uSessionsConst || 0==uSessionsConst.size())
 			return null;
 		List<VoSession> uSessions = new ArrayList<>(uSessionsConst);
+		Collections.sort(uSessions, lastActivityComparator);
 		Collections.sort(uSessions, lastActivityComparator);
 		VoSession lastSession = uSessions.get(uSessions.size() - 1);
 		for (VoSession ns : uSessions) {
@@ -122,7 +128,7 @@ public abstract class Notification {
 	}
 
 	private void addUserToNotificationIst(List<VoUser> userList, int now, VoUser vu) {
-		int timeAgo = (int) now - vu.getLastNotified();
+		int timeAgo =  now - vu.getLastNotified();
 		NotificationFreq nf = vu.getNotificationFreq().freq;
 		if (NotificationFreq.DAYLY == nf && timeAgo >= 86400 || NotificationFreq.TWICEAWEEK == nf && timeAgo >= 3 * 86400
 				|| NotificationFreq.WEEKLY == nf && timeAgo >= 7 * 86400) {
@@ -181,7 +187,7 @@ public abstract class Notification {
 
 		PersistenceManager pm = PMF.getPm();
 
-		String subject = "сообщение пользовател: "+author.getName()+" "+author.getLastName();
+		String subject = "сообщение пользователя: "+author.getName()+" "+author.getLastName();
 		String body = "";
 		try {
 			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
@@ -192,7 +198,11 @@ public abstract class Notification {
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType(pm).toString()) :
 				msg instanceof VoMessage ? ("Сообщение в группе: "+pm.getObjectById( VoTopic.class, ((VoMessage) msg).getTopicId()).getGroupType(pm)) : "";
 		body += "<br/><i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
-		decorateAndSendMessage(null, subject, body);
+		try {
+			EMailHelper.sendSimpleEMail(author.getName() + " " + author.getLastName() + "<" + author.getEmail() + ">", "info@vmesteonline.ru", subject, body);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void dialogMessageNotification(VoDialog dlg, VoUser author, VoUser rcpt) {
@@ -210,7 +220,7 @@ public abstract class Notification {
 					String body = author.getName() + " " + author.getLastName() + " написал вам: <br/><br/><i>" + lastMsg.getContent()
 							+ "</i><br/><br/><a href=\"https://" + host + "/dialog-single/" + dlg.getId() + "\">Ответить...</a>";
 
-					decorateAndSendMessage(rcpt, "сообщение от " + author.getName(), body);
+					decorateAndSendMessage(rcpt,  author.getName()+" "+author.getLastName() +" отправил вам сообщение", body);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -223,26 +233,29 @@ public abstract class Notification {
 
 		String body = newUser.getName() + " " + newUser.getLastName() + ", добро пожаловать на сайт Вашего дома!<br/><br/> ";
 
-		body += "Ваш логин: "+newUser.getEmail()+"<br/>Пароль:    "+newUser.getPassword()+"<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
-		Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		userSet.addAll(executeQuery( pm.newQuery(VoUser.class, "")));
+		body += "Ваш логин: " + newUser.getEmail() + "<br/>Пароль:    " + newUser.getPassword() + "<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
+		//body.Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
+		List res = executeQuery(pm.newQuery("SQL", "SELECT COUNT(*) FROM VOUSER"));
+		
+		body += "На сайте уже зарегистрировано: " + res.get(0) + " пользователей<br/>";
 
-		body += "На сайте уже зарегистрировано: " + userSet.size() + " пользователей<br/>";
-		
-		List<VoUser> ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.NEIGHBORS, pm), pm );
-		if(0!=ul.size()) body += "Из них рядом с вами живут: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation( newUser.getGroup(GroupType.BUILDING, pm), pm );
-		if(0!=ul.size()) body += "В вашем доме: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
-		if(0!=ul.size()) body += "В вашем подъезде: "+ul.size()+"<br/>";
-		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm );
-		if(0!=ul.size()) body += "На вашем этаже : "+ul.size()+"<br/>";
-		
+		List<VoUser> ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.NEIGHBORS, pm), pm);
+		if (0 != ul.size()) body += "В соседних домах: " + ul.size() + "<br/>";
+		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.BUILDING, pm), pm);
+		if (0 != ul.size()) body += "В вашем доме: " + ul.size() + "<br/>";
+		if (0 != pm.getObjectById(VoPostalAddress.class, newUser.getAddress()).getStaircase()) {
+			ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
+			if (0 != ul.size()) body += "В вашем подъезде: " + ul.size() + "<br/>";
+		}
+		if (0 != pm.getObjectById(VoPostalAddress.class, newUser.getAddress()).getFloor()) {
+			ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm);
+			if (0 != ul.size()) body += "На вашем этаже : " + ul.size() + "<br/>";
+		}
 		
 		body += "<br/> Мы создали этот сайт, чтобы Ваша жизнь стала чуть комфортней, от того что вы будете в курсе что происходит в вашем доме. <br/><br/>";
 		if (!newUser.isEmailConfirmed()) {
 			body += "Для доступа к сайту, подтвердите ваш email перейдя по <a href=\"https://" + host + "/confirm/profile/" + newUser.getId() + ","
-					+ newUser.getConfirmCode() + "\">этой ссылке</a><br/></br>";
+					+ newUser.getConfirmMailCode() + "\">этой ссылке</a><br/></br>";
 			pm.makePersistent(newUser);// to save confirm code
 		}
 
@@ -286,8 +299,8 @@ public abstract class Notification {
 		try {
 			String body = user.getName() + " " + user.getLastName() + ", <br/>"
 					+ "<p>На сайте Вашего дома было запрошено восстановление пароля доступа для адреса вашей электронной почты. "
-					+ "Если вы хотите выполнить эту действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
-					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8") + "\">этой ссылкой</a>.</p>"
+					+ "Если вы хотите выполнить это действие, воспользуйтесь " + "<a href=\"https://" + host + "/remember_passw.html#" + +user.getConfirmCode()
+					+ "-" + URLEncoder.encode(user.getEmail(), "UTF-8").replace("-", "%2D") + "\">ссылкой</a>.</p>"
 					+ "<p>Если у вас возникли трудности с доступом к сайту или есть вопросы, вы можете задать их нам в ответном письме.</p>";
 			decorateAndSendMessage(user, "восстановление пароля", body);
 

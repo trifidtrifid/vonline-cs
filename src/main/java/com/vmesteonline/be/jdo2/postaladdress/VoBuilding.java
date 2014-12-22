@@ -1,5 +1,6 @@
 package com.vmesteonline.be.jdo2.postaladdress;
 
+import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.thrift.Building;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
@@ -28,6 +29,11 @@ public class VoBuilding  {
 	}
 
 	public String getAddressString() {
+		if( null==addressString){
+			PersistenceManager pm = PMF.getPm();
+			addressString =  pm.getObjectById(VoStreet.class,streetId).getName() + " "+getFullNo();
+			pm.makePersistent(this);
+		}
 		return addressString;
 	}
 

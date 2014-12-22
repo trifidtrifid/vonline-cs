@@ -20,7 +20,6 @@ import com.vmesteonline.be.thrift.PostalAddress;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.thrift.messageservice.*;
 import com.vmesteonline.be.utils.Defaults;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class MessageServiceTests extends TestWorkAround {
 
 	private Message createMessage(long tpcId, long msgId, MessageType type, String anonName) throws Exception {
 		Message msg = new Message(0, msgId, type, tpcId, getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, (int) (System.currentTimeMillis() / 1000L), 0, "test content", 0, 0,
-				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, anonName, null, null, 0);
+				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, anonName, null, null, 0, false);
 		if (type == MessageType.BLOG)
 			return msi.postBlogMessage(msg);
 		else
@@ -57,7 +56,7 @@ public class MessageServiceTests extends TestWorkAround {
 	private Message createMessage(long tpcId, long msgId) throws Exception {
 		Message msg = new Message(0, msgId, MessageType.BASE, tpcId, getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, (int) (System.currentTimeMillis() / 1000L), 0, "test content",
 				0, 0, new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null,
-				null,0);
+				null,0, false);
 		return msi.postMessage(msg);
 	}
 
@@ -68,20 +67,17 @@ public class MessageServiceTests extends TestWorkAround {
 
 	private Topic createTopic(long groupId, MessageType type) throws Exception {
 		Message msg = new Message(0, 0, type, 0, groupId, 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
-				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0);
-		Topic topic = new Topic(0, topicSubject, msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, null, null);
+				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
+		Topic topic = new Topic(0, topicSubject, msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, null, null, false);
 		return msi.postTopic(topic);
 	}
 
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
 		Assert.assertTrue(init());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		close();
-	}
 
 	@Test
 	public void testCreateTopticAndTwoReplies() {
@@ -293,8 +289,8 @@ public class MessageServiceTests extends TestWorkAround {
 			long grId = getUserGroupId(Defaults.user1email, GroupType.BUILDING);
 
 			Message msg = new Message(0, 0, MessageType.BASE, 0,getUserGroupId(Defaults.user1email, GroupType.BUILDING), 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
-					new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0);
-			Topic topic = new Topic(0, "testSubject", msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, poll, null);
+					new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
+			Topic topic = new Topic(0, "testSubject", msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, poll, null, false);
 			msi.postTopic(topic);
 
 			TopicListPart rTopic = msi.getTopics(grId, 0, 0, 0L, 10);
@@ -305,8 +301,8 @@ public class MessageServiceTests extends TestWorkAround {
 			Assert.assertEquals(poll.names.get(0), rTopic.topics.get(0).poll.names.get(0));
 			Assert.assertEquals(0, rTopic.topics.get(0).poll.values.get(0).intValue());
 			Assert.assertEquals(0, rTopic.topics.get(0).poll.values.get(1).intValue());
-			Assert.assertEquals("Aname", rTopic.topics.get(0).userInfo.firstName);
-			Assert.assertEquals("Afamily", rTopic.topics.get(0).userInfo.lastName);
+			Assert.assertEquals(Defaults.user1name, rTopic.topics.get(0).userInfo.firstName);
+			Assert.assertEquals(Defaults.user1lastName, rTopic.topics.get(0).userInfo.lastName);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -321,8 +317,8 @@ public class MessageServiceTests extends TestWorkAround {
 			Poll poll = createPoll();
 
 			Message msg = new Message(0, 0, MessageType.BASE, 0, getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
-					new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0);
-			Topic topic = new Topic(0, "testSubject", msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, poll, null);
+					new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
+			Topic topic = new Topic(0, "testSubject", msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, poll, null, false);
 			topic = msi.postTopic(topic);
 
 			msi.doPoll(topic.poll.pollId, 0);
@@ -437,6 +433,15 @@ public class MessageServiceTests extends TestWorkAround {
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(0, rTopic.totalSize);
 
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.BUILDING), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+			createTopic(getUserGroupId(Defaults.user3email, GroupType.STAIRCASE));
 			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.BUILDING), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(1, rTopic.totalSize);
@@ -444,6 +449,7 @@ public class MessageServiceTests extends TestWorkAround {
 			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(1, rTopic.totalSize);
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -468,7 +474,7 @@ public class MessageServiceTests extends TestWorkAround {
 
 			rTopic = msi.getTopics(getUserGroupId(Defaults.user4email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
-			Assert.assertEquals(1, rTopic.totalSize);
+			Assert.assertEquals(0, rTopic.totalSize);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -480,16 +486,17 @@ public class MessageServiceTests extends TestWorkAround {
 	// сообщение по дому себе в подъезд не видно, видно в доме, видно в округе
 	public void testGetTopicsHomeToSelf() {
 		try {
-			createTopic(getUserGroupId(Defaults.user1email, GroupType.BUILDING));
-			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 0L, 10);
+			asi.login(Defaults.user2email, Defaults.user2pass);
+			createTopic(getUserGroupId(Defaults.user2email, GroupType.BUILDING));
+			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.STAIRCASE), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(0, rTopic.totalSize);
 
-			rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.BUILDING), 0, 0, 0L, 10);
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.BUILDING), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(1, rTopic.totalSize);
 
-			rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(1, rTopic.totalSize);
 
@@ -567,6 +574,11 @@ public class MessageServiceTests extends TestWorkAround {
 
 			rTopic = msi.getTopics(getUserGroupId(Defaults.user4email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+			asi.login(Defaults.user2email, Defaults.user2pass);
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(1, rTopic.totalSize);
 
 		} catch (Exception e) {
@@ -579,7 +591,9 @@ public class MessageServiceTests extends TestWorkAround {
 	// сообщение по округе себе в подъезде не видно, в доме не видно, видно в округе
 	public void testGetTopicsSmallToSelf() {
 		try {
-			createTopic(getUserGroupId(Defaults.user1email, GroupType.NEIGHBORS));
+			createTopic(getUserGroupId(Defaults.user2email, GroupType.NEIGHBORS));
+			asi.login(Defaults.user2email, Defaults.user2pass);
+
 			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 0L, 10);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(0, rTopic.totalSize);
@@ -675,6 +689,116 @@ public class MessageServiceTests extends TestWorkAround {
 	}
 
 	@Test
+	// сообщение с этажа одной локации можно переметить в другую
+	public void testMoveTopicForomOneGroupToAnother() {
+		try {
+			Topic topicF = createTopic(getUserGroupId(Defaults.user2email, GroupType.FLOOR));//zanevsky32k3
+			asi.login(Defaults.user5email, Defaults.user5pass);//respublikanskay6
+
+			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+			//move topic from one users group to another
+			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			msi.moveTopic( topicF.id, getUserGroupId(Defaults.user5email, GroupType.STAIRCASE), null, null, null, null);
+
+			asi.login(Defaults.user5email, Defaults.user5pass);//the fi
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize);
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.STAIRCASE), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize);
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.FLOOR), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception thrown." + e.getMessage());
+		}
+	}
+
+	@Test
+	// сообщение с этажа одной локации можно переметить в другую
+	public void testTopicExtendTheRange() {
+		try {
+			Topic topicF = createTopic(getUserGroupId(Defaults.user2email, GroupType.FLOOR));//zanevsky32k3
+
+			asi.login(Defaults.user2email, Defaults.user2pass); //logout the BigBro
+			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+			//change the radius to bigger one  700M
+			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			msi.moveTopic( topicF.id, 0, null, null, GroupType.BLOCK, null); //700M
+
+			asi.login(Defaults.user2email, Defaults.user2pass); //logout the big bro
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.NEIGHBORS), 0, 0, 0L, 10); //more then 1000M
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize); //it's not enough
+
+			//change the radius to bigger one  1500M
+			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages BB
+			msi.moveTopic( topicF.id, 0, null, null, GroupType.DISTRICT, null); //1500M
+
+			asi.login(Defaults.user2email, Defaults.user2pass);
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.NEIGHBORS), 0, 0, 0L, 10); //less then 15000M
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize); //it's not enough
+
+			////change the radius to small one
+			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			msi.moveTopic( topicF.id, 0, null, null, GroupType.NEIGHBORS, null); //350M
+
+			asi.login(Defaults.user2email, Defaults.user2pass); //logout the BB
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user5email, GroupType.NEIGHBORS), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception thrown." + e.getMessage());
+		}
+	}
+
+	@Test
+	// сообщение с этажа одной локации можно переметить в другую
+	public void testTopicChangeTheType() {
+		try {
+			Topic topicF = createTopic(getUserGroupId(Defaults.user2email, GroupType.FLOOR));//zanevsky32k3
+
+			asi.login(Defaults.user2email, Defaults.user2pass); //logout the BigBro
+			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.FLOOR), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize);
+
+			//make it the advert
+			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			msi.moveTopic( topicF.id, 0, null, null, null, MessageType.ADVERT);
+
+			asi.login(Defaults.user2email, Defaults.user2pass); //logout the big bro
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user2email, GroupType.FLOOR), 0, 0, 0L, 10); //more then 1000M
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize); //no base message
+
+			rTopic = msi.getAdverts(getUserGroupId(Defaults.user2email, GroupType.FLOOR), 0, 10); //more then 1000M
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize); //it's here!
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception thrown." + e.getMessage());
+		}
+	}
+
+	@Test
 	public void testBlogMessages() {
 		try {
 
@@ -687,9 +811,9 @@ public class MessageServiceTests extends TestWorkAround {
 			MessageListPart mlp = msi.getMessagesAsList(topic.getId(), MessageType.BLOG, 0, false, 10);
 			Assert.assertEquals(2, mlp.totalSize);
 			Assert.assertEquals(msg.getId(), mlp.messages.get(0).getId());
-			Assert.assertEquals("Aname Afamily", mlp.messages.get(0).getAnonName());
+			Assert.assertEquals(Defaults.user1name + " " +Defaults.user1lastName, mlp.messages.get(0).getAnonName());
 			Assert.assertNotNull(mlp.messages.get(0).getUserInfo());
-			Assert.assertEquals("Aname", mlp.messages.get(0).getUserInfo().getFirstName());
+			Assert.assertEquals(Defaults.user1name, mlp.messages.get(0).getUserInfo().getFirstName());
 
 			Assert.assertEquals(msg1.getId(), mlp.messages.get(1).getId());
 			Assert.assertEquals("Anonimous", mlp.messages.get(1).getAnonName());
@@ -789,6 +913,7 @@ public class MessageServiceTests extends TestWorkAround {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			fail(e.toString());
 		}
 	}
 }

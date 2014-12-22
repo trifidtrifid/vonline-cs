@@ -1,12 +1,19 @@
 package com.vmesteonline.be.jdo2;
 
-import javax.jdo.annotations.*;
 import java.math.BigDecimal;
+
+import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.Index;
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 @Index(name="locIdx", members={"longitude","latitude"})
-public abstract class GeoLocation {
+public class GeoLocation {
 
 	public GeoLocation() {
 		longitude = "0";
@@ -21,11 +28,21 @@ public abstract class GeoLocation {
 	}
 
 	public void setLongitude(BigDecimal longitude) {
+		if( null==longitude)
+			determineLocation();
+		
 		this.longitude = null == longitude ? null : longitude.toPlainString();
 	}
 
 	public BigDecimal getLatitude() {
+		if( null==latitude)
+			determineLocation();
 		return null == latitude ? null : new BigDecimal(latitude);
+	}
+
+	protected void determineLocation() {
+		longitude = "0.0";
+		latitude = "0.0"; 
 	}
 
 	public void setLatitude(BigDecimal latitude) {

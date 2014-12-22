@@ -14,12 +14,15 @@ import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.VoHelper;
+
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.HttpServletRequest;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -29,12 +32,10 @@ import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 	public MessageServiceImpl() throws InvalidOperation {
-		initDb();
 	}
 
-	public MessageServiceImpl(String sessId) throws InvalidOperation {
-		super(sessId);
-		initDb();
+	public MessageServiceImpl(HttpServletRequest req) throws InvalidOperation {
+		super(req);
 	}
 
 	@Override
@@ -65,9 +66,14 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm, user);
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
+				if (VoUser.isHeTheBigBro(user)){
+					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
+					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+					tpc.setCanChange(true);
+				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				MessageListPart mlp = getMessagesAsList(tpc.id, MessageType.BASE, 0, false, 10000);
 				if (mlp.totalSize > 0)
@@ -234,53 +240,77 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	public static List<VoTopic> getTopics(long groupId, List<Long> userGroups, MessageType type, long lastLoadedTopicId, int length, boolean importantOnly,
-			PersistenceManager pm) {
+										  PersistenceManager pm, VoUser user) {
 
 		String filter = "";
 		List<VoTopic> allTopics = null;
 		List<VoTopic> topics = new ArrayList<>();
 		Exception e = null;
+		VoUserGroup ug = null;
+		boolean bigBro = VoUser.isHeTheBigBro(user);
+
 		if( 0!=groupId) {
-			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
-			if( ug.getGroupType() > GroupType.BUILDING.getValue() ) {
-				BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), ug.getRadius());
-				BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), ug.getRadius());
-				BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
-				BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), ug.getRadius());
-				filter += "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
-						"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "' && userGroupType <=" + ug.getGroupType() + " && ";
+			ug = pm.getObjectById(VoUserGroup.class, groupId);
+			if ( type != MessageType.BLOG && !bigBro) {
+				if( null!=userGroups && userGroups.size() >= Defaults.getDefaultGroups().size() ){
+                    filter += " ( ";
+                    for( int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx ++){
+                        int groupTypeValue = GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue();
+                        filter += "userGroupType>="+ groupTypeValue + " && ";
+                        if( groupTypeValue > GroupType.BUILDING.getValue() ) {
+							//int radius = ug.getRadius();
+							int radius = 3000; //set radius 3KM and filter messages later
+
+							BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), radius);
+                            BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), radius);
+                            BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), radius);
+                            BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), radius);
+                            filter += "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
+                                    "' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "')";
+                        }
+                        else {
+                            filter += "userGroupId=="+userGroups.get(gIdx);
+                        }
+                        filter += " || ";
+                    }
+                    filter = filter.substring(0,filter.length()-4) + ")";
+                }
 			} else {
-				filter += "longitude == '" + ug.getLongitude() + "' && latitude == '" + ug.getLatitude()+ "' && userGroupType <=" + ug.getGroupType() + " && ";
-			}
-			if( null!=userGroups && userGroups.size() >= Defaults.defaultGroups.size() ){
-				filter += "( userGroupType>="+GroupType.BUILDING.getValue()+" || ";
-				for( int gIdx = 0; gIdx < GroupType.BUILDING.getValue() - Defaults.FIRST_USERS_GROUP; gIdx ++){
-					filter += "userGroupType=="+GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue() +" && userGroupId=="+userGroups.get(gIdx)+" || ";
-				}
-				filter = filter.substring(0,filter.length()-4) + ") && ";
+				filter = " true ";
 			}
 		}
 
 		try {
 
-            if( type == MessageType.BLOG ) {
-				filter += "type=='"+MessageType.BLOG.name()+"'";
+       if( type == MessageType.BLOG ) {
+      	 filter = "type=='"+MessageType.BLOG.name()+"'";
 
-            } else {
-				if (importantOnly) {
-					int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
-					filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& " + filter;
-				}
-
-				if (type == MessageType.WALL)
-					filter += "(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' || type=='" + MessageType.ADVERT+"')";
-				else
-					filter += "type=='" + type + "'";
-			}
+       } else {
+					if (importantOnly) {
+						int minimumCreateDate = (int) (System.currentTimeMillis() / 1000L - 86400L * 14L); // two
+						filter = "isImportant == true && lastUpdate > " + minimumCreateDate + "&& " + filter;
+					}
+					
+					if (type == MessageType.WALL)
+						filter += filter.length() > 0 ? "&& (type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' )" :
+							"(type=='" + MessageType.WALL + "' || type=='" + MessageType.BASE+"' )"; //|| type=='" + MessageType.ADVERT+"')";
+					else
+						filter += filter.length() > 0 ? "&& type=='" + type + "'" : "type=='" + type + "'";
+       }
 
 			Query q = pm.newQuery(VoTopic.class, filter);
 			q.setOrdering("lastUpdate DESC");
 			allTopics = executeQuery(q);
+
+			if( null != ug && ug.getGroupType() > GroupType.BUILDING.getValue() && !bigBro){
+				ArrayList<VoTopic> allTopicsFiltered = new ArrayList<>(  );
+				for( VoTopic tpc: allTopics){
+					if( VoHelper.calculateRadius( ug, tpc ) <= Defaults.radiusByType[ tpc.getUserGroupType()]) {
+						allTopicsFiltered.add( tpc );
+					}
+				}
+				allTopics = allTopicsFiltered;
+			}
 
 			boolean addTopic = 0 == lastLoadedTopicId ? true : false;
 			for (VoTopic topic : allTopics) {
@@ -309,13 +339,18 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public TopicListPart getBlog(long lastLoadedTopicId, int length) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
-		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm);
+
+		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm, null);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
-
 		for (VoTopic voTopic : topics) {
 			Topic tpc = voTopic.getTopic(0, pm);
 			mlp.addToTopics(tpc);
+			try {
+				if( getCurrentUser().getEmail().equalsIgnoreCase("info@vmesteonline.ru") )
+					tpc.setCanChange(true);
+			} catch (InvalidOperation invalidOperation) {
+			}
 		}
 		return mlp;
 	}
@@ -343,13 +378,15 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		try {
 			VoUser user = getCurrentUser(pm);
 
-			List<Long> groupsToSearch = new ArrayList<>();
-			groupsToSearch.add(groupId);
-
-			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm, user);
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
+				if (VoUser.isHeTheBigBro(user)){
+					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
+					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+					tpc.setCanChange(true);
+				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo( user, voTopic.getAuthorId(), pm);
 				tpc.setMessageNum(voTopic.getMessageNum());
 				mlp.addToTopics(tpc);
@@ -412,6 +449,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public int checkUpdates(int lastRequest) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
 		VoSession sess = getCurrentSession(pm);
+		if( null == sess.getUser() )
+			throw new InvalidOperation(VoError.NotAuthorized, "Not authorized now.");
+
 		int now = (int) (System.currentTimeMillis() / 1000L);
 		if (now - sess.getLastActivityTs() > 60) { /*
 																								 * Update last Activity once per
@@ -451,6 +491,29 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	@Override
+	public TopicListPart getBusinessTopics(long lastLoadedTopicId, int length) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+
+		VoUser currentUser = getCurrentUser();
+		List<VoTopic> topics = getTopics(0, null, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, currentUser);
+		TopicListPart mlp = new TopicListPart();
+		mlp.totalSize = topics.size();
+		for (VoTopic voTopic : topics) {
+			Topic tpc = voTopic.getTopic(0, pm);
+			mlp.addToTopics(tpc);
+			if( currentUser.getEmail().equalsIgnoreCase("info@vmesteonline.ru") )
+                  tpc.setCanChange(true);
+		}
+		return mlp;
+	}
+
+	@Override
+	public Message postBusinessTopics(Message msg) throws InvalidOperation, TException {
+		msg.setType( MessageType.BUSINESS_PAGE);
+		return  postMessage(msg) ;
+	}
+
+	@Override
 	public Message postMessage(Message msg) throws InvalidOperation {
 		long userId = getCurrentUserId();
 		msg.setAuthorId(userId);
@@ -459,7 +522,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		if (0 == msg.getId()) {
 			PersistenceManager pm = PMF.getPm();
 			try {
-				msg.setAuthorId( getCurrentUserId() );
+				VoUser currentUser = getCurrentUser(pm);
+				msg.setAuthorId( currentUser.getId() );
 				vomsg = new VoMessage(msg, pm);
 				VoTopic topic = pm.getObjectById(VoTopic.class, msg.getTopicId());
 				topic.setMessageNum(topic.getMessageNum() + 1);
@@ -467,12 +531,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				pm.makePersistent(topic);
 
 				if (msg.type != MessageType.BLOG) {
-					VoUser currentUser = getCurrentUser(pm);
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg,currentUser );
 				}
-
-
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -484,10 +545,6 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			updateMessage(msg);
 		}
 		return msg;
-	}
-
-	private void initDb() throws InvalidOperation {
-
 	}
 
 	@Override
@@ -522,6 +579,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		mlp.totalSize = lst.size();
 		for (VoMessage voMessage : lst) {
 			Message msg = voMessage.getMessage(userId, pm);
+			if( null!=user && VoUser.isHeTheBigBro(user))
+				msg.setCanChange(true);
 			if (voMessage.getAuthorId() != null)
 				msg.userInfo = UserServiceImpl.getShortUserInfo(user, voMessage.getAuthorId(), pm);
 			mlp.addToMessages(msg);
@@ -623,6 +682,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			theTopic.setUserGroupId(newGroupId);
 			theTopic.setLatitude(newGroup.getLatitude());
 			theTopic.setLongitude(newGroup.getLongitude());
+			theTopic.setUserGroupType(newGroup.getGroupType());
 		}
 	}
 
@@ -876,7 +936,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     public String getNextMulticastMessage() throws InvalidOperation, TException {
         PersistenceManager pm = PMF.getPm();
         VoSession currentSession = getCurrentSession();
-        VoUser cu = pm.getObjectById(VoUser.class, currentSession.getUserId());
+        VoUser cu = currentSession.getUser();
         int now = (int) (System.currentTimeMillis() / 1000L);
         VoMulticastMessage message = getCurrentMessage(pm, cu);
         if (currentSession.isNewBroadcastMessage() && (message == null || !message.hasNext)) {
@@ -892,7 +952,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
     public String getMulticastMessage() throws InvalidOperation, TException {
         PersistenceManager pm = PMF.getPm();
         VoSession currentSession = getCurrentSession();
-        VoUser cu = pm.getObjectById(VoUser.class, currentSession.getUserId());
+        VoUser cu = currentSession.getUser();
         VoMulticastMessage message = getCurrentMessage(pm, cu);
 		/*
 		 * if(currentSession.isNewBroadcastMessage() && (message == null ||
@@ -990,7 +1050,36 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
         sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
     }
 
-    @Override
+	@Override
+	public Topic moveTopic(long id, long groupId, String longitude, String latitude, GroupType groupType, MessageType msgType) throws TException {
+
+		PersistenceManager pm = PMF.getPm();
+		VoTopic voTopic = pm.getObjectById(VoTopic.class, id);
+		VoUser currentUser = getCurrentUser(pm);
+		if(VoUser.isHeTheBigBro(currentUser)) {
+			if( null!=msgType ) voTopic.setType(msgType);
+			if( voTopic.getSubject() == null || voTopic.getSubject().trim().length() == 0 ) {
+				int minSLen = Math.min(25, voTopic.getContent().length());
+				minSLen = voTopic.getContent().length() == minSLen ? minSLen : voTopic.getContent().indexOf(' ',minSLen);
+				voTopic.setSubject( voTopic.getContent().substring(0, minSLen) + "...");
+			}
+			if( 0==groupId ) {
+				if( null!=groupType ) voTopic.setUserGroupType(groupType.getValue());
+				if( null!=longitude ) voTopic.setLongitude(new BigDecimal(longitude));
+				if( null!=latitude ) voTopic.setLatitude(new BigDecimal(latitude));
+			} else {
+				VoUserGroup voGroup = pm.getObjectById(VoUserGroup.class, groupId);
+				voTopic.setLongitude(voGroup.getLongitude());
+				voTopic.setLatitude(voGroup.getLatitude());
+				voTopic.setUserGroupType(voGroup.getGroupType());
+				voTopic.setUserGroupId(groupId);
+			}
+			pm.makePersistent( voTopic );
+		}
+		return voTopic.getTopic( currentUser.getId(), pm);
+	}
+
+	@Override
     public List<WallItem> getImportantNews(long groupId, long rubricId, int commmunityId, int length) throws InvalidOperation {
         TopicListPart topics = getTopics(groupId, rubricId, commmunityId, 0, 1000, MessageType.WALL, true);
 

@@ -95,7 +95,7 @@ public class ImageConverterVersionCreator implements VersionCreator {
     }
 
     //=================================================================================================
-    private Crop extractCrop(Map<String, String[]> params) {
+    public static Crop extractCrop(Map<String, String[]> params) {
         String[] cropParams;
         String[] sparams = params.get("s");
         if (null == sparams || 0 == sparams.length || (cropParams = sparams[0].split(",")).length < 4)
@@ -111,7 +111,7 @@ public class ImageConverterVersionCreator implements VersionCreator {
     }
 
     //=================================================================================================
-    private Scale extractScale(Map<String, String[]> params) {
+    public static Scale extractScale(Map<String, String[]> params) {
         if (null == params.get("w") || params.get("w").length == 0 ||
                 null == params.get("h") || params.get("h").length == 0)
             return null;
@@ -127,9 +127,9 @@ public class ImageConverterVersionCreator implements VersionCreator {
     }
 
     //=================================================================================================
-    private static class Scale {
-        int x;
-        int y;
+    public static class Scale {
+        public int x;
+        public int y;
 
         public Scale(int x, int y) {
             this.x = x;
@@ -146,9 +146,9 @@ public class ImageConverterVersionCreator implements VersionCreator {
     }
 
     //=================================================================================================
-    private static class Crop {
-        int Xlt, Ylt;
-        int Xrb, Yrb;
+    public static class Crop {
+        public int Xlt, Ylt;
+        public int Xrb, Yrb;
 
         @Override
         public String toString() {

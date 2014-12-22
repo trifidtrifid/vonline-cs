@@ -1,9 +1,12 @@
 package com.vmesteonline.be.jdo2;
 
+import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.thrift.Group;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
+import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
@@ -19,6 +22,8 @@ import static com.vmesteonline.be.utils.VoHelper.executeQuery;
         @Index(name="VG_LLGTS_IDX", members = {"longitude","latitude", "groupType", "staircase"}),
         @Index(name="VG_LLGT_IDX", members = {"longitude","latitude", "groupType"})})
 public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> {
+
+	private static Logger logger = Logger.getLogger(VoUserGroup.class);
 
 	public static VoUserGroup createVoUserGroup(BigDecimal longitude, BigDecimal latitude, int radius, byte staircase, byte floor, String name, int impScore, int gType,
 			PersistenceManager pm) throws InvalidOperation {
@@ -42,13 +47,13 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			throw new InvalidOperation(VoError.GeneralError, "Two or more the same groups already registered + "+ugl.get(0)); 
 			
 		} else {
-			VoUserGroup ug = new VoUserGroup(longitude, latitude, radius, staircase, floor, name, impScore, gType, pm);
+			VoUserGroup ug = new VoUserGroup(longitude, latitude, radius, staircase, floor, name, impScore, gType);
 			pm.makePersistent(ug);
 			return ug;
 		}
 	}
 
-	private VoUserGroup(BigDecimal longitude, BigDecimal latitude, int radius, byte staircase, byte floor, String name, int impScore, int gType, PersistenceManager pm){
+	private VoUserGroup(BigDecimal longitude, BigDecimal latitude, int radius, byte staircase, byte floor, String name, int impScore, int gType){
 		setLongitude(longitude);
 		setLatitude(latitude);
 		this.radius = radius;
@@ -86,6 +91,16 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	}
 
 	public String getDescription() {
+		if( null==description ){
+			PersistenceManager pm = PMF.getPm();
+			List<VoBuilding> bgs = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='" + getLongitude() + "' && latitude=='" + getLatitude()+"'"));
+			if( 1!=bgs.size()){
+				logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
+			} else {
+				description = bgs.get(0).getAddressString() + "GT:"+GroupType.findByValue(groupType);
+				pm.makePersistent(this);
+			}
+		}
 		return description;
 	}
 
@@ -115,10 +130,6 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	@Persistent
 	private int groupType;
 
-	@Persistent
-    @Serialized
-	private List<Long> upperLevelGroups;
-
 	public int getImportantScore() {
 		return importantScore;
 	}
@@ -136,5 +147,13 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	public String toString() {
 		return "VoUserGroup [id=" + getId() + ", name=" + name + ", longitude=" + getLongitude() + ", latitude=" + getLatitude() + ", radius=" + radius +", staircase="+staircase +", floor="+floor
 				+ "]";
+	}
+
+	public byte getFloor() {
+		return floor;
+	}
+
+	public byte getStaircase() {
+		return staircase;
 	}
 }

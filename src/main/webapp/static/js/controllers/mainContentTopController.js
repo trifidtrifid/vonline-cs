@@ -23,13 +23,17 @@ forumControllers.controller('mainContentTopController',function($rootScope, $sta
                 $state.go('set-info');
 
             }else {
+                if($state.current.name == 'set-info') {
+                    localStorage.setItem('VO_setInfo_groupId',group.id);
+                    $state.go('main');
+                }
+                console.log('go-main');
 
                 for (var i = 0; i < groupsLength; i++) {
                     groups[i].selected = false;
                 }
 
                 group.selected = true;
-
 
                 $rootScope.currentGroup = group;
                 $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);

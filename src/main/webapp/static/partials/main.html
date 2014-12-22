@@ -1,15 +1,85 @@
 
-        <section class="forum page ng-cloak" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()" ng-cloak>
+    <section ng-if="!base.me.addressConfirmed" ng-include="'/static/partials/unconfirm.html'"></section>
 
-        <div ng-include="'/static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"
-             ng-show="lenta.isCreateNewsShow[currentGroup.id] || lenta.wallItems.length > 0"></div>
+    <div ng-if="base.me.addressConfirmed">
+        <section class="forum page" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()">
+
+        <div class="create-wall-wrap">
+            <textarea class="no-resize" ng-click="lenta.isOpenMessageBar = true" ng-hide="lenta.isOpenMessageBar">Написать сообщение</textarea>
+
+            <div ng-show="lenta.isOpenMessageBar">
+                <a class="write-mess-selectGroup" href="#" ng-click="lenta.showGroups()">
+                    <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isGroupsInMessShow, 'fa-chevron-up':lenta.isGroupsInMessShow}"></i>
+                    <span ng-if="!lenta.selGroupName">Выберите группу</span>
+                    <span ng-if="lenta.selGroupName">{{lenta.selGroupName}}</span>
+                </a>
+                <ul class="select-group-list" ng-show="lenta.isGroupsInMessShow">
+                    <li ng-repeat="group in groups | orderBy: 'id':reverse" ng-click="lenta.selectGroupNew(group)">
+                        <label href="#">
+                            <input name="select-wall-group" type="radio"/>
+                            {{group.visibleName}}
+                        </label>
+                    </li>
+                </ul>
+                <textarea ng-model="lenta.message.content" class="topic-textarea no-resize" ng-keyup="base.messageChange($event,1)"
+                          ng-blur="base.textareaBlur(lenta.message.content,lenta.message.default,lenta,true)" ng-focus="base.textareaFocus(lenta.message.content,lenta.message.default,lenta,true)"
+                          ng-hasfocus="base.isLentaFocus">Написать сообщение</textarea>
+
+                <div>
+                    <div>
+                        <div class="attach-area" id="attach-area-{{lenta.attachId}}">
+                            <div class="loading hidden">
+                                <img ng-src="/static/i/loading2.gif" alt="картинка"/>
+                            </div>
+                        </div>
+                        <div class="attach-area attach-area-doc" id="attach-doc-area-{{lenta.attachId}}"></div>
+                    </div>
+                </div>
+
+                <div class="message-input-bottom">
+                    <div class="pull-right">
+                        <button class="pull-right btn btn-sm no-border btn-primary" ng-click="createTopic($event,lenta)">Отправить</button>
+                        <a href="#" class="pull-right close-messageBar" ng-click="lenta.isOpenMessageBar=false">Закрыть</a>
+                    </div>
+
+                    <div class="btn-group attach-dropdown pull-left">
+                        <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+                            <span class="btn-group-text">Прикрепить</span>
+                            <span class="icon-caret-down icon-on-right"></span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-blue" ng-show="lenta.isEdit">
+                            <li><input id="attachImage-edit-{{lenta.id}}" type="file"/></li>
+                            <li><input id="attachDoc-edit-{{lenta.id}}" type="file"/></li>
+                            <li><a href="#" ng-click="base.showPoll($event,lenta)" ng-show="lenta.isPollAvailable">Опрос</a></li>
+                        </ul>
+
+                        <ul class="dropdown-menu dropdown-blue" ng-hide="lenta.isEdit">
+                            <li><input id="attachImage-{{lenta.attachId}}" type="file"/></li>
+                            <li><input id="attachDoc-{{lenta.attachId}}" type="file"/></li>
+                            <li><a href="#" ng-click="base.showPoll($event,lenta)" ng-show="lenta.isPollAvailable">Опрос</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <span class="error-info" ng-show="lenta.isCreateMessageError">{{lenta.createMessageErrorText}}</span>
+
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+
+
+        <!--<div ng-include="'/static/templates/createTopic.html'" onload="ctrl=lenta; initCreateTopic(lenta);"
+             ng-show="lenta.isCreateNewsShow[currentGroup.id] || lenta.wallItems.length > 0"></div>-->
 
             <div class="lenta">
                 <div ng-if="!lenta.wallItems || lenta.wallItems.length == 0" class="empty-messages">
                     <div ng-include="'/static/partials/empty/empty-main.html'"></div>
                 </div>
                 <div class="lenta-item" ng-repeat="wallItem in lenta.wallItems"
-                        ng-switch on="wallItem.topic.message.type">
+                        ng-switch on="wallItem.topic.message.type" id="{{wallItem.topic.id}}">
 
                     <div class="wallitem-message" ng-switch-when="5">
 
@@ -21,7 +91,7 @@
 
                             <div class="body text-container">
 
-                                <div class="message-tools pull-right" ng-show="wallItem.topic.userInfo.id == base.me.id">
+                                <div class="message-tools pull-right" ng-show="wallItem.topic.userInfo.id == base.me.id || wallItem.topic.canChange">
                                     <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(wallItem.topic,lenta.wallItems,true,true)">&times;</a>
                                     <a href="#" title="Редактировать" ng-click="base.setEdit($event,wallItem.topic,false)" class="fa fa-pencil pull-right"></a>
                                 </div>
@@ -132,7 +202,7 @@
                                 </a>
 
                                 <div class="body text-container">
-                                    <div class="message-tools pull-right" ng-show="wallMessage.userInfo.id == base.me.id">
+                                    <div class="message-tools pull-right" ng-show="wallMessage.userInfo.id == base.me.id || wallMessage.canChange">
                                         <a href="#" title="Удалить" class="message-delete-link pull-right" ng-click="base.deleteMessage(wallMessage,wallItem.messages,false)">&times;</a>
                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,wallMessage)" class="fa fa-pencil pull-right"></a>
                                     </div>
@@ -217,6 +287,7 @@
             </div>
 
         </section>
+    </div>
 
 
 

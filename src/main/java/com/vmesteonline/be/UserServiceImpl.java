@@ -1,7 +1,6 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
@@ -10,20 +9,26 @@ import com.vmesteonline.be.thrift.userservice.FullAddressCatalogue;
 import com.vmesteonline.be.thrift.userservice.GroupLocation;
 import com.vmesteonline.be.thrift.userservice.UserService;
 import com.vmesteonline.be.utils.Defaults;
+import com.vmesteonline.be.utils.ImageConverterVersionCreator;
 import com.vmesteonline.be.utils.Pair;
 import com.vmesteonline.be.utils.VoHelper;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.thrift.TException;
 
 import javax.jdo.Extent;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractCrop;
+import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractScale;
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
@@ -31,12 +36,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public UserServiceImpl() {
 	}
 
-	public UserServiceImpl(String sessId) {
-		super(sessId);
-	}
-
-	public UserServiceImpl(HttpSession sess) {
-		super(sess);
+	public UserServiceImpl(HttpServletRequest req) {
+		super(req);
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	}
 
-	public static ShortUserInfo getShortUserInfo( VoUser cuser, long userId, PersistenceManager pm) {
+	public static ShortUserInfo  getShortUserInfo( VoUser cuser, long userId, PersistenceManager pm) {
 		if (userId == 0)
 			return null;
 		
@@ -110,7 +111,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				user = pm.getObjectById(VoUser.class, userId);
 			} catch (JDOObjectNotFoundException e) {
 				logger.info("Current user doues not exists. Not found by Id.");
-				getCurrentSession(pm).setUserId(null);
+				getCurrentSession(pm).setUser(null);
 				throw new InvalidOperation(VoError.NotAuthorized, "can't find user by id");
 			}
 
@@ -122,10 +123,13 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				throw new InvalidOperation(VoError.GeneralError, "can't find user bu id");
 			}
 			List<Group> groups = new ArrayList<Group>();
-			for (Long group : uGroups) {
-				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, group);
+			for (Long groupId : uGroups) {
+				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
 				logger.info("return group " + ug.getName());
-				groups.add( ug.createGroup());
+				Group group = ug.createGroup();
+				if( ug.getGroupType() == GroupType.STAIRCASE.getValue() && ug.getStaircase() == 0 ) group.setId(0);
+				else if( ug.getGroupType() == GroupType.FLOOR.getValue() && ug.getFloor() == 0 ) group.setId(0);
+				groups.add(group);
 			}
 			Collections.sort(groups, new Comparator<Group>(){
 
@@ -143,7 +147,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	
-	public static List<String> getLocationCodesForRegistration() throws InvalidOperation {
+	/*public static List<String> getLocationCodesForRegistration() throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
 		Extent<VoPostalAddress> postalAddresses = pm.getExtent(VoPostalAddress.class, true);
@@ -160,7 +164,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			locations.add(code);
 		}
 		return locations;
-	}
+	}*/
 
 	@Override
 	public void deleteUserAddress(PostalAddress newAddress) throws InvalidOperation, TException {
@@ -204,6 +208,17 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoUser user;
 			try {
 				user = pm.getObjectById(VoUser.class, userId);
+				
+				if(currentUser.isTheBigBro()){
+					UserProfile up = user.getUserProfile();
+					try {
+						up.contacts.homeAddress = pm.getObjectById( VoPostalAddress.class, user.getAddress()).getPostalAddress();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					up.setNotifications(user.getNotificationFreq());
+					return up;
+				}
 
 			} catch (JDOObjectNotFoundException e) {
 				throw new InvalidOperation(VoError.IncorrectParametrs, "No user found by ID: " + userId);
@@ -246,7 +261,9 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	private GroupType determineProvacyByAddresses(VoUser currentUser, VoUser user, PersistenceManager pm) throws InvalidOperation {
-		//--------------- implementation faster then commented below but it requires that groups are in the same order and the same Type
+		
+		//--------------- is users have the same group
+
 		Iterator<Long> ugit = user.getGroups().iterator();
 		Iterator<Long> cugit = currentUser.getGroups().iterator();
 		long commonGroupId;
@@ -255,10 +272,9 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				return GroupType.findByValue( pm.getObjectById(VoUserGroup.class, commonGroupId ).getGroupType());
 			}
 		}
-		return GroupType.TOWN;
 		
-	//---- Slower but reliable 
-		/*GroupType relation = GroupType.TOWN;
+		//---- relations by distance
+		GroupType relation = GroupType.TOWN;
 		
 		VoPostalAddress cuAddr = pm.getObjectById( VoPostalAddress.class, currentUser.getAddress());
 		long uAddrId;
@@ -267,7 +283,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			relation = GroupType.TOWN;
 
 		} else if ( null!=(uAddr = pm.getObjectById(VoPostalAddress.class, uAddrId))
-				&& cuAddr.getBuilding() == uAddr.getBuilding() && 0 != cuAddr.getBuilding()) { // the same building
+				&& cuAddr.getBuilding() == uAddr.getBuilding() && 0 != cuAddr.getBuilding()) { // the same building, not possible!
 
 			relation = GroupType.BUILDING;
 
@@ -289,7 +305,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				relation = GroupType.BLOCK;
 			
 		}
-		return relation;*/
+		return relation;
 	}
 
 	@Override
@@ -466,12 +482,46 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		VoUser voUser = getCurrentUser(pm);
 
-		voUser.setAvatarTopic(url);
-		voUser.setAvatarMessage(url);
-		voUser.setAvatarProfileShort(url);
+
+
+		voUser.setAvatarTopic(createThumbnailURL(url,80));
+		voUser.setAvatarMessage(createThumbnailURL(url,48));
+		voUser.setAvatarProfileShort(createThumbnailURL(url,80));
 		voUser.setAvatarProfile(url);
 		pm.makePersistent(voUser);
 
+	}
+
+	public String createThumbnailURL(String url, int size) {
+		String smallPicUrl = url;
+		try {
+			Map<String,String[]> params = new HashMap<>();
+			URI uri = new URI(url);
+			List<NameValuePair> nvp = URLEncodedUtils.parse(uri, "UTF-8");
+			for (int iin = 0; iin < nvp.size(); iin++) {
+                NameValuePair nv = nvp.get(iin);
+                params.put( nv.getName(), new String[]{ nv.getValue()});
+            }
+
+			ImageConverterVersionCreator.Scale scale = extractScale( params );
+			ImageConverterVersionCreator.Crop crop = extractCrop(params);
+
+			//create 100x100 bounded avatar
+			int x = crop.Xrb - crop.Xlt;
+			int y = crop.Yrb - crop.Ylt;
+
+			float k = x > y ?
+                    x > size ? (float)size / (float)x : 1.0F :
+                    y > size ? (float)size / (float)y : 1.0F ;
+
+			smallPicUrl = uri.getPath()+
+                    "?w="+ (int)(scale.x * k)+
+                    "&h="+ (int)(scale.y * k)+
+                    "&s="+ (int)(crop.Xlt * k)+"," + (int)(crop.Ylt * k)+","+(int)(crop.Xrb * k)+","+(int)(crop.Yrb * k);
+		} catch (Exception e) {
+			logger.warning("Failed to create thumb for the avatar '"+url+"'"+e.getMessage());
+		}
+		return smallPicUrl;
 	}
 
 	@Override
@@ -581,7 +631,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		try {
 			// TODO check that there is no building with the same name
 			VoStreet vs = pm.getObjectById(VoStreet.class, streetId);
-			Query q = pm.newQuery("SELECT * FROM vobuilding WHERE streetId == " + streetId + " &&  fullNo == '" + fullNo + "' ALLOW FILTERING");
+			Query q = pm.newQuery("SQL", "SELECT * FROM VOBUILDING WHERE streetId = " + streetId + " &&  fullNo = '" + fullNo + "'");
 			List<VoBuilding> buildings = executeQuery(  q );
 			if (buildings.size() > 0) {
 				logger.info("VoBuilding was NOT created. The same VoBuilding was registered. Return an old one: " + buildings.get(0));
@@ -713,6 +763,13 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"'";
 			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
 			users = new ArrayList<>(ulist);
+			
+			List<Long> pgids = executeQuery(pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP WHERE longitude='"
+					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1)));
+			
+			if( pgids.size() > 0 )
+				users.removeAll( getUsersByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm));
+			
 		}
 		Collections.sort(users,uIdCOmp);
 		return users;
@@ -720,7 +777,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 	public static  List<VoUser> getUsersByGroup(Long groupId, PersistenceManager pm) {
 		List<VoUser> users = new ArrayList<>();
-		List results = executeQuery(  pm.newQuery("SQL","SELECT `ID` FROM `USERGROUPS` WHERE `GROUP`="+groupId) );
+		List results = executeQuery(  pm.newQuery("SQL","SELECT g.`ID` FROM `USERGROUPS` as g JOIN VOUSER as u ON u.ID=g.ID WHERE `GROUP`="+groupId +" AND u.emailConfirmed=true") );
 		List<Long> uids = new ArrayList<>();
 		Iterator rit = results.iterator();
 		while(rit.hasNext()) {
@@ -752,12 +809,8 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		String mapKey = "yandex.group.map." + groupId + "." + color;
 		String url = ServiceImpl.getObjectFromCache(mapKey);
 		if (null != url)
-			if (url instanceof String) {
-				return (String) url;
-			} else {
-				// incorrect type of object in the cache
-				ServiceImpl.removeObjectFromCache(mapKey);
-			}
+			return url;
+
 		PersistenceManager pm = PMF.getPm();
 		int width = 450, height = 450;
 		
@@ -792,14 +845,14 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 					url += "," + (lod + Math.sin(i) * loDelta) + "," + (lad + Math.cos(i) * laDelta);
 				}
 			
-				ServiceImpl.putObjectToCache(mapKey, (String) url);
+				ServiceImpl.putObjectToCache(mapKey, url);
 				
 			} else {
 				
 				url = VoGeocoder.createMapImageURL(  userGroup.getLongitude(), userGroup.getLatitude(), 450, 450 );
 			}
 
-		return (String) url;
+		return url;
 	}
 
 	private static List<Rubric> tmpRubrics = Arrays.asList( new Rubric[]{ new Rubric(0L,"","","")});
