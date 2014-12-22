@@ -2,11 +2,10 @@ run
 /vonline-cs.*
 /src/main/java/com/vmesteonline/be/thrift/
 /src/main/webapp/static/.idea
-**/*.class
+*.log
 .classpath
 .project
 .settings/
 datanucleus.log
 /target/
-/target/
-/target/
+

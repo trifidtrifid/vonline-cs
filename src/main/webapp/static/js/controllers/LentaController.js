@@ -1,13 +1,35 @@
 
 forumControllers.controller('LentaController',function($rootScope) {
 
+    var lenta = this;
+
+    /**/
+
+    lenta.isGroupsInMessShow = false;
+    lenta.isOpenMessageBar = false;
+
+    lenta.showGroups = function(){
+        console.log('show',lenta.isGroupsInMessShow);
+        lenta.isGroupsInMessShow ? lenta.isGroupsInMessShow = false : lenta.isGroupsInMessShow = true
+    };
+
+    lenta.selectGroupNew = function(group){
+        lenta.isGroupsInMessShow = false;
+        lenta.selGroupName = group.visibleName;
+        $rootScope.base.selectGroupInDropdown(group.id,lenta);
+    };
+
+    lenta.isCreateMessageError = true;
+    lenta.createMessageErrorText = "Вы не указали группу";
+
+    /**/
+
     $('.ng-cloak').removeClass('ng-cloak');
         $rootScope.setTab(1);
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;
 
-        var lenta = this,
-            lastLoadedId = 0,
+        var lastLoadedId = 0,
             loadedLength = 10;
 
         var len = userClientGroups.length;
@@ -206,6 +228,9 @@ forumControllers.controller('LentaController',function($rootScope) {
                 }
             }
         };
+
+
+    $rootScope.initCreateTopic(lenta);
 
         initFancyBox($('.forum'));
 
