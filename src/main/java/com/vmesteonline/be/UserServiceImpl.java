@@ -1,6 +1,7 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
@@ -12,6 +13,7 @@ import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.ImageConverterVersionCreator;
 import com.vmesteonline.be.utils.Pair;
 import com.vmesteonline.be.utils.VoHelper;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.thrift.TException;
@@ -21,6 +23,7 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.http.HttpServletRequest;
+
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.*;
@@ -946,5 +949,19 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			else if( !us.contains( nss.getKey()) && nss.getValue() ) us.add(nss.getKey());
 		}
 		pm.makePersistent(currentUser);
+	}
+
+	@Override
+	public boolean confirmUserAddress(String code) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser user = getCurrentUser(pm);
+		if( user.isAddressConfirmed() ) return true;
+		List<VoInviteCode> icl = executeQuery(pm.newQuery(VoInviteCode.class, "code=='"+code+"'"));
+		if ( icl.size() > 0){
+			boolean addrConfirmed = icl.get(0).getId() == user.getAddress();
+			user.setAddressConfirmed(addrConfirmed);
+			return addrConfirmed;
+		} 
+		return false;
 	}
 }
