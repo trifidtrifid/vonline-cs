@@ -37,7 +37,7 @@ forumControllers.controller('LentaController',function($rootScope) {
             lenta.isCreateNewsShow[userClientGroups[i].id] = false;
         }
         //lenta.isCreateNewsShow[] = false;
-        $rootScope.COMMENTS_DEFAULT_COUNT = 4;
+        $rootScope.COMMENTS_DEFAULT_COUNT = 3;
 
         var ls_setInfo_groupId = localStorage.getItem('VO_setInfo_groupId'),
             currentGroup = userClientGroups[3];
