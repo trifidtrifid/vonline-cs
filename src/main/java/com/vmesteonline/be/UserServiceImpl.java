@@ -955,13 +955,20 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public boolean confirmUserAddress(String code) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser user = getCurrentUser(pm);
-		if( user.isAddressConfirmed() ) return true;
-		List<VoInviteCode> icl = executeQuery(pm.newQuery(VoInviteCode.class, "code=='"+code+"'"));
-		if ( icl.size() > 0){
-			boolean addrConfirmed = icl.get(0).getId() == user.getAddress();
+		if( user.isAddressConfirmed() )
+			return true;
+		
+		try {
+			VoInviteCode inviteCode = VoInviteCode.getInviteCode(code, pm);
+			boolean addrConfirmed = (inviteCode.getPostalAddressId() == user.getAddress());
+			logger.info("User address ID="+user.getAddress()+" InviteCode address=" + inviteCode.getPostalAddressId() 
+					+" So adress confirmed=" + addrConfirmed);
 			user.setAddressConfirmed(addrConfirmed);
 			return addrConfirmed;
-		} 
+		} catch (Exception e) {
+			logger.warning("Address not confirmed by code "+code+" for "+user+" Exception: "+e.getMessage());
+			e.printStackTrace();
+		}
 		return false;
 	}
 
