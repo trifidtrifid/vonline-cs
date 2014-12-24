@@ -964,4 +964,36 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		} 
 		return false;
 	}
+
+	public static int getUsersCountByLocation(VoUserGroup group, PersistenceManager pm) {
+		int radius = group.getRadius();
+		int count =0;
+		if( group.getGroupType() <= GroupType.BUILDING.getValue() ) {
+			count = getUsersCountByGroup(group.getId(), pm);
+		} else {
+			String ufilter = "emailConfirmed=true AND ";
+			BigDecimal latitudeMax = VoHelper.getLatitudeMax(group.getLatitude(), radius);
+			BigDecimal latitudeMin = VoHelper.getLatitudeMin(group.getLatitude(), radius);
+			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
+			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
+			ufilter += "longitude >= '" + longitudeMin + "' AND longitude <= '" + longitudeMax +
+					"' AND latitude >= '" + latitudeMin + "' AND latitude <= '" + latitudeMax+"'";
+			List<Long> ulist = executeQuery(pm.newQuery( "SQL", "SELECT count(*) FROM VOUSER WHERE "+ ufilter));
+			count = ulist.get(0).intValue();
+			
+			List<Long> pgids = executeQuery(pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP WHERE longitude='"
+					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1)));
+			
+			if( pgids.size() > 0 )
+				count -= getUsersCountByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm);
+			
+		}
+		
+		return count;
+	}
+
+	private static int getUsersCountByGroup(long groupId, PersistenceManager pm) {
+		List<Long> results = executeQuery(  pm.newQuery("SQL","SELECT count(*) FROM `USERGROUPS` as g JOIN VOUSER as u ON u.ID=g.ID WHERE `GROUP`="+groupId +" AND u.emailConfirmed=true") );
+		return results.get(0).intValue();
+	}
 }
