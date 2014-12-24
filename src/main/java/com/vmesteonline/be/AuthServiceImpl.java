@@ -7,15 +7,20 @@ import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.notifications.Notification;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.UserLocation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.authservice.AuthService;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
+import com.vmesteonline.be.thrift.messageservice.Dialog;
+import com.vmesteonline.be.thrift.messageservice.MessageService.AsyncProcessor.getTopics;
+import com.vmesteonline.be.thrift.messageservice.WallItem;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.VoHelper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
@@ -33,364 +38,418 @@ import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 
-    public AuthServiceImpl() {
-    }
+	public AuthServiceImpl() {
+	}
 
-    public AuthServiceImpl(HttpServletRequest req) {
-        super(req);
-    }
+	public AuthServiceImpl(HttpServletRequest req) {
+		super(req);
+	}
 
-    @Override
-    public boolean checkIfAuthorized() throws InvalidOperation {
-        return null != getCurrentSession().getUser();
-    }
+	@Override
+	public boolean checkIfAuthorized() throws InvalidOperation {
+		return null != getCurrentSession().getUser();
+	}
 
-    public static void checkIfAuthorised(HttpServletRequest req) throws InvalidOperation {
-        PersistenceManager pm = PMF.getPm();
-        String httpSessId = ServiceImpl.createSessId( req );
-        VoSession session = getSession(httpSessId, pm);
-        if( null ==session || null==session.getUser())
-            throw new InvalidOperation(VoError.NotAuthorized, "Not authorized");
-    }
+	public static void checkIfAuthorised(HttpServletRequest req) throws InvalidOperation {
+		PersistenceManager pm = PMF.getPm();
+		String httpSessId = ServiceImpl.createSessId(req);
+		VoSession session = getSession(httpSessId, pm);
+		if (null == session || null == session.getUser())
+			throw new InvalidOperation(VoError.NotAuthorized, "Not authorized");
+	}
 
-    public LoginResult allowUserAccess(String email, String pwd, boolean checkPwd) throws InvalidOperation {
-        PersistenceManager pm = PMF.getPm();
-        VoUser u = getUserByEmail(email, pm);
-        if (u != null) {
-            pm.refresh(u);
-            if (u.getPassword().equals(pwd) || !checkPwd) {
-                if (!u.isEmailConfirmed())
-                    return LoginResult.EMAIL_NOT_CONFIRMED;
-                logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
-                saveUserInSession(getCurrentSession(), pm, u);
-                return LoginResult.SUCCESS;
-            } else
-                logger.info("incorrect password " + email + " pass " + pwd);
+	public LoginResult allowUserAccess(String email, String pwd, boolean checkPwd) throws InvalidOperation {
+		PersistenceManager pm = PMF.getPm();
+		VoUser u = getUserByEmail(email, pm);
+		if (u != null) {
+			pm.refresh(u);
+			if (u.getPassword().equals(pwd) || !checkPwd) {
+				if (!u.isEmailConfirmed())
+					return LoginResult.EMAIL_NOT_CONFIRMED;
+				logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
+				saveUserInSession(getCurrentSession(), pm, u);
+				return LoginResult.SUCCESS;
+			} else
+				logger.info("incorrect password " + email + " pass " + pwd);
 
-        }
-        if (checkPwd)
-            throw new InvalidOperation(VoError.IncorrectParametrs, "incorrect login or password");
+		}
+		if (checkPwd)
+			throw new InvalidOperation(VoError.IncorrectParametrs, "incorrect login or password");
 
-        return LoginResult.NOT_MATCH;
-    }
+		return LoginResult.NOT_MATCH;
+	}
 
-    void saveUserInSession(VoSession sess, PersistenceManager pm, VoUser u) throws InvalidOperation {
-        sess.setUser(u);
-        pm.makePersistent(sess);
-    }
+	void saveUserInSession(VoSession sess, PersistenceManager pm, VoUser u) throws InvalidOperation {
+		sess.setUser(u);
+		Query q = pm.newQuery(VoSession.class, "user==u");
+		q.declareParameters("VoUser u"); 
+		q.setOrdering("lastActivityTs DESC");
+		List<VoSession> sessL = executeQuery(q, u);
 
-    public static VoSession getSession(String sessId, PersistenceManager pm) throws InvalidOperation {
+		int lastActivityTs;
+		VoSession lastSess = null;
+		if (sessL.size() > 0) {
+			lastActivityTs = (lastSess = sessL.get(0)).getLastActivityTs();
+			sess.setLastActivityTs(lastActivityTs);
+		} else {
+			// weekAgo
+			lastActivityTs = (int) (System.currentTimeMillis() / 1000L) - 86400 * 7;
+		}
+		loadPersonalMessages(sess, lastSess, lastActivityTs);
+		loadBroadcastMessages(sess, lastSess, lastActivityTs);
+		loadImportantMessages(sess, lastSess, lastActivityTs);
+		pm.makePersistent(sess);
+	}
 
-        try {
-            VoSession sess = pm.getObjectById(VoSession.class, sessId);
-            if (sess == null)
-                throw new InvalidOperation(VoError.NotAuthorized, "can't find active session for " + sessId);
-            return sess;
-        } catch (JDOObjectNotFoundException e) {
-            throw new InvalidOperation(VoError.NotAuthorized, "can't find active session for " + sessId);
-        } catch (Exception e) {
-            logger.debug("exception: " + e.toString());
-        }
-        throw new InvalidOperation(VoError.NotAuthorized, "can't find active session for " + sessId);
+	private void loadImportantMessages(VoSession sess, VoSession lastSess, int lastActivityTs) {
+		PersistenceManager pm = PMF.getPm();
+		try {
+			MessageServiceImpl msi = new MessageServiceImpl(this);
+			List<WallItem> importantNews = msi.getImportantNews(sess.getUser().getGroup(GroupType.NEIGHBORS, pm).getId(), 0, 0, 100);
+			int count = 0;
+			for (WallItem wi : importantNews)
+				if (wi.getTopic().lastUpdate > lastActivityTs)
+					count++;
+			sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+		} catch (InvalidOperation e) {
+			e.printStackTrace();
+		}
+	}
 
-    }
+	private void loadBroadcastMessages(VoSession sess, VoSession lastSess, int lastActivityTs) {
+		try {
+			MessageServiceImpl msi = new MessageServiceImpl(this);
+			sess.setNewBroadcastMessage(null != msi.getMulticastMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public LoginResult login(final String email, final String password) throws InvalidOperation {
-        logger.info("try authentificate user " + email + " pass " + password);
-        return allowUserAccess(email, password, true);
-    }
+	private void loadPersonalMessages(VoSession sess, VoSession lastSess, int lastActivityTs) {
+		try {
+			DialogServiceImpl dsi = new DialogServiceImpl(this);
+			List<Dialog> dialogs = dsi.getDialogs(lastActivityTs);
+			sess.setLastUpdateTs(dialogs.size() > 0 ? dialogs.get(0).lastMessageDate : lastActivityTs);
 
-    public void allowUserAccess(PersistenceManager pm, VoUser u) throws InvalidOperation {
-        logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
-        saveUserInSession( getCurrentSession(), pm, u);
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public String requestInviteCode(String address, String email) {
+	public static VoSession getSession(String sessId, PersistenceManager pm) throws InvalidOperation {
 
-        try {
-            AddressInfo resolvedAddress = VoGeocoder.resolveAddressString(address);
-            EMailHelper.sendSimpleEMail("trifid@gmail.com", email + "wants to register", email + " " + resolvedAddress.getAddresText() + "(" + address
-                    + ") wants to join");
-            return VoGeocoder.createMapImageURL(resolvedAddress.getLongitude(), resolvedAddress.getLattitude(), 450, 450);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.warn("warning when try to send email from join. user " + email + " address " + address);
-        }
-        return "";
-    }
+		try {
+			VoSession sess = pm.getObjectById(VoSession.class, sessId);
+			if (sess == null)
+				throw new InvalidOperation(VoError.NotAuthorized, "can't find active session for " + sessId);
+			return sess;
+		} catch (JDOObjectNotFoundException e) {
+			throw new InvalidOperation(VoError.NotAuthorized, "can't find active session for " + sessId);
+		} catch (Exception e) {
+			logger.debug("exception: " + e.toString());
+		}
+		throw new InvalidOperation(VoError.NotAuthorized, "can't find active session for " + sessId);
 
-    @Override
-    public UserLocation checkInviteCode(String code) throws InvalidOperation {
+	}
 
-        PersistenceManager pm = PMF.getPm();
+	@Override
+	public LoginResult login(final String email, final String password) throws InvalidOperation {
+		logger.info("try authentificate user " + email + " pass " + password);
+		return allowUserAccess(email, password, true);
+	}
 
-        VoInviteCode invite = VoInviteCode.getInviteCode(code.trim().toUpperCase(), pm);
-        VoPostalAddress pa = pm.getObjectById(VoPostalAddress.class, invite.getPostalAddressId());
-        VoBuilding vBuilding = pm.getObjectById(VoBuilding.class, pa.getBuilding());
-        if (vBuilding.getLatitude() == null || vBuilding.getLongitude() == null) {
-            VoGeocoder.getPosition(vBuilding, false, pm);
-            pm.makePersistent(vBuilding);
-        }
-        return new UserLocation(pa.getAddressText(pm), Long.toString(invite.getPostalAddressId()), VoGeocoder.createMapImageURL(
-                vBuilding.getLongitude(), vBuilding.getLatitude(), 450, 450));
+	public void allowUserAccess(PersistenceManager pm, VoUser u) throws InvalidOperation {
+		logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
+		saveUserInSession(getCurrentSession(), pm, u);
+	}
 
-    }
+	@Override
+	public String requestInviteCode(String address, String email) {
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public long registerNewUser(String firstname, String lastname, String password, String email, String inviteCode, int gender)
-            throws InvalidOperation {
-        return registerNewUser(firstname, lastname, password, email, inviteCode, gender, true);
-    }
+		try {
+			AddressInfo resolvedAddress = VoGeocoder.resolveAddressString(address);
+			EMailHelper.sendSimpleEMail("trifid@gmail.com", email + "wants to register", email + " " + resolvedAddress.getAddresText() + "(" + address
+					+ ") wants to join");
+			return VoGeocoder.createMapImageURL(resolvedAddress.getLongitude(), resolvedAddress.getLattitude(), 450, 450);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.warn("warning when try to send email from join. user " + email + " address " + address);
+		}
+		return "";
+	}
 
-    public long registerNewUser(String firstname, String lastname, String password, String email, String inviteCode, int gender,
-                                boolean needConfirmEmail) throws InvalidOperation {
+	@Override
+	public UserLocation checkInviteCode(String code) throws InvalidOperation {
 
-        VoUser userByEmail = getUserByEmail(email);
-        if (userByEmail != null && userByEmail.isEmailConfirmed() && userByEmail.isAddressConfirmed() )
-            throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
-        if (null == inviteCode || "".equals(inviteCode.trim()))
-            throw new InvalidOperation(VoError.IncorrectParametrs, "unknown invite code " + inviteCode);
+		PersistenceManager pm = PMF.getPm();
 
-        PersistenceManager pm = PMF.getPm();
+		VoInviteCode invite = VoInviteCode.getInviteCode(code.trim().toUpperCase(), pm);
+		VoPostalAddress pa = pm.getObjectById(VoPostalAddress.class, invite.getPostalAddressId());
+		VoBuilding vBuilding = pm.getObjectById(VoBuilding.class, pa.getBuilding());
+		if (vBuilding.getLatitude() == null || vBuilding.getLongitude() == null) {
+			VoGeocoder.getPosition(vBuilding, false, pm);
+			pm.makePersistent(vBuilding);
+		}
+		return new UserLocation(pa.getAddressText(pm), Long.toString(invite.getPostalAddressId()), VoGeocoder.createMapImageURL(vBuilding.getLongitude(),
+				vBuilding.getLatitude(), 450, 450));
 
-        inviteCode = inviteCode.toUpperCase();
-        VoInviteCode voInviteCode = VoInviteCode.getInviteCode(inviteCode, pm);
-        voInviteCode.registered();
+	}
 
-        final VoUser user = null == userByEmail ?
-                new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
-        user.setGender(gender);
-        user.setEmailConfirmed(!needConfirmEmail);
-        user.setAddressConfirmed(true);
+	@SuppressWarnings("unchecked")
+	@Override
+	public long registerNewUser(String firstname, String lastname, String password, String email, String inviteCode, int gender)
+			throws InvalidOperation {
+		return registerNewUser(firstname, lastname, password, email, inviteCode, gender, true);
+	}
 
-        pm.makePersistent(user);
-        pm.makePersistent(voInviteCode);
-        pm.flush();
+	public long registerNewUser(String firstname, String lastname, String password, String email, String inviteCode, int gender,
+			boolean needConfirmEmail) throws InvalidOperation {
 
-        VoPostalAddress uaddress;
-        try {
-            uaddress = user.setLocation(voInviteCode.getPostalAddressId(), pm);
-        } catch (NumberFormatException | InvalidOperation e) {
-            throw new InvalidOperation(VoError.IncorectLocationCode, "Incorrect code." + e);
-        }
+		VoUser userByEmail = getUserByEmail(email);
+		if (userByEmail != null && userByEmail.isEmailConfirmed() && userByEmail.isAddressConfirmed())
+			throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
+		if (null == inviteCode || "".equals(inviteCode.trim()))
+			throw new InvalidOperation(VoError.IncorrectParametrs, "unknown invite code " + inviteCode);
 
-        List<Long> groups = user.getGroups();
-        logger.info("register "
-                + email
-                + " pass "
-                + password
-                + " id "
-                + user.getId()
-                + " location code: "
-                + inviteCode
-                + " home group: "
-                + (0 == groups.size() ? "Undefined!" : pm.getObjectById(VoUserGroup.class, groups.get(0)).getName() + "[" + uaddress.getAddressText(pm)
-                + "]"));
-        // Add the send welcomeMessage Task to the default queue.
-        if(needConfirmEmail)
-        {
-            Notification.welcomeMessageNotification(user, pm);
-        }
+		PersistenceManager pm = PMF.getPm();
 
-        return user.getId();
-    }
-    @Override
-    public long registerNewUserByAddress(String firstname, String lastname, String password, String email, String addressString, short gender) throws InvalidOperation {
+		inviteCode = inviteCode.toUpperCase();
+		VoInviteCode voInviteCode = VoInviteCode.getInviteCode(inviteCode, pm);
+		voInviteCode.registered();
 
-        VoUser userByEmail = getUserByEmail(email);
-        if (userByEmail != null && userByEmail.isEmailConfirmed())
-            throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
+		final VoUser user = null == userByEmail ? new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
+		user.setGender(gender);
+		user.setEmailConfirmed(!needConfirmEmail);
+		user.setAddressConfirmed(true);
 
-        AddressInfo addressInfo = VoGeocoder.resolveAddressString(addressString);
-        if( !addressInfo.isExact() || !addressInfo.isKindHouse() ){
-            logger.warn("Failed to resolve address '" + addressString + "'");
-            throw new InvalidOperation(VoError.IncorrectParametrs, "Failed to resolve address '"+addressString+"'");
-        }
+		pm.makePersistent(user);
+		pm.makePersistent(voInviteCode);
+		pm.flush();
 
+		VoPostalAddress uaddress;
+		try {
+			uaddress = user.setLocation(voInviteCode.getPostalAddressId(), pm);
+		} catch (NumberFormatException | InvalidOperation e) {
+			throw new InvalidOperation(VoError.IncorectLocationCode, "Incorrect code." + e);
+		}
 
-        PersistenceManager pm = PMF.getPm();
-        VoCountry voCountry = VoCountry.createVoCountry(addressInfo.getCountryName(), pm);
-        VoCity voCity = VoCity.createVoCity(voCountry, addressInfo.getCityName(), pm);
-        VoStreet voStreet = VoStreet.createVoStreet( voCity, addressInfo.getStreetName(), pm );
-        VoBuilding voBuilding = VoBuilding.createVoBuilding( addressInfo.getZipCode(), voStreet, addressInfo.getBuildingNo(),
-                addressInfo.getLongitude(), addressInfo.getLattitude(), pm);
-        VoPostalAddress pa = VoPostalAddress.createVoPostalAddress( voBuilding, (byte)0,(byte)0,0,"",pm);
+		List<Long> groups = user.getGroups();
+		logger
+				.info("register "
+						+ email
+						+ " pass "
+						+ password
+						+ " id "
+						+ user.getId()
+						+ " location code: "
+						+ inviteCode
+						+ " home group: "
+						+ (0 == groups.size() ? "Undefined!" : pm.getObjectById(VoUserGroup.class, groups.get(0)).getName() + "[" + uaddress.getAddressText(pm)
+								+ "]"));
+		// Add the send welcomeMessage Task to the default queue.
+		if (needConfirmEmail) {
+			Notification.welcomeMessageNotification(user, pm);
+		}
 
-        final VoUser user = null == userByEmail ?
-                new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
-        user.setGender(gender);
-        user.setEmailConfirmed(false);
-        user.setCurrentPostalAddress( pa, pm );
-        user.setAddressConfirmed(false);
-        VoInviteCode ic = VoHelper.createNewInviteCode(3, 3, pa, null, pm);
-        pm.makePersistent(user);
+		return user.getId();
+	}
 
-        try {
-            EMailHelper.sendSimpleEMail("trifid@gmail.com", "Wants to register: "+addressString,
-                    "ID:" + user.getId() + " <br/>Full name:" +user.getName() + " " + user.getLastName() + "<br/>email:" + user.getEmail() + "<br/>Address: " + addressString+"<br/>Code: "+ic.getCode());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        logger.info("register " + email + " pass " + password + " id " + user.getId() + " location '" + addressString + "'");
-        // Add the send welcomeMessage Task to the default queue.
-        Notification.welcomeMessageNotification(user, pm);
-        return user.getId();
-    }
+	@Override
+	public long registerNewUserByAddress(String firstname, String lastname, String password, String email, String addressString, short gender)
+			throws InvalidOperation {
 
-    @Override
-    public boolean emailRegistered(String email) throws InvalidOperation, TException {
-        return getUserByEmail(email) == null;
-    }
+		VoUser userByEmail = getUserByEmail(email);
+		if (userByEmail != null && userByEmail.isEmailConfirmed())
+			throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
 
-    @Override
-    public void logout() throws TException {
-        PersistenceManager pm = PMF.getPm();
-        pm.deletePersistent(getCurrentSession(pm));
-    }
+		AddressInfo addressInfo = VoGeocoder.resolveAddressString(addressString);
+		if (!addressInfo.isExact() || !addressInfo.isKindHouse()) {
+			logger.warn("Failed to resolve address '" + addressString + "'");
+			throw new InvalidOperation(VoError.IncorrectParametrs, "Failed to resolve address '" + addressString + "'");
+		}
 
-    public VoUser getUserByEmail(String email) {
-        PersistenceManager pm = PMF.getPm();
-        return getUserByEmail(email, pm);
-    }
+		PersistenceManager pm = PMF.getPm();
+		VoCountry voCountry = VoCountry.createVoCountry(addressInfo.getCountryName(), pm);
+		VoCity voCity = VoCity.createVoCity(voCountry, addressInfo.getCityName(), pm);
+		VoStreet voStreet = VoStreet.createVoStreet(voCity, addressInfo.getStreetName(), pm);
+		VoBuilding voBuilding = VoBuilding.createVoBuilding(addressInfo.getZipCode(), voStreet, addressInfo.getBuildingNo(), addressInfo.getLongitude(),
+				addressInfo.getLattitude(), pm);
+		VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(voBuilding, (byte) 0, (byte) 0, 0, "", pm);
 
-    @SuppressWarnings("unchecked")
-    public static VoUser getUserByEmail(String email, PersistenceManager pm) {
+		final VoUser user = null == userByEmail ? new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
+		user.setGender(gender);
+		user.setEmailConfirmed(false);
+		user.setCurrentPostalAddress(pa, pm);
+		user.setAddressConfirmed(false);
+		VoInviteCode ic = VoHelper.createNewInviteCode(3, 3, pa, null, pm);
+		pm.makePersistent(user);
 
-        Query q = pm.newQuery("SQL","SELECT ID FROM VOUSER where EMAIL='"+email.toLowerCase().trim()+"'");
-        List<Long> users = executeQuery( q );
-        if (users.isEmpty())
-            return null;
-        if (users.size() != 1)
-            logger.error("has more than one user with email " + email);
-        return pm.getObjectById(VoUser.class, users.get(0));
-    }
+		try {
+			EMailHelper.sendSimpleEMail("trifid@gmail.com", "Wants to register: " + addressString,
+					"ID:" + user.getId() + " <br/>Full name:" + user.getName() + " " + user.getLastName() + "<br/>email:" + user.getEmail() + "<br/>Address: "
+							+ addressString + "<br/>Code: " + ic.getCode());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("register " + email + " pass " + password + " id " + user.getId() + " location '" + addressString + "'");
+		// Add the send welcomeMessage Task to the default queue.
+		Notification.welcomeMessageNotification(user, pm);
+		return user.getId();
+	}
 
-    private static Logger logger = Logger.getLogger("com.vmesteonline.be.AuthServiceImpl");
+	@Override
+	public boolean emailRegistered(String email) throws InvalidOperation, TException {
+		return getUserByEmail(email) == null;
+	}
 
-    @Override
-    public void setCurrentAttribute(Map<Integer, Long> typeValueMap) throws InvalidOperation {
-        super.setCurrentAttribute(typeValueMap);
-    }
+	@Override
+	public void logout() throws TException {		
+		PersistenceManager pm = PMF.getPm();
+		VoSession cs = getCurrentSession(pm);
+		cs.deactivate(pm);
+		pm.deletePersistent(cs);
+	}
 
-    @Override
-    public Map<Integer, Long> getCurrentAttributes() throws InvalidOperation {
-        return getCurrentSessionAttributes();
-    }
+	public VoUser getUserByEmail(String email) {
+		PersistenceManager pm = PMF.getPm();
+		return getUserByEmail(email, pm);
+	}
 
-    @Override
-    public boolean checkEmailRegistered(String email) {
-        PersistenceManager pm = PMF.getPm();
-        return null != getUserByEmail(email, pm);
-    }
+	@SuppressWarnings("unchecked")
+	public static VoUser getUserByEmail(String email, PersistenceManager pm) {
 
-    @Override
-    public void sendConfirmCode(String to, String localfileName) throws TException {
-        PersistenceManager pm = PMF.getPm();
-        try {
-            VoUser vu = getUserByEmail(to, pm);
-            if (null == vu)
-                throw new InvalidOperation(VoError.IncorrectParametrs, "Nobody found by email '" + to + "'");
+		Query q = pm.newQuery("SQL", "SELECT ID FROM VOUSER where EMAIL='" + email.toLowerCase().trim() + "'");
+		List<Long> users = executeQuery(q);
+		if (users.isEmpty())
+			return null;
+		if (users.size() != 1)
+			logger.error("has more than one user with email " + email);
+		return pm.getObjectById(VoUser.class, users.get(0));
+	}
 
-            long code = System.currentTimeMillis() % 123456L;
-            vu.setConfirmCode(code);
-            pm.makePersistent(vu);
+	private static Logger logger = Logger.getLogger("com.vmesteonline.be.AuthServiceImpl");
 
-            if( !Defaults.isItTests){
-                File localFIle = new File(localfileName);
+	@Override
+	public void setCurrentAttribute(Map<Integer, Long> typeValueMap) throws InvalidOperation {
+		super.setCurrentAttribute(typeValueMap);
+	}
 
-                FileInputStream fis = new FileInputStream(localFIle);
-                byte[] content = new byte[(int) localFIle.length()];
-                fis.read(content);
-                fis.close();
+	@Override
+	public Map<Integer, Long> getCurrentAttributes() throws InvalidOperation {
+		return getCurrentSessionAttributes();
+	}
 
-                EMailHelper.sendSimpleEMail(to, "Код для смены пароля на сайте Во!",
-                        new String(content, "UTF-8").replace("%code%", "" + code).replace("%name%", vu.getName() + " " + vu.getLastName()));
-            }
-            logger.info("Code to change password is: " + code);
+	@Override
+	public boolean checkEmailRegistered(String email) {
+		PersistenceManager pm = PMF.getPm();
+		return null != getUserByEmail(email, pm);
+	}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new InvalidOperation(VoError.GeneralError, "Failed to send email to '" + to + "'. " + e);
-        }
-    }
+	@Override
+	public void sendConfirmCode(String to, String localfileName) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		try {
+			VoUser vu = getUserByEmail(to, pm);
+			if (null == vu)
+				throw new InvalidOperation(VoError.IncorrectParametrs, "Nobody found by email '" + to + "'");
 
-    @Override
-    public void confirmRequest(String email, String confirmCode, String newPassword) throws TException {
-        PersistenceManager pm = PMF.getPm();
-        VoUser vu = getUserByEmail(email, pm);
-        if (null != vu && Long.parseLong(confirmCode) == vu.getConfirmCode()) {
-            vu.setEmailConfirmed(true);
-            if (null != newPassword && !"".equals(newPassword.trim()))
-                vu.setPassword(newPassword);
-            pm.makePersistent(vu);
-        } else
-            throw new InvalidOperation(VoError.IncorrectParametrs, "No such code registered for user!");
-    }
+			long code = System.currentTimeMillis() % 123456L;
+			vu.setConfirmCode(code);
+			pm.makePersistent(vu);
 
-    @Override
-    public boolean checkIfEmailConfirmed(String email) throws TException {
-        PersistenceManager pm = PMF.getPm();
-        VoUser vu = getUserByEmail(email, pm);
-        return null != vu && vu.isEmailConfirmed();
-    }
+			if (!Defaults.isItTests) {
+				File localFIle = new File(localfileName);
 
-    // TODO what is this? This is a part of the method access restrictions implementation
-    @Override
-    public boolean isPublicMethod(String method) {
-        return true;// publicMethods.contains(method);
-    }
+				FileInputStream fis = new FileInputStream(localFIle);
+				byte[] content = new byte[(int) localFIle.length()];
+				fis.read(content);
+				fis.close();
 
-    // ======================================================================================================================
+				EMailHelper.sendSimpleEMail(to, "Код для смены пароля на сайте Во!",
+						new String(content, "UTF-8").replace("%code%", "" + code).replace("%name%", vu.getName() + " " + vu.getLastName()));
+			}
+			logger.info("Code to change password is: " + code);
 
-    @Override
-    public long categoryId() {
-        return ServiceCategoryID.AUTH_SI.ordinal();
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new InvalidOperation(VoError.GeneralError, "Failed to send email to '" + to + "'. " + e);
+		}
+	}
 
-    @Override
-    public boolean remindPassword(String emal) throws TException {
-        PersistenceManager pm = PMF.getPm();
-        VoUser user = getUserByEmail(emal, pm);
-        if (null != user) {
-            user.setConfirmCode(System.currentTimeMillis() % 998765);
-            Notification.sendRemindCodeMessage(user);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public void confirmRequest(String email, String confirmCode, String newPassword) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser vu = getUserByEmail(email, pm);
+		if (null != vu && Long.parseLong(confirmCode) == vu.getConfirmCode()) {
+			vu.setEmailConfirmed(true);
+			if (null != newPassword && !"".equals(newPassword.trim()))
+				vu.setPassword(newPassword);
+			pm.makePersistent(vu);
+		} else
+			throw new InvalidOperation(VoError.IncorrectParametrs, "No such code registered for user!");
+	}
 
-    @Override
-    public boolean checkRemindCode(String remindeCode, String emal) throws TException {
-        PersistenceManager pm = PMF.getPm();
-        VoUser user = getUserByEmail(emal, pm);
-        if (null != user) {
-            if (remindeCode != null && remindeCode.equals("" + user.getConfirmCode()))
-                return true;
-        }
-        return false;
-    }
+	@Override
+	public boolean checkIfEmailConfirmed(String email) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser vu = getUserByEmail(email, pm);
+		return null != vu && vu.isEmailConfirmed();
+	}
 
-    @Override
-    public boolean changePasswordByRemidCode(String remindCode, String emal, String newPwd) throws TException {
-        PersistenceManager pm = PMF.getPm();
-        VoUser user = getUserByEmail(emal, pm);
-        if (null != user) {
-            if (remindCode != null && remindCode.equals("" + user.getConfirmCode())) {
+	// TODO what is this? This is a part of the method access restrictions
+	// implementation
+	@Override
+	public boolean isPublicMethod(String method) {
+		return true;// publicMethods.contains(method);
+	}
 
-                user.setPassword(newPwd);
-                user.setConfirmCode(System.currentTimeMillis()); // just to reset
-                user.setEmailConfirmed(true);
+	// ======================================================================================================================
 
-                pm.makePersistent(user);
-                saveUserInSession(getCurrentSession(), pm, user);
-                return true;
-            }
-        }
-        return false;
-    }
+	@Override
+	public long categoryId() {
+		return ServiceCategoryID.AUTH_SI.ordinal();
+	}
 
+	@Override
+	public boolean remindPassword(String emal) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser user = getUserByEmail(emal, pm);
+		if (null != user) {
+			user.setConfirmCode(System.currentTimeMillis() % 998765);
+			Notification.sendRemindCodeMessage(user);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkRemindCode(String remindeCode, String emal) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser user = getUserByEmail(emal, pm);
+		if (null != user) {
+			if (remindeCode != null && remindeCode.equals("" + user.getConfirmCode()))
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean changePasswordByRemidCode(String remindCode, String emal, String newPwd) throws TException {
+		PersistenceManager pm = PMF.getPm();
+		VoUser user = getUserByEmail(emal, pm);
+		if (null != user) {
+			if (remindCode != null && remindCode.equals("" + user.getConfirmCode())) {
+
+				user.setPassword(newPwd);
+				user.setConfirmCode(System.currentTimeMillis()); // just to reset
+				user.setEmailConfirmed(true);
+
+				pm.makePersistent(user);
+				saveUserInSession(getCurrentSession(), pm, user);
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

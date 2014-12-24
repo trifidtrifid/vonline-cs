@@ -12,12 +12,14 @@ import com.vmesteonline.be.thrift.messageservice.Dialog;
 import com.vmesteonline.be.thrift.messageservice.DialogMessage;
 import com.vmesteonline.be.thrift.messageservice.DialogService.Iface;
 import com.vmesteonline.be.utils.VoHelper;
+
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
 import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
@@ -26,6 +28,11 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 
 	private static Logger logger = Logger.getLogger(DialogServiceImpl.class.getName());
 
+	public DialogServiceImpl(ServiceImpl si) throws InvalidOperation {
+		super(si);
+	}
+	public DialogServiceImpl() {
+	}
 	@Override
 	public Dialog getDialog(List<Long> users, int after) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();

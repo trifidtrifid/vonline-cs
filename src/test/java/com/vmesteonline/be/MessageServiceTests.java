@@ -700,7 +700,7 @@ public class MessageServiceTests extends TestWorkAround {
 			Assert.assertEquals(0, rTopic.totalSize);
 
 			//move topic from one users group to another
-			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			asi.login(Defaults.user6email, Defaults.user6pass); //the first user only can move messages
 			msi.moveTopic( topicF.id, getUserGroupId(Defaults.user5email, GroupType.STAIRCASE), null, null, null, null);
 
 			asi.login(Defaults.user5email, Defaults.user5pass);//the fi
@@ -745,7 +745,7 @@ public class MessageServiceTests extends TestWorkAround {
 			Assert.assertEquals(0, rTopic.totalSize); //it's not enough
 
 			//change the radius to bigger one  1500M
-			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages BB
+			asi.login(Defaults.user6email, Defaults.user6pass); //the first user only can move messages BB
 			msi.moveTopic( topicF.id, 0, null, null, GroupType.DISTRICT, null); //1500M
 
 			asi.login(Defaults.user2email, Defaults.user2pass);
@@ -754,7 +754,7 @@ public class MessageServiceTests extends TestWorkAround {
 			Assert.assertEquals(1, rTopic.totalSize); //it's not enough
 
 			////change the radius to small one
-			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			asi.login(Defaults.user6email, Defaults.user6pass); //the first user only can move messages
 			msi.moveTopic( topicF.id, 0, null, null, GroupType.NEIGHBORS, null); //350M
 
 			asi.login(Defaults.user2email, Defaults.user2pass); //logout the BB
@@ -780,7 +780,7 @@ public class MessageServiceTests extends TestWorkAround {
 			Assert.assertEquals(1, rTopic.totalSize);
 
 			//make it the advert
-			asi.login(Defaults.user1email, Defaults.user1pass); //the first user only can move messages
+			asi.login(Defaults.user6email, Defaults.user6pass); //the first user only can move messages
 			msi.moveTopic( topicF.id, 0, null, null, null, MessageType.ADVERT);
 
 			asi.login(Defaults.user2email, Defaults.user2pass); //logout the big bro
@@ -899,10 +899,10 @@ public class MessageServiceTests extends TestWorkAround {
 			asi.login(Defaults.user1email, Defaults.user1pass);
 			asi.login(Defaults.user2email, Defaults.user2pass);
 			
-			msi.sendAddressMulticastMessage( Arrays.asList( paa ).subList(0, 2), "testMulticast", 0, 0);
 			int now = (int) (System.currentTimeMillis()/1000L);
-			int upv = msi.checkUpdates(now);
-			Assert.assertEquals(upv, 1);
+			msi.sendAddressMulticastMessage( Arrays.asList( paa ).subList(0, 2), "testMulticast", 0, 0);
+			int upv = msi.checkUpdates(now-10);
+			Assert.assertEquals(upv, 0);
 			String mm = msi.getMulticastMessage();
 			Assert.assertEquals(mm, "testMulticast");
 			mm = msi.getNextMulticastMessage();

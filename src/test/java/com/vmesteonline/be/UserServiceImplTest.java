@@ -583,7 +583,7 @@ public class UserServiceImplTest extends TestWorkAround {
 			asi.login(Defaults.user2email, Defaults.user2email);
 			long userAid = updateContacts(GroupType.FLOOR);
 			// same building same staircase same floor
-			contactsIsVisible(Defaults.user3email, Defaults.user3pass, userAid);
+			contactsIsVisible(Defaults.user2email, Defaults.user2pass, userAid);
 			// same building another staircase
 			contactsIsInVisible(Defaults.user1email, Defaults.user1pass, userAid);
 			// another building
@@ -618,7 +618,7 @@ public class UserServiceImplTest extends TestWorkAround {
 				Assert.assertEquals(1, uAFloorGroup.size());
 				Assert.assertEquals(1, uAStaircaseGroup.size());
 				Assert.assertEquals(3, uABuildingGroup.size());
-				Assert.assertEquals(4, uANgrGroup.size());
+				Assert.assertEquals(1, uANgrGroup.size());
 				
 				asi.login(Defaults.user2email, Defaults.user2pass);
 				uAgroups = usi.getUserGroups();
@@ -631,7 +631,7 @@ public class UserServiceImplTest extends TestWorkAround {
 				Assert.assertEquals(2, uAFloorGroup.size());
 				Assert.assertEquals(2, uAStaircaseGroup.size());
 				Assert.assertEquals(3, uABuildingGroup.size());
-				Assert.assertEquals(4, uANgrGroup.size());
+				Assert.assertEquals(1, uANgrGroup.size());
 
 			} finally {
 				pmA.close();

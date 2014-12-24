@@ -115,6 +115,10 @@ public class ServiceImpl {
 	protected ServiceImpl(HttpServletRequest req) {
 		initCurrentSession(req);
 	}
+	
+	protected ServiceImpl(ServiceImpl that){
+		this.currentSessionTL.set( that.currentSessionTL.get());
+	}
 
 	public long getCurrentUserId() throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();

@@ -1,7 +1,9 @@
 package com.vmesteonline.be.jdo2;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 public class VoMulticastMessage {
@@ -59,4 +61,8 @@ public class VoMulticastMessage {
 	private int endBefore;
 	
 	public boolean hasNext;
+	
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
+	protected long id;
 }

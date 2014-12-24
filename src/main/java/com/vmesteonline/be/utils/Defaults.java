@@ -31,12 +31,10 @@ public class Defaults {
 	public static Long user4id = null;
 	public static Long user5id = null;
 	
-	public static String user1lastName = "Онлайн.ru";
-	public static String user1name = "Вместе";
-	public static String user1email = "info@vmesteonline.ru";
-	public static String user1pass = "123456";
-	public static String zan32k3Lat = "59.933146";
-	public static String zan32k3Long = "30.423117";
+	public static String user1lastName = "Aname";
+	public static String user1name = "Afamily";
+	public static String user1email = "a";
+	public static String user1pass = "a";
 
 	public static String user2lastName = "Bfamily";
 	public static String user2name = "Bname";
@@ -57,11 +55,18 @@ public class Defaults {
 	public static String user5name = "Ename";
 	public static String user5email = "e";
 	public static String user5pass = "e";
+	
+	public static String user6lastName = "Онлайн.ru";
+	public static String user6name = "Вместе";
+	public static String user6email = "info@vmesteonline.ru";
+	public static String user6pass = "123456";
+	public static String zan32k3Lat = "0.933146";
+	public static String zan32k3Long = "0.423117";
 
-	public static String[] unames = new String[] { user1name, user2name, user3name, user4name, user5name };
-	public static String[] ulastnames = new String[] { user1lastName, user2lastName, user3lastName, user4lastName, user5lastName };
-	public static String[] uEmails = new String[] { user1email, user2email, user3email, user4email, user5email };
-	public static String[] uPasses = new String[] { user1pass, user2pass, user3pass, user4pass, user5pass };
+	public static String[] unames = new String[] { user1name, user2name, user3name, user4name, user5name, user6name };
+	public static String[] ulastnames = new String[] { user1lastName, user2lastName, user3lastName, user4lastName, user5lastName, user6lastName };
+	public static String[] uEmails = new String[] { user1email, user2email, user3email, user4email, user5email, user6email };
+	public static String[] uPasses = new String[] { user1pass, user2pass, user3pass, user4pass, user5pass, user6pass };
 
 	public static int radiusZero = 0;
 	public static int radiusBuilding = 50;
@@ -243,19 +248,23 @@ public class Defaults {
 			VoCity city = VoCity.createVoCity(country, CITY, pm);
 			VoStreet streetZ = VoStreet.createVoStreet(city, "Заневский", pm);
 			VoStreet streetR = VoStreet.createVoStreet(city, "Республиканская", pm);
+			VoStreet streetH = VoStreet.createVoStreet(city, "Генерала Хазова", pm);
 
 			VoBuilding zanevsky32k3 = VoBuilding.createVoBuilding("195213", streetZ, "32к3", null, null, pm);
 			VoBuilding respublikanskaya35 = VoBuilding.createVoBuilding("195213", streetR, "35", null, null, pm);
 			VoBuilding resp6 = VoBuilding.createVoBuilding("195213", streetR, "6", null, null, pm);
+			VoBuilding gh45 = VoBuilding.createVoBuilding("195213", streetH, "45", null, null, pm);
+			
 			addresses = new VoPostalAddress[] {
 
 					VoPostalAddress.createVoPostalAddress(zanevsky32k3, (byte) 1, (byte) 1, 5, "", pm),
 					VoPostalAddress.createVoPostalAddress(zanevsky32k3, (byte) 2, (byte) 1, 50, "", pm),
 					VoPostalAddress.createVoPostalAddress(zanevsky32k3, (byte) 2, (byte) 1, 51, "", pm),
 					VoPostalAddress.createVoPostalAddress(respublikanskaya35, (byte) 1, (byte) 11, 35, "", pm),
-					VoPostalAddress.createVoPostalAddress(resp6, (byte) 1, (byte) 2, 25, "", pm) };
+					VoPostalAddress.createVoPostalAddress(resp6, (byte) 1, (byte) 2, 25, "", pm),
+					VoPostalAddress.createVoPostalAddress(gh45, (byte) 1, (byte) 2, 25, "", pm)};
 
-			String invCodes[] = { "1", "2", "3", "4", "5" };
+			String invCodes[] = { "1", "2", "3", "4", "5", "6" };
 
 
 			for (int i = 0; i < addresses.length; i++) {
