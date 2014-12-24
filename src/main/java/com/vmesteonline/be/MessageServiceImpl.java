@@ -70,7 +70,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-			List<VoTopic> topics = getTopics(groupId, user.getGroups(), MessageType.WALL, lastLoadedIdTopicId, length, false, pm, user);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), lastLoadedIdTopicId, MessageType.WALL, lastLoadedIdTopicId, length, false, pm, user);
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
 				if (VoUser.isHeTheBigBro(user)) {
@@ -242,7 +242,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		return mlp;
 	}
 
-	public static List<VoTopic> getTopics(long groupId, List<Long> userGroups, MessageType type, long lastLoadedTopicId, int length,
+	public static List<VoTopic> getTopics(long groupId, List<Long> userGroups, long rubricId, MessageType type, long lastLoadedTopicId, int length,
 			boolean importantOnly, PersistenceManager pm, VoUser user) {
 
 		String filter = "";
@@ -302,7 +302,11 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				else
 					filter += filter.length() > 0 ? "&& type=='" + type + "'" : "type=='" + type + "'";
 			}
-
+			
+			if( 0!=rubricId  )
+				filter = filter.length() > 0 ? filter + " && (rubricId==0 || rubricId=="+rubricId+")" : 
+					"(rubricId==0 || rubricId=="+rubricId+")";
+			
 			Query q = pm.newQuery(VoTopic.class, filter);
 			q.setOrdering("lastUpdate DESC");
 			allTopics = executeQuery(q);
@@ -345,7 +349,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		PersistenceManager pm = PMF.getPm();
 
-		List<VoTopic> topics = getTopics(0, null, MessageType.BLOG, lastLoadedTopicId, length, false, pm, null);
+		List<VoTopic> topics = getTopics(0, null, 0, MessageType.BLOG, lastLoadedTopicId, length, false, pm, null);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
 		for (VoTopic voTopic : topics) {
@@ -383,7 +387,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		try {
 			VoUser user = getCurrentUser(pm);
 
-			List<VoTopic> topics = getTopics(groupId, user.getGroups(), type, lastLoadedTopicId, length, importantOnly, pm, user);
+			List<VoTopic> topics = getTopics(groupId, user.getGroups(), rubricId, type, lastLoadedTopicId, length, importantOnly, pm, user);
 			mlp.totalSize += topics.size();
 			for (VoTopic voTopic : topics) {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
@@ -501,7 +505,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 
 		VoUser currentUser = getCurrentUser();
-		List<VoTopic> topics = getTopics(0, null, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, currentUser);
+		List<VoTopic> topics = getTopics(0, null, 0, MessageType.BUSINESS_PAGE, lastLoadedTopicId, length, false, pm, currentUser);
 		TopicListPart mlp = new TopicListPart();
 		mlp.totalSize = topics.size();
 		for (VoTopic voTopic : topics) {

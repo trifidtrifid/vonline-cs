@@ -17,20 +17,23 @@ import com.vmesteonline.be.notifications.NewsNotification;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.thrift.PostalAddress;
+import com.vmesteonline.be.thrift.Rubric;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.thrift.messageservice.*;
 import com.vmesteonline.be.utils.Defaults;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.jdo.PersistenceManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class MessageServiceTests extends TestWorkAround {
 
@@ -64,11 +67,22 @@ public class MessageServiceTests extends TestWorkAround {
 	private Topic createTopic(long groupId) throws Exception {
 		return createTopic(groupId, MessageType.BASE);
 	}
+	private Topic createTopic(long groupId, long rubricId) throws Exception {
+		return createTopic(groupId, MessageType.BASE,rubricId);
+	}
 
 	private Topic createTopic(long groupId, MessageType type) throws Exception {
 		Message msg = new Message(0, 0, type, 0, groupId, 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
 				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
 		Topic topic = new Topic(0, topicSubject, msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, null, null, false);
+		return msi.postTopic(topic);
+	}
+	
+	private Topic createTopic(long groupId, MessageType type, Long rubricId) throws Exception {
+		Message msg = new Message(0, 0, type, 0, groupId, 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
+				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
+		Topic topic = new Topic(0, topicSubject, msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, null, null, false);
+		topic.setRubricId(rubricId);
 		return msi.postTopic(topic);
 	}
 
@@ -171,6 +185,42 @@ public class MessageServiceTests extends TestWorkAround {
 
 	}
 
+	@Test
+	public void testGetTopicsByRubric() {
+
+		try {
+			List<Rubric> userRubrics = usi.getUserRubrics();
+			assertTrue( userRubrics.size() > 1 );
+			
+			Topic tpc = createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), userRubrics.get(0).id);
+			//без указания рубрик
+			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize);
+			
+			//в рубрике другой нет
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), userRubrics.get(1).id, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(0, rTopic.totalSize);
+			
+			//в рубрике размещения
+			rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), userRubrics.get(0).id, 0, 0L, 10);
+			Assert.assertNotNull(rTopic);
+			Assert.assertEquals(1, rTopic.totalSize);
+			
+			Assert.assertEquals(tpc.getId(), rTopic.topics.get(0).getId());
+			Assert.assertEquals(topicSubject, rTopic.topics.get(0).getSubject());
+			Assert.assertNotNull(rTopic.topics.get(0).userInfo);
+			Assert.assertEquals(Defaults.user1name, rTopic.topics.get(0).userInfo.firstName);
+			Assert.assertEquals(Defaults.user1lastName, rTopic.topics.get(0).userInfo.lastName);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Exception thrown." + e.getMessage());
+		}
+
+	}
+	
 	@Test
 	public void testGetAdvert() {
 		try {

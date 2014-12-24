@@ -858,11 +858,11 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		return url;
 	}
 
-	private static List<Rubric> tmpRubrics = Arrays.asList( new Rubric[]{ new Rubric(0L,"","","")});
+	private static List<Rubric> tmpRubrics;
 	
 	@Override
 	public List<Rubric> getUserRubrics() throws InvalidOperation, TException {
-		return tmpRubrics;
+		return tmpRubrics == null ? tmpRubrics = Defaults.initializeRubrics() : tmpRubrics;
 	}
 
 //	public static CachableObject<GroupType> usersRelation = new CachableObject<GroupType>();

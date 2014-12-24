@@ -1,18 +1,21 @@
 package com.vmesteonline.be.utils;
 
 import com.vmesteonline.be.AuthServiceImpl;
+import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.*;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
+import com.vmesteonline.be.thrift.Rubric;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.VoError;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+
 import java.util.*;
 
 import static com.vmesteonline.be.utils.VoHelper.executeQuery;
@@ -92,7 +95,6 @@ public class Defaults {
 	public static VoPostalAddress[] addresses;
 	public static boolean initDefaultData(PersistenceManager pm, boolean loadInviteCodes) {
 
-		setDefaultRubrics(new ArrayList<>());
 		try {
 			clearLocations(pm);
 			clearMulticastMesssages(pm);
@@ -303,5 +305,22 @@ public class Defaults {
 
 	public static void setDefaultRubrics(List<VoRubric> defaultRubrics) {
 		Defaults.defaultRubrics = defaultRubrics;
+	}
+
+	public static List<Rubric> initializeRubrics() throws InvalidOperation {
+		PersistenceManager pm = PMF.getPm();
+		if( null==Defaults.defaultRubrics)
+			Defaults.defaultRubrics = Arrays.asList( new VoRubric[]{
+				VoRubric.createVoRubric( "Кто чем", "#whowhow", "В группе соседи предлагают друг другу свои услуги и спрашивают помощи", true, pm),
+				VoRubric.createVoRubric( "Домоуправление (ЖКХ)", "#zhkh", "Вопросы связанные с благоустройсвом и решением бытовых вопросов", true, pm),
+				VoRubric.createVoRubric( "Автомобилисты", "#auto", "Решение вопросов порковки, стоянки, заездов выездов", true, pm),
+				VoRubric.createVoRubric( "Родители и Дети", "#childs", "Прогулки и площадки, детсады, школы, кружки и репититоры", true, pm),
+				VoRubric.createVoRubric( "Барахолка", "#things", "У кого что полезное есть предложить или нужно попросить", true, pm),
+				VoRubric.createVoRubric( "Безопасность", "#security", "Преступность, что происходит как с этим бороться", true, pm),
+				VoRubric.createVoRubric( "Досуг ", "#dosug", "Клубы, рестораны, кафе, бары", true, pm),
+				VoRubric.createVoRubric( "Спорт ", "#sport", "Спортзалы, тренера и спортивные мероприятия личные и общественные", true, pm),
+				});
+		
+		return VoHelper.convertMutableSet(Defaults.defaultRubrics, new ArrayList<Rubric>(), new Rubric());
 	}
 }

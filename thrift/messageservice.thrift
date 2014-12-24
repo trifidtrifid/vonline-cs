@@ -86,7 +86,7 @@ struct Topic {
 	13: bedata.ShortUserInfo userInfo,
 	14: Poll poll, 	
 	15: bedata.GroupType groupType,
-	16: bool canChange
+	16: bool canChange,
 }
 
 struct TopicListPart {
