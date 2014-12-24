@@ -25,6 +25,17 @@
                           ng-blur="base.textareaBlur(lenta.message.content,lenta.message.default,lenta,true)" ng-focus="base.textareaFocus(lenta.message.content,lenta.message.default,lenta,true)"
                           ng-hasfocus="base.isLentaFocus">Написать сообщение</textarea>
 
+                <div class="create-poll" ng-show="lenta.isPollShow">
+                    <a class="poll-cancel pull-right" title="отмена опроса" href="#" ng-click="lenta.isPollShow = false;lenta.isPollAvailable = true;">&times;</a>
+                    <h5>Тема опроса:</h5>
+                    <input type="text" ng-model="lenta.pollSubject"/>
+                    <h5>Варианты ответов:</h5>
+                    <div ng-repeat="input in lenta.pollInputs">
+                        <input ng-model="input.name" type="text"/>
+                    </div>
+                    <input type="text" class="poll-readonly" readonly value="Добавить ответ" ng-click="base.addPollInput($event,lenta)" ng-focus="base.addPollInput($event,lenta,true)"/>
+                </div>
+
                 <div>
                     <div>
                         <div class="attach-area" id="attach-area-{{lenta.attachId}}">

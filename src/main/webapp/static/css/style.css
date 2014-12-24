@@ -1797,6 +1797,13 @@ h1 {
   font-weight: bold;
 }
 /* nearby */
+.nearby {
+  padding: 10px;
+  width: auto;
+}
+.nearby h2 {
+  margin-top: 0;
+}
 .nearby-more {
   font-size: 14px;
   font-weight: normal;
@@ -1812,6 +1819,9 @@ h1 {
 .code-block {
   text-align: center;
   float: none !important;
+}
+.error-info {
+  left: 0;
 }
 /* new style createTopic */
 .create-wall-wrap {

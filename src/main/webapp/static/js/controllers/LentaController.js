@@ -9,7 +9,6 @@ forumControllers.controller('LentaController',function($rootScope) {
     lenta.isOpenMessageBar = false;
 
     lenta.showGroups = function(){
-        console.log('show',lenta.isGroupsInMessShow);
         lenta.isGroupsInMessShow ? lenta.isGroupsInMessShow = false : lenta.isGroupsInMessShow = true
     };
 
@@ -38,7 +37,7 @@ forumControllers.controller('LentaController',function($rootScope) {
             lenta.isCreateNewsShow[userClientGroups[i].id] = false;
         }
         //lenta.isCreateNewsShow[] = false;
-        $rootScope.COMMENTS_DEFAULT_COUNT = 4;
+        $rootScope.COMMENTS_DEFAULT_COUNT = 3;
 
         var ls_setInfo_groupId = localStorage.getItem('VO_setInfo_groupId'),
             currentGroup = userClientGroups[3];
@@ -63,6 +62,7 @@ forumControllers.controller('LentaController',function($rootScope) {
 
         lenta.attachId = "0";
         $rootScope.base.initStartParamsForCreateTopic(lenta);
+        lenta.selectedGroup = null;
 
         lenta.message = {};
 

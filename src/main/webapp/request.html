@@ -141,12 +141,14 @@
                     }else{
                         $('.error-info').addClass('hidden');
 
-                        var myGeocoder = ymaps.geocode(addressStreet);
+                        var myGeocoder = ymaps.geocode(address);
                         myGeocoder.then(
                                 function (res) {
                                     //map.geoObjects.add(res.geoObjects);
                                     //console.log(res.geoObjects.get(0).geometry);
                                     var center = res.geoObjects.get(0).geometry._$g;
+                                    //console.log(res.geoObjects.get(0));
+                                    var yaAddr = res.geoObjects.get(0).properties.get('metaDataProperty').GeocoderMetaData.text;
 
                                     if(!map){
                                         map = new ymaps.Map("map", {
@@ -167,7 +169,7 @@
                                     map.geoObjects.add(myGeoObject); // Размещение геообъекта на карте.
                                     // Выведем в консоль данные, полученные в результате геокодирования объекта.
 
-                                    $('.confirm-address').text(address);
+                                    $('.confirm-address').text(yaAddr);
                                     $('.request').addClass('hidden');
                                     $('.confirm').removeClass('hidden');
 
@@ -183,7 +185,7 @@
                                     $('.confirm-forward').click(function(e){
                                         e.preventDefault();
 
-                                        var addr = encodeURIComponent(address);
+                                        var addr = encodeURIComponent(yaAddr);
                                         document.location.replace('registration.html#email='+ email+ ";address="+ addr);
                                     });
 

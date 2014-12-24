@@ -584,6 +584,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         }
 
         function createWallTopic(ctrl) {
+            console.log('wallTopic',ctrl.selectedGroup);
 
             if (ctrl.isEdit) {
                 ctrl.attachedImages = getAttachedImages($('#attach-area-edit-' + ctrl.id));
@@ -592,7 +593,6 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 ctrl.attachedImages = getAttachedImages($('#attach-area-' + ctrl.attachId));
                 ctrl.attachedDocs = getAttachedDocs($('#attach-doc-area-' + ctrl.attachId));
             }
-
 
             if (ctrl.attachedImages.length == 0 && ctrl.attachedDocs && ctrl.attachedDocs.length == 0 && !ctrl.isPollShow
                 && (ctrl.message.content == TEXT_DEFAULT_1 || !ctrl.message.content)) {

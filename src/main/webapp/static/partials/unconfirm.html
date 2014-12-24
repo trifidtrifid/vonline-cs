@@ -12,7 +12,11 @@
             <div><input type="text" ng-model="ctrl.code" class="form-control input-lg code-input" placeholder="Код доступа"/></div>
             <br/>
 
-            <button type="submit" class="btn btn-primary no-border btn-lg" ng-click="unconfLogin()">Войти</button>
+            <button class="btn btn-primary no-border btn-lg" ng-click="ctrl.unconfLogin()">Войти</button>
+            <br/>
+            <br/>
+
+            <div class="error-info" ng-show="ctrl.isErrorConfirm">Неверный код !</div>
         </div>
     </div>
 
