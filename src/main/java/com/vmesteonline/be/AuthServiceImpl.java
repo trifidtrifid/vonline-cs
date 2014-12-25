@@ -114,7 +114,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		} catch (InvalidOperation e) {
 			e.printStackTrace();
 		}
-	}
+	} 
 
 	private void loadBroadcastMessages(VoSession sess, VoSession lastSess, int lastActivityTs) {
 		try {

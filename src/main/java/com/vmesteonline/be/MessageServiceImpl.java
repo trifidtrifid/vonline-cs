@@ -38,6 +38,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		super(req);
 	}
 
+	public MessageServiceImpl(ServiceImpl serviceImpl) {
+		super(serviceImpl);
+	}
+
 	@Override
 	public void sendInfoEmail(String email, String name, String content) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
@@ -831,7 +835,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			long topicId = msg.getTopicId();
 			VoTopic topic = pm.getObjectById(VoTopic.class, topicId);
 
-			if (msg.getAuthorId() != cu.getId() && !(isModerator = cu.isGroupModerator(topic.getUserGroupId())) && !VoUser.isHeTheBigBro(cu) )
+			if (msg.getAuthorId() != cu.getId() && !(isModerator = cu.isGroupModerator(topic.getUserGroupId())) && !VoUser.isHeTheBigBro(cu))
 				throw new InvalidOperation(VoError.IncorrectParametrs, "USer is not the author and not moderator");
 
 			topic.setMessageNum(topic.getMessageNum() - 1);

@@ -12,6 +12,7 @@ import com.vmesteonline.be.utils.Defaults;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
+
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -410,7 +411,7 @@ public class VoUser extends GeoLocation {
 	@Persistent
 	private String job;
 
-	@Persistent(serialized = "true", defaultFetchGroup = "true")
+	@Persistent
 	private UserFamily userFamily;
 
 	@Persistent
@@ -419,7 +420,7 @@ public class VoUser extends GeoLocation {
 	@Persistent
 	private RelationsType relations;
 
-	@Persistent(serialized = "true",defaultFetchGroup = "true")
+	@Persistent
 	private UserPrivacy privacy;
 
 	@Persistent
@@ -481,7 +482,12 @@ public class VoUser extends GeoLocation {
 	}
 
 	public UserPrivacy getPrivacy() {
-		return null == privacy ? new UserPrivacy(0L, GroupType.BUILDING, GroupType.STAIRCASE) : privacy;
+		
+		try {
+			return null == privacy ? privacy = new UserPrivacy(0L, GroupType.BUILDING, GroupType.STAIRCASE) : privacy;
+		} catch (RuntimeException e) {
+			return privacy = new UserPrivacy(0L, GroupType.BUILDING, GroupType.STAIRCASE);
+		}
 	}
 
 	public void setPrivacy(UserPrivacy privacy) {
