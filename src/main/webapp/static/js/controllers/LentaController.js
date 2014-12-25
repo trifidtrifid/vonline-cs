@@ -20,6 +20,7 @@ forumControllers.controller('LentaController',function($rootScope) {
 
     lenta.closeInput = function(){
         lenta.isOpenMessageBar = false;
+        lenta.isGroupsInMessShow = false;
         lenta.selectedGroup = lenta.selGroupName = null;
         lenta.message.content = TEXT_DEFAULT_1;
     };

@@ -776,6 +776,14 @@ h1 {
 .message-tools .fa-pencil:hover {
   color: #438eb9;
 }
+.folding {
+  height: 55px;
+  overflow: hidden;
+}
+.foldingImg {
+  height: 120px;
+  overflow: hidden;
+}
 .hashtag {
   margin-left: 10px;
   margin-right: 10px;
