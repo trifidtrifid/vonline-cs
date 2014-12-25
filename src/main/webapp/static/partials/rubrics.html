@@ -1,0 +1,41 @@
+
+    <section class="talks page ng-cloak" ng-show="base.talksIsActive">
+
+        <section class="create-topic" ng-hide="base.createTopicIsHide">
+            <div ng-include="'/static/templates/createTopic.html'" onload="ctrl = talks; initCreateTopic(talks);"></div>
+        </section>
+
+        <section class="talks-title-block">
+
+            <div ng-if="!talks.topics || talks.topics.length == 0" class="empty-messages">
+                <div ng-include="'/static/partials/empty/empty-talks.html'"></div>
+            </div>
+
+            <div class="talks-title" ng-repeat="talk in talks.topics" id="{{talk.id}}">
+
+                <div class="talks-title-right">
+                    <span class="label label-lg arrowed lenta-item-hashtag pull-right"
+                          ng-class="talk.tagColor">{{talk.label}}</span>
+
+                    <a class="pull-right important-status" ng-class="{'important' : talk.message.important == 1}" title='{{ talk.message.importantText }}' href="#" ng-click="base.markImportant($event,talk.message)"><i class="fa fa-star"></i></a>
+                    <a class="pull-right like-status" ng-class="{'isLike' : talk.message.like == 1}" title='Нравится' href="#" ng-click="base.markLike($event,talk.message)"><i class="fa fa-heart"></i></a>
+                    <div class="like-help" id="like-help-{{talk.message.id}}">сообщение уже отмечено</div>
+
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="talks-title-left load-talk">
+                    <a ui-sref="talks-single({ talkId : {{talk.id}} })">{{talk.subject}}</a>
+                    <div>{{talk.messageNum}} сообщений</div>
+                </div>
+
+                <div class="last-update pull-right">
+                    <div>Последнее обновление: {{talk.lastUpdateEdit}}</div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+

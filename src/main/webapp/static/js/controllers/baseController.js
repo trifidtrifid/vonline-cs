@@ -454,6 +454,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         };
 
         base.groups = userClientGroups;
+        base.rubrics = userClientRubrics;
 
         base.goToDialog = function (userId) {
             var users = [];

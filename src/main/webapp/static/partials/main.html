@@ -230,7 +230,8 @@
                                         </div>
                                         <div ng-if="wallMessage.content.length >= base.contentLength">
                                             <div class="text" ng-hide="wallMessage.isFullText">
-                                                <div ng-bind-html="wallMessage.content.slice(0,base.contentLength-1)"></div>
+                                                <!-- .slice(0,base.contentLength-1) -->
+                                                <div class="folding" ng-bind-html="wallMessage.content"></div>
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">читать далее...</a></div>
                                             </div>
                                             <div class="text" ng-show="wallMessage.isFullText">
