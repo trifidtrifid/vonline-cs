@@ -96,7 +96,11 @@ public class VoUser extends GeoLocation {
 
 	}
 	public UserFamily getUserFamily() {
-		return userFamily;
+		try{ 
+			return userFamily;
+		} catch(RuntimeException rte){
+			return userFamily = new UserFamily();
+		}
 	}
 	
 	public int getRegistered() {
