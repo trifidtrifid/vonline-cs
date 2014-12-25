@@ -4,7 +4,7 @@
     <div ng-if="base.me.addressConfirmed">
         <section class="forum page" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()">
 
-        <div class="create-wall-wrap">
+        <div class="create-wall-wrap" ng-show="lenta.isCreateNewsShow[currentGroup.id] || lenta.wallItems.length > 0">
             <textarea class="no-resize" ng-click="lenta.isOpenMessageBar = true" ng-hide="lenta.isOpenMessageBar">Написать сообщение</textarea>
 
             <div ng-show="lenta.isOpenMessageBar">
@@ -14,9 +14,9 @@
                     <span ng-if="lenta.selGroupName">{{lenta.selGroupName}}</span>
                 </a>
                 <ul class="select-group-list" ng-show="lenta.isGroupsInMessShow">
-                    <li ng-repeat="group in groups | orderBy: 'id':reverse" ng-click="lenta.selectGroupNew(group)">
+                    <li ng-repeat="group in groups | orderBy: 'id':reverse" ng-if="group.id != 0" ng-click="lenta.selectGroupNew(group)">
                         <label href="#">
-                            <input name="select-wall-group" type="radio"/>
+                            <input name="select-wall-group" ng-model="lenta.selGroupName" value="{{group.visibleName}}" type="radio"/>
                             {{group.visibleName}}
                         </label>
                     </li>
@@ -50,7 +50,7 @@
                 <div class="message-input-bottom">
                     <div class="pull-right">
                         <button class="pull-right btn btn-sm no-border btn-primary" ng-click="createTopic($event,lenta)">Отправить</button>
-                        <a href="#" class="pull-right close-messageBar" ng-click="lenta.isOpenMessageBar=false">Закрыть</a>
+                        <a href="#" class="pull-right close-messageBar" ng-click="lenta.closeInput()">Закрыть</a>
                     </div>
 
                     <div class="btn-group attach-dropdown pull-left">
