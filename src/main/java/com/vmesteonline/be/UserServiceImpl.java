@@ -858,11 +858,11 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		return url;
 	}
 
-	private static List<Rubric> tmpRubrics = Arrays.asList( new Rubric[]{ new Rubric(0L,"","","")});
+	private static List<Rubric> tmpRubrics;
 	
 	@Override
 	public List<Rubric> getUserRubrics() throws InvalidOperation, TException {
-		return tmpRubrics;
+		return tmpRubrics == null ? tmpRubrics = Defaults.initializeRubrics() : tmpRubrics;
 	}
 
 //	public static CachableObject<GroupType> usersRelation = new CachableObject<GroupType>();
@@ -955,13 +955,52 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public boolean confirmUserAddress(String code) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		VoUser user = getCurrentUser(pm);
-		if( user.isAddressConfirmed() ) return true;
-		List<VoInviteCode> icl = executeQuery(pm.newQuery(VoInviteCode.class, "code=='"+code+"'"));
-		if ( icl.size() > 0){
-			boolean addrConfirmed = icl.get(0).getId() == user.getAddress();
+		if( user.isAddressConfirmed() )
+			return true;
+		
+		try {
+			VoInviteCode inviteCode = VoInviteCode.getInviteCode(code, pm);
+			boolean addrConfirmed = (inviteCode.getPostalAddressId() == user.getAddress());
+			logger.info("User address ID="+user.getAddress()+" InviteCode address=" + inviteCode.getPostalAddressId() 
+					+" So adress confirmed=" + addrConfirmed);
 			user.setAddressConfirmed(addrConfirmed);
 			return addrConfirmed;
-		} 
+		} catch (Exception e) {
+			logger.warning("Address not confirmed by code "+code+" for "+user+" Exception: "+e.getMessage());
+			e.printStackTrace();
+		}
 		return false;
+	}
+
+	public static int getUsersCountByLocation(VoUserGroup group, PersistenceManager pm) {
+		int radius = group.getRadius();
+		int count =0;
+		if( group.getGroupType() <= GroupType.BUILDING.getValue() ) {
+			count = getUsersCountByGroup(group.getId(), pm);
+		} else {
+			String ufilter = "emailConfirmed=true AND ";
+			BigDecimal latitudeMax = VoHelper.getLatitudeMax(group.getLatitude(), radius);
+			BigDecimal latitudeMin = VoHelper.getLatitudeMin(group.getLatitude(), radius);
+			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
+			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
+			ufilter += "longitude >= '" + longitudeMin + "' AND longitude <= '" + longitudeMax +
+					"' AND latitude >= '" + latitudeMin + "' AND latitude <= '" + latitudeMax+"'";
+			List<Long> ulist = executeQuery(pm.newQuery( "SQL", "SELECT count(*) FROM VOUSER WHERE "+ ufilter));
+			count = ulist.get(0).intValue();
+			
+			List<Long> pgids = executeQuery(pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP WHERE longitude='"
+					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1)));
+			
+			if( pgids.size() > 0 )
+				count -= getUsersCountByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm);
+			
+		}
+		
+		return count;
+	}
+
+	private static int getUsersCountByGroup(long groupId, PersistenceManager pm) {
+		List<Long> results = executeQuery(  pm.newQuery("SQL","SELECT count(*) FROM `USERGROUPS` as g JOIN VOUSER as u ON u.ID=g.ID WHERE `GROUP`="+groupId +" AND u.emailConfirmed=true") );
+		return results.get(0).intValue();
 	}
 }

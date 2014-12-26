@@ -38,6 +38,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		super(req);
 	}
 
+	public MessageServiceImpl(ServiceImpl serviceImpl) {
+		super(serviceImpl);
+	}
+
 	@Override
 	public void sendInfoEmail(String email, String name, String content) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
@@ -831,7 +835,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			long topicId = msg.getTopicId();
 			VoTopic topic = pm.getObjectById(VoTopic.class, topicId);
 
-			if (msg.getAuthorId() != cu.getId() && (isModerator = cu.isGroupModerator(topic.getUserGroupId())))
+			if (msg.getAuthorId() != cu.getId() && !(isModerator = cu.isGroupModerator(topic.getUserGroupId())) && !VoUser.isHeTheBigBro(cu))
 				throw new InvalidOperation(VoError.IncorrectParametrs, "USer is not the author and not moderator");
 
 			topic.setMessageNum(topic.getMessageNum() - 1);
@@ -893,7 +897,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		try {
 			VoTopic tpc = pm.getObjectById(VoTopic.class, topicId);
 			VoUser cu = getCurrentUser();
-			if (tpc.getAuthorId() != cu.getId() && cu.isGroupModerator(tpc.getUserGroupId()))
+			if (tpc.getAuthorId() != cu.getId() && !cu.isGroupModerator(tpc.getUserGroupId()) && !VoUser.isHeTheBigBro(cu))
 				throw new InvalidOperation(VoError.IncorrectParametrs, "USer is not the author and not a moderator");
 
 			deleteAttachments(pm, tpc.getImages());

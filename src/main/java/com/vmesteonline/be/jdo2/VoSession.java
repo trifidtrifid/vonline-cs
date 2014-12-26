@@ -2,7 +2,9 @@ package com.vmesteonline.be.jdo2;
 
 import com.vmesteonline.be.thrift.authservice.CurrentAttributeType;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
+
 import java.util.HashMap;
 import java.util.Map;
 //extends GeoLocation
@@ -15,6 +17,7 @@ public class VoSession {
         id = sessId;
         setUser(user);
         curAttrMap = new HashMap<>();
+        deactivatedTime = -1;
     }
 
     public void setUser(VoUser user) {
@@ -47,6 +50,15 @@ public class VoSession {
 
     public String getLastName() {
         return lastName;
+    }
+    
+    public void deactivate(PersistenceManager pm){ //create and story a copy of the last session
+    	if(null!=user){
+    		int now = (int)( System.currentTimeMillis()/1000L );
+    		VoSession copy = new VoSession(this.id+"_died_"+now, user);	    	
+				copy.lastUpdateTs = copy.lastActivityTs = copy.deactivatedTime = now;
+	    	pm.makePersistent(copy);
+    	}
     }
 
     public void setLastName(String lastName) {
@@ -81,6 +93,10 @@ public class VoSession {
 
     @Persistent
     private int newImportantMessages;
+    
+    @Persistent
+    private int deactivatedTime; //time when session was logged out
+    
     /**
      * Map that contains quantity of mew messages in dialogs that are not opened by user recently
      */

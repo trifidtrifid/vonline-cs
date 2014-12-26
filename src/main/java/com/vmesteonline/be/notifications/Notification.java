@@ -234,22 +234,20 @@ public abstract class Notification {
 		String body = newUser.getName() + " " + newUser.getLastName() + ", добро пожаловать на сайт Вашего дома!<br/><br/> ";
 
 		body += "Ваш логин: " + newUser.getEmail() + "<br/>Пароль:    " + newUser.getPassword() + "<br/><i>[Вы можете поменять пароль в меню настроек]</i><br/><br/>";
-		//body.Set<VoUser> userSet = new TreeSet<VoUser>(vuComp);
-		List res = executeQuery(pm.newQuery("SQL", "SELECT COUNT(*) FROM VOUSER"));
-		
+		List res = executeQuery(pm.newQuery("SQL", "SELECT COUNT(*) FROM VOUSER"));		
 		body += "На сайте уже зарегистрировано: " + res.get(0) + " пользователей<br/>";
 
-		List<VoUser> ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.NEIGHBORS, pm), pm);
-		if (0 != ul.size()) body += "В соседних домах: " + ul.size() + "<br/>";
-		ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.BUILDING, pm), pm);
-		if (0 != ul.size()) body += "В вашем доме: " + ul.size() + "<br/>";
+		int count = UserServiceImpl.getUsersCountByLocation(newUser.getGroup(GroupType.NEIGHBORS, pm), pm);
+		if (0 != count) body += "В соседних домах: " + count + "<br/>";
+		count = UserServiceImpl.getUsersCountByLocation(newUser.getGroup(GroupType.BUILDING, pm), pm);
+		if (0 != count) body += "В вашем доме: " + count + "<br/>";
 		if (0 != pm.getObjectById(VoPostalAddress.class, newUser.getAddress()).getStaircase()) {
-			ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
-			if (0 != ul.size()) body += "В вашем подъезде: " + ul.size() + "<br/>";
+			count =  UserServiceImpl.getUsersCountByLocation(newUser.getGroup(GroupType.STAIRCASE, pm), pm);
+			if (0 != count) body += "В вашем подъезде: " + count + "<br/>";
 		}
 		if (0 != pm.getObjectById(VoPostalAddress.class, newUser.getAddress()).getFloor()) {
-			ul = UserServiceImpl.getUsersByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm);
-			if (0 != ul.size()) body += "На вашем этаже : " + ul.size() + "<br/>";
+			count =  UserServiceImpl.getUsersCountByLocation(newUser.getGroup(GroupType.FLOOR, pm), pm);
+			if (0 != count) body += "На вашем этаже : " + count + "<br/>";
 		}
 		
 		body += "<br/> Мы создали этот сайт, чтобы Ваша жизнь стала чуть комфортней, от того что вы будете в курсе что происходит в вашем доме. <br/><br/>";
