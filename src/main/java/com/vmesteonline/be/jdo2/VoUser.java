@@ -100,6 +100,7 @@ public class VoUser extends GeoLocation {
 			return userFamily;
 		} catch(RuntimeException rte){
 			return userFamily = new UserFamily();
+			
 		}
 	}
 	
