@@ -107,4 +107,4 @@ forumControllers.controller('TalksController',function($rootScope) {
 
         $('.ng-cloak').removeClass('ng-cloak');
 
-    })
+    });
