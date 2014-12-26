@@ -398,6 +398,12 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         base.initStartParamsForCreateTopic = function (ctrl) {
             ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup = $rootScope.currentGroup;
+            console.log('initStartParams',ctrl.selectedGroup);
+
+            if(!ctrl.isTalk){
+                ctrl.selectedGroup = null;
+                console.log('initStartParams-2',ctrl.selectedGroup);
+            }
 
             ctrl.isEdit = false;
             ctrl.isCreateMessageError = false;

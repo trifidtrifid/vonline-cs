@@ -27,7 +27,6 @@ forumControllers.controller('mainContentTopController',function($rootScope, $sta
                     localStorage.setItem('VO_setInfo_groupId',group.id);
                     $state.go('main');
                 }
-                console.log('go-main');
 
                 for (var i = 0; i < groupsLength; i++) {
                     groups[i].selected = false;
