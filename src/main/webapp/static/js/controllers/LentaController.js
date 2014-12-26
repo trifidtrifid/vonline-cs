@@ -14,8 +14,15 @@ forumControllers.controller('LentaController',function($rootScope) {
 
     lenta.selectGroupNew = function(group){
         lenta.isGroupsInMessShow = false;
-        lenta.selGroupName = group.visibleName;
+        //lenta.selGroupName = group.visibleName;
         $rootScope.base.selectGroupInDropdown(group.id,lenta);
+    };
+
+    lenta.closeInput = function(){
+        lenta.isOpenMessageBar = false;
+        lenta.isGroupsInMessShow = false;
+        lenta.selectedGroup = lenta.selGroupName = null;
+        lenta.message.content = TEXT_DEFAULT_1;
     };
 
     lenta.isCreateMessageError = true;

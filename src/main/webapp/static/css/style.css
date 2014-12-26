@@ -776,6 +776,14 @@ h1 {
 .message-tools .fa-pencil:hover {
   color: #438eb9;
 }
+.folding {
+  height: 55px;
+  overflow: hidden;
+}
+.foldingImg {
+  height: 120px;
+  overflow: hidden;
+}
 .hashtag {
   margin-left: 10px;
   margin-right: 10px;
@@ -1820,7 +1828,7 @@ h1 {
   text-align: center;
   float: none !important;
 }
-.error-info {
+.code-block .error-info {
   left: 0;
 }
 /* new style createTopic */
@@ -1831,6 +1839,7 @@ h1 {
 }
 .create-wall-wrap textarea {
   width: 100%;
+  color: #000;
   border: 1px solid #b5b5b5;
 }
 .create-wall-wrap .write-mess-selectGroup {

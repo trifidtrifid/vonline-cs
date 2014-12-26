@@ -616,6 +616,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                     ctrl.message.content = "";
                 }
                 ctrl.isCreateMessageError = false;
+                ctrl.isOpenMessageBar = false;
 
                 var isWall = 1,
                     newTopic = postTopic(ctrl, isWall, false, $filter);
@@ -629,6 +630,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                         ctrl.poll.pollId = newTopic.poll.pollId;
                     }
                 } else {
+                    ctrl.selectedGroup = ctrl.selGroupName = null;
                     cleanAttached($('#attach-area-' + ctrl.attachId));
                     cleanAttached($('#attach-doc-area-' + ctrl.attachId));
                 }

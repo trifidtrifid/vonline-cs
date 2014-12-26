@@ -4,7 +4,7 @@
     <div ng-if="base.me.addressConfirmed">
         <section class="forum page" ng-show="base.lentaIsActive" infinite-scroll="lenta.addMoreItems()">
 
-        <div class="create-wall-wrap">
+        <div class="create-wall-wrap" ng-show="lenta.isCreateNewsShow[currentGroup.id] || lenta.wallItems.length > 0">
             <textarea class="no-resize" ng-click="lenta.isOpenMessageBar = true" ng-hide="lenta.isOpenMessageBar">Написать сообщение</textarea>
 
             <div ng-show="lenta.isOpenMessageBar">
@@ -14,9 +14,9 @@
                     <span ng-if="lenta.selGroupName">{{lenta.selGroupName}}</span>
                 </a>
                 <ul class="select-group-list" ng-show="lenta.isGroupsInMessShow">
-                    <li ng-repeat="group in groups | orderBy: 'id':reverse" ng-click="lenta.selectGroupNew(group)">
+                    <li ng-repeat="group in groups | orderBy: 'id':reverse" ng-if="group.id != 0" ng-click="lenta.selectGroupNew(group)">
                         <label href="#">
-                            <input name="select-wall-group" type="radio"/>
+                            <input name="select-wall-group" ng-model="lenta.selGroupName" value="{{group.visibleName}}" type="radio"/>
                             {{group.visibleName}}
                         </label>
                     </li>
@@ -50,7 +50,7 @@
                 <div class="message-input-bottom">
                     <div class="pull-right">
                         <button class="pull-right btn btn-sm no-border btn-primary" ng-click="createTopic($event,lenta)">Отправить</button>
-                        <a href="#" class="pull-right close-messageBar" ng-click="lenta.isOpenMessageBar=false">Закрыть</a>
+                        <a href="#" class="pull-right close-messageBar" ng-click="lenta.closeInput()">Закрыть</a>
                     </div>
 
                     <div class="btn-group attach-dropdown pull-left">
@@ -115,11 +115,15 @@
 
                                 <div ng-hide="wallItem.topic.isEdit">
 
-                                    <div ng-if="wallItem.topic.message.content.length < base.contentLength">
+                                    <div ng-class="{folding:!wallItem.topic.isFullText}" class="text" ng-bind-html="wallItem.topic.message.content"></div>
 
-                                        <div class="text" ng-bind-html="wallItem.topic.message.content"></div>
-                                    </div>
                                     <div ng-if="wallItem.topic.message.content.length >= base.contentLength">
+                                        <a href="#" ng-click="base.toggleFullText(wallItem.topic)">
+                                            <span ng-hide="wallItem.topic.isFullText">читать далее...</span>
+                                            <span ng-show="wallItem.topic.isFullText">свернуть</span>
+                                        </a>
+                                    </div>
+                                    <!--<div ng-if="wallItem.topic.message.content.length >= base.contentLength">
                                         <div class="text" ng-hide="wallItem.topic.isFullText">
                                             <div ng-bind-html="wallItem.topic.message.content.slice(0,base.contentLength-1)"></div>
                                             <div><a href="#" ng-click="base.toggleFullText(wallItem.topic)">читать далее...</a></div>
@@ -129,12 +133,14 @@
 
                                             <div><a href="#" ng-click="base.toggleFullText(wallItem.topic)">свернуть</a></div>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                     <div class="attached" ng-show="wallItem.topic.message.images.length || wallItem.topic.message.documents.length">
-                                        <a href="{{image.URL}}" class="fancybox" ng-click="$event.preventDefault()" rel="attached-group-{{wallItem.topic.id}}" ng-repeat="image in wallItem.topic.message.images">
-                                            <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
-                                        </a>
+                                        <div class="attached-img-wrap" ng-class="{foldingImg : !wallItem.topic.isFullText}">
+                                            <a href="{{image.URL}}" class="fancybox" ng-click="$event.preventDefault()" rel="attached-group-{{wallItem.topic.id}}" ng-repeat="image in wallItem.topic.message.images">
+                                                <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
+                                            </a>
+                                        </div>
                                         <div class="docs">
                                             <div ng-repeat="document in wallItem.topic.message.documents"><a ng-href="{{document.URL}}" target="_blank" class="doc-item">{{document.fileName}}</a></div>
                                         </div>
@@ -224,11 +230,20 @@
 
                                     <div ng-hide="wallMessage.isEdit">
 
-                                        <div ng-if="wallMessage.content.length < base.contentLength">
+                                        <div ng-class="{folding:!wallMessage.isFullText}" class="text" ng-bind-html="wallMessage.content"></div>
+
+                                        <div ng-if="wallMessage.content.length >= base.contentLength">
+                                            <a href="#" ng-click="base.toggleFullText(wallMessage)">
+                                                <span ng-hide="wallMessage.isFullText">читать далее...</span>
+                                                <span ng-show="wallMessage.isFullText">свернуть</span>
+                                            </a>
+                                        </div>
+
+                                        <!--<div ng-if="wallMessage.content.length < base.contentLength">
 
                                             <div class="text" ng-bind-html="wallMessage.content"></div>
-                                        </div>
-                                        <div ng-if="wallMessage.content.length >= base.contentLength">
+                                        </div>-->
+                                        <!--<div ng-if="wallMessage.content.length >= base.contentLength">
                                             <div class="text" ng-hide="wallMessage.isFullText">
                                                 <div ng-bind-html="wallMessage.content.slice(0,base.contentLength-1)"></div>
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">читать далее...</a></div>
@@ -238,12 +253,14 @@
 
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">свернуть</a></div>
                                             </div>
-                                        </div>
+                                        </div>-->
 
                                         <div class="attached" ng-show="wallMessage.images.length || wallMessage.documents.length">
-                                            <a href="{{image.URL}}" class="fancybox" rel="attached-group-{{wallItem.topic.id+'-'+wallMessage.id}}" ng-repeat="image in wallMessage.images">
-                                                <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
-                                            </a>
+                                            <div class="attached-img-wrap" ng-class="{foldingImg : !wallMessage.isFullText}">
+                                                <a href="{{image.URL}}" class="fancybox" rel="attached-group-{{wallItem.topic.id+'-'+wallMessage.id}}" ng-repeat="image in wallMessage.images">
+                                                    <img ng-src="{{image.URL}}?w=150&h=150" alt="картинка"/>
+                                                </a>
+                                            </div>
                                             <div class="docs">
                                                 <div ng-repeat="document in wallMessage.documents"><a ng-href="{{document.URL}}" target="_blank" class="doc-item">{{document.fileName}}</a></div>
                                             </div>
