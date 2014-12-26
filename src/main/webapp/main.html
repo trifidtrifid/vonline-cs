@@ -137,10 +137,10 @@
 
                     <h3 class="staff-title">Категории</h3>
                     <ul class="nav nav-list rubrics-menu">
-                        <!--<li ng-repeat="rubric in rubrics"><a href="#">{{rubric.visibleName}}</a></li>-->
-                        <li><a href="#">Собаки</a></li>
+                        <li ng-repeat="rubric in base.rubrics"><a ui-sref="rubrics({ rubricId : rubric.id})">{{rubric.visibleName}}</a></li>
+                        <!--<li><a href="#">Собаки</a></li>
                         <li><a href="#">Дети</a></li>
-                        <li><a href="#">Апельсины</a></li>
+                        <li><a href="#">Апельсины</a></li>-->
                     </ul>
                     <div class="footer footer-left" ng-hide="base.isFooterBottom">
                         <span class="copypast">&copy;</span> ВместеОнлайн 2014

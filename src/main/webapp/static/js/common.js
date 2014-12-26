@@ -37,6 +37,8 @@ var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(pr
 if(path != '/blog' && path != '/about' && path != '/contacts') {
     var userClientGroups = userClient.getUserGroups(),
         userClientRubrics = userClient.getUserRubrics();
+
+    console.log('111',userClientRubrics);
     if (userClientGroups.length == 0) document.location.replace('/login');
 
     var shortUserInfo = userClient.getShortUserInfo();

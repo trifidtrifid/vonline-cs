@@ -1,5 +1,5 @@
 
-forumControllers.controller('rubrics',function($rootScope) {
+forumControllers.controller('rubrics',function($rootScope,$stateParams) {
         /*
         * при работе с обсждениями нужно учесть следующее:
         * есть три типа сообщения :
@@ -68,7 +68,7 @@ forumControllers.controller('rubrics',function($rootScope) {
             $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
             $rootScope.importantIsLoadedFromTop = false;*/
 
-            talk.topics = messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
+            talk.topics = messageClient.getTopics(talk.selectedGroup.id, $stateParams.rubricId, 0, 0, 1000).topics;
 
             initTalks();
 
