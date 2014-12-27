@@ -55,9 +55,11 @@ public class VoSession {
     public void deactivate(PersistenceManager pm){ //create and story a copy of the last session
     	if(null!=user){
     		int now = (int)( System.currentTimeMillis()/1000L );
-    		VoSession copy = new VoSession(this.id+"_died_"+now, user);	    	
+    		VoSession copy = new VoSession(this.id+"_died_"+now, null);	    	
 				copy.lastUpdateTs = copy.lastActivityTs = copy.deactivatedTime = now;
 	    	pm.makePersistent(copy);
+	    	copy.setUser( user);
+	    	pm.makePersistent(copy);	    	
     	}
     }
 
