@@ -40,7 +40,7 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 		VoUser cuser;
 		long currentUserId = (cuser = getCurrentUser(pm)).getId();
 		// sort users
-		SortedSet userss = new TreeSet<Long>();
+		SortedSet<Long> userss = new TreeSet<Long>();
 		userss.addAll(users);
 		// add current user if not added
 		if (!userss.contains(currentUserId))

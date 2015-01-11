@@ -161,7 +161,7 @@ public class ServiceImpl {
 		} catch (Exception e) {
 			VoSession ns = new VoSession( currentSessionTL.get(), null);
 			pm.makePersistent( ns);
-			pm.refresh(ns);
+			ns.setUser(null);
 			return ns;
 		}
 	}

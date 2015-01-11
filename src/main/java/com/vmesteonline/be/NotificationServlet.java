@@ -15,14 +15,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+import java.net.InetAddress;
 
 @SuppressWarnings("serial")
 public class NotificationServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse rsp) throws ServletException, IOException {
-		if( req.getLocalAddr().equalsIgnoreCase("localhost")) {
+		if( InetAddress.getByName( req.getLocalName()).isLoopbackAddress()) {
 			try {
 				String reqType = req.getParameter("rt");
 				if ("swm".equals(reqType)) {

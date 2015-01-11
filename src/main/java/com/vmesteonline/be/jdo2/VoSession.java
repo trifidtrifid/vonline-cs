@@ -53,12 +53,12 @@ public class VoSession {
     }
     
     public void deactivate(PersistenceManager pm){ //create and story a copy of the last session
-    	if(null!=user){
+    	if(null!=getUser()){
     		int now = (int)( System.currentTimeMillis()/1000L );
     		VoSession copy = new VoSession(this.id+"_died_"+now, null);	    	
 				copy.lastUpdateTs = copy.lastActivityTs = copy.deactivatedTime = now;
 	    	pm.makePersistent(copy);
-	    	copy.setUser( user);
+	    	copy.setUser(getUser());
 	    	pm.makePersistent(copy);	    	
     	}
     }
@@ -77,7 +77,7 @@ public class VoSession {
     @Persistent(defaultFetchGroup = "true")
     private String lastName;
 
-    @Persistent(nullValue=NullValue.DEFAULT)
+    @Persistent
     private VoUser user;
 
     @Persistent
