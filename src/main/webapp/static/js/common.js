@@ -35,7 +35,10 @@ protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
 if(path != '/blog' && path != '/about' && path != '/contacts') {
-    var userClientGroups = userClient.getUserGroups();
+    var userClientGroups = userClient.getUserGroups(),
+        userClientRubrics = userClient.getUserRubrics();
+
+    console.log('111',userClientRubrics);
     if (userClientGroups.length == 0) document.location.replace('/login');
 
     var shortUserInfo = userClient.getShortUserInfo();

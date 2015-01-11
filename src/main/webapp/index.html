@@ -42,7 +42,8 @@
 
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-md-offset-3 subscribe">
-				<form class="form-horizontal" role="form" id="subscribeForm" method="POST">
+				<form class="form-horizontal" role="form" action="#" id="subscribeForm" method="POST">
+
 					<div class="form-group">
 						<div class="col-md-7 col-sm-6 col-sm-offset-1 col-md-offset-0">
 							<input class="form-control input-lg" name="email" type="email" id="address" placeholder="Введите email" data-validate="validate(required, email)" required="required"> <input
@@ -285,8 +286,7 @@
             var isAuth = authClient.checkIfAuthorized();
 
             if (isAuth) {
-                document.location.replace('/main');
-            }
+                document.location.replace('/main');            }
 
 							$('.no-code-link')
 									.click(
@@ -321,61 +321,27 @@
 																.show();
 													} else {
 
-														/*$
-																.ajax({
-																	url : action,
-																	type : 'POST',
-																	data : {
-																		email : email,
-																		code : code,
-																		isOnlyAddUser : true
-																	},
-																	success : function(
-																			data) {
-																		//alert("111 "+data);
+                                                        try {
+                                                            var userLocation = authClient
+                                                                    .checkInviteCode(code);
+                                                            var address = encodeURIComponent(userLocation.address);
+                                                            document.location
+                                                                    .replace('registration.html#email='
+                                                                            + email
+                                                                            + ";address="
+                                                                            + address
+                                                                            + ';mapUrl='
+                                                                            + userLocation.mapUrl
+                                                                            + ";code="
+                                                                            + code);
+                                                        } catch (e) {
+                                                            $(
+                                                                    '.alertMsg')
+                                                                    .text(
+                                                                            'Вы ввели некоректный код или этот код уже был активирован.')
+                                                                    .show();
+                                                        }
 
-																		if (data == 'Неверный код !'
-																				&& !$(
-																						'#code')
-																						.hasClass(
-																								'passive')) {
-																			$(
-																					'#result')
-																					.html(
-																							data);
-																		} else {*/
-
-																			try {
-																				var userLocation = authClient
-																						.checkInviteCode(code);
-																				var address = encodeURIComponent(userLocation.address);
-																				document.location
-																						.replace('registration.html#email='
-																								+ email
-																								+ ";address="
-																								+ address
-                                                                                                + ';mapUrl='
-                                                                                                + userLocation.mapUrl
-																								+ ";code="
-																								+ code);
-																			} catch (e) {
-																				$(
-																						'.alertMsg')
-																						.text(
-																								'Вы ввели некоректный код или этот код уже был активирован.')
-																						.show();
-																			}
-
-																		/*}
-
-																	},
-																	error : function() {
-																		$(
-																				'#result')
-																				.html(
-																						'Произошла ошибка.');
-																	}
-																});*/
 													}
 												}
 

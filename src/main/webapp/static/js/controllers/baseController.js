@@ -398,7 +398,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         base.initStartParamsForCreateTopic = function (ctrl) {
             ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup = $rootScope.currentGroup;
-
+            
             ctrl.isEdit = false;
             ctrl.isCreateMessageError = false;
             ctrl.isPollAvailable = true;
@@ -454,6 +454,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         };
 
         base.groups = userClientGroups;
+        base.rubrics = userClientRubrics;
 
         base.goToDialog = function (userId) {
             var users = [];

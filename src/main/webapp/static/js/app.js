@@ -109,6 +109,16 @@ main.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "/static/partials/nearby-single.html",
             controller: 'nearbySingleCtrl as nearby'
         })
+        .state('rubrics', {
+            url: "/rubrics/:rubricId",
+            templateUrl: "/static/partials/rubrics.html",
+            controller: 'rubrics as talks'
+        })
+        .state('rubrics-single', {
+            url: "/rubric-single/:rubricId",
+            templateUrl: "/static/partials/rubrics-single.html",
+            controller: 'nearbySingleCtrl as nearby'
+        })
         .state('blog', {
             url: "/blog"
         })
