@@ -1,6 +1,6 @@
  Выкат на продакшн:
 1. Скопировать содержимое файлов
- vonline-cs\src\main\resources\META-INF\prod-persistence.xml -> persistence.xml
+vonline-cs\src\main\resources\META-INF\prod-persistence.xml -> persistence.xml
 vonline-cs\src\main\webapp\WEB-INF\prod-jetty-web.xml -> jetty-web.xml
 2. Задать имя war файла в vonline-cs\pom.xml
 Для продакшина  <finalName>vonline</finalName>
