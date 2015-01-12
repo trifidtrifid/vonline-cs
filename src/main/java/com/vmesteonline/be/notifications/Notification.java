@@ -55,10 +55,10 @@ public abstract class Notification {
 		int threeDaysAgo = (int) now - 86400 * 3;
 		int weekAgo = (int) now - 86400 * 7;
 		
-		Query q = pm.newQuery("SQL","SELECT ID FROM VOUSER WHERE emailConfirmed=true AND notificationsFreq <> "+NotificationFreq.NEVER.getValue()+" AND ("
+		Query q = pm.newQuery("SQL","SELECT ID FROM VOUSER WHERE emailConfirmed=true AND notificationsFreq<>"+NotificationFreq.NEVER.getValue()+" AND ("
 				+ "notificationsFreq = "+NotificationFreq.DAYLY.getValue()+" AND lastNotified<"+dayAgo
-				+ "notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+threeDaysAgo
-				+ "notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+weekAgo+")");
+				+ " OR notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+threeDaysAgo
+				+ " OR notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+weekAgo+")");
 		
 		List<Long> userIdList = executeQuery(q);
 		for( Long uid : userIdList){
