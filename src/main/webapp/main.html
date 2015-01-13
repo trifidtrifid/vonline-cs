@@ -134,9 +134,14 @@
                         <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>
 
 					</ul>
+
+                    <!--<h3 class="staff-title">Категории</h3>
+                    <ul class="nav nav-list rubrics-menu">
+                        <li ng-repeat="rubric in base.rubrics"><a ui-sref="rubrics({ rubricId : rubric.id})">{{rubric.visibleName}}</a></li>
+                    </ul>-->
+
                     <div class="footer footer-left" ng-hide="base.isFooterBottom">
                         <span class="copypast">&copy;</span> ВместеОнлайн 2014
-                        <!-- временная обработка ссылок пока не адаптирован блог, о нас и контакты под ангуляр -->
                         <ul>
                             <li><a href="./about" onclick="document.location.replace('./about');">О сайте</a></li>
                             <li><a href="./blog" onclick="document.location.replace('./blog');">Блог</a></li>
@@ -271,6 +276,8 @@
 <script src="/static/js/controllers/aboutCtrl.js"></script>
 <script src="/static/js/controllers/nearbyCtrl.js"></script>
 <script src="/static/js/controllers/nearbySingleCtrl.js"></script>
+<script src="/static/js/controllers/rubrics.js"></script>
+<script src="/static/js/controllers/rubrics-single.js"></script>
 
 <script src="/static/js/angular/angular-ui-router.js"></script>
 <script src="/static/js/angular/sanitize.js"></script>

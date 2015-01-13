@@ -86,7 +86,8 @@ forumControllers.controller('LentaController',function($rootScope) {
         initWallItem(lenta.wallItems);
 
         $rootScope.selectGroupInDropdown_lenta = function(groupId){
-            lenta.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            //lenta.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
         };
 
         lenta.goToAnswerInput = function(event){
