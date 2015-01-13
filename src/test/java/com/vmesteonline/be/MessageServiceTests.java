@@ -247,7 +247,7 @@ public class MessageServiceTests extends TestWorkAround {
 		try {
 			createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE));
 			createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), MessageType.WALL);
-			List<WallItem> rTopic = msi.getWallItems(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 10000);
+			List<WallItem> rTopic = msi.getWallItems(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 10000);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(2, rTopic.size());
 
@@ -264,22 +264,23 @@ public class MessageServiceTests extends TestWorkAround {
 			List<Topic> tpcs = new ArrayList<Topic>();
 			for (int i = 0; i < 7; i++) {
 				tpcs.add(createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE)));
+				Thread.currentThread().sleep(1000);
 			}
 
 			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 0L, 5);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(5, rTopic.totalSize);
-			Assert.assertEquals(tpcs.get(0).getId(), rTopic.topics.get(0).getId());
-			Assert.assertEquals(tpcs.get(1).getId(), rTopic.topics.get(1).getId());
-			Assert.assertEquals(tpcs.get(2).getId(), rTopic.topics.get(2).getId());
+			Assert.assertEquals(tpcs.get(6).getId(), rTopic.topics.get(0).getId());
+			Assert.assertEquals(tpcs.get(5).getId(), rTopic.topics.get(1).getId());
+			Assert.assertEquals(tpcs.get(4).getId(), rTopic.topics.get(2).getId());
 			Assert.assertEquals(tpcs.get(3).getId(), rTopic.topics.get(3).getId());
-			Assert.assertEquals(tpcs.get(4).getId(), rTopic.topics.get(4).getId());
+			Assert.assertEquals(tpcs.get(2).getId(), rTopic.topics.get(4).getId());
 
 			rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, rTopic.topics.get(4).getId(), 5);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(2, rTopic.totalSize);
-			Assert.assertEquals(tpcs.get(5).getId(), rTopic.topics.get(0).getId());
-			Assert.assertEquals(tpcs.get(6).getId(), rTopic.topics.get(1).getId());
+			Assert.assertEquals(tpcs.get(1).getId(), rTopic.topics.get(0).getId());
+			Assert.assertEquals(tpcs.get(0).getId(), rTopic.topics.get(1).getId());
 
 		} catch (Exception e) {
 			e.printStackTrace();

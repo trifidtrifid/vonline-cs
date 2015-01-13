@@ -87,8 +87,8 @@ public class VoTopic extends VoBaseMessage {
 		return tpc;
 	}
 
-	public GroupType getGroupType( PersistenceManager pm){
-		return GroupType.findByValue( pm.getObjectById(VoUserGroup.class, userGroupId).getGroupType() );
+	public GroupType getGroupType(){
+		return GroupType.findByValue( userGroupType );
 	}
 	
 	public int getMessageNum() {

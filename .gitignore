@@ -8,5 +8,5 @@ run
 .settings/
 datanucleus.log
 /target/
-/.idea
-
+.idea/
+src/main/main.iml

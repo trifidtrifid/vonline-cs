@@ -6,12 +6,15 @@ import com.vmesteonline.be.thrift.*;
 import com.vmesteonline.be.thrift.userservice.FullAddressCatalogue;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.VoHelper;
+
 import org.apache.thrift.TException;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.jdo.PersistenceManager;
+
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
