@@ -128,7 +128,14 @@
                             </a>
 
                         </li>
-                        <li><a ui-sref="main"> <span class="menu-text">Новости</span> </a></li>
+                        <li>
+                            <a ui-sref="main"> <span class="menu-text">Новости</span> </a>
+                            <ul class="nav nav-list rubrics-menu">
+                                <li ng-repeat="rubric in base.rubrics">
+                                    <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> <!-- ng-click="setTab($event,2)" -->
                         <li><a ui-sref="profit"> <span class="menu-text">Услуги и объявления</span> </a></li>
                         <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>

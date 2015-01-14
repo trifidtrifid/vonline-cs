@@ -142,8 +142,8 @@ h1 {
 .nav-list > li.active:hover a:before {
   display: none;
 }
-.nav-list > li:hover a,
-.nav-list > li.active:hover a {
+.nav-list > li:hover>a,
+.nav-list > li.active:hover>a {
   background: #f2f2f2;
 }
 .sidebar#sidebar {
@@ -667,14 +667,10 @@ h1 {
     border: 1px solid #ccc;
     background: #ccc;
     padding: 0 10px;
-    -moz-transform: rotate(90deg);
-/* Для Firefox */
-    -ms-transform: rotate(90deg);
-/* Для IE */
-    -webkit-transform: rotate(90deg);
-/* Для Safari, Chrome, iOS */
-    -o-transform: rotate(90deg);
-/* Для Opera */
+    -moz-transform: rotate(90deg); /* Для Firefox */
+    -ms-transform: rotate(90deg); /* Для IE */
+    -webkit-transform: rotate(90deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(90deg); /* Для Opera */
     transform: rotate(90deg);
   }
   .container {
@@ -1902,8 +1898,8 @@ h1 {
   text-transform: uppercase;
 }
 .rubrics-menu li a {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 5px 0 5px 25px;
+  cursor: pointer;
 }
 /* backoffice */
 .backoffice {

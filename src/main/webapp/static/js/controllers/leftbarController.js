@@ -50,4 +50,20 @@ forumControllers.controller('leftBarController',function($rootScope) {
     $rootScope.isSet = function(number){
         return $rootScope.leftbar.tab === number;
     };
+
+    $rootScope.setRubric = function(rubric){
+
+            /*for (var i = 0; i < groupsLength; i++) {
+                groups[i].selected = false;
+            }
+
+            group.selected = true;
+
+            $rootScope.currentGroup = group;
+            $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);*/
+            $rootScope.currentRubric = rubric;
+
+        $rootScope.wallChangeRubric(rubric.id);
+
+    }
   })

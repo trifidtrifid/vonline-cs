@@ -123,7 +123,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         $rootScope.wallChangeGroup = function(groupId){
             //console.log('wall-change ',groupId);
 
-            lenta.wallItems = messageClient.getWallItems(groupId, 0, loadedLength);
+            lenta.wallItems = messageClient.getWallItems(groupId, $rootScope.currentRubric.id, loadedLength);
 
             if(lenta.wallItems.length) {
                 initWallItem(lenta.wallItems);
@@ -132,6 +132,21 @@ forumControllers.controller('LentaController',function($rootScope) {
             }
 
         };
+
+    $rootScope.wallChangeRubric = function(rubricId){
+        console.log('wall-change ',rubricId);
+
+        lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId, loadedLength);
+
+        console.log('wall-change-2 ',lenta.wallItems);
+
+        if(lenta.wallItems.length) {
+            initWallItem(lenta.wallItems);
+
+            lastLoadedId = lenta.wallItems[lenta.wallItems.length-1].topic.id;
+        }
+
+    };
 
         function initWallItem(wallItems){
             wallItemsLength = wallItems.length;
