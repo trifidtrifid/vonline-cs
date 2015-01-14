@@ -123,7 +123,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         $rootScope.wallChangeGroup = function(groupId){
             //console.log('wall-change ',groupId);
 
-            lenta.wallItems = messageClient.getWallItems(groupId, $rootScope.currentRubric.id, loadedLength);
+            lenta.wallItems = messageClient.getWallItems(groupId, $rootScope.currentRubric.id,0, loadedLength);
 
             if(lenta.wallItems.length) {
                 initWallItem(lenta.wallItems);
@@ -136,7 +136,7 @@ forumControllers.controller('LentaController',function($rootScope) {
     $rootScope.wallChangeRubric = function(rubricId){
         console.log('wall-change ',rubricId);
 
-        lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId, loadedLength);
+        lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
 
         console.log('wall-change-2 ',lenta.wallItems);
 
