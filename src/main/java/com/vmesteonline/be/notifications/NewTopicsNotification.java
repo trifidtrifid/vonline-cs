@@ -28,22 +28,24 @@ public class NewTopicsNotification extends Notification {
 		this.messagesToSend = ntf;
 	}
 
-	public void makeNotification( Set<VoUser> users ) {
+	public void makeNotification( Set<VoUser> users, PersistenceManager pm ) {
 
 		int now = (int)(System.currentTimeMillis()/1000L);
 
-		PersistenceManager pm = PMF.getPm();
-
 		Query query = pm.newQuery(VoTopic.class, "createDate>" + (now - 86400 * 7));
 		List<VoTopic> newTopics = executeQuery( query );
-		Map<VoUser, List[]> userTopics = new HashMap<>();
+		Map<VoUser, List<VoTopic>[]> userTopics = new HashMap<>();
 		for( VoTopic topic: newTopics ){
 			if( topic.getType() == MessageType.BLOG )
 				continue;
-			VoGroup voGroup = Defaults.getDefaultGroups().get(topic.getUserGroupType() - Defaults.FIRST_USERS_GROUP);
-			int radius = voGroup.getRadius();
+			
+			int topicGroupTypeValue = topic.getGroupType().getValue();
+			int buldingTypeValue = GroupType.BUILDING.getValue();
+			
+			int radius = Defaults.radiusByType[ topicGroupTypeValue ];
 			String ufilter;
-			if( voGroup.getGroupType() <= GroupType.BUILDING.getValue() )
+			
+			if( topicGroupTypeValue <= buldingTypeValue )
 				ufilter = "longitude=='"+topic.getLongitude()+"' && latitude=='"+topic.getLatitude()+"'";
 			else {
 				BigDecimal latitudeMax = VoHelper.getLatitudeMax(topic.getLatitude(), radius);
@@ -53,15 +55,18 @@ public class NewTopicsNotification extends Notification {
 				ufilter = "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
 						"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax + "'";
 			}
-			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
-			for( VoUser u: ulist ){
-				if( u.getLastNotified() < topic.getCreatedAt() ) {
-					List[] topics = userTopics.get(u);
+			
+			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter + "&& lastNotified<"+topic.getCreatedAt()));
+			for( VoUser u: ulist ){	
+				if( users.contains( u ) && (topicGroupTypeValue > buldingTypeValue 
+						|| topic.getUserGroupId() == u.getGroup(topic.getGroupType(), pm).getId()) ){
+					List<VoTopic>[] topics = userTopics.get(u);
 					if (null == topics)
 						userTopics.put(u, topics = new List[GroupType.values().length]);
-					if (topics[topic.getUserGroupType()] == null)
-						topics[topic.getUserGroupType()] = new ArrayList<>();
-					topics[topic.getUserGroupType()].add( topic );
+					int tugt = topic.getUserGroupType();
+					if (topics[tugt] == null)
+						topics[tugt] = new ArrayList<>();
+					topics[tugt].add( topic );
 				}
 			}
 		}
@@ -71,7 +76,7 @@ public class NewTopicsNotification extends Notification {
 			String body = "<p><b>Ваши соседи пишут</b></p>";
 			boolean somethingToSend = false;
 			for ( VoGroup ug: Defaults.getDefaultGroups()) {
-				List topicsList = userTopics.get(u)[ug.getGroupType()];
+				List<VoTopic> topicsList = userTopics.get(u)[ug.getGroupType()];
 				if (topicsList != null) {
 					String tc = createGroupContent(pm, ug, u, topicsList);
 					if (tc != null) {
@@ -123,7 +128,7 @@ public class NewTopicsNotification extends Notification {
 	private String createTopicContent(PersistenceManager pm, VoGroup ug, VoTopic tpc) {
 		VoUser author = pm.getObjectById(VoUser.class, tpc.getAuthorId());
 		String contactTxt = "<a href=\"https://"+host+"/profile/"+author.getId()+"\">"+StringEscapeUtils.escapeHtml4(author.getName() + " " + author.getLastName())+"</a>";
-		DateFormat df = new SimpleDateFormat("yyyy.MM.dd 'в' HH:mm:ss z");
+		DateFormat df = new SimpleDateFormat("yyyy.MM.dd 'в' HH:mm:ss");
 		df.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
 		Date date = new Date(((long) tpc.getCreatedAt()) * 1000L);
 

@@ -15,7 +15,7 @@ public class NewsNotification extends Notification {
 	private static Logger logger = Logger.getLogger(NewsNotification.class.getSimpleName());
 
 	@Override
-	public void makeNotification(Set<VoUser> users) {}
+	public void makeNotification(Set<VoUser> users, PersistenceManager pm) {}
 	
 	public void sendNotifications( ) throws InvalidOperation{
 
@@ -26,9 +26,9 @@ public class NewsNotification extends Notification {
 			logger.debug("Start NEWS notification. THere are "+users+" to notify");
 			
 			if(users.size()>0){
-				new NewTopicsNotification(messagesToSend).makeNotification(users); 
+				new NewTopicsNotification(messagesToSend).makeNotification(users, pm); 
 				logger.debug("Got "+messagesToSend.size()+" to send new Topics");
-				new NewNeigboursNotification(messagesToSend).makeNotification(users);
+				new NewNeigboursNotification(messagesToSend).makeNotification(users, pm);
 				logger.debug("Got +"+messagesToSend.size()+" to send new News");
 				
 				for( Entry<VoUser, List<NotificationMessage>> un :messagesToSend.entrySet()){
@@ -41,7 +41,7 @@ public class NewsNotification extends Notification {
 					body += "<br/><i>Вы можете изменить рассылку новостей в </i>"
 							+ "<a href=\"https://"+host+"/settings\">настройках профиля</a>";
 					logger.debug("Got +"+messagesToSend.size()+" to send new News");
-					decorateAndSendMessage(user, " новости рядом с вами", body);
+					//decorateAndSendMessage(user, " новости рядом с вами", body);
 					logger.debug("News sent to:" + user);
 					user.setLastNotified(now);
 					pm.makePersistent(user);

@@ -159,7 +159,10 @@ public class ServiceImpl {
 		try {
 			return pm.getObjectById(VoSession.class, currentSessionTL.get());
 		} catch (Exception e) {
-			return pm.makePersistent( new VoSession( currentSessionTL.get(), null));
+			VoSession ns = new VoSession( currentSessionTL.get(), null);
+			pm.makePersistent( ns);
+			ns.setUser(null);
+			return ns;
 		}
 	}
 

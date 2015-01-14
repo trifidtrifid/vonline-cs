@@ -1,21 +1,29 @@
 package com.vmesteonline.be.notifications;
 
-import com.vmesteonline.be.data.PMF;
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+import static com.vmesteonline.be.utils.VoHelper.logger;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
 import com.vmesteonline.be.thrift.GroupType;
-import org.apache.commons.lang3.StringEscapeUtils;
-
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import java.io.IOException;
-import java.util.*;
-
-import static com.vmesteonline.be.utils.VoHelper.executeQuery;
-import static com.vmesteonline.be.utils.VoHelper.logger;
 
 
 public class NewNeigboursNotification extends Notification {
@@ -25,15 +33,12 @@ public class NewNeigboursNotification extends Notification {
 	}
 
 	@Override
-	public void makeNotification( Set<VoUser> users ) {
+	public void makeNotification( Set<VoUser> users, PersistenceManager pm ) {
 		int now = (int)(System.currentTimeMillis()/1000L);
-		
-		PersistenceManager pm = PMF.getPm();
 
 		Map< Long, Set<VoUser>> groupUsersMap = getNewNeighbors(pm);
 
 		// create message for each user
-		
 		for (VoUser u : users) {
 			boolean somethingToSend = false;
 			Set<VoUser> neghbors = new TreeSet<VoUser>( vuComp );

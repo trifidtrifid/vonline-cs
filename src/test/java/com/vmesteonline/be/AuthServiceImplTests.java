@@ -8,11 +8,14 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.utils.Defaults;
+
 import org.apache.thrift.TException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.jdo.PersistenceManager;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -33,6 +36,11 @@ public class AuthServiceImplTests extends TestWorkAround{
         usi = new UserServiceImpl();
     }
 
+  	@After
+  	public void tearDown() throws Exception {
+  		pm.close();
+  	}
+    
     @Test
     public void testLogin() {
         try {
