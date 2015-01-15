@@ -980,14 +980,18 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		 int lastShownTimestamp = cu.getLastMulticastShown();
 		 
 		 int now = (int)(System.currentTimeMillis() / 1000L);
-		 List<Long> results = executeQuery( pm.newQuery("SQL",
-				 "SELECT MM.ID FROM VOMULTICASTMESSAGE AS MM LEFT JOIN USERGROUPS AS UG ON MM.USERGROUP_ID_OID=UG.GROUP WHERE UG.ID="
-		  + cu.getId() + " AND startAfter > " + lastShownTimestamp +" AND endBefore < " + now 
-		  		+ " order by startAfter"
-		  ));
-		 if( results.size() > 0){
-			 return pm.getObjectById(VoMulticastMessage.class, results.get(0));
-		 }
+		 try {
+			List<Long> results = executeQuery( pm.newQuery("SQL",
+					 "SELECT MM.ID FROM VOMULTICASTMESSAGE AS MM LEFT JOIN USERGROUPS AS UG ON MM.USERGROUP_ID_OID=UG.GROUP WHERE UG.ID="
+			  + cu.getId() + " AND startAfter > " + lastShownTimestamp +" AND endBefore < " + now 
+			  		+ " order by startAfter"
+			  ));
+			 if( results.size() > 0){
+				 return pm.getObjectById(VoMulticastMessage.class, results.get(0));
+			 }
+		} catch (Exception e) {
+			logger.warn("Error while loading multicast messages: "+e,e);
+		}
 		 
 		return null;
 	}

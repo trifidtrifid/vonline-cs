@@ -1,6 +1,27 @@
 package com.vmesteonline.be.notifications;
 
-import com.vmesteonline.be.data.PMF;
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
+
 import com.vmesteonline.be.jdo2.VoGroup;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
@@ -8,18 +29,6 @@ import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.messageservice.MessageType;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.VoHelper;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.log4j.Logger;
-
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public class NewTopicsNotification extends Notification {
 	private static Logger logger = Logger.getLogger(NewTopicsNotification.class.getSimpleName());
@@ -32,7 +41,7 @@ public class NewTopicsNotification extends Notification {
 
 		int now = (int)(System.currentTimeMillis()/1000L);
 
-		Query query = pm.newQuery(VoTopic.class, "createDate>" + (now - 86400 * 7));
+		Query query = pm.newQuery(VoTopic.class, "createDate>" + (now - 86400 * 7) +" && importantScore>" + 0);
 		List<VoTopic> newTopics = executeQuery( query );
 		Map<VoUser, List<VoTopic>[]> userTopics = new HashMap<>();
 		for( VoTopic topic: newTopics ){
@@ -46,7 +55,7 @@ public class NewTopicsNotification extends Notification {
 			String ufilter;
 			
 			if( topicGroupTypeValue <= buldingTypeValue )
-				ufilter = "longitude=='"+topic.getLongitude()+"' && latitude=='"+topic.getLatitude()+"'";
+				ufilter = "longitude=='"+topic.getLongitude()+"' && latitude=='"+topic.getLatitude()+"' ";
 			else {
 				BigDecimal latitudeMax = VoHelper.getLatitudeMax(topic.getLatitude(), radius);
 				BigDecimal latitudeMin = VoHelper.getLatitudeMin(topic.getLatitude(), radius);
@@ -71,6 +80,10 @@ public class NewTopicsNotification extends Notification {
 			}
 		}
 
+		createAndSendMessages(userTopics, now, pm);
+	}
+
+	protected void createAndSendMessages(Map<VoUser, List<VoTopic>[]> userTopics, int now, PersistenceManager pm) {
 		// create message for each user
 		for (VoUser u : userTopics.keySet()) {
 			String body = "<p><b>Ваши соседи пишут</b></p>";
