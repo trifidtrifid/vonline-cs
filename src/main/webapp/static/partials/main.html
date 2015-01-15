@@ -25,6 +25,20 @@
                           ng-blur="base.textareaBlur(lenta.message.content,lenta.message.default,lenta,true)" ng-focus="base.textareaFocus(lenta.message.content,lenta.message.default,lenta,true)"
                           ng-hasfocus="base.isLentaFocus">Написать сообщение</textarea>
 
+                <a class="write-mess-selectGroup write-mess-selectRubric" href="#" ng-click="lenta.showRubrics()">
+                    <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isRubricsInMessShow, 'fa-chevron-up':lenta.isRubricsInMessShow}"></i>
+                    <span ng-if="!lenta.selRubricName">Выберите рубрику</span>
+                    <span ng-if="lenta.selRubricName">{{lenta.selRubricName}}</span>
+                </a>
+                <ul class="select-group-list select-rubric-list clearfix" ng-show="lenta.isRubricsInMessShow">
+                    <li ng-repeat="rubric in base.rubrics" ng-click="lenta.selectRubricNew(rubric)">
+                        <label href="#">
+                            <input name="select-wall-rubric" ng-model="lenta.selRubricName" value="{{rubric.visibleName}}" type="radio"/>
+                            {{rubric.visibleName}}
+                        </label>
+                    </li>
+                </ul>
+
                 <div class="create-poll" ng-show="lenta.isPollShow">
                     <a class="poll-cancel pull-right" title="отмена опроса" href="#" ng-click="lenta.isPollShow = false;lenta.isPollAvailable = true;">&times;</a>
                     <h5>Тема опроса:</h5>

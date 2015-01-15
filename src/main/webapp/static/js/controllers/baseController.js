@@ -585,7 +585,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         }
 
         function createWallTopic(ctrl) {
-            console.log('wallTopic',ctrl.selectedGroup);
+            console.log('wallTopic',ctrl.selectedGroup,$rootScope.currentRubric);
 
             if (ctrl.isEdit) {
                 ctrl.attachedImages = getAttachedImages($('#attach-area-edit-' + ctrl.id));
@@ -618,6 +618,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 }
                 ctrl.isCreateMessageError = false;
                 ctrl.isOpenMessageBar = false;
+                ctrl.selectedRubric = $rootScope.currentRubric;
 
                 var isWall = 1,
                     newTopic = postTopic(ctrl, isWall, false, $filter);

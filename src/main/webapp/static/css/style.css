@@ -1856,6 +1856,10 @@ h1 {
 .create-wall-wrap .write-mess-selectGroup .fa {
   margin-top: 4px;
 }
+.create-wall-wrap .write-mess-selectGroup.write-mess-selectRubric {
+  border-top: 0 !important;
+  border-bottom: 1px solid #b5b5b5;
+}
 .create-wall-wrap .select-group-list {
   background-color: #fff;
   margin: 0;
@@ -1874,6 +1878,14 @@ h1 {
 }
 .create-wall-wrap .select-group-list li:last-child {
   margin-bottom: 0;
+}
+.create-wall-wrap .select-rubric-list {
+  border-top: 0;
+  border-bottom: 1px solid #b5b5b5;
+}
+.create-wall-wrap .select-rubric-list li {
+  float: left;
+  width: 50%;
 }
 .create-wall-wrap .message-input-bottom .btn-primary {
   margin: 10px 0 0 10px;

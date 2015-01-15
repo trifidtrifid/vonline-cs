@@ -6,6 +6,7 @@ forumControllers.controller('LentaController',function($rootScope) {
     /**/
 
     lenta.isGroupsInMessShow = false;
+    lenta.isRubricsInMessShow = false;
     lenta.isOpenMessageBar = false;
 
     lenta.showGroups = function(){
@@ -18,9 +19,36 @@ forumControllers.controller('LentaController',function($rootScope) {
         $rootScope.base.selectGroupInDropdown(group.id,lenta);
     };
 
+    lenta.showRubrics = function(){
+        lenta.isRubricsInMessShow ? lenta.isRubricsInMessShow = false : lenta.isRubricsInMessShow = true
+    };
+
+    lenta.selectRubricNew = function(rubric){
+        lenta.isRubricsInMessShow = false;
+        lenta.selRubricName = rubric.visibleName;
+        //$rootScope.base.selectRubricInDropdown(rubric.id,lenta);
+        var rubricsLength = userClientRubrics.length,
+            selectedRubric;
+        for(var i = 0; i < rubricsLength; i++){
+            if(rubric.id == userClientRubrics[i].id){
+                $rootScope.currentRubric = userClientRubrics[i];
+            }
+        }
+
+        //$rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+
+        //ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup;
+    };
+
+    if(!$rootScope.currentRubric) {
+        $rootScope.currentRubric = {}
+        $rootScope.currentRubric.id = 0;
+    }
+
     lenta.closeInput = function(){
         lenta.isOpenMessageBar = false;
         lenta.isGroupsInMessShow = false;
+        lenta.isRubricsInMessShow = false;
         lenta.selectedGroup = lenta.selGroupName = null;
         lenta.message.content = TEXT_DEFAULT_1;
     };
@@ -75,7 +103,7 @@ forumControllers.controller('LentaController',function($rootScope) {
 
         lenta.message.content = lenta.message.default = TEXT_DEFAULT_1;
 
-        lenta.wallItems = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,0,loadedLength);
+        lenta.wallItems = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id,0,loadedLength);
 
         var wallItemsLength;
         lenta.wallItems ? wallItemsLength = lenta.wallItems.length :
@@ -231,7 +259,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         lenta.addMoreItems = function(){
             //lastLoadedIdFF = lastLoadedId;
             if(wallItemsLength == 10) {
-                var buff = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id, lastLoadedId, loadedLength);
+                var buff = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id, lastLoadedId, loadedLength);
                 if (buff) {
 
                     var buffLength = buff.length;

@@ -38,7 +38,7 @@ if(path != '/blog' && path != '/about' && path != '/contacts') {
     var userClientGroups = userClient.getUserGroups(),
         userClientRubrics = userClient.getUserRubrics();
 
-    console.log('111',userClientRubrics);
+    console.log('111',userClientRubrics,userClientGroups);
     if (userClientGroups.length == 0) document.location.replace('/login');
 
     var shortUserInfo = userClient.getShortUserInfo();
@@ -522,6 +522,7 @@ function postTopic(obj,isWall,isAdverts,$filter){
 
         obj.label = getLabel(userClientGroups,obj.selectedGroup.type);
         obj.tagColor = getTagColor(obj.label);
+        obj.rubricId = obj.selectedRubric.id;
 
         var newTopic = messageClient.postTopic(obj);
     }else {
@@ -586,6 +587,7 @@ function postTopic(obj,isWall,isAdverts,$filter){
             newTopic.poll = poll;
             newTopic.metaType = "poll";
         }
+        newTopic.rubricId = obj.selectedRubric.id;
 
         //alert(newTopic.message.content);
         var tempTopic = messageClient.postTopic(newTopic);
