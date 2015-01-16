@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
         OauthServletTests.class,
         MessagesTreeTests.class,
         AuthServiceImplTests.class,
-        MessageServiceTests.class })
+        MessageServiceTests.class,
+        NewsNotificationsTests.class})
 public class AllTests {
 
 }

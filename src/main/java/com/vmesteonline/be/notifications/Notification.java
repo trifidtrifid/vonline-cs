@@ -44,11 +44,11 @@ public abstract class Notification {
 
 	public abstract void makeNotification(Set<VoUser> users, PersistenceManager pm);
 
-	protected Map<VoUser, List<NotificationMessage>> messagesToSend = new HashMap<VoUser, List<NotificationMessage>>();
+	protected Map<VoUser, List<NotificationMessage>> messagesToSend = new TreeMap<VoUser, List<NotificationMessage>>();
 
 	protected Set<VoUser> createRecipientsList(PersistenceManager pm) {
 
-		Set<VoUser> userSet = new HashSet<VoUser>();
+		Set<VoUser> userSet = new TreeSet<VoUser>();
 
 		int now = (int) (System.currentTimeMillis() / 1000L);
 		int dayAgo = (int) now - 86400;
