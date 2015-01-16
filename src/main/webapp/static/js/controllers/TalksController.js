@@ -105,6 +105,19 @@ forumControllers.controller('TalksController',function($rootScope) {
 
         };
 
+    talk.selRubricName = userClientRubrics[0].visibleName;
+    talk.selectRubricNew = function(rubric){
+        talk.selRubricName = rubric.visibleName;
+        var rubricsLength = userClientRubrics.length;
+
+        for(var i = 0; i < rubricsLength; i++){
+            if(rubric.id == userClientRubrics[i].id){
+                $rootScope.currentRubric = userClientRubrics[i];
+            }
+        }
+
+    };
+
         $('.ng-cloak').removeClass('ng-cloak');
 
     });

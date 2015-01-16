@@ -38,6 +38,19 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
             for(var i = 0; i < topicLength; i++){
                 if(talkId == talk.topics[i].id){
                     talk.fullTalkTopic = talk.topics[i];
+                    talk.fullTalkTopic.rubric = getTopicRubric(talk.fullTalkTopic);
+
+                    talk.fullTalkTopic.selectRubricNew = function(rubric){
+                        talk.fullTalkTopic.selRubricName = rubric.visibleName;
+                        var rubricsLength = userClientRubrics.length;
+
+                        for(var i = 0; i < rubricsLength; i++){
+                            if(rubric.id == userClientRubrics[i].id){
+                                $rootScope.currentRubric = userClientRubrics[i];
+                            }
+                        }
+
+                    };
 
                     $rootScope.base.initStartParamsForCreateTopic(talk.fullTalkTopic);
 
@@ -261,6 +274,7 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
             }
 
         };
+
 
         $('.ng-cloak').removeClass('ng-cloak');
 

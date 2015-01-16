@@ -481,6 +481,18 @@ function getTagColor(labelName){
     }
     return color;
 }
+function getTopicRubric(topic){
+    var len = userClientRubrics.length,
+        rubric;
+
+    for(var i = 0; i < len; i++){
+        if(userClientRubrics[i].id == topic.rubricId){
+            rubric = userClientRubrics[i];
+        }
+    }
+
+    return rubric
+};
 
 function postTopic(obj,isWall,isAdverts,$filter){
     if(obj.id){
@@ -522,11 +534,12 @@ function postTopic(obj,isWall,isAdverts,$filter){
 
         obj.label = getLabel(userClientGroups,obj.selectedGroup.type);
         obj.tagColor = getTagColor(obj.label);
-        obj.rubricId = obj.selectedRubric.id;
+        obj.selectedRubric.id ? obj.rubricId = obj.selectedRubric.id : obj.rubricId = 0;
 
         var newTopic = messageClient.postTopic(obj);
     }else {
         // значит создание
+        console.log('postTopic-2');
 
         var messageType,
             messageContent,
@@ -587,7 +600,8 @@ function postTopic(obj,isWall,isAdverts,$filter){
             newTopic.poll = poll;
             newTopic.metaType = "poll";
         }
-        newTopic.rubricId = obj.selectedRubric.id;
+        //newTopic.rubricId = obj.selectedRubric.id;
+        obj.selectedRubric.id ? newTopic.rubricId = obj.selectedRubric.id : newTopic.rubricId = 0;
 
         //alert(newTopic.message.content);
         var tempTopic = messageClient.postTopic(newTopic);

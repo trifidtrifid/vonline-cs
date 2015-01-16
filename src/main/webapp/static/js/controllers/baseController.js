@@ -558,6 +558,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                     talk.message.content = "";
                 }
                 talk.isCreateTalkError = false;
+                talk.selectedRubric = $rootScope.currentRubric;
 
                 var isWall = 0, isAdvert = false;
                 if (talk.isAdvert) isAdvert = true;
@@ -619,6 +620,8 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 ctrl.isCreateMessageError = false;
                 ctrl.isOpenMessageBar = false;
                 ctrl.selectedRubric = $rootScope.currentRubric;
+
+                //console.log('createWallTopic',ctrl.selectedRubric);
 
                 var isWall = 1,
                     newTopic = postTopic(ctrl, isWall, false, $filter);

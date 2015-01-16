@@ -23,7 +23,8 @@ forumControllers.controller('LentaController',function($rootScope) {
         lenta.isRubricsInMessShow ? lenta.isRubricsInMessShow = false : lenta.isRubricsInMessShow = true
     };
 
-    lenta.selectRubricNew = function(rubric){
+    lenta.selectRubricNew = function(rubric,ctrl){
+        console.log('selectRubricNew');
         lenta.isRubricsInMessShow = false;
         lenta.selRubricName = rubric.visibleName;
         //$rootScope.base.selectRubricInDropdown(rubric.id,lenta);
@@ -33,6 +34,10 @@ forumControllers.controller('LentaController',function($rootScope) {
             if(rubric.id == userClientRubrics[i].id){
                 $rootScope.currentRubric = userClientRubrics[i];
             }
+        }
+
+        if(ctrl){
+            ctrl.selRubricName = rubric.visibleName;
         }
 
         //$rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
@@ -208,6 +213,7 @@ forumControllers.controller('LentaController',function($rootScope) {
                     wallItems[i].topic.message.createdEdit = getTiming(wallItems[i].topic.message.created);
                     wallItems[i].topic.authorName = getAuthorName(wallItems[i].topic.userInfo);
                     wallItems[i].topic.metaType = "message";
+                    wallItems[i].topic.rubric = getTopicRubric(wallItems[i].topic);
 
                     var mesLen;
                     wallItems[i].messages ?
@@ -225,8 +231,6 @@ forumControllers.controller('LentaController',function($rootScope) {
                     (mesLen >= $rootScope.COMMENTS_DEFAULT_COUNT) ?
                     wallItems[i].bufferMessages = wallItems[i].messages.slice(mesLen-$rootScope.COMMENTS_DEFAULT_COUNT):
                         wallItems[i].bufferMessages = wallItems[i].messages;
-
-
 
                     if(wallItems[i].topic.poll != null){
                         //значит это опрос
