@@ -1913,6 +1913,10 @@ h1 {
   padding: 5px 0 5px 25px;
   cursor: pointer;
 }
+.rubrics-menu li.active a {
+  background: #f2f2f2;
+  color: #1963aa;
+}
 /* backoffice */
 .backoffice {
   text-align: left;

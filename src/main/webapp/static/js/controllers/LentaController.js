@@ -40,10 +40,12 @@ forumControllers.controller('LentaController',function($rootScope) {
         //ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup;
     };
 
-    if(!$rootScope.currentRubric) {
-        $rootScope.currentRubric = {}
+    console.log('33');
+    //if(!$rootScope.currentRubric) {
+        $rootScope.currentRubric = {};
         $rootScope.currentRubric.id = 0;
-    }
+    //}
+
 
     lenta.closeInput = function(){
         lenta.isOpenMessageBar = false;
@@ -162,11 +164,11 @@ forumControllers.controller('LentaController',function($rootScope) {
         };
 
     $rootScope.wallChangeRubric = function(rubricId){
-        console.log('wall-change ',rubricId);
+        //console.log('wall-change ',rubricId);
 
         lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
 
-        console.log('wall-change-2 ',lenta.wallItems);
+        //console.log('wall-change-2 ',lenta.wallItems);
 
         if(lenta.wallItems.length) {
             initWallItem(lenta.wallItems);

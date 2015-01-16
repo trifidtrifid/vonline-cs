@@ -62,8 +62,12 @@ forumControllers.controller('leftBarController',function($rootScope) {
             $rootScope.currentGroup = group;
             $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);*/
             $rootScope.currentRubric = rubric;
+        if(!rubric) {
+            $rootScope.currentRubric = {};
+            $rootScope.currentRubric.id = 0;
+        }
 
-        $rootScope.wallChangeRubric(rubric.id);
+        $rootScope.wallChangeRubric($rootScope.currentRubric.id);
 
     }
   })

@@ -129,9 +129,9 @@
 
                         </li>
                         <li>
-                            <a ui-sref="main"> <span class="menu-text">Новости</span> </a>
+                            <a ui-sref="main" ng-click="setRubric(0)"> <span class="menu-text">Новости</span> </a>
                             <ul class="nav nav-list rubrics-menu">
-                                <li ng-repeat="rubric in base.rubrics">
+                                <li ng-repeat="rubric in base.rubrics" ng-class="{active: currentRubric.id == rubric.id}">
                                     <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
                                 </li>
                             </ul>
