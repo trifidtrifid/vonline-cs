@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeMap;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -43,7 +44,8 @@ public class NewTopicsNotification extends Notification {
 
 		Query query = pm.newQuery(VoTopic.class, "createDate>" + (now - 86400 * 7) +" && importantScore>" + 0);
 		List<VoTopic> newTopics = executeQuery( query );
-		Map<VoUser, List<VoTopic>[]> userTopics = new HashMap<>();
+		Map<VoUser, List<VoTopic>[]> userTopics = new TreeMap<>();
+		
 		for( VoTopic topic: newTopics ){
 			if( topic.getType() == MessageType.BLOG )
 				continue;

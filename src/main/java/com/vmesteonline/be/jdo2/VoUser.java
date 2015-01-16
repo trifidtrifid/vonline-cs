@@ -22,7 +22,7 @@ import java.util.*;
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
         @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
 
-public class VoUser extends GeoLocation {
+public class VoUser extends GeoLocation implements Comparable<VoUser> {
 
 	public static int BASE_USER_SCORE = 100;
 
@@ -694,5 +694,10 @@ public class VoUser extends GeoLocation {
 
 	public boolean isTheBigBro() {
 		return isHeTheBigBro(this);
+	}
+
+	@Override
+	public int compareTo(VoUser that) {
+		return Long.compare(this.id, that.id);
 	}
 }
