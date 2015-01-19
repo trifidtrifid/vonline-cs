@@ -56,7 +56,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         lenta.isOpenMessageBar = false;
         lenta.isGroupsInMessShow = false;
         lenta.isRubricsInMessShow = false;
-        lenta.selectedGroup = lenta.selGroupName = null;
+        lenta.selectedGroup = lenta.selGroupName = lenta.selRubricName = $rootScope.currentRubric = null;
         lenta.message.content = TEXT_DEFAULT_1;
     };
 
