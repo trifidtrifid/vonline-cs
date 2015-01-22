@@ -304,8 +304,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			}
 			
 			if( 0!=rubricId  )
-				filter = filter.length() > 0 ? filter + " && (rubricId==0 || rubricId=="+rubricId+")" : 
-					"(rubricId==0 || rubricId=="+rubricId+")";
+				filter = filter.length() > 0 ? filter + " && rubricId=="+rubricId : 
+					"rubricId=="+rubricId;
 			
 			Query q = pm.newQuery(VoTopic.class, filter);
 			q.setOrdering("lastUpdate DESC");

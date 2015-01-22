@@ -171,5 +171,5 @@ public class VoServlet extends HttpServlet {
 		this.customHeaders.addAll(headers);
 	}
     //REgular expression that would be checked before write Thrift log. If matches request would not being logged
-    private static final String disabledThriftLoggingPatterns = ".*checkUpdates.*";
+    private static final String disabledThriftLoggingPatterns = "(.*checkUpdates.*|.*getDialogUpdates.*)";
 }

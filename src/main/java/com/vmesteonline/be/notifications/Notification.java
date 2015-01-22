@@ -58,7 +58,7 @@ public abstract class Notification {
 		Query q = pm.newQuery("SQL","SELECT ID FROM VOUSER WHERE emailConfirmed=true AND notificationsFreq<>"+NotificationFreq.NEVER.getValue()+" AND ("
 				+ "notificationsFreq = "+NotificationFreq.DAYLY.getValue()+" AND lastNotified<"+dayAgo
 				+ " OR notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+threeDaysAgo
-				+ " OR notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+weekAgo+")");
+				+ " OR notificationsFreq = "+NotificationFreq.WEEKLY.getValue()+" AND lastNotified<"+weekAgo+")");
 		
 		List<Long> userIdList = executeQuery(q);
 		for( Long uid : userIdList){
