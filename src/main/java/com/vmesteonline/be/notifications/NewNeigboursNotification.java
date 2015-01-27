@@ -41,7 +41,7 @@ public class NewNeigboursNotification extends Notification {
 		// create message for each user
 		for (VoUser u : users) {
 			boolean somethingToSend = false;
-			Set<VoUser> neghbors = new TreeSet<VoUser>( vuComp );
+			Set<VoUser> neghbors = new TreeSet<VoUser>( );
 			neghbors.add(u);
 			ArrayList<Long> ugs = new ArrayList<>(u.getGroups());
 			Collections.reverse(ugs);
@@ -61,19 +61,24 @@ public class NewNeigboursNotification extends Notification {
 					}
 					neghbors.addAll(ggoupNeighbors);
 				}
+				
 			}
 			if(somethingToSend){
-				NotificationMessage mn = new NotificationMessage();
-				mn.message = body;
-				mn.subject = "Новые соседи";
-				mn.to = u.getEmail();
-				try {
-					sendMessage(mn, u);
-					u.setLastNotified(now);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				sendMessageToUser(u, body, now);
 			}
+		}
+	}
+
+	private void sendMessageToUser(VoUser u, String body, int now) {
+		NotificationMessage mn = new NotificationMessage();
+		mn.message = body;
+		mn.subject = "Новые соседи";
+		mn.to = u.getEmail();
+		try {
+			sendMessage(mn, u);
+			u.setLastNotified(now);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -120,7 +125,7 @@ public class NewNeigboursNotification extends Notification {
 	}
 
 	//новые соседи зарегестрировавшиеся за последнюю неделю
-	private Map< Long, Set<VoUser>> getNewNeighbors( PersistenceManager pm ){
+	protected Map< Long, Set<VoUser>> getNewNeighbors( PersistenceManager pm ){
 		
 		//Map< VoUserGroup, List<VoUser>> nuMap = new TreeMap<VoUserGroup, List<VoUser>>( super.ugComp );
 
@@ -128,13 +133,13 @@ public class NewNeigboursNotification extends Notification {
 
 		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
 		Query sql = pm.newQuery("SQL", "select `GROUP`,U.ID FROM VOUSER as U RIGHT JOIN USERGROUPS as UG ON UG.ID=U.ID WHERE U.registered > " + weekAgo);
-		List results = executeQuery(sql);
-		Iterator rit = results.iterator();
+		List<Object[]> results = executeQuery(sql);
+		Iterator<Object[]> rit = results.iterator();
 		while(rit.hasNext()) {
-			Object[] groupAndUserIds = (Object[]) rit.next();
+			Object[] groupAndUserIds = rit.next();
 			Set<VoUser> voUsers = groupUserMap.get(groupAndUserIds[0]);
 			if (null == voUsers)
-				voUsers = new TreeSet<>(vuComp);
+				voUsers = new TreeSet<>();
 			try {
 				voUsers.add(pm.getObjectById(VoUser.class, groupAndUserIds[1]));
 			} catch (Exception e) {

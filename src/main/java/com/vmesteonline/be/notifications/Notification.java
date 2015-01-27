@@ -1,29 +1,40 @@
 package com.vmesteonline.be.notifications;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.log4j.Logger;
+
 import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.VoBaseMessage;
+import com.vmesteonline.be.jdo2.VoMessage;
+import com.vmesteonline.be.jdo2.VoSession;
+import com.vmesteonline.be.jdo2.VoTopic;
+import com.vmesteonline.be.jdo2.VoUser;
+import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.log4j.Logger;
-
-import javax.jdo.Extent;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import javax.management.PersistentMBean;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.*;
-
-import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 
 public abstract class Notification {
 

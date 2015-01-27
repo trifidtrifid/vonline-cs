@@ -2,8 +2,6 @@ package com.vmesteonline.be;
 
 import static org.junit.Assert.fail;
 
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +15,9 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.notifications.NewTopicsNotification;
-import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.thrift.messageservice.MessageType;
@@ -33,8 +29,6 @@ public class NewsNotificationsTests extends MessageServiceTests {
 	private static class NewTopicsNotificationForTest extends NewTopicsNotification {
 		
 		public Map<VoUser, List<VoTopic>[]> userTopics;
-		public Set<VoUser> recipientsList;
-		
 		public NewTopicsNotificationForTest() {
 			super(null);		
 			userTopics = null;
