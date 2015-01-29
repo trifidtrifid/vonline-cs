@@ -26,7 +26,7 @@ import com.vmesteonline.be.utils.Defaults;
 
 public class NewsNotificationsTests extends MessageServiceTests {
 	
-	private static class NewTopicsNotificationForTest extends NewTopicsNotification {
+	public static class NewTopicsNotificationForTest extends NewTopicsNotification {
 		
 		public Map<VoUser, List<VoTopic>[]> userTopics;
 		public NewTopicsNotificationForTest() {
