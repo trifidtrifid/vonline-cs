@@ -536,10 +536,11 @@ function postTopic(obj,isWall,isAdverts,$filter){
         obj.tagColor = getTagColor(obj.label);
         obj.selectedRubric.id ? obj.rubricId = obj.selectedRubric.id : obj.rubricId = 0;
 
+        console.log('postTopic-2',obj.rubricId);
+
         var newTopic = messageClient.postTopic(obj);
     }else {
         // значит создание
-        console.log('postTopic-2');
 
         var messageType,
             messageContent,

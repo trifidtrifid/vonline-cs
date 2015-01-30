@@ -1,5 +1,5 @@
 
-forumControllers.controller('leftBarController',function($rootScope) {
+forumControllers.controller('leftBarController',function($rootScope,$state) {
 
     $rootScope.setTab = function(newValue){
 
@@ -62,9 +62,11 @@ forumControllers.controller('leftBarController',function($rootScope) {
             $rootScope.currentGroup = group;
             $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);*/
             $rootScope.currentRubric = rubric;
+            $rootScope.selRubricName = $rootScope.currentRubric.visibleName;
         if(!rubric) {
             $rootScope.currentRubric = {};
-            $rootScope.currentRubric.id = 0;
+            //$rootScope.currentRubric.id = 0;
+            $rootScope.selRubricName = null;
         }
 
         $rootScope.wallChangeRubric($rootScope.currentRubric.id);

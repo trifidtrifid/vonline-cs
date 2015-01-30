@@ -528,6 +528,13 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         }
 
         function addSingleTalk(talk) {
+            console.log('addSingleTalk-0',$rootScope.currentRubric);
+            talk.selectedRubric = $rootScope.currentRubric;
+            if(!talk.selectedRubric) {
+                talk.selectedRubric = {};
+                talk.selectedRubric.id = 0;
+            }
+
             if (talk.isEdit) {
                 talk.attachedImages = getAttachedImages($('#attach-area-edit-' + talk.id));
                 talk.attachedDocs = getAttachedDocs($('#attach-doc-area-edit-' + talk.id), talk.isEdit);
@@ -558,11 +565,11 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                     talk.message.content = "";
                 }
                 talk.isCreateTalkError = false;
-                talk.selectedRubric = $rootScope.currentRubric;
 
                 var isWall = 0, isAdvert = false;
                 if (talk.isAdvert) isAdvert = true;
 
+                console.log('addSingleTalk',$rootScope.currentRubric);
                 var newTopic = postTopic(talk, isWall, isAdvert, $filter);
 
                 if (newTopic.poll && talk.poll) talk.poll.pollId = newTopic.poll.pollId;
@@ -586,7 +593,8 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         }
 
         function createWallTopic(ctrl) {
-            console.log('wallTopic',ctrl.selectedGroup,$rootScope.currentRubric);
+            console.log('wallTopic',$rootScope.currentRubric);
+            ctrl.selectedRubric = $rootScope.currentRubric;
 
             if (ctrl.isEdit) {
                 ctrl.attachedImages = getAttachedImages($('#attach-area-edit-' + ctrl.id));
@@ -612,6 +620,11 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 ctrl.isCreateMessageError = true;
                 ctrl.createMessageErrorText = "Вы не указали группу.";
 
+            }else if(ctrl.selectedRubric.id === undefined){
+
+                ctrl.isCreateMessageError = true;
+                ctrl.createMessageErrorText = "Вы не указали рубрику.";
+
             }else{
 
                 if (ctrl.message.content == TEXT_DEFAULT_1 && (ctrl.attachedImages || ctrl.attachedDocs || ctrl.isPollShow)) {
@@ -619,7 +632,6 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 }
                 ctrl.isCreateMessageError = false;
                 ctrl.isOpenMessageBar = false;
-                ctrl.selectedRubric = $rootScope.currentRubric;
 
                 //console.log('createWallTopic',ctrl.selectedRubric);
 
@@ -635,7 +647,8 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                         ctrl.poll.pollId = newTopic.poll.pollId;
                     }
                 } else {
-                    ctrl.selectedGroup = ctrl.selGroupName = null;
+                    ctrl.selectedGroup = ctrl.selGroupName = ctrl.selRubricName = null;
+                    ctrl.selectedRubric = {};
                     cleanAttached($('#attach-area-' + ctrl.attachId));
                     cleanAttached($('#attach-doc-area-' + ctrl.attachId));
                 }

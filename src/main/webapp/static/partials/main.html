@@ -27,13 +27,19 @@
 
                 <a class="write-mess-selectGroup write-mess-selectRubric" href="#" ng-click="lenta.showRubrics()">
                     <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isRubricsInMessShow, 'fa-chevron-up':lenta.isRubricsInMessShow}"></i>
-                    <span ng-if="!lenta.selRubricName">Выберите рубрику</span>
-                    <span ng-if="lenta.selRubricName">{{lenta.selRubricName}}</span>
+                    <span ng-if="!selRubricName">Выберите рубрику</span>
+                    <span ng-if="selRubricName">{{selRubricName}}</span>
                 </a>
                 <ul class="select-group-list select-rubric-list clearfix" ng-show="lenta.isRubricsInMessShow">
+                    <li  ng-click="lenta.selectRubricNew(0)">
+                        <label href="#">
+                            <input name="select-wall-rubric" ng-model="selRubricName" value="Общее" type="radio"/>
+                            Общее
+                        </label>
+                    </li>
                     <li ng-repeat="rubric in base.rubrics" ng-click="lenta.selectRubricNew(rubric)">
                         <label href="#">
-                            <input name="select-wall-rubric" ng-model="lenta.selRubricName" value="{{rubric.visibleName}}" type="radio"/>
+                            <input name="select-wall-rubric" ng-model="selRubricName" value="{{rubric.visibleName}}" type="radio"/>
                             {{rubric.visibleName}}
                         </label>
                     </li>

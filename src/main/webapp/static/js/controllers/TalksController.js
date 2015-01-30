@@ -105,9 +105,16 @@ forumControllers.controller('TalksController',function($rootScope) {
 
         };
 
-    talk.selRubricName = userClientRubrics[0].visibleName;
+    talk.selRubricName = "Общее";
     talk.selectRubricNew = function(rubric){
-        talk.selRubricName = rubric.visibleName;
+        if(rubric) {
+            talk.selRubricName = rubric.visibleName;
+        }else{
+            talk.selRubricName = "Общее";
+            $rootScope.currentRubric = {};
+            $rootScope.currentRubric.id = 0;
+        }
+
         var rubricsLength = userClientRubrics.length;
 
         for(var i = 0; i < rubricsLength; i++){

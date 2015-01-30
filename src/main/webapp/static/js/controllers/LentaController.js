@@ -26,7 +26,14 @@ forumControllers.controller('LentaController',function($rootScope) {
     lenta.selectRubricNew = function(rubric,ctrl){
         console.log('selectRubricNew');
         lenta.isRubricsInMessShow = false;
-        lenta.selRubricName = rubric.visibleName;
+
+        if(rubric) {
+            $rootScope.selRubricName = rubric.visibleName;
+        }else{
+            $rootScope.selRubricName = "Общее";
+            $rootScope.currentRubric = {};
+            $rootScope.currentRubric.id = 0;
+        }
         //$rootScope.base.selectRubricInDropdown(rubric.id,lenta);
         var rubricsLength = userClientRubrics.length,
             selectedRubric;
@@ -37,7 +44,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         }
 
         if(ctrl){
-            ctrl.selRubricName = rubric.visibleName;
+            rubric ? ctrl.selRubricName = rubric.visibleName : ctrl.selRubricName = "Общее";
         }
 
         //$rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
@@ -45,18 +52,14 @@ forumControllers.controller('LentaController',function($rootScope) {
         //ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup;
     };
 
-    console.log('33');
-    //if(!$rootScope.currentRubric) {
-        $rootScope.currentRubric = {};
-        $rootScope.currentRubric.id = 0;
-    //}
-
+    $rootScope.currentRubric = {};
+    //$rootScope.currentRubric.id = 0;
 
     lenta.closeInput = function(){
         lenta.isOpenMessageBar = false;
         lenta.isGroupsInMessShow = false;
         lenta.isRubricsInMessShow = false;
-        lenta.selectedGroup = lenta.selGroupName = lenta.selRubricName = $rootScope.currentRubric = null;
+        lenta.selectedGroup = lenta.selGroupName = $rootScope.selRubricName = $rootScope.currentRubric = null;
         lenta.message.content = TEXT_DEFAULT_1;
     };
 
