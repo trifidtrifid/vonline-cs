@@ -118,6 +118,21 @@ main.config(function($stateProvider, $urlRouterProvider) {
         .state('contacts', {
             url: "/contacts"
         })
+        .state('cabinet', {
+            url: "/cabinet",
+            templateUrl: "/static/partials/business/cabinet.html",
+            controller: 'Cabinet as nearby'
+        })
+        .state('edit', {
+            url: "/edit",
+            templateUrl: "/static/partials/business/edit.html",
+            controller: 'Edit'
+        })
+        .state('statistic', {
+            url: "/statistic",
+            templateUrl: "/static/partials/business/statistic.html",
+            controller: 'Statistic'
+        })
 });
 
 main.config(function($locationProvider){

@@ -110,7 +110,13 @@
 						} catch (e) {
 						}
 					</script>
-					<ul class="nav nav-list">
+                    <ul class="nav nav-list">
+                        <li><a ui-sref="main"> <span class="menu-text">Главная</span> </a></li>
+                        <li><a ui-sref="edit"> <span class="menu-text">Редактировать</span> </a></li>
+                        <li><a ui-sref="statistic"> <span class="menu-text">Статистика</span> </a></li>
+                        <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>
+                    </ul>
+					<!--<ul class="nav nav-list">
                         <li>
                             <a ui-sref="important">
                                 <span class="menu-text">
@@ -129,11 +135,11 @@
 
                         </li>
                         <li><a ui-sref="main"> <span class="menu-text">Новости</span> </a></li>
-                        <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> <!-- ng-click="setTab($event,2)" -->
+                        <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> &lt;!&ndash; ng-click="setTab($event,2)" &ndash;&gt;
                         <li><a ui-sref="profit"> <span class="menu-text">Услуги и объявления</span> </a></li>
                         <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>
 
-					</ul>
+					</ul>-->
                     <div class="footer footer-left" ng-hide="base.isFooterBottom">
                         <span class="copypast">&copy;</span> ВместеОнлайн 2014
                         <!-- временная обработка ссылок пока не адаптирован блог, о нас и контакты под ангуляр -->
@@ -271,6 +277,9 @@
 <script src="/static/js/controllers/aboutCtrl.js"></script>
 <script src="/static/js/controllers/nearbyCtrl.js"></script>
 <script src="/static/js/controllers/nearbySingleCtrl.js"></script>
+<script src="/static/js/controllers/business/Cabinet.js"></script>
+<script src="/static/js/controllers/business/Edit.js"></script>
+<script src="/static/js/controllers/business/Statistic.js"></script>
 
 <script src="/static/js/angular/angular-ui-router.js"></script>
 <script src="/static/js/angular/sanitize.js"></script>

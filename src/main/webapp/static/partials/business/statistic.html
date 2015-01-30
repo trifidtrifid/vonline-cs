@@ -1,0 +1,21 @@
+
+<section class="maps page" ng-class="base.mapsLoadStatus">
+
+<div class="maps">
+
+    <div>Соседей в округе: </div>
+    <div>Просмотров: </div>
+
+    <div>
+        <!--<img ng-src="{{ maps.url }}" alt=""/>-->
+
+        <ya-map ya-zoom="{{maps.zoom}}" ya-center="{{ maps.center }}" ya-controls="smallMapDefaultSet" ya-after-init="maps.afterMapInit($target)" style="width: 100%; height: 400px; display: block;">
+            <ya-geo-object ya-source="maps.baloon"></ya-geo-object>
+            <ya-geo-object ya-source="maps.radius" ya-options="{draggable: false,fillColor: '{{maps.color}}',strokeColor: '#688AE0',strokeOpacity: 0.8,strokeWidth: 2}"></ya-geo-object>
+        </ya-map>
+    </div>
+
+</div>
+
+</section>
+
