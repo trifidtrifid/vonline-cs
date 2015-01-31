@@ -36,6 +36,7 @@ import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
+import com.vmesteonline.be.utils.VoHelper;
 
 public abstract class Notification {
 
@@ -256,8 +257,8 @@ public abstract class Notification {
 	public static void sendMessageResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
-		String subject = "Вместеонлайн.ру: "+ 
-				(subj != null ? StringUtils.abbreviate(subj, 32) : "на ваше сообщение " ) + "сосед: "+responder.getName()+" "+responder.getLastName()+" ответил";
+		String subject =  
+				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(subj, 32, 50)) + "... комментарий от "+responder.getName()+" "+responder.getLastName();
 		String body = "";
 		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
 		try {
@@ -271,8 +272,8 @@ public abstract class Notification {
 	public static void sendTopicResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
-		String subject = "Вместеонлайн.ру: "+ 
-				(subj != null ? StringUtils.abbreviate(subj, 32) : "на ваше сообщение " ) + "сосед: "+responder.getName()+" "+responder.getLastName()+" ответил";
+		String subject = 
+				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(subj, 32, 50)) + "... комментарий от "+responder.getName()+" "+responder.getLastName();
 		String body = "";
 		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
 		try {

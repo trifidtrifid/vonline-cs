@@ -543,16 +543,12 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				if (msg.type != MessageType.BLOG) {
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg, currentUser);
+					List<Long> usersToNotify = executeQuery( pm.newQuery("SQL","SELECT DISTINCT authorId FROM VOMESSAGE where topicId="+topic.getId()+" AND authorId!="+msg.getAuthorId() + " AND authorId!="+topic.getAuthorId()));
+					for( Long uid: usersToNotify){
+						Notification.sendMessageResponse(topic, currentUser, vomsg, uid);	
+					}
 					if( topic.getAuthorId() != msg.getAuthorId()){
-						if( 0!= msg.getParentId()) {
-							VoMessage parentMessage = pm.getObjectById(VoMessage.class, msg.getParentId());
-							if( parentMessage.getAuthorId() != msg.getAuthorId()){
-								Notification.sendMessageResponse(topic, currentUser, vomsg, parentMessage.getAuthorId());
-							}
-							if( parentMessage.getAuthorId() != topic.getAuthorId()){
 								Notification.sendTopicResponse(topic, currentUser, vomsg, topic.getAuthorId());
-							}
-						}
 					}
 				}
 

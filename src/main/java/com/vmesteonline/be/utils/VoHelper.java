@@ -9,6 +9,7 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.MatrixAsList;
 import com.vmesteonline.be.thrift.VoError;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
@@ -508,5 +509,14 @@ public class VoHelper {
 		VoInviteCode ic = new VoInviteCode(passCode, pa.getId());
 		pm.makePersistent(ic);
 		return ic;
+	}
+	
+	public static String getShortMessageForm(String message, int minLength, int maxLength){
+		if(null==message) return "";
+		String msg = message.replaceAll("[\t \r\n]", " ").replaceAll("<[/]?br[/]?>", " ");
+		if( msg.length()<minLength) return msg;
+		int trimPOs = msg.indexOf(" ", minLength);
+		trimPOs = -1 != trimPOs || trimPOs > maxLength ? maxLength : trimPOs; 
+		return msg.substring(0, trimPOs);
 	}
 }
