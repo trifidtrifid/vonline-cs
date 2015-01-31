@@ -112,6 +112,14 @@
 					</script>
 					<ul class="nav nav-list">
                         <li>
+                            <a ui-sref="main" ng-click="setRubric(0)"> <span class="menu-text">Главная</span> </a>
+                            <ul class="nav nav-list rubrics-menu">
+                                <li ng-repeat="rubric in base.rubrics" ng-class="{active: currentRubric.id == rubric.id}">
+                                    <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a ui-sref="important">
                                 <span class="menu-text">
                                     Важные сообщения
@@ -127,14 +135,6 @@
                                 </span>
                             </a>
 
-                        </li>
-                        <li>
-                            <a ui-sref="main" ng-click="setRubric(0)"> <span class="menu-text">Новости</span> </a>
-                            <ul class="nav nav-list rubrics-menu">
-                                <li ng-repeat="rubric in base.rubrics" ng-class="{active: currentRubric.id == rubric.id}">
-                                    <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
-                                </li>
-                            </ul>
                         </li>
                         <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> <!-- ng-click="setTab($event,2)" -->
                         <li><a ui-sref="profit"> <span class="menu-text">Услуги и объявления</span> </a></li>
