@@ -516,7 +516,7 @@ public class VoHelper {
 		String msg = message.replaceAll("[\t \r\n]", " ").replaceAll("<[/]?br[/]?>", " ");
 		if( msg.length()<minLength) return msg;
 		int trimPOs = msg.indexOf(" ", minLength);
-		trimPOs = -1 != trimPOs || trimPOs > maxLength ? maxLength : trimPOs; 
+		trimPOs = -1 == trimPOs || trimPOs > maxLength ? maxLength : trimPOs; 
 		return msg.substring(0, trimPOs);
 	}
 }
