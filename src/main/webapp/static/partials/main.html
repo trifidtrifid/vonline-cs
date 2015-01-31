@@ -10,7 +10,7 @@
             <div ng-show="lenta.isOpenMessageBar">
                 <a class="write-mess-selectGroup" href="#" ng-click="lenta.showGroups()">
                     <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isGroupsInMessShow, 'fa-chevron-up':lenta.isGroupsInMessShow}"></i>
-                    <span ng-if="!lenta.selGroupName">Выберите группу</span>
+                    <span ng-if="!lenta.selGroupName" ng-class="{'red-text' : lenta.isCreateMessageGroupError}">Выберите группу</span>
                     <span ng-if="lenta.selGroupName">{{lenta.selGroupName}}</span>
                 </a>
                 <ul class="select-group-list" ng-show="lenta.isGroupsInMessShow">
@@ -27,7 +27,7 @@
 
                 <a class="write-mess-selectGroup write-mess-selectRubric" href="#" ng-click="lenta.showRubrics()">
                     <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isRubricsInMessShow, 'fa-chevron-up':lenta.isRubricsInMessShow}"></i>
-                    <span ng-if="!selRubricName">Выберите рубрику</span>
+                    <span ng-if="!selRubricName" ng-class="{'red-text' : lenta.isCreateMessageRubricError}">Выберите рубрику</span>
                     <span ng-if="selRubricName">{{selRubricName}}</span>
                 </a>
                 <ul class="select-group-list select-rubric-list clearfix" ng-show="lenta.isRubricsInMessShow">
@@ -95,6 +95,8 @@
                 </div>
 
                 <span class="error-info" ng-show="lenta.isCreateMessageError">{{lenta.createMessageErrorText}}</span>
+                <span class="error-info" ng-show="lenta.isCreateMessageGroupError">Вы не указали группу</span>
+                <span class="error-info" ng-show="lenta.isCreateMessageRubricError">Вы не указали рубрику</span>
 
                 <div class="clearfix"></div>
 

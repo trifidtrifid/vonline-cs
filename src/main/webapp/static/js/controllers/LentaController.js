@@ -15,6 +15,8 @@ forumControllers.controller('LentaController',function($rootScope) {
 
     lenta.selectGroupNew = function(group){
         lenta.isGroupsInMessShow = false;
+        lenta.isCreateMessageGroupError = false;
+
         //lenta.selGroupName = group.visibleName;
         $rootScope.base.selectGroupInDropdown(group.id,lenta);
     };
@@ -26,6 +28,7 @@ forumControllers.controller('LentaController',function($rootScope) {
     lenta.selectRubricNew = function(rubric,ctrl){
         console.log('selectRubricNew');
         lenta.isRubricsInMessShow = false;
+        lenta.isCreateMessageRubricError = false;
 
         if(rubric) {
             $rootScope.selRubricName = rubric.visibleName;
@@ -56,6 +59,10 @@ forumControllers.controller('LentaController',function($rootScope) {
     //$rootScope.currentRubric.id = 0;
 
     lenta.closeInput = function(){
+        lenta.isCreateMessageError = false;
+        lenta.isCreateMessageGroupError = false;
+        lenta.isCreateMessageRubricError = false;
+
         lenta.isOpenMessageBar = false;
         lenta.isGroupsInMessShow = false;
         lenta.isRubricsInMessShow = false;

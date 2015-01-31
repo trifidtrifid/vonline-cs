@@ -608,22 +608,30 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 && (ctrl.message.content == TEXT_DEFAULT_1 || !ctrl.message.content)) {
 
                 ctrl.isCreateMessageError = true;
+                ctrl.isCreateMessageGroupError = false;
+                ctrl.isCreateMessageRubricError = false;
+
                 ctrl.createMessageErrorText = "Вы не ввели сообщение";
 
             } else if (ctrl.isPollShow && (!ctrl.pollSubject || ctrl.pollInputs[0].name == "" || ctrl.pollInputs[1].name == "")) {
 
                 ctrl.isCreateMessageError = true;
+                ctrl.isCreateMessageGroupError = false;
+                ctrl.isCreateMessageRubricError = false;
+
                 ctrl.createMessageErrorText = "Вы не указали данные для опроса";
 
             } else if(!ctrl.selectedGroup){
 
-                ctrl.isCreateMessageError = true;
-                ctrl.createMessageErrorText = "Вы не указали группу.";
+                ctrl.isCreateMessageError = false;
+                ctrl.isCreateMessageGroupError = true;
+                ctrl.isCreateMessageRubricError = false;
 
-            }else if(ctrl.selectedRubric.id === undefined){
+            }else if(ctrl.selectedRubric === undefined || ctrl.selectedRubric.id === undefined){
 
-                ctrl.isCreateMessageError = true;
-                ctrl.createMessageErrorText = "Вы не указали рубрику.";
+                ctrl.isCreateMessageError = false;
+                ctrl.isCreateMessageGroupError = false;
+                ctrl.isCreateMessageRubricError = true;
 
             }else{
 
