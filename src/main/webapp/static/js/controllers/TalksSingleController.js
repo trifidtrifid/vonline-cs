@@ -39,9 +39,16 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
                 if(talkId == talk.topics[i].id){
                     talk.fullTalkTopic = talk.topics[i];
                     talk.fullTalkTopic.rubric = getTopicRubric(talk.fullTalkTopic);
+                    if(!talk.fullTalkTopic.rubric) talk.fullTalkTopic.selRubricName = "Общее";
 
                     talk.fullTalkTopic.selectRubricNew = function(rubric){
-                        talk.fullTalkTopic.selRubricName = rubric.visibleName;
+                        if(rubric) {
+                            talk.fullTalkTopic.selRubricName = rubric.visibleName;
+                        }else{
+                            talk.fullTalkTopic.selRubricName = "Общее";
+                            $rootScope.currentRubric = {};
+                            $rootScope.currentRubric.id = 0;
+                        }
                         var rubricsLength = userClientRubrics.length;
 
                         for(var i = 0; i < rubricsLength; i++){
@@ -49,6 +56,8 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
                                 $rootScope.currentRubric = userClientRubrics[i];
                             }
                         }
+
+                        console.log('talk-single',$rootScope.currentRubric);
 
                     };
 

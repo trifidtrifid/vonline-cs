@@ -10,7 +10,7 @@
             <div ng-show="lenta.isOpenMessageBar">
                 <a class="write-mess-selectGroup" href="#" ng-click="lenta.showGroups()">
                     <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isGroupsInMessShow, 'fa-chevron-up':lenta.isGroupsInMessShow}"></i>
-                    <span ng-if="!lenta.selGroupName">Выберите группу</span>
+                    <span ng-if="!lenta.selGroupName" ng-class="{'red-text' : lenta.isCreateMessageGroupError}">Выберите группу</span>
                     <span ng-if="lenta.selGroupName">{{lenta.selGroupName}}</span>
                 </a>
                 <ul class="select-group-list" ng-show="lenta.isGroupsInMessShow">
@@ -27,13 +27,19 @@
 
                 <a class="write-mess-selectGroup write-mess-selectRubric" href="#" ng-click="lenta.showRubrics()">
                     <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isRubricsInMessShow, 'fa-chevron-up':lenta.isRubricsInMessShow}"></i>
-                    <span ng-if="!lenta.selRubricName">Выберите рубрику</span>
-                    <span ng-if="lenta.selRubricName">{{lenta.selRubricName}}</span>
+                    <span ng-if="!selRubricName" ng-class="{'red-text' : lenta.isCreateMessageRubricError}">Выберите рубрику</span>
+                    <span ng-if="selRubricName">{{selRubricName}}</span>
                 </a>
                 <ul class="select-group-list select-rubric-list clearfix" ng-show="lenta.isRubricsInMessShow">
+                    <li  ng-click="lenta.selectRubricNew(0)">
+                        <label href="#">
+                            <input name="select-wall-rubric" ng-model="selRubricName" value="Общее" type="radio"/>
+                            Общее
+                        </label>
+                    </li>
                     <li ng-repeat="rubric in base.rubrics" ng-click="lenta.selectRubricNew(rubric)">
                         <label href="#">
-                            <input name="select-wall-rubric" ng-model="lenta.selRubricName" value="{{rubric.visibleName}}" type="radio"/>
+                            <input name="select-wall-rubric" ng-model="selRubricName" value="{{rubric.visibleName}}" type="radio"/>
                             {{rubric.visibleName}}
                         </label>
                     </li>
@@ -89,6 +95,8 @@
                 </div>
 
                 <span class="error-info" ng-show="lenta.isCreateMessageError">{{lenta.createMessageErrorText}}</span>
+                <span class="error-info" ng-show="lenta.isCreateMessageGroupError">Вы не указали группу</span>
+                <span class="error-info" ng-show="lenta.isCreateMessageRubricError">Вы не указали рубрику</span>
 
                 <div class="clearfix"></div>
 
