@@ -1,5 +1,5 @@
 
-forumControllers.controller('LentaController',function($rootScope) {
+forumControllers.controller('LentaController',function($rootScope,$state) {
 
     var lenta = this;
 
@@ -26,7 +26,6 @@ forumControllers.controller('LentaController',function($rootScope) {
     };
 
     lenta.selectRubricNew = function(rubric,ctrl){
-        console.log('selectRubricNew');
         lenta.isRubricsInMessShow = false;
         lenta.isCreateMessageRubricError = false;
 
@@ -55,7 +54,6 @@ forumControllers.controller('LentaController',function($rootScope) {
         //ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup;
     };
 
-    $rootScope.currentRubric = {};
     //$rootScope.currentRubric.id = 0;
 
     lenta.closeInput = function(){
@@ -120,6 +118,25 @@ forumControllers.controller('LentaController',function($rootScope) {
 
         lenta.message.content = lenta.message.default = TEXT_DEFAULT_1;
 
+        $rootScope.wallChangeRubric = function(rubricId){
+
+            lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
+
+            if(lenta.wallItems.length) {
+                initWallItem(lenta.wallItems);
+
+                lastLoadedId = lenta.wallItems[lenta.wallItems.length-1].topic.id;
+            }
+
+        };
+
+        if($state.current.rubricId) {
+            $rootScope.wallChangeRubric($state.current.rubricId);
+            $state.current.rubricId = null;
+        }else{
+            $rootScope.currentRubric = {};
+        }
+
         lenta.wallItems = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id,0,loadedLength);
 
         var wallItemsLength;
@@ -166,7 +183,6 @@ forumControllers.controller('LentaController',function($rootScope) {
         };
 
         $rootScope.wallChangeGroup = function(groupId){
-            //console.log('wall-change ',groupId);
 
             lenta.wallItems = messageClient.getWallItems(groupId, $rootScope.currentRubric.id,0, loadedLength);
 
@@ -177,21 +193,6 @@ forumControllers.controller('LentaController',function($rootScope) {
             }
 
         };
-
-    $rootScope.wallChangeRubric = function(rubricId){
-        //console.log('wall-change ',rubricId);
-
-        lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
-
-        //console.log('wall-change-2 ',lenta.wallItems);
-
-        if(lenta.wallItems.length) {
-            initWallItem(lenta.wallItems);
-
-            lastLoadedId = lenta.wallItems[lenta.wallItems.length-1].topic.id;
-        }
-
-    };
 
         function initWallItem(wallItems){
             wallItemsLength = wallItems.length;

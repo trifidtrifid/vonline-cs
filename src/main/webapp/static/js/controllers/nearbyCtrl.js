@@ -6,6 +6,7 @@ forumControllers.controller('nearbyCtrl', function($rootScope) {
     $rootScope.base.pageTitle = "Рядом";
     $rootScope.base.talksIsActive = $rootScope.base.advertsIsActive = false;
     showGroupOverBuilding($rootScope.groups);
+    $rootScope.currentRubric = null;
 
     nearby.isAuth = authClient.checkIfAuthorized();
 

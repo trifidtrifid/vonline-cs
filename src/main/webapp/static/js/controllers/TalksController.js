@@ -51,6 +51,8 @@ forumControllers.controller('TalksController',function($rootScope) {
             $rootScope.base.bufferSelectedGroup = talk.selectedGroup =
             $rootScope.currentGroup = userClientGroups[3];
 
+            $rootScope.currentRubric = null;
+
             $rootScope.base.initStartParamsForCreateTopic(talk);
 
             talk.isTalk = true;

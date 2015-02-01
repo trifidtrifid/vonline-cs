@@ -30,6 +30,8 @@ forumControllers.controller('AdvertsController',function($rootScope) {
         $rootScope.base.bufferSelectedGroup = adverts.selectedGroup =
         $rootScope.currentGroup = userClientGroups[3];
 
+        $rootScope.currentRubric = null;
+
         $rootScope.base.initStartParamsForCreateTopic(adverts);
 
         adverts.answerFirstMessage = TEXT_DEFAULT_2;
