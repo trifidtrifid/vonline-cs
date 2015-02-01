@@ -53,23 +53,20 @@ forumControllers.controller('leftBarController',function($rootScope,$state) {
 
     $rootScope.setRubric = function(rubric){
 
-            /*for (var i = 0; i < groupsLength; i++) {
-                groups[i].selected = false;
-            }
-
-            group.selected = true;
-
-            $rootScope.currentGroup = group;
-            $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);*/
             $rootScope.currentRubric = rubric;
             $rootScope.selRubricName = $rootScope.currentRubric.visibleName;
         if(!rubric) {
             $rootScope.currentRubric = {};
-            //$rootScope.currentRubric.id = 0;
             $rootScope.selRubricName = null;
         }
 
-        $rootScope.wallChangeRubric($rootScope.currentRubric.id);
+        if($state.current.name != 'main') {
+            var st = $state.get('main');
+            st.rubricId = rubric.id;
+            $state.go('main');
+        }else {
+            $rootScope.wallChangeRubric($rootScope.currentRubric.id);
+        }
 
     }
   })
