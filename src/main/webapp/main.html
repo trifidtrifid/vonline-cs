@@ -117,6 +117,7 @@
                                 <li ng-repeat="rubric in base.rubrics" ng-class="{active: currentRubric.id == rubric.id}">
                                     <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
                                 </li>
+                                <li><a ui-sref="profit"> <span class="menu-text">Полезные соседи</span> </a></li>
                             </ul>
                         </li>
                         <li>
@@ -137,7 +138,6 @@
 
                         </li>
                         <li><a ui-sref="talks"> <span class="menu-text">Обсуждения</span> </a></li> <!-- ng-click="setTab($event,2)" -->
-                        <li><a ui-sref="profit"> <span class="menu-text">Услуги и объявления</span> </a></li>
                         <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>
 
 					</ul>
@@ -148,7 +148,7 @@
                     </ul>-->
 
                     <div class="footer footer-left" ng-hide="base.isFooterBottom">
-                        <span class="copypast">&copy;</span> ВместеОнлайн 2014
+                        <span class="copypast">&copy;</span> ВместеОнлайн 2015
                         <ul>
                             <li><a href="./about" onclick="document.location.replace('./about');">О сайте</a></li>
                             <li><a href="./blog" onclick="document.location.replace('./blog');">Блог</a></li>
@@ -199,7 +199,7 @@
 		</div>
         
         <div class="footer footer-bottom clearfix ng-cloak" ng-show="base.isFooterBottom">
-            <div class="pull-left"><span class="copypast">&copy;</span> ВместеОнлайн 2014</div>
+            <div class="pull-left"><span class="copypast">&copy;</span> ВместеОнлайн 2015</div>
             <div class="pull-right">
                 <ul>
                     <li><a href="./about" onclick="document.location.replace('./about');">О сайте</a></li>
