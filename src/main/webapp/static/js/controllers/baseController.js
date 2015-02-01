@@ -624,14 +624,16 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             } else if(!ctrl.selectedGroup){
 
                 ctrl.isCreateMessageError = false;
+                ctrl.isGroupsInMessShow = true;
                 ctrl.isCreateMessageGroupError = true;
                 ctrl.isCreateMessageRubricError = false;
 
-            }else if(ctrl.selectedRubric === undefined || ctrl.selectedRubric.id === undefined){
+            }else if(ctrl.selectedRubric === null || ctrl.selectedRubric.id === undefined){
 
                 ctrl.isCreateMessageError = false;
                 ctrl.isCreateMessageGroupError = false;
                 ctrl.isCreateMessageRubricError = true;
+                ctrl.isRubricsInMessShow = true;
 
             }else{
 
@@ -640,6 +642,8 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 }
                 ctrl.isCreateMessageError = false;
                 ctrl.isOpenMessageBar = false;
+                ctrl.isGroupsInMessShow = false;
+                ctrl.isRubricsInMessShow = false;
 
                 //console.log('createWallTopic',ctrl.selectedRubric);
 
