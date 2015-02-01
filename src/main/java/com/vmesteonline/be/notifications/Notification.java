@@ -258,29 +258,22 @@ public abstract class Notification {
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
 		String subject =  
-				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + "... комментарий от "+responder.getName()+" "+responder.getLastName();
+				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
 		String body = "";
 		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
-		try {
-			VoUser author = pm.getObjectById(VoUser.class, authorId);
-			EMailHelper.sendSimpleEMail(author.getName() + " " + author.getLastName() + "<" + author.getEmail() + ">", "info@vmesteonline.ru", subject, body);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		
+		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		decorateAndSendMessage(author, subject, body);							
 	}
 
 	public static void sendTopicResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
 		String subject = 
-				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + "... комментарий от "+responder.getName()+" "+responder.getLastName();
+				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
 		String body = "";
 		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
-		try {
-			VoUser author = pm.getObjectById(VoUser.class, authorId);
-			EMailHelper.sendSimpleEMail(author.getName() + " " + author.getLastName() + "<" + author.getEmail() + ">", "info@vmesteonline.ru", subject, body);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		decorateAndSendMessage(author, subject, body);							
 	}
 }

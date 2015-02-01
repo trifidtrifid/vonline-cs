@@ -517,6 +517,6 @@ public class VoHelper {
 		if( msg.length()<minLength) return msg;
 		int trimPOs = msg.indexOf(" ", minLength);
 		trimPOs = -1 == trimPOs || trimPOs > maxLength ? maxLength : trimPOs; 
-		return msg.substring(0, trimPOs);
+		return msg.substring(0, trimPOs)+"...";
 	}
 }

@@ -96,10 +96,9 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			List<VoBuilding> bgs = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='" + getLongitude() + "' && latitude=='" + getLatitude()+"'"));
 			if( 1!=bgs.size()){
 				logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
-			} else {
-				description = bgs.get(0).getAddressString() + "GT:"+GroupType.findByValue(groupType);
-				pm.makePersistent(this);
 			}
+			description = bgs.get(0).getAddressString() + "GT:"+GroupType.findByValue(groupType);
+			pm.makePersistent(this);
 		}
 		return description;
 	}
