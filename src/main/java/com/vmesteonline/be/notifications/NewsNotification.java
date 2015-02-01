@@ -33,15 +33,15 @@ public class NewsNotification extends Notification {
 				
 				for( Entry<VoUser, List<NotificationMessage>> un :messagesToSend.entrySet()){
 					VoUser user = un.getKey();
-					String body = "Новости ВместеОнлайн.ру<br/><br/>";
+					String body = "<h2>Новости ВместеОнлайн.ру</h2>";
 					for( NotificationMessage nm : un.getValue())
-						body += nm.message + "<br/><br/>";
+						body += nm.message;
 					
 					body += "Подробности на сайте<a href=\"https://"+host+"\"> ВместеОнлайн.ру</a>";
 					body += "<br/><i>Вы можете изменить рассылку новостей в </i>"
 							+ "<a href=\"https://"+host+"/settings\">настройках профиля</a>";
 					logger.debug("Got +"+messagesToSend.size()+" to send new News");
-					//decorateAndSendMessage(user, " новости рядом с вами", body);
+					decorateAndSendMessage(user, " новости рядом с вами", body);
 					logger.debug("News sent to:" + user);
 					user.setLastNotified(now);
 					pm.makePersistent(user);

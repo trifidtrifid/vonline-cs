@@ -88,7 +88,7 @@ public class NewTopicsNotification extends Notification {
 	protected void createAndSendMessages(Map<VoUser, List<VoTopic>[]> userTopics, int now, PersistenceManager pm) {
 		// create message for each user
 		for (VoUser u : userTopics.keySet()) {
-			String body = "<p><b>Ваши соседи пишут</b></p>";
+			String body = "<h3>Ваши соседи пишут</h3>";
 			boolean somethingToSend = false;
 			for ( VoGroup ug: Defaults.getDefaultGroups()) {
 				List<VoTopic> topicsList = userTopics.get(u)[ug.getGroupType()];
@@ -106,8 +106,7 @@ public class NewTopicsNotification extends Notification {
 				mn.subject = "Ваши соседи пишут";
 				mn.to = u.getEmail();
 				try {
-					sendMessage(mn, u);
-					u.setLastNotified(now);
+					sendMessage(mn, u);					
 				} catch (IOException e) {
 					
 					e.printStackTrace();
@@ -124,7 +123,7 @@ public class NewTopicsNotification extends Notification {
 			if( orderedTopics.get(0).getCreatedAt() < u.getLastNotified() )
 				return null;
 			
-			String groupContent = "<p><b>В группе '" + ug.getVisibleName() + "'</b>";
+			String groupContent = "<p><b>В группе '" + ug.getVisibleName() + "':</b>";
 				
 			for (VoTopic tpc : orderedTopics) {
 				if( tpc.getCreatedAt() < u.getLastNotified() )
@@ -152,7 +151,7 @@ public class NewTopicsNotification extends Notification {
 		//topicTxt += StringEscapeUtils.escapeHtml4(tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length())));
 		topicTxt += tpc.getContent().substring( 0, Math.min(255, tpc.getContent().length()));
 		if( tpc.getContent().length() > 255 ) topicTxt += "<a href=\"https://"+host+"/wall-single/"+tpc.getId()+"\">...</a>";
-		topicTxt += "</p>--";
+		topicTxt += "</p>";
 		return topicTxt;
 	}
 

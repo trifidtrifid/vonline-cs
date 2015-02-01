@@ -67,7 +67,13 @@ public class NewNeigboursNotification extends Notification {
 					"' AND latitude>='" + latMin +"' AND latitude<='"+latMax+"'");
 			List<Long> usersToNotify = executeQuery(visibleUSersSQL);*/
 		
-			if( u.getLongitude().compareTo( lonMin ) >= 0 && u.getLongitude().compareTo( lonMax ) <= 0 &&
+			if( null == u.getLongitude() && null!=u.getGroups() && u.getGroups().size() > 0) {
+				VoUserGroup group = pm.getObjectById(VoUserGroup.class, u.getGroups().get(0));
+				u.setLongitude( group.getLongitude());
+				u.setLatitude( group.getLatitude());
+			}
+			if( null!=u.getLongitude() && null!=u.getLatitude() &&
+					u.getLongitude().compareTo( lonMin ) >= 0 && u.getLongitude().compareTo( lonMax ) <= 0 &&
 					u.getLatitude().compareTo( latMin ) >= 0 && u.getLatitude().compareTo( latMax ) <= 0 ) { //users of this group are visible
 				for( VoUser newUSer: groupUsersMap.get(updatedGroupId)) {
 					if( u.getId() != newUSer.getId() && u.getLastNotified() < newUSer.getRegistered() ){
@@ -87,11 +93,11 @@ public class NewNeigboursNotification extends Notification {
 	}
 
 	protected String createMessageWithNewNeibs(Map< GroupType, Set<VoUser>> neibInGroups, PersistenceManager pm) {
-		String body = "Новые соседи: <br/>";
+		String body = "<h3>Новые соседи:</h3>";
 		for( GroupType gt: GroupType.values()){
 			Set<VoUser> newNbrs = neibInGroups.get(gt);
 			if( null != newNbrs && !newNbrs.isEmpty()){
-				body+= "<p>В группе '"+Defaults.getDefaultGroups().get(gt.getValue() - Defaults.FIRST_USERS_GROUP).getVisibleName()+"':<br/>";
+				body+= "<p><b>В группе '"+Defaults.getDefaultGroups().get(gt.getValue() - Defaults.FIRST_USERS_GROUP).getVisibleName()+"':</b><br/>";
 				for( VoUser nn: newNbrs ){
 					String contactTxt = "<a href=\"https://"+host+"/profile/"+nn.getId()+"\">"+StringEscapeUtils.escapeHtml4(nn.getName() + " " + nn.getLastName())+"</a>";
 					body += contactTxt + " : " + nn.getAddressString(gt, pm)+"<br/>";
@@ -108,8 +114,7 @@ public class NewNeigboursNotification extends Notification {
 		mn.subject = "Новые соседи";
 		mn.to = u.getEmail();
 		try {
-			sendMessage(mn, u);
-			u.setLastNotified(now);
+			sendMessage(mn, u);			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
