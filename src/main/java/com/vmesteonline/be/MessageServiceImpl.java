@@ -606,33 +606,38 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	private void updateMessage(Message msg) throws InvalidOperation {
-
 		int now = (int) (System.currentTimeMillis() / 1000);
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoMessage storedMsg = pm.getObjectById(VoMessage.class, msg.getId());
-
-			if (storedMsg.getAuthorId() != getCurrentUserId(pm))
-				throw new InvalidOperation(VoError.IncorrectParametrs, "User is not author of message");
-
+			VoUser currentUser = getCurrentUser(pm);
+			if (storedMsg.getAuthorId() != currentUser.getId())
+				if(!currentUser.isTheBigBro())
+					throw new InvalidOperation(VoError.IncorrectParametrs, "User is not author of message");
+				else
+					msg.setAuthorId(storedMsg.getAuthorId());
+			
 			VoTopic topic = pm.getObjectById(VoTopic.class, storedMsg.getTopicId());
 
 			/* Check if content changed, then update edit date */
 			if (!storedMsg.getContent().equals(msg.getContent())) {
 				// int editedAt = 0 == msg.getEdited() ? now : msg.getEdited();
-				storedMsg.setEditedAt(now);
+				if(!currentUser.isTheBigBro()){ 					
+					storedMsg.setEditedAt(now);
+				}
 				storedMsg.setContent(msg.getContent());
 			}
-
-			if (storedMsg.getTopicId() != msg.getTopicId() || storedMsg.getAuthorId() != msg.getAuthorId()
-					|| storedMsg.getRecipient() != msg.getRecipientId() || storedMsg.getCreatedAt() != msg.getCreated() || storedMsg.getType() != msg.getType())
+			
+			if (storedMsg.getTopicId() != msg.getTopicId() || storedMsg.getAuthorId() != msg.getAuthorId() 
+					|| storedMsg.getRecipient() != msg.getRecipientId() || storedMsg.getCreatedAt() != msg.getCreated() || storedMsg.getType() != msg.getType()){
+				logger.error("Parameters: topic, author, recipient, createdAt, type could not be changed!");
 				throw new InvalidOperation(VoError.IncorrectParametrs, "Parameters: topic, author, recipient, createdAt, type could not be changed!");
+			}
 
 			storedMsg.setImages(updateAttachments(storedMsg.getImages(), msg.getImages(), storedMsg.getAuthorId(), pm));
 			storedMsg.setDocuments(updateAttachments(storedMsg.getDocuments(), msg.getDocuments(), storedMsg.getAuthorId(), pm));
 
-			pm.makePersistent(storedMsg);
-			pm.makePersistent(topic);
+			pm.makePersistent(storedMsg);			
 
 		} catch (JDOObjectNotFoundException onfe) {
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Message not found");
@@ -643,17 +648,17 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		int now = (int) (System.currentTimeMillis() / 1000);
 
-		if (topic.getAuthorId() != getCurrentUserId(pm))
-			throw new InvalidOperation(VoError.IncorrectParametrs, "User is not author of message");
-
+		VoUser currentUser = getCurrentUser(pm);
 		/* Check if content changed, then update edit date */
 		if (!topic.getContent().equals(msg.getContent())) {
 			// int editedAt = 0 == msg.getEdited() ? now : msg.getEdited();
-			topic.setEditedAt(now);
-			topic.setLastUpdate(now);
+			if(!currentUser.isTheBigBro()){ 
+				topic.setEditedAt(now);
+				topic.setLastUpdate(now);
+			}
 			topic.setContent(msg.getContent());
 		}
-
+		
 		if (topic.getAuthorId() != msg.getAuthorId() || topic.getCreatedAt() != msg.getCreated() || topic.getType() != msg.getType())
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Parameters: topic, author, recipient, createdAt, type could not be changed!");
 
@@ -664,12 +669,17 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	private void updateTopic(Topic topic) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
+		
 		VoTopic theTopic;
 		try {
 			theTopic = pm.getObjectById(VoTopic.class, topic.getId());
 		} catch (Exception e1) {
 			throw new InvalidOperation(VoError.IncorrectParametrs, "FAiled to update Topic. No topic found by ID" + topic.getId());
 		}
+
+		VoUser currentUser = getCurrentUser(pm);
+		if (!currentUser.isTheBigBro() && theTopic.getAuthorId() != currentUser.getId())
+			throw new InvalidOperation(VoError.IncorrectParametrs, "User is not author of message");
 
 		updateTopicMessage(theTopic, topic.getMessage(), pm);
 		theTopic.setImages(updateAttachments(theTopic.getImages(), topic.getMessage().getImages(), theTopic.getAuthorId(), pm));
@@ -678,6 +688,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		theTopic.setViewers(topic.viewers);
 		changeTopicGroup(topic, theTopic, pm);
 		theTopic.setSubject(topic.getSubject());
+		theTopic.setRubricId( topic.getRubricId());
 
 		updatePoll(theTopic, topic, pm);
 

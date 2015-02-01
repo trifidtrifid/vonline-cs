@@ -311,14 +311,15 @@ public class Defaults {
 		PersistenceManager pm = PMF.getPm();
 		if( null==Defaults.defaultRubrics)
 			Defaults.defaultRubrics = Arrays.asList( new VoRubric[]{
-				VoRubric.createVoRubric( "Кто чем", "#whowhow", "В группе соседи предлагают друг другу свои услуги и спрашивают помощи", true, pm),
-				VoRubric.createVoRubric( "Домоуправление (ЖКХ)", "#zhkh", "Вопросы связанные с благоустройсвом и решением бытовых вопросов", true, pm),
-				VoRubric.createVoRubric( "Автомобилисты", "#auto", "Решение вопросов порковки, стоянки, заездов выездов", true, pm),
+				VoRubric.createVoRubric( "Благоустройство и ЖКХ", "#zhkh", "Вопросы связанные с благоустройсвом и решением бытовых вопросов", true, pm),
 				VoRubric.createVoRubric( "Родители и Дети", "#childs", "Прогулки и площадки, детсады, школы, кружки и репититоры", true, pm),
-				VoRubric.createVoRubric( "Барахолка", "#things", "У кого что полезное есть предложить или нужно попросить", true, pm),
-				VoRubric.createVoRubric( "Безопасность", "#security", "Преступность, что происходит как с этим бороться", true, pm),
+				VoRubric.createVoRubric( "Куплю\\продам", "#buysell", "", true, pm),
+				VoRubric.createVoRubric( "Происшествия", "#security", "Преступность, что происходит как с этим бороться", true, pm),
+//				VoRubric.createVoRubric( "Полезные соседи", "#things", "У кого что полезное есть предложить или нужно попросить", true, pm),
+				VoRubric.createVoRubric( "Здоровье и спорт ", "#sport", "Спортзалы, тренера и спортивные мероприятия личные и общественные", true, pm),
 				VoRubric.createVoRubric( "Досуг ", "#dosug", "Клубы, рестораны, кафе, бары", true, pm),
-				VoRubric.createVoRubric( "Спорт ", "#sport", "Спортзалы, тренера и спортивные мероприятия личные и общественные", true, pm),
+				VoRubric.createVoRubric( "Питомцы", "#pets", "", true, pm),
+				VoRubric.createVoRubric( "Бюро находок", "#lost'nfound", "", true, pm)
 				});
 		
 		return VoHelper.convertMutableSet(Defaults.defaultRubrics, new ArrayList<Rubric>(), new Rubric());
