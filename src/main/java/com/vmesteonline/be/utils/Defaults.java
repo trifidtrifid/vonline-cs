@@ -319,7 +319,7 @@ public class Defaults {
 				VoRubric.createVoRubric( "Здоровье и спорт ", "#sport", "Спортзалы, тренера и спортивные мероприятия личные и общественные", true, pm),
 				VoRubric.createVoRubric( "Досуг ", "#dosug", "Клубы, рестораны, кафе, бары", true, pm),
 				VoRubric.createVoRubric( "Питомцы", "#pets", "", true, pm),
-				VoRubric.createVoRubric( "Бюро находок", "#lost'nfound", "", true, pm)
+				VoRubric.createVoRubric( "Бюро находок", "#lostnfound", "", true, pm)
 				});
 		
 		return VoHelper.convertMutableSet(Defaults.defaultRubrics, new ArrayList<Rubric>(), new Rubric());
