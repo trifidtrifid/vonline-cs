@@ -630,6 +630,7 @@ function postTopic(obj,isWall,isAdverts,$filter){
 }
 
 function postMessageMy(obj,isWall,isFirstLevel,$filter){
+
     if((obj.id && obj.isEdit) || (obj.message && obj.message.isEdit)){
         // значит редактирование
         var message;
