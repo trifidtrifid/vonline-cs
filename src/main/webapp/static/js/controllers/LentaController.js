@@ -39,11 +39,14 @@ forumControllers.controller('LentaController',function($rootScope,$state) {
         //$rootScope.base.selectRubricInDropdown(rubric.id,lenta);
         var rubricsLength = userClientRubrics.length,
             selectedRubric;
-        for(var i = 0; i < rubricsLength; i++){
-            if(rubric.id == userClientRubrics[i].id){
-                $rootScope.currentRubric = userClientRubrics[i];
+
+        //if(!ctrl.isEdit) {
+            for (var i = 0; i < rubricsLength; i++) {
+                if (rubric.id == userClientRubrics[i].id) {
+                    $rootScope.currentRubric = userClientRubrics[i];
+                }
             }
-        }
+        //}
 
         if(ctrl){
             rubric ? ctrl.selRubricName = rubric.visibleName : ctrl.selRubricName = "Общее";

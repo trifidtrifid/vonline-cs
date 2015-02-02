@@ -290,6 +290,16 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         };
 
         base.setEdit = function (event, message, isNeedAnswerShow) {
+            if(!message.rubric) {
+                //message.selRubricName = "Общее";
+                message.rubric = {};
+                message.rubric.visibleName = "Общее";
+                message.rubric.id = 0;
+            }
+
+            //$rootScope.currentRubric = message.rubric;
+
+            console.log('setEdit',$rootScope.currentRubric);
             var isTopic;
             (message.message) ? isTopic = true : isTopic = false;
 
@@ -529,6 +539,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         function addSingleTalk(talk) {
             console.log('addSingleTalk-0',$rootScope.currentRubric);
+
             talk.selectedRubric = $rootScope.currentRubric;
             if(!talk.selectedRubric) {
                 talk.selectedRubric = {};
@@ -593,8 +604,14 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         }
 
         function createWallTopic(ctrl) {
-            console.log('wallTopic',$rootScope.currentRubric);
-            ctrl.selectedRubric = $rootScope.currentRubric;
+
+            if(ctrl.isEdit && !$rootScope.currentRubric) {
+                ctrl.selectedRubric = ctrl.rubric;
+            }else{
+                ctrl.selectedRubric = $rootScope.currentRubric;
+            }
+
+            //console.log('WallTopic',ctrl.selectedRubric);
 
             if (ctrl.isEdit) {
                 ctrl.attachedImages = getAttachedImages($('#attach-area-edit-' + ctrl.id));
