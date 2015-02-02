@@ -129,6 +129,7 @@ forumControllers.controller('LentaController',function($rootScope,$state) {
                 initWallItem(lenta.wallItems);
 
                 lastLoadedId = lenta.wallItems[lenta.wallItems.length-1].topic.id;
+                lastLoadedIdFF = null;
             }
 
         };
@@ -193,6 +194,7 @@ forumControllers.controller('LentaController',function($rootScope,$state) {
                 initWallItem(lenta.wallItems);
 
                 lastLoadedId = lenta.wallItems[lenta.wallItems.length-1].topic.id;
+                lastLoadedIdFF = null;
             }
 
         };
@@ -278,6 +280,7 @@ forumControllers.controller('LentaController',function($rootScope,$state) {
         var lastLoadedIdFF;
         lenta.addMoreItems = function(){
             //lastLoadedIdFF = lastLoadedId;
+            console.log('addMoreItems',lastLoadedId,loadedLength,$rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric);
             if(wallItemsLength == 10) {
                 var buff = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id, lastLoadedId, loadedLength);
                 if (buff) {
