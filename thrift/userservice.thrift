@@ -55,8 +55,7 @@ service UserService {
 	void updateContacts(1:bedata.UserContacts contacts) throws (1:error.InvalidOperation exc),
 	void updateFamily(1:bedata.UserFamily family) throws (1:error.InvalidOperation exc),
 	void updateInterests(1:bedata.UserInterests interests) throws (1:error.InvalidOperation exc),
-	void updateNotifications(1:bedata.Notifications notifications) throws (1:error.InvalidOperation exc),
-		
+	void updateNotifications(1:bedata.Notifications notifications) throws (1:error.InvalidOperation exc),		
 	
 	list<bedata.Country> getCounties() throws (1:error.InvalidOperation exc),
 	list<bedata.City> getCities(1:i64 countryId) throws (1:error.InvalidOperation exc),
