@@ -77,4 +77,7 @@ service UserService {
 	void updateUserAddress( 1:i32 staircase, 2:i32 floor, 3:i32 flatNo) throws (1:error.InvalidOperation exc),
 	
 	void updateUserServices( 1:map<bedata.ServiceType,bool> newServiceStauses ) throws (1:error.InvalidOperation exc),
+	
+	list<string> getAddressListByGroupId( 1:i64 groupId ) throws (1:error.InvalidOperation exc),
+	list<string> getAddressListByMessageId( 1:i64 msgId ) throws (1:error.InvalidOperation exc),		
 }

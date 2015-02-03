@@ -2,6 +2,7 @@ package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoInviteCode;
+import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
@@ -1002,5 +1003,56 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	private static int getUsersCountByGroup(long groupId, PersistenceManager pm) {
 		List<Long> results = executeQuery(  pm.newQuery("SQL","SELECT count(*) FROM `USERGROUPS` as g JOIN VOUSER as u ON u.ID=g.ID WHERE `GROUP`="+groupId +" AND u.emailConfirmed=true") );
 		return results.get(0).intValue();
+	}
+
+	@Override
+	public List<String> getAddressListByGroupId(long groupId) throws InvalidOperation {
+		PersistenceManager pm = PMF.getPm();
+		Set<String> res = getGroupMembersListById(groupId, pm);
+		return new ArrayList<String>(res);
+	}
+
+	private Set<String> getGroupMembersListById(long groupId, PersistenceManager pm) {
+		Set<String> res = new TreeSet<String>();
+		VoUserGroup group = pm.getObjectById(VoUserGroup.class, groupId);
+		GroupType groupType = GroupType.findByValue(group.getGroupType());
+		if( groupType.getValue() <= GroupType.BUILDING.getValue() ) {
+			
+			switch( groupType){
+			case BUILDING:
+				res.add(group.getBuildingAddressString(pm));
+				break;
+			case STAIRCASE:
+				res.add("Парадная №"+group.getStaircase());
+				break;
+			case FLOOR:
+				res.add("Этаж "+group.getStaircase());
+				break;
+			default:
+				break;
+			} 
+			
+		} else {
+			int radius = group.getRadius();
+			String ufilter = "";
+			BigDecimal latitudeMax = VoHelper.getLatitudeMax(group.getLatitude(), radius);
+			BigDecimal latitudeMin = VoHelper.getLatitudeMin(group.getLatitude(), radius);
+			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
+			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
+			ufilter += "longitude >= '" + longitudeMin + "' AND longitude <= '" + longitudeMax +
+					"' AND latitude >= '" + latitudeMin + "' AND latitude <= '" + latitudeMax+"'";
+			List<Long> ulist = executeQuery(pm.newQuery( "SQL", "SELECT ID FROM VOBUILDING WHERE "+ ufilter));
+			for( Long bid : ulist){
+				res.add( pm.getObjectById(VoBuilding.class, bid ).getAddressString() );
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public List<String> getAddressListByMessageId(long msgId) throws InvalidOperation {
+		PersistenceManager pm = PMF.getPm();
+		Set<String> res = getGroupMembersListById( pm.getObjectById(VoTopic.class, msgId).getUserGroupId(), pm);
+		return new ArrayList<String>(res);
 	}
 }
