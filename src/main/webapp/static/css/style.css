@@ -1896,3 +1896,25 @@ h1 {
 .backoffice .broadcast textarea {
   width: 100%;
 }
+.cabinet-edit {
+  font-size: 14px;
+}
+.cabinet-edit label {
+  display: block;
+}
+.cabinet-edit label span {
+  display: inline-block;
+  width: 150px;
+}
+.cabinet-edit label input {
+  display: inline-block;
+  width: 300px;
+}
+.cabinet-edit textarea {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+.cabinet-edit .cabinet-descr {
+  margin-bottom: 10px;
+}

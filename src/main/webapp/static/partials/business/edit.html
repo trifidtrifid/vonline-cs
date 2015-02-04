@@ -1,36 +1,35 @@
 
-<section class="page">
+<section class="page cabinet-edit">
 
-<div>
-    <img src="" alt=""/>
-</div>
-    
-<div><img src="" alt=""/></div>
+    <label class="block clearfix logo-container">
+        <div class="avatar big" style="background-image: url({{edit.logoURL}})"></div>
+        <a ui-sref="profile.change-avatar" class="change-avatar-link" ng-show="profile.isMayEdit">Изменить аватар</a>
+    </label>
+
+    <div>
+        <div>Иллюстрация</div>
+        <img src="" alt=""/>
+    </div>
 
     <label>
         <span>Название</span>
-        <input type="text"/>
+        <input type="text" ng-model="edit.shortName"/>
     </label>
     <label>
         <span>Короткое описание</span>
-        <input type="text"/>
-    </label>
-    <label>
-        <span>Время работы</span>
-        <input type="text"/>
+        <input type="text" ng-model="edit.shortInfo"/>
     </label>
     <label>
         <span>Адрес</span>
-        <input type="text"/>
-    </label>
-    <label>
-        <span>Комментарий</span>
-        <input type="text"/>
+        <input type="text" ng-model="edit.address"/>
     </label>
 
-    <div><textarea name="" id="" cols="30" rows="10"></textarea></div>
+    <div class="cabinet-descr">
+        <div>Полное описание</div>
+        <textarea ng-model="edit.fullInfo"></textarea>
+    </div>
 
-    <button class="btn">Сохранить</button>
+    <button class="btn btn-sm btn-primary no-border" ng-click="edit.save()">Сохранить</button>
 
 </section>
 
