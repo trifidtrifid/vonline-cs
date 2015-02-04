@@ -1,5 +1,5 @@
 
-forumControllers.controller('TalksController',function($rootScope) {
+forumControllers.controller('rubrics',function($rootScope,$stateParams) {
         /*
         * при работе с обсждениями нужно учесть следующее:
         * есть три типа сообщения :
@@ -51,8 +51,6 @@ forumControllers.controller('TalksController',function($rootScope) {
             $rootScope.base.bufferSelectedGroup = talk.selectedGroup =
             $rootScope.currentGroup = userClientGroups[3];
 
-            $rootScope.currentRubric = null;
-
             $rootScope.base.initStartParamsForCreateTopic(talk);
 
             talk.isTalk = true;
@@ -70,7 +68,7 @@ forumControllers.controller('TalksController',function($rootScope) {
             $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
             $rootScope.importantIsLoadedFromTop = false;*/
 
-            talk.topics = messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
+            talk.topics = messageClient.getTopics(talk.selectedGroup.id, $stateParams.rubricId, 0, 0, 1000).topics;
 
             initTalks();
 
@@ -107,26 +105,6 @@ forumControllers.controller('TalksController',function($rootScope) {
 
         };
 
-    talk.selRubricName = "Общее";
-    talk.selectRubricNew = function(rubric){
-        if(rubric) {
-            talk.selRubricName = rubric.visibleName;
-        }else{
-            talk.selRubricName = "Общее";
-            $rootScope.currentRubric = {};
-            $rootScope.currentRubric.id = 0;
-        }
-
-        var rubricsLength = userClientRubrics.length;
-
-        for(var i = 0; i < rubricsLength; i++){
-            if(rubric.id == userClientRubrics[i].id){
-                $rootScope.currentRubric = userClientRubrics[i];
-            }
-        }
-
-    };
-
         $('.ng-cloak').removeClass('ng-cloak');
 
-    });
+    })

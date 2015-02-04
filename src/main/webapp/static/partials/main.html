@@ -10,7 +10,7 @@
             <div ng-show="lenta.isOpenMessageBar">
                 <a class="write-mess-selectGroup" href="#" ng-click="lenta.showGroups()">
                     <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isGroupsInMessShow, 'fa-chevron-up':lenta.isGroupsInMessShow}"></i>
-                    <span ng-if="!lenta.selGroupName">Выберите группу</span>
+                    <span ng-if="!lenta.selGroupName" ng-class="{'red-text' : lenta.isCreateMessageGroupError}">Выберите группу</span>
                     <span ng-if="lenta.selGroupName">{{lenta.selGroupName}}</span>
                 </a>
                 <ul class="select-group-list" ng-show="lenta.isGroupsInMessShow">
@@ -24,6 +24,26 @@
                 <textarea ng-model="lenta.message.content" class="topic-textarea no-resize" ng-keyup="base.messageChange($event,1)"
                           ng-blur="base.textareaBlur(lenta.message.content,lenta.message.default,lenta,true)" ng-focus="base.textareaFocus(lenta.message.content,lenta.message.default,lenta,true)"
                           ng-hasfocus="base.isLentaFocus">Написать сообщение</textarea>
+
+                <a class="write-mess-selectGroup write-mess-selectRubric" href="#" ng-click="lenta.showRubrics()">
+                    <i class="pull-right fa" ng-class="{'fa-chevron-down': !lenta.isRubricsInMessShow, 'fa-chevron-up':lenta.isRubricsInMessShow}"></i>
+                    <span ng-if="!selRubricName" ng-class="{'red-text' : lenta.isCreateMessageRubricError}">Выберите рубрику</span>
+                    <span ng-if="selRubricName">{{selRubricName}}</span>
+                </a>
+                <ul class="select-group-list select-rubric-list clearfix" ng-show="lenta.isRubricsInMessShow">
+                    <li  ng-click="lenta.selectRubricNew(0)">
+                        <label href="#">
+                            <input name="select-wall-rubric" ng-model="selRubricName" value="Общее" type="radio"/>
+                            Общее
+                        </label>
+                    </li>
+                    <li ng-repeat="rubric in base.rubrics" ng-click="lenta.selectRubricNew(rubric)">
+                        <label href="#">
+                            <input name="select-wall-rubric" ng-model="selRubricName" value="{{rubric.visibleName}}" type="radio"/>
+                            {{rubric.visibleName}}
+                        </label>
+                    </li>
+                </ul>
 
                 <div class="create-poll" ng-show="lenta.isPollShow">
                     <a class="poll-cancel pull-right" title="отмена опроса" href="#" ng-click="lenta.isPollShow = false;lenta.isPollAvailable = true;">&times;</a>
@@ -75,6 +95,8 @@
                 </div>
 
                 <span class="error-info" ng-show="lenta.isCreateMessageError">{{lenta.createMessageErrorText}}</span>
+                <span class="error-info" ng-show="lenta.isCreateMessageGroupError">Вы не указали группу</span>
+                <span class="error-info" ng-show="lenta.isCreateMessageRubricError">Вы не указали рубрику</span>
 
                 <div class="clearfix"></div>
 
@@ -242,10 +264,11 @@
                                         <!--<div ng-if="wallMessage.content.length < base.contentLength">
 
                                             <div class="text" ng-bind-html="wallMessage.content"></div>
-                                        </div>-->
-                                        <!--<div ng-if="wallMessage.content.length >= base.contentLength">
+                                        </div>
+                                        <div ng-if="wallMessage.content.length >= base.contentLength">
                                             <div class="text" ng-hide="wallMessage.isFullText">
-                                                <div ng-bind-html="wallMessage.content.slice(0,base.contentLength-1)"></div>
+                                                <!-- .slice(0,base.contentLength-1)
+                                                <div class="folding" ng-bind-html="wallMessage.content"></div>
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">читать далее...</a></div>
                                             </div>
                                             <div class="text" ng-show="wallMessage.isFullText">

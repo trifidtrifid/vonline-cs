@@ -89,6 +89,30 @@
             </div>
         </div>
 
+        <div class="hashtag pull-left" ng-if="ctrl.isTalk || (ctrl.isEdit && !ctrl.isAdvert)">
+            <span>рубрика</span>
+            <div class="btn-group hashtag-dropdown">
+                <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border">
+                    <span class="btn-group-text" ng-if="!ctrl.selRubricName">#{{ctrl.rubric.visibleName}}</span>
+                    <!--<span class="btn-group-text" ng-if="ctrl.selRubricName">#{{ctrl.selRubricName}}</span>-->
+                    <span class="btn-group-text" ng-if="ctrl.selRubricName">#{{ctrl.selRubricName}}</span>
+                    <span class="icon-caret-down icon-on-right"></span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-blue">
+                    <li>
+                        <a href="#" ng-if="lenta" ng-click="lenta.selectRubricNew(0,ctrl)">Общее</a>
+                        <a href="#" ng-if="!lenta" ng-click="ctrl.selectRubricNew(0)">Общее</a>
+                    </li>
+                    <li ng-repeat="rubric in base.rubrics">
+                        <a href="#" ng-if="lenta" ng-click="lenta.selectRubricNew(rubric,ctrl)">{{rubric.visibleName}}</a>
+                        <a href="#" ng-if="!lenta" ng-click="ctrl.selectRubricNew(rubric)">{{rubric.visibleName}}</a>
+                    </li>
+                    <!--  ng-click="base.selectGroupInDropdown(group.id,ctrl)" -->
+                </ul>
+            </div>
+        </div>
+
         <span class="error-info" ng-show="ctrl.isCreateMessageError">{{ctrl.createMessageErrorText}}</span>
 
     </div>

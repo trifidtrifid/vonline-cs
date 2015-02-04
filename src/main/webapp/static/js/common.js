@@ -35,7 +35,10 @@ protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
 if(path != '/blog' && path != '/about' && path != '/contacts') {
-    var userClientGroups = userClient.getUserGroups();
+    var userClientGroups = userClient.getUserGroups(),
+        userClientRubrics = userClient.getUserRubrics();
+
+    console.log('111',userClientRubrics,userClientGroups);
     if (userClientGroups.length == 0) document.location.replace('/login');
 
     var shortUserInfo = userClient.getShortUserInfo();
@@ -478,6 +481,18 @@ function getTagColor(labelName){
     }
     return color;
 }
+function getTopicRubric(topic){
+    var len = userClientRubrics.length,
+        rubric;
+
+    for(var i = 0; i < len; i++){
+        if(userClientRubrics[i].id == topic.rubricId){
+            rubric = userClientRubrics[i];
+        }
+    }
+
+    return rubric
+};
 
 function postTopic(obj,isWall,isAdverts,$filter){
     if(obj.id){
@@ -519,6 +534,9 @@ function postTopic(obj,isWall,isAdverts,$filter){
 
         obj.label = getLabel(userClientGroups,obj.selectedGroup.type);
         obj.tagColor = getTagColor(obj.label);
+        obj.selectedRubric.id ? obj.rubricId = obj.selectedRubric.id : obj.rubricId = 0;
+
+        console.log('postTopic-2',obj.rubricId);
 
         var newTopic = messageClient.postTopic(obj);
     }else {
@@ -583,6 +601,8 @@ function postTopic(obj,isWall,isAdverts,$filter){
             newTopic.poll = poll;
             newTopic.metaType = "poll";
         }
+        //newTopic.rubricId = obj.selectedRubric.id;
+        obj.selectedRubric.id ? newTopic.rubricId = obj.selectedRubric.id : newTopic.rubricId = 0;
 
         //alert(newTopic.message.content);
         var tempTopic = messageClient.postTopic(newTopic);
@@ -610,6 +630,7 @@ function postTopic(obj,isWall,isAdverts,$filter){
 }
 
 function postMessageMy(obj,isWall,isFirstLevel,$filter){
+
     if((obj.id && obj.isEdit) || (obj.message && obj.message.isEdit)){
         // значит редактирование
         var message;

@@ -6,6 +6,7 @@ forumControllers.controller('importantController',function($rootScope) {
         $rootScope.base.isFooterBottom = false;
         $rootScope.base.pageTitle = "Важно";
         $rootScope.base.mainContentTopIsHide = true;
+        $rootScope.currentRubric = null;
 
         var important = this,
             lastLoadedId = 0,

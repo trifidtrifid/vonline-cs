@@ -1,11 +1,12 @@
 
-forumControllers.controller('LentaController',function($rootScope) {
+forumControllers.controller('LentaController',function($rootScope,$state) {
 
     var lenta = this;
 
     /**/
 
     lenta.isGroupsInMessShow = false;
+    lenta.isRubricsInMessShow = false;
     lenta.isOpenMessageBar = false;
 
     lenta.showGroups = function(){
@@ -14,14 +15,59 @@ forumControllers.controller('LentaController',function($rootScope) {
 
     lenta.selectGroupNew = function(group){
         lenta.isGroupsInMessShow = false;
+        lenta.isCreateMessageGroupError = false;
+
         //lenta.selGroupName = group.visibleName;
         $rootScope.base.selectGroupInDropdown(group.id,lenta);
     };
 
+    lenta.showRubrics = function(){
+        lenta.isRubricsInMessShow ? lenta.isRubricsInMessShow = false : lenta.isRubricsInMessShow = true
+    };
+
+    lenta.selectRubricNew = function(rubric,ctrl){
+        lenta.isRubricsInMessShow = false;
+        lenta.isCreateMessageRubricError = false;
+
+        if(rubric) {
+            $rootScope.selRubricName = rubric.visibleName;
+        }else{
+            $rootScope.selRubricName = "Общее";
+            $rootScope.currentRubric = {};
+            $rootScope.currentRubric.id = 0;
+        }
+        //$rootScope.base.selectRubricInDropdown(rubric.id,lenta);
+        var rubricsLength = userClientRubrics.length,
+            selectedRubric;
+
+        //if(!ctrl.isEdit) {
+            for (var i = 0; i < rubricsLength; i++) {
+                if (rubric.id == userClientRubrics[i].id) {
+                    $rootScope.currentRubric = userClientRubrics[i];
+                }
+            }
+        //}
+
+        if(ctrl){
+            rubric ? ctrl.selRubricName = rubric.visibleName : ctrl.selRubricName = "Общее";
+        }
+
+        //$rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+
+        //ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup;
+    };
+
+    //$rootScope.currentRubric.id = 0;
+
     lenta.closeInput = function(){
+        lenta.isCreateMessageError = false;
+        lenta.isCreateMessageGroupError = false;
+        lenta.isCreateMessageRubricError = false;
+
         lenta.isOpenMessageBar = false;
         lenta.isGroupsInMessShow = false;
-        lenta.selectedGroup = lenta.selGroupName = null;
+        lenta.isRubricsInMessShow = false;
+        lenta.selectedGroup = lenta.selGroupName = $rootScope.selRubricName = $rootScope.currentRubric = null;
         lenta.message.content = TEXT_DEFAULT_1;
     };
 
@@ -75,7 +121,26 @@ forumControllers.controller('LentaController',function($rootScope) {
 
         lenta.message.content = lenta.message.default = TEXT_DEFAULT_1;
 
-        lenta.wallItems = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,0,loadedLength);
+        $rootScope.wallChangeRubric = function(rubricId){
+
+            lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
+
+            if(lenta.wallItems.length) {
+                initWallItem(lenta.wallItems);
+
+                lastLoadedId = lenta.wallItems[lenta.wallItems.length-1].topic.id;
+            }
+
+        };
+
+        if($state.current.rubricId) {
+            $rootScope.wallChangeRubric($state.current.rubricId);
+            $state.current.rubricId = null;
+        }else{
+            $rootScope.currentRubric = {};
+        }
+
+        lenta.wallItems = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id,0,loadedLength);
 
         var wallItemsLength;
         lenta.wallItems ? wallItemsLength = lenta.wallItems.length :
@@ -86,7 +151,8 @@ forumControllers.controller('LentaController',function($rootScope) {
         initWallItem(lenta.wallItems);
 
         $rootScope.selectGroupInDropdown_lenta = function(groupId){
-            lenta.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            //lenta.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
         };
 
         lenta.goToAnswerInput = function(event){
@@ -120,9 +186,8 @@ forumControllers.controller('LentaController',function($rootScope) {
         };
 
         $rootScope.wallChangeGroup = function(groupId){
-            //console.log('wall-change ',groupId);
 
-            lenta.wallItems = messageClient.getWallItems(groupId, 0, loadedLength);
+            lenta.wallItems = messageClient.getWallItems(groupId, $rootScope.currentRubric.id,0, loadedLength);
 
             if(lenta.wallItems.length) {
                 initWallItem(lenta.wallItems);
@@ -162,6 +227,7 @@ forumControllers.controller('LentaController',function($rootScope) {
                     wallItems[i].topic.message.createdEdit = getTiming(wallItems[i].topic.message.created);
                     wallItems[i].topic.authorName = getAuthorName(wallItems[i].topic.userInfo);
                     wallItems[i].topic.metaType = "message";
+                    wallItems[i].topic.rubric = getTopicRubric(wallItems[i].topic);
 
                     var mesLen;
                     wallItems[i].messages ?
@@ -179,8 +245,6 @@ forumControllers.controller('LentaController',function($rootScope) {
                     (mesLen >= $rootScope.COMMENTS_DEFAULT_COUNT) ?
                     wallItems[i].bufferMessages = wallItems[i].messages.slice(mesLen-$rootScope.COMMENTS_DEFAULT_COUNT):
                         wallItems[i].bufferMessages = wallItems[i].messages;
-
-
 
                     if(wallItems[i].topic.poll != null){
                         //значит это опрос
@@ -215,7 +279,7 @@ forumControllers.controller('LentaController',function($rootScope) {
         lenta.addMoreItems = function(){
             //lastLoadedIdFF = lastLoadedId;
             if(wallItemsLength == 10) {
-                var buff = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id, lastLoadedId, loadedLength);
+                var buff = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id, lastLoadedId, loadedLength);
                 if (buff) {
 
                     var buffLength = buff.length;

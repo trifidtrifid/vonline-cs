@@ -151,8 +151,8 @@ transform()
   &:before
     display none
 
-.nav-list > li:hover a
-.nav-list > li.active:hover a
+.nav-list > li:hover>a
+.nav-list > li.active:hover>a
   background #f2f2f2
 
 .sidebar#sidebar
@@ -683,11 +683,11 @@ transform()
       color #438eb9
 
 .folding
-  height 55px // 3 строки
+  max-height 55px // 3 строки
   overflow hidden
 .foldingImg
-  height 120px
-  overflow hidden
+  //max-height 120px
+  //overflow hidden
 
 .hashtag
   margin-left 10px
@@ -1574,6 +1574,8 @@ transform()
   padding 15px
   h2
     margin-top 0
+  .error-info
+    left 0
 .code-block
   text-align center
   float none !important
@@ -1601,6 +1603,9 @@ transform()
       text-decoration none
     .fa
       margin-top 4px
+    &.write-mess-selectRubric
+      border-top 0 !important
+      border-bottom 1px solid #b5b5b5
   .select-group-list
     background-color #fff
     margin 0
@@ -1616,6 +1621,12 @@ transform()
         display block
       &:last-child
         margin-bottom 0
+  .select-rubric-list
+    border-top 0
+    border-bottom 1px solid #b5b5b5
+    li
+      float left
+      width 50%
   .message-input-bottom
     .btn-primary
       margin 10px 0 0  10px
@@ -1629,6 +1640,19 @@ transform()
       text-decoration none
   .error-info
     top 14px
+
+/**/
+.staff-title
+  font-size 14px
+  text-transform uppercase
+.rubrics-menu
+  li
+    a
+      padding 5px 0 5px 25px
+      cursor pointer
+    &.active a
+      background #f2f2f2
+      color #1963aa
 
 /* backoffice */
 .backoffice

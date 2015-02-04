@@ -15,7 +15,7 @@ public class NewsNotification extends Notification {
 	private static Logger logger = Logger.getLogger(NewsNotification.class.getSimpleName());
 
 	@Override
-	public void makeNotification(Set<VoUser> users) {}
+	public void makeNotification(Set<VoUser> users, PersistenceManager pm) {}
 	
 	public void sendNotifications( ) throws InvalidOperation{
 
@@ -26,16 +26,16 @@ public class NewsNotification extends Notification {
 			logger.debug("Start NEWS notification. THere are "+users+" to notify");
 			
 			if(users.size()>0){
-				new NewTopicsNotification(messagesToSend).makeNotification(users); 
+				new NewTopicsNotification(messagesToSend).makeNotification(users, pm); 
 				logger.debug("Got "+messagesToSend.size()+" to send new Topics");
-				new NewNeigboursNotification(messagesToSend).makeNotification(users);
+				new NewNeigboursNotification(messagesToSend).makeNotification(users, pm);
 				logger.debug("Got +"+messagesToSend.size()+" to send new News");
 				
 				for( Entry<VoUser, List<NotificationMessage>> un :messagesToSend.entrySet()){
 					VoUser user = un.getKey();
-					String body = "Новости ВместеОнлайн.ру<br/><br/>";
+					String body = "<h2>Новости ВместеОнлайн.ру</h2>";
 					for( NotificationMessage nm : un.getValue())
-						body += nm.message + "<br/><br/>";
+						body += nm.message;
 					
 					body += "Подробности на сайте<a href=\"https://"+host+"\"> ВместеОнлайн.ру</a>";
 					body += "<br/><i>Вы можете изменить рассылку новостей в </i>"

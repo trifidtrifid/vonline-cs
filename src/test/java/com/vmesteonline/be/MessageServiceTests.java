@@ -37,7 +37,7 @@ import static org.junit.Assert.*;
 
 public class MessageServiceTests extends TestWorkAround {
 
-	private Message createMessage(long tpcId, long msgId, MessageType type, String anonName) throws Exception {
+	protected Message createMessage(long tpcId, long msgId, MessageType type, String anonName) throws Exception {
 		Message msg = new Message(0, msgId, type, tpcId, getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, (int) (System.currentTimeMillis() / 1000L), 0, "test content", 0, 0,
 				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, anonName, null, null, 0, false);
 		if (type == MessageType.BLOG)
@@ -47,7 +47,7 @@ public class MessageServiceTests extends TestWorkAround {
 
 	}
 
-	private Poll createPoll() {
+	protected Poll createPoll() {
 		Poll poll = new Poll();
 		poll.subject = "test poll";
 		poll.names = new ArrayList<String>();
@@ -56,7 +56,7 @@ public class MessageServiceTests extends TestWorkAround {
 		return poll;
 	}
 
-	private Message createMessage(long tpcId, long msgId) throws Exception {
+	protected Message createMessage(long tpcId, long msgId) throws Exception {
 		Message msg = new Message(0, msgId, MessageType.BASE, tpcId, getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, (int) (System.currentTimeMillis() / 1000L), 0, "test content",
 				0, 0, new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null,
 				null,0, false);
@@ -64,21 +64,21 @@ public class MessageServiceTests extends TestWorkAround {
 	}
 
 
-	private Topic createTopic(long groupId) throws Exception {
+	protected Topic createTopic(long groupId) throws Exception {
 		return createTopic(groupId, MessageType.BASE);
 	}
-	private Topic createTopic(long groupId, long rubricId) throws Exception {
+	protected Topic createTopic(long groupId, long rubricId) throws Exception {
 		return createTopic(groupId, MessageType.BASE,rubricId);
 	}
 
-	private Topic createTopic(long groupId, MessageType type) throws Exception {
+	protected Topic createTopic(long groupId, MessageType type) throws Exception {
 		Message msg = new Message(0, 0, type, 0, groupId, 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
 				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
 		Topic topic = new Topic(0, topicSubject, msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, null, null, false);
 		return msi.postTopic(topic);
 	}
 	
-	private Topic createTopic(long groupId, MessageType type, Long rubricId) throws Exception {
+	protected Topic createTopic(long groupId, MessageType type, Long rubricId) throws Exception {
 		Message msg = new Message(0, 0, type, 0, groupId, 0, 0, 0, "Content of the first topic is a simple string", 0, 0,
 				new HashMap<MessageType, Long>(), new HashMap<Long, String>(), new UserMessage(true, false, false), 0, null, null, null, null, null, null,0, false);
 		Topic topic = new Topic(0, topicSubject, msg, 0, 0, 0, 0, 0, 0, new UserTopic(), null, null, null, false);
@@ -247,7 +247,7 @@ public class MessageServiceTests extends TestWorkAround {
 		try {
 			createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE));
 			createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), MessageType.WALL);
-			List<WallItem> rTopic = msi.getWallItems(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 10000);
+			List<WallItem> rTopic = msi.getWallItems(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 10000);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(2, rTopic.size());
 
@@ -264,22 +264,23 @@ public class MessageServiceTests extends TestWorkAround {
 			List<Topic> tpcs = new ArrayList<Topic>();
 			for (int i = 0; i < 7; i++) {
 				tpcs.add(createTopic(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE)));
+				Thread.currentThread().sleep(1000);
 			}
 
 			TopicListPart rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, 0L, 5);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(5, rTopic.totalSize);
-			Assert.assertEquals(tpcs.get(0).getId(), rTopic.topics.get(0).getId());
-			Assert.assertEquals(tpcs.get(1).getId(), rTopic.topics.get(1).getId());
-			Assert.assertEquals(tpcs.get(2).getId(), rTopic.topics.get(2).getId());
+			Assert.assertEquals(tpcs.get(6).getId(), rTopic.topics.get(0).getId());
+			Assert.assertEquals(tpcs.get(5).getId(), rTopic.topics.get(1).getId());
+			Assert.assertEquals(tpcs.get(4).getId(), rTopic.topics.get(2).getId());
 			Assert.assertEquals(tpcs.get(3).getId(), rTopic.topics.get(3).getId());
-			Assert.assertEquals(tpcs.get(4).getId(), rTopic.topics.get(4).getId());
+			Assert.assertEquals(tpcs.get(2).getId(), rTopic.topics.get(4).getId());
 
 			rTopic = msi.getTopics(getUserGroupId(Defaults.user1email, GroupType.STAIRCASE), 0, 0, rTopic.topics.get(4).getId(), 5);
 			Assert.assertNotNull(rTopic);
 			Assert.assertEquals(2, rTopic.totalSize);
-			Assert.assertEquals(tpcs.get(5).getId(), rTopic.topics.get(0).getId());
-			Assert.assertEquals(tpcs.get(6).getId(), rTopic.topics.get(1).getId());
+			Assert.assertEquals(tpcs.get(1).getId(), rTopic.topics.get(0).getId());
+			Assert.assertEquals(tpcs.get(0).getId(), rTopic.topics.get(1).getId());
 
 		} catch (Exception e) {
 			e.printStackTrace();

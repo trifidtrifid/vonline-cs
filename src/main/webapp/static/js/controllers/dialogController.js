@@ -7,6 +7,7 @@ forumControllers.controller('dialogController',function($rootScope,$stateParams,
         $rootScope.base.lastLoadedId = 0;
         $rootScope.currentPage = 'dialog-single';
         $rootScope.base.currentDialogId = $stateParams.dialogId;
+        $rootScope.currentRubric = null;
 
         var dialog = this,
             lastLoadedId = 0,

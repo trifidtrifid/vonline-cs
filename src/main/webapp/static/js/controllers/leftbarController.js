@@ -1,5 +1,5 @@
 
-forumControllers.controller('leftBarController',function($rootScope) {
+forumControllers.controller('leftBarController',function($rootScope,$state) {
 
     $rootScope.setTab = function(newValue){
 
@@ -50,4 +50,23 @@ forumControllers.controller('leftBarController',function($rootScope) {
     $rootScope.isSet = function(number){
         return $rootScope.leftbar.tab === number;
     };
+
+    $rootScope.setRubric = function(rubric){
+
+            $rootScope.currentRubric = rubric;
+            $rootScope.selRubricName = $rootScope.currentRubric.visibleName;
+        if(!rubric) {
+            $rootScope.currentRubric = {};
+            $rootScope.selRubricName = null;
+        }
+
+        if($state.current.name != 'main') {
+            var st = $state.get('main');
+            st.rubricId = rubric.id;
+            $state.go('main');
+        }else {
+            $rootScope.wallChangeRubric($rootScope.currentRubric.id);
+        }
+
+    }
   })

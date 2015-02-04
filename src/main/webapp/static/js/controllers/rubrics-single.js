@@ -1,5 +1,5 @@
 
-forumControllers.controller('TalksSingleController',function($rootScope,$stateParams){
+forumControllers.controller('rubricsSingle',function($rootScope,$stateParams){
 
         $rootScope.base.isFooterBottom = false;
 
@@ -38,28 +38,6 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
             for(var i = 0; i < topicLength; i++){
                 if(talkId == talk.topics[i].id){
                     talk.fullTalkTopic = talk.topics[i];
-                    talk.fullTalkTopic.rubric = getTopicRubric(talk.fullTalkTopic);
-                    if(!talk.fullTalkTopic.rubric) talk.fullTalkTopic.selRubricName = "Общее";
-
-                    talk.fullTalkTopic.selectRubricNew = function(rubric){
-                        if(rubric) {
-                            talk.fullTalkTopic.selRubricName = rubric.visibleName;
-                        }else{
-                            talk.fullTalkTopic.selRubricName = "Общее";
-                            $rootScope.currentRubric = {};
-                            $rootScope.currentRubric.id = 0;
-                        }
-                        var rubricsLength = userClientRubrics.length;
-
-                        for(var i = 0; i < rubricsLength; i++){
-                            if(rubric.id == userClientRubrics[i].id){
-                                $rootScope.currentRubric = userClientRubrics[i];
-                            }
-                        }
-
-                        console.log('talk-single',$rootScope.currentRubric);
-
-                    };
 
                     $rootScope.base.initStartParamsForCreateTopic(talk.fullTalkTopic);
 
@@ -283,7 +261,6 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
             }
 
         };
-
 
         $('.ng-cloak').removeClass('ng-cloak');
 

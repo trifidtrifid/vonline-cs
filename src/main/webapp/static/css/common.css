@@ -10,6 +10,9 @@
   color: #f00;
   font-size: 14px;
 }
+.red-text {
+  color: #f00;
+}
 .login-error {
   text-align: center;
   clear: right;

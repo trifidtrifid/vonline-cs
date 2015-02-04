@@ -118,6 +118,15 @@
                     </ul>
 					<!--<ul class="nav nav-list">
                         <li>
+                            <a ui-sref="main" ng-click="setRubric(0)"> <span class="menu-text">Главная</span> </a>
+                            <ul class="nav nav-list rubrics-menu">
+                                <li ng-repeat="rubric in base.rubrics" ng-class="{active: currentRubric.id == rubric.id}">
+                                    <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
+                                </li>
+                                <li><a ui-sref="profit"> <span class="menu-text">Полезные соседи</span> </a></li>
+                            </ul>
+                        </li>
+                        <li>
                             <a ui-sref="important">
                                 <span class="menu-text">
                                     Важные сообщения
@@ -143,6 +152,7 @@
                     <div class="footer footer-left" ng-hide="base.isFooterBottom">
                         <span class="copypast">&copy;</span> ВместеОнлайн 2015
                         <!-- временная обработка ссылок пока не адаптирован блог, о нас и контакты под ангуляр -->
+
                         <ul>
                             <li><a href="./about" onclick="document.location.replace('./about');">О сайте</a></li>
                             <li><a href="./blog" onclick="document.location.replace('./blog');">Блог</a></li>
@@ -277,9 +287,14 @@
 <script src="/static/js/controllers/aboutCtrl.js"></script>
 <script src="/static/js/controllers/nearbyCtrl.js"></script>
 <script src="/static/js/controllers/nearbySingleCtrl.js"></script>
+<<<<<<< HEAD
 <script src="/static/js/controllers/business/Cabinet.js"></script>
 <script src="/static/js/controllers/business/Edit.js"></script>
 <script src="/static/js/controllers/business/Statistic.js"></script>
+=======
+<script src="/static/js/controllers/rubrics.js"></script>
+<script src="/static/js/controllers/rubrics-single.js"></script>
+>>>>>>> 392ce73c1ddbd1b3f574e108fc0ae4892d15478a
 
 <script src="/static/js/angular/angular-ui-router.js"></script>
 <script src="/static/js/angular/sanitize.js"></script>

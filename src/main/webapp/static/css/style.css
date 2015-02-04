@@ -142,8 +142,8 @@ h1 {
 .nav-list > li.active:hover a:before {
   display: none;
 }
-.nav-list > li:hover a,
-.nav-list > li.active:hover a {
+.nav-list > li:hover>a,
+.nav-list > li.active:hover>a {
   background: #f2f2f2;
 }
 .sidebar#sidebar {
@@ -773,11 +773,7 @@ h1 {
   color: #438eb9;
 }
 .folding {
-  height: 55px;
-  overflow: hidden;
-}
-.foldingImg {
-  height: 120px;
+  max-height: 55px;
   overflow: hidden;
 }
 .hashtag {
@@ -1820,6 +1816,9 @@ h1 {
 .unconfirm h2 {
   margin-top: 0;
 }
+.unconfirm .error-info {
+  left: 0;
+}
 .code-block {
   text-align: center;
   float: none !important;
@@ -1853,6 +1852,10 @@ h1 {
 .create-wall-wrap .write-mess-selectGroup .fa {
   margin-top: 4px;
 }
+.create-wall-wrap .write-mess-selectGroup.write-mess-selectRubric {
+  border-top: 0 !important;
+  border-bottom: 1px solid #b5b5b5;
+}
 .create-wall-wrap .select-group-list {
   background-color: #fff;
   margin: 0;
@@ -1872,6 +1875,14 @@ h1 {
 .create-wall-wrap .select-group-list li:last-child {
   margin-bottom: 0;
 }
+.create-wall-wrap .select-rubric-list {
+  border-top: 0;
+  border-bottom: 1px solid #b5b5b5;
+}
+.create-wall-wrap .select-rubric-list li {
+  float: left;
+  width: 50%;
+}
 .create-wall-wrap .message-input-bottom .btn-primary {
   margin: 10px 0 0 10px;
 }
@@ -1888,6 +1899,19 @@ h1 {
 }
 .create-wall-wrap .error-info {
   top: 14px;
+}
+/**/
+.staff-title {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.rubrics-menu li a {
+  padding: 5px 0 5px 25px;
+  cursor: pointer;
+}
+.rubrics-menu li.active a {
+  background: #f2f2f2;
+  color: #1963aa;
 }
 /* backoffice */
 .backoffice {

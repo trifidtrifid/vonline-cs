@@ -5,6 +5,7 @@ forumControllers.controller('dialogsController', function($rootScope,$state){
         $rootScope.leftbar.tab = 0;
         $rootScope.base.isFooterBottom = false;
         $rootScope.currentPage = "dialogs";
+        $rootScope.currentRubric = null;
 
         resetPages($rootScope.base);
         $rootScope.base.privateMessagesIsActive = true;

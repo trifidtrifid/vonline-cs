@@ -3,6 +3,7 @@ $(document).ready(function(){
     var protocol = new Thrift.Protocol(transport);
     var authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol);
 
+    console.log(transport,protocol,authClient);
     var URL,URLArray, email;
 
     if($('.btn-remember-passw').length){

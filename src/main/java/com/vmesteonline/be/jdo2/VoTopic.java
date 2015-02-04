@@ -80,15 +80,18 @@ public class VoTopic extends VoBaseMessage {
 			try {
 				VoPoll voPoll = pm.getObjectById(VoPoll.class, pollId);
 				tpc.poll = voPoll.getPoll(userId);
-			} catch (Exception e) {
+			} catch (RuntimeException e) {
+				e.printStackTrace();
+		  } catch (Exception e) {
+		  	e.printStackTrace();
 			}
 		}
 		tpc.setRubricId( rubricId );
 		return tpc;
 	}
 
-	public GroupType getGroupType( PersistenceManager pm){
-		return GroupType.findByValue( pm.getObjectById(VoUserGroup.class, userGroupId).getGroupType() );
+	public GroupType getGroupType(){
+		return GroupType.findByValue( userGroupType );
 	}
 	
 	public int getMessageNum() {
