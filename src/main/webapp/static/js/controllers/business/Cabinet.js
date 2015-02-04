@@ -1,32 +1,18 @@
 
-forumControllers.controller('nearbyCtrl', function($rootScope) {
-    var nearby = this;
+forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
+    var nearby = this,
+        postId;
 
-    nearby.businessList = businessClient.getBusinessList(groupType,currentRubricId);
+    nearby.info = businessClient.getMyBusinessInfo();
+
+    /*if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
+        postId = $stateParams.nearbyId;
+    }*/
 
     $rootScope.base.isFooterBottom = true;
-    $rootScope.base.pageTitle = "Рядом";
-    $rootScope.base.talksIsActive = $rootScope.base.advertsIsActive = false;
-    showGroupOverBuilding($rootScope.groups);
-    $rootScope.currentRubric = null;
+    //$rootScope.base.pageTitle = "Рядом";
 
-    nearby.isAuth = authClient.checkIfAuthorized();
-
-    if(nearby.isAuth){
-        //me = userClient.getUserProfile();
-        //$('.anonName').removeClass('hidden');
-    }
-
-    nearby.posts = messageClient.getBusinessTopics(0,1000);
-
-    if(nearby.posts.topics) {
-        var len = nearby.posts.topics.length;
-        for (var i = 0; i < len; i++) {
-            nearby.posts.topics[i].isCommentShow = false;
-            nearby.posts.topics[i].isInputShow = false;
-            nearby.posts.topics[i].short = nearby.posts.topics[i].message.content.split(';')[0];
-        }
-    }
+    //nearby.isAuth = authClient.checkIfAuthorized();
 
     nearby.toggleComm = function($event,post){
         $event.preventDefault();
@@ -39,6 +25,7 @@ forumControllers.controller('nearbyCtrl', function($rootScope) {
 
             if(!post.comments) {
                 post.comments = messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
+                console.log('finish');
             }
         }
 
@@ -49,6 +36,7 @@ forumControllers.controller('nearbyCtrl', function($rootScope) {
 
         post.isInputShow ? post.isInputShow = false : post.isInputShow = true;
 
+        console.log('input',post.isInputShow);
 
     };
 
@@ -123,7 +111,6 @@ forumControllers.controller('nearbyCtrl', function($rootScope) {
         return timing;
     };
 
-    angular.element($('.nearby')).css({'min-height': $(window).height()-175});
 
     $('.ng-cloak').removeClass('ng-cloak');
 
