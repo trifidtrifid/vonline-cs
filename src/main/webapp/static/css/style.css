@@ -1920,6 +1920,14 @@ h1 {
 .backoffice .broadcast textarea {
   width: 100%;
 }
+.business-logout {
+  color: #fff;
+  margin: 12px 20px 0 0;
+}
+.business-logout:hover {
+  text-decoration: none;
+  color: #fff;
+}
 .cabinet-edit {
   font-size: 14px;
 }

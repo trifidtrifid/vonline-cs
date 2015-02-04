@@ -5,15 +5,16 @@
 
         <div class="post">
             <div class="topic">
-                <div ng-include="nearby.post.fullLink"></div>
+                <div>{{nearby.info.fullName}}</div>
+                <div>
+                    <div class="pull-left">
+                        <img ng-src="{{nearby.info.logoURL }}"/>
+                    </div>
+                    <div>
+                        {{nearby.info.shortInfo}}
+                    </div>
+                </div>
             </div>
-            <!--<div class="topic-stuff">
-                <a href="#" class="show-comment" ng-click="nearby.toggleComm($event,nearby.post)">
-                    <span ng-show="nearby.post.isCommentShow">Скрыть комментарии</span>
-                    <span ng-show="!nearby.post.isCommentShow">Показать комментарии</span>
-                </a> |
-                <a href="#" class="make-comment" ng-click="nearby.toggleInput($event,nearby.post)">Комментировать</a>
-            </div>-->
 
             <div class="dialogs">
                 <div class="itemdiv dialogdiv new" ng-repeat="comm in nearby.post.comments" ng-show="nearby.post.isCommentShow">

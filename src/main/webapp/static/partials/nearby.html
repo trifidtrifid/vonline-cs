@@ -33,19 +33,31 @@
 <div class="wallitem-message blog nearby">
 
     <!-- data-postlink="<%=Blog.topics.get(i).message.content%>" data-topicid="<%=Blog.topics.get(i).id%>" -->
-    <div class="post" ng-repeat="post in nearby.posts.topics">
-        <div class="topic">
+    <div class="post" ng-repeat="post in nearby.businessList">
+        <!--<div class="topic">
             <div ng-include="post.short"></div>
+        </div>-->
+        <div class="topic">
+            <div>{{post.shortName}}</div>
+            <div>
+                <div class="pull-left">
+                    <img ng-src="{{post.logoURL }}"/>
+                </div>
+                <div>
+                    {{post.shortInfo}}
+                </div>
+                <div>{{post.address}}</div>
+            </div>
         </div>
-        <!--<div class="topic-stuff">
+        <div class="topic-stuff">
             <a href="#" class="show-comment" ng-click="nearby.toggleComm($event,post)">
                 <span ng-show="post.isCommentShow">Скрыть комментарии</span>
                 <span ng-show="!post.isCommentShow">Показать комментарии</span>
             </a> |
             <a href="#" class="make-comment" ng-click="nearby.toggleInput($event,post)">Комментировать</a>
-        </div>-->
+        </div>
 
-        <!--<div class="dialogs">
+        <div class="dialogs">
             <div class="itemdiv dialogdiv new" ng-repeat="comm in post.comments" ng-show="post.isCommentShow">
                 <a ui-href="profile-{{comm.userInfo.id}}" class="user" ng-class="{'no-link': !comm.userInfo}">
                     <div class="avatar short2" style="background-image: url({{comm.userInfo.avatar}})"></div>
@@ -61,16 +73,15 @@
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
 
-        <!--<div class="input-group" ng-show="post.isInputShow">
+        <div class="input-group" ng-show="post.isInputShow">
 
             <input type="text" class="anonName" placeholder="Имя Фамилия" ng-if="!nearby.isAuth" ng-model="post.anonName"/>
 
             <textarea class="message-textarea" ng-focus="true" ng-model="post.commenting"
                       onblur="if(this.value=='') this.value='Ваш ответ';"
                       onfocus="if(this.value=='Ваш ответ') this.value='';" ></textarea>
-
 
             <span class="input-group-btn">
                 <button class="btn btn-sm btn-info no-radius no-border send-in-blog" type="button" ng-click="nearby.sendComm($event,post)">
@@ -80,7 +91,7 @@
                 <span class="error-info"></span>
 
             </span>
-        </div>-->
+        </div>
 
         <a ui-sref="nearby-single({ nearbyId : {{post.id}} })" class="pull-right nearby-more">Подробнее</a>
         <div class="clearfix"></div>

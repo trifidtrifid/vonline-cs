@@ -2,6 +2,8 @@
 forumControllers.controller('nearbyCtrl', function($rootScope) {
     var nearby = this;
 
+    nearby.businessList = businessClient.getBusinessList(groupType,currentRubricId);
+
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
     $rootScope.base.talksIsActive = $rootScope.base.advertsIsActive = false;

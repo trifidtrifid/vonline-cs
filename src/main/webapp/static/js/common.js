@@ -34,6 +34,10 @@ transport = new Thrift.Transport("/thrift/UserService");
 protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
+transport = new Thrift.Transport("/thrift/BusinessService");
+protocol = new Thrift.Protocol(transport);
+businessClient = new com.vmesteonline.be.thrift.businesservice.BuisinessServiceClient(protocol);
+
 if(path != '/blog' && path != '/about' && path != '/contacts') {
     var userClientGroups = userClient.getUserGroups(),
         userClientRubrics = userClient.getUserRubrics();

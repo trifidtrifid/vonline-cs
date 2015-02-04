@@ -2,6 +2,10 @@ var forumControllers = angular.module('forum.controllers', ['ui.select2','infini
 
 forumControllers.controller('baseController',function($scope,$rootScope,$state,$filter,$location) {
 
+    //$rootScope.IS_BUSINESS = localStorage.getItem('VO_is_business');
+    $rootScope.IS_BUSINESS = 1;
+    localStorage.removeItem('VO_is_business');
+
         var base = this;
         base.url = $location.url();
         $scope.$on('$locationChangeSuccess', function($event,newState,oldState){
@@ -17,7 +21,6 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             }
         });
 
-    console.log(base.url);
     if(base.url != '/blog' && base.url != '/about' && base.url != '/contacts') {
         if(!hasStart) start();
     }

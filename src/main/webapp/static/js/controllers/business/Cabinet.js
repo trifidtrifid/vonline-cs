@@ -1,39 +1,18 @@
 
-forumControllers.controller('Cabinet',function($rootScope) {
+forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     var nearby = this,
         postId;
 
-    if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
+    nearby.info = businessClient.getMyBusinessInfo();
+
+    /*if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
         postId = $stateParams.nearbyId;
-    }
+    }*/
 
     $rootScope.base.isFooterBottom = true;
-    $rootScope.base.pageTitle = "Рядом";
+    //$rootScope.base.pageTitle = "Рядом";
 
-    nearby.isAuth = authClient.checkIfAuthorized();
-
-    if(nearby.isAuth){
-        //me = userClient.getUserProfile();
-        //$('.anonName').removeClass('hidden');
-    }
-
-    nearby.posts = messageClient.getBusinessTopics(0,1000);
-
-    if(nearby.posts.topics) {
-        var len = nearby.posts.topics.length;
-        for (var i = 0; i < len; i++) {
-            console.log(nearby.posts.topics[i].id,parseInt(postId));
-            if(nearby.posts.topics[i].id == parseInt(postId)){
-                nearby.posts.topics[i].isCommentShow = true;
-                nearby.posts.topics[i].isInputShow = true;
-                nearby.posts.topics[i].full = nearby.posts.topics[i].message.content.split(';')[1];
-
-                nearby.post = nearby.posts.topics[i];
-                nearby.post.fullLink = '/'+nearby.posts.topics[i].full;
-                console.log(nearby.post);
-            }
-        }
-    }
+    //nearby.isAuth = authClient.checkIfAuthorized();
 
     nearby.toggleComm = function($event,post){
         $event.preventDefault();
