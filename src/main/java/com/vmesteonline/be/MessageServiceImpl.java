@@ -134,6 +134,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		PersistenceManager pm = PMF.getPm();
 
+		return createMessagesList(topicId, lastLoadedId, length, userId, pm);
+	}
+
+	public static MessageListPart createMessagesList(long topicId, long lastLoadedId, int length, long userId, PersistenceManager pm) throws InvalidOperation {
 		Query q = pm.newQuery(VoMessage.class);
 		q.setFilter("topicId == " + topicId);
 		List<VoMessage> voMsgs = executeQuery(q);
@@ -280,7 +284,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		try {
 
-			if (type == MessageType.BLOG) {
+			if (type == MessageType.BUSINESS_PAGE) {
+				filter = "type=='" + MessageType.BUSINESS_PAGE.name() + "'";
+
+			} else if (type == MessageType.BLOG) {
 				filter = "type=='" + MessageType.BLOG.name() + "'";
 
 			} else {
