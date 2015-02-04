@@ -40,6 +40,9 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		if( gType <= GroupType.FLOOR.getValue() )
 			queryStr += " && floor==" + floor;
 		
+		if( gType == GroupType.NOBODY.getValue() )
+			queryStr += " && name=='" + name + "'";
+		
 		List<VoUserGroup> ugl =  executeQuery(pm.newQuery(VoUserGroup.class, queryStr));
 		
 		if( 1==ugl.size() ) {

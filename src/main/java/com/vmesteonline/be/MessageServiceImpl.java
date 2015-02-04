@@ -264,12 +264,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 							// int radius = ug.getRadius();
 							int radius = 3000; // set radius 3KM and filter messages later
 
-							BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), radius);
-							BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), radius);
-							BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), radius);
-							BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), radius);
-							filter += "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax + "' && latitude >= '" + latitudeMin
-									+ "' && latitude <= '" + latitudeMax + "')";
+							String locFilter = VoHelper.createFilterByLocation(ug, radius);
+							filter += locFilter;
 						} else {
 							filter += "userGroupId==" + userGroups.get(gIdx);
 						}

@@ -148,13 +148,9 @@ public abstract class VoBaseMessage extends GeoLocation {
 		this.editedAt = editedAt;
 	}
 
-	/*
-	 * public VoUserAttitude(int likes, int unlikes) { likesNum = likes; unlikesNum = unlikes; }
-	 */
 	public int getLikes() {
 		return null==likes ? 0 : likes.size();
 	}
-
 
 	public void setImages(List<Long> images) {
 		this.images = images;

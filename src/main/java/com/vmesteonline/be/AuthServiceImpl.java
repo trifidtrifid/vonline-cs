@@ -5,6 +5,7 @@ import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.GroupType;
@@ -68,7 +69,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 					return LoginResult.EMAIL_NOT_CONFIRMED;
 				logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
 				saveUserInSession(getCurrentSession(), pm, u);
-				return LoginResult.SUCCESS;
+				return u instanceof VoBusiness ? LoginResult.USER_IS_COMERC : LoginResult.SUCCESS;
 			} else
 				logger.info("incorrect password " + email + " pass " + pwd);
 

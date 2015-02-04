@@ -9,8 +9,8 @@ struct BusinessDescription {
 	3:string	fullName,
 	4:string	shortInfo,
 	5:string	fullInfo,
-	6:string	logoURL,
-	7:list<string>	imageURLs,
+	6:messageservice.Attach	logo,
+	7:list<messageservice.Attach>	images,
 	8:string 	address,
 	9:string 	longitude,
 	10:string 	latitude,
@@ -22,7 +22,8 @@ struct BusinessInfo {
 	2:string 	shortName,
 	3:string	shortInfo,
 	4:string	logoURL,
-	5:string 	address,	
+	5:string 	address,
+	6:i32		distance,	
 }
 
 struct Statistics {
@@ -33,10 +34,10 @@ struct Statistics {
 
 service BuisinessService {
 	BusinessDescription getMyBusinessInfo(), //возвращает описание для текущего пользователя
-	list<BusinessInfo> getBusinessList(1:bedata.GroupType groupType, 2:i64 rubricId) , //возвращает информацию по бизнесам в радицсе задано	 группы от текузего пользователя
+	list<BusinessInfo> getBusinessList(1:bedata.GroupType groupType, 2:i64 rubricId) , //возвращает информацию по бизнесам в радисе заданом для группы текущего пользователя
 	BusinessDescription getBusinesDescription(1:i64 buisinessId),
-	BusinessDescription createBusinesDescription(1:BusinessDescription description),
-	BusinessDescription updatrBusinesDescription(1:BusinessDescription newDescription),
+	BusinessDescription createBusinesDescription(1:BusinessDescription description, 2:string email, 3:string password),
+	BusinessDescription updateBusinesDescription(1:BusinessDescription newDescription),
 	messageservice.WallItem	getWallItem( 1:i64 businessId ),	
 }
 

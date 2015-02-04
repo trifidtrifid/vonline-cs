@@ -260,7 +260,7 @@ public abstract class Notification {
 		String subject =  
 				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
 		String body = "";
-		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
+		body += "<i>" + msg.getContent() + "</i>";
 		
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
 		decorateAndSendMessage(author, subject, body);							
@@ -272,7 +272,7 @@ public abstract class Notification {
 		String subject = 
 				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
 		String body = "";
-		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
+		body += "<i>" + msg.getContent() + "</i>";
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
 		decorateAndSendMessage(author, subject, body);							
 	}

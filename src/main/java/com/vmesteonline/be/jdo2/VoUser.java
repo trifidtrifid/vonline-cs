@@ -21,7 +21,7 @@ import java.util.*;
         @Index(name="VOUSER_EML_IDX", members={"email"}),
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
         @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
-
+@Discriminator(strategy=DiscriminatorStrategy.CLASS_NAME)
 public class VoUser extends GeoLocation implements Comparable<VoUser> {
 
 	public static int BASE_USER_SCORE = 100;
