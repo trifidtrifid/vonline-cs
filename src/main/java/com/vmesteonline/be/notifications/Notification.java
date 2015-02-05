@@ -265,7 +265,7 @@ public abstract class Notification {
 		String shortMsg = subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50);
 		String subject = "новый комментарий в обсуждении: " + shortMsg ;
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
-		String body = author.getName()+", <br/><p>" + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"</i>' оставил комментарий:</p>";
+		String body = author.getName()+", <br/><p>Пользователь " + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"</i>' оставил комментарий:</p>";
 		body += "<p><i>" + msg.getContent() + "</i></p>";
 		decorateAndSendMessage(author, subject, body);							
 	}
