@@ -10,7 +10,6 @@ import javax.jdo.PersistenceManager;
 
 import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
-import org.datanucleus.metadata.PersistenceFileMetaData;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoTopic;
@@ -18,6 +17,7 @@ import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.thrift.GroupType;
+import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.businesservice.BusinessService.Iface;
 import com.vmesteonline.be.thrift.businesservice.BusinessDescription;
 import com.vmesteonline.be.thrift.businesservice.BusinessInfo;
@@ -134,4 +134,14 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 		return null;
 	}
 
+	@Override
+	public boolean isPublicMethod(String method) {
+		VoUser currentUser = null;
+		try {
+			currentUser = getCurrentUser();
+		} catch (InvalidOperation e) {			
+			e.printStackTrace();
+		}
+		return !"createBusinessDescription".endsWith(method) || currentUser != null && currentUser.isTheBigBro();
+	}
 }
