@@ -19,14 +19,13 @@ detected.
     <!--  + war OR resourceBase                                          -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <Set name="contextPath">/</Set>
-    <Set name="war"><Property name="jetty.webapps" default="."/>/vonline.war</Set>
+    <Set name="war"><Property name="jetty.webapps" default="."/>/demo.vonline.war</Set>
     <Set name="extraClasspath">WEB-INF/classes,WEB-INF/libs,WEB-INF/classes/META-INF</Set>
     <!-- virtual hosts -->
     <Set name="virtualHosts">
         <Array type="String">
-            <Item>www.vmesteonline.ru</Item>
-            <Item>vmesteonline.ru</Item>
-            <Item>localhost</Item>
+            <Item>demo.vmesteonline.ru</Item>
+            <Item>demo.localhost</Item>
         </Array>
     </Set>
     <Set name="sessionHandler">
@@ -37,5 +36,5 @@ detected.
 	        </New>
 	      </Arg>
 	    </New>
-	  </Set>
+ 	</Set>
 </Configure>
