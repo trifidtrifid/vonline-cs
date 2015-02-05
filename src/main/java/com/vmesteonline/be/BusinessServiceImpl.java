@@ -120,6 +120,9 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoBusiness newBusiness = VoBusiness.create(description, email, password, pm);
+			if( null == newBusiness ) {
+				return description;
+			}
 			pm.makePersistent(newBusiness);
 			Message msg = new Message();
 			msg.setContent("Текст сообщения для обсуждения");
