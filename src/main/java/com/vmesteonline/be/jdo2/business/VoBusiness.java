@@ -30,8 +30,10 @@ public class VoBusiness extends VoUser  {
 	public static VoBusiness create( BusinessDescription bd, String email, String password, PersistenceManager pm){
 		
 		List<Long> rslt = VoHelper.executeQuery( pm.newQuery("SQL","SELECT 1 FROM VOUSER WHERE email='"+email+"'"));
-		if( !rslt.isEmpty() )
+		if( !rslt.isEmpty() ){
+			bd.setFullInfo("Пользователь с email '"+email+"' уже существует");
 			return null; // возвращает нул только если не удалось создать бизнес аккаанут т.к. на указанный email уже зарегистрировано пользователь или бизнем
+		}
 		
 		VoBusiness vb = new VoBusiness( bd.shortName, "", email, password);
 		
@@ -99,8 +101,11 @@ public class VoBusiness extends VoUser  {
             imgs.add(att.getAttach());
         }
     
+		Attach logoAttach = null;
+		if( null != logo)
+			logoAttach = pm.getObjectById(VoFileAccessRecord.class,logo).getAttach();
 		return new BusinessDescription(id, shortName, fullName, shortInfo, fullInfo, 
-				pm.getObjectById(VoFileAccessRecord.class,logo).getAttach(),
+				logoAttach,
 				imgs, addressLine, latitude, longitude, radius);
 	}
 	

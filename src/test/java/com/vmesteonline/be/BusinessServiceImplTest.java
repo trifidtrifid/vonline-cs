@@ -15,6 +15,11 @@ import com.vmesteonline.be.thrift.messageservice.Attach;
 
 public class BusinessServiceImplTest extends TestWorkAround {
 
+	private BusinessDescription bd1 = new BusinessDescription( 0, "Бизнес1", "Длинное название Бизнеса 1", 
+			"кратакая инфа по Бизнесу 1", "Длинная инфа по Бизнесу1", 
+			new Attach("B1.logo.jpeg", "image/jpeg", "http://localhost:64284/file/FwwAAAAAAA=.jpg"),
+			new ArrayList<Attach>(), "Адрес Бизнеса 1", "30.0000", "60.0000", 350);
+	
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -53,15 +58,12 @@ public class BusinessServiceImplTest extends TestWorkAround {
 
 	@Test
 	public void testCreateBusinessDescription() {
-		BusinessDescription bd = new BusinessDescription( 0, "Бизнес1", "Длинное название Бизнеса 1", 
-				"кратакая инфа по Бизнесу 1", "Длинная инфа по Бизнесу1", 
-				new Attach("B1.logo.jpeg", "image/jpeg", "http://localhost:64284/file/FwwAAAAAAA=.jpg"),
-				new ArrayList<Attach>(), "Адрес Бизнеса 1", "30.0000", "60.0000", 350); 
+		 
 				
 		try {
 			asi.login("info@vmesteonline.ru", "123456");
-			Assert.assertNull(bsi.createBusinessDescription(bd, "a", "a"));
-			Assert.assertNull(bsi.createBusinessDescription(bd, "bzns1", "123456"));
+			Assert.assertNull(bsi.createBusinessDescription(bd1, "a", "a"));
+			Assert.assertNull(bsi.createBusinessDescription(bd1, "bzns1", "123456"));
 		} catch (TException e) {			
 			e.printStackTrace();
 			Assert.fail();
