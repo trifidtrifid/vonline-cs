@@ -18,7 +18,7 @@ import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.thrift.GroupType;
-import com.vmesteonline.be.thrift.businesservice.BuisinessService.Iface;
+import com.vmesteonline.be.thrift.businesservice.BusinessService.Iface;
 import com.vmesteonline.be.thrift.businesservice.BusinessDescription;
 import com.vmesteonline.be.thrift.businesservice.BusinessInfo;
 import com.vmesteonline.be.thrift.messageservice.Message;
@@ -62,12 +62,12 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	@Override
-	public BusinessDescription getBusinesDescription(long buisinessId) throws TException {
+	public BusinessDescription getBusinessDescription(long businessId) throws TException {
 		PersistenceManager pm = PMF.getPm();
 		try {
-			return pm.getObjectById(VoBusiness.class,buisinessId).getBusinessDescription(pm);
+			return pm.getObjectById(VoBusiness.class,businessId).getBusinessDescription(pm);
 		} catch (Exception e) {	
-			logger.warn("getBusinesDescription incorrect buisinessId="+buisinessId, e);
+			logger.warn("getBusinesDescription incorrect businessId="+businessId, e);
 			e.printStackTrace();			
 		}
 		return null;
@@ -75,7 +75,7 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 
 
 	@Override
-	public BusinessDescription updateBusinesDescription(BusinessDescription newDescription) throws TException {
+	public BusinessDescription updateBusinessDescription(BusinessDescription newDescription) throws TException {
 		PersistenceManager pm = PMF.getPm();
 		if(newDescription!=null)
 			try {
@@ -116,7 +116,7 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	@Override
-	public BusinessDescription createBusinesDescription(BusinessDescription description, String email, String password) throws TException {
+	public BusinessDescription createBusinessDescription(BusinessDescription description, String email, String password) throws TException {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoBusiness newBusiness = VoBusiness.create(description, email, password, pm);
