@@ -75,7 +75,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
 				if (VoUser.isHeTheBigBro(user)) {
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
-					tpc.getMessage().setContent(ug.getName() + ":" + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+					tpc.getMessage().setContent(ug.getName() + ": " + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
 					tpc.setCanChange(true);
 				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo(user, voTopic.getAuthorId(), pm);
@@ -134,6 +134,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		PersistenceManager pm = PMF.getPm();
 
+		return createMessagesList(topicId, lastLoadedId, length, userId, pm);
+	}
+
+	public static MessageListPart createMessagesList(long topicId, long lastLoadedId, int length, long userId, PersistenceManager pm) throws InvalidOperation {
 		Query q = pm.newQuery(VoMessage.class);
 		q.setFilter("topicId == " + topicId);
 		List<VoMessage> voMsgs = executeQuery(q);
@@ -264,12 +268,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 							// int radius = ug.getRadius();
 							int radius = 3000; // set radius 3KM and filter messages later
 
-							BigDecimal latitudeMax = VoHelper.getLatitudeMax(ug.getLatitude(), radius);
-							BigDecimal latitudeMin = VoHelper.getLatitudeMin(ug.getLatitude(), radius);
-							BigDecimal longitudeMax = VoHelper.getLongitudeMax(ug.getLongitude(), ug.getLatitude(), radius);
-							BigDecimal longitudeMin = VoHelper.getLongitudeMin(ug.getLongitude(), ug.getLatitude(), radius);
-							filter += "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax + "' && latitude >= '" + latitudeMin
-									+ "' && latitude <= '" + latitudeMax + "')";
+							String locFilter = VoHelper.createFilterByLocation(ug, radius);
+							filter += locFilter;
 						} else {
 							filter += "userGroupId==" + userGroups.get(gIdx);
 						}
@@ -284,7 +284,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 
 		try {
 
-			if (type == MessageType.BLOG) {
+			if (type == MessageType.BUSINESS_PAGE) {
+				filter = "type=='" + MessageType.BUSINESS_PAGE.name() + "'";
+
+			} else if (type == MessageType.BLOG) {
 				filter = "type=='" + MessageType.BLOG.name() + "'";
 
 			} else {
@@ -686,14 +689,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		theTopic.setDocuments(updateAttachments(theTopic.getDocuments(), topic.getMessage().getDocuments(), theTopic.getAuthorId(), pm));
 		theTopic.setUsersNum(topic.usersNum);
 		theTopic.setViewers(topic.viewers);
-		changeTopicGroup(topic, theTopic, pm);
+		if (!currentUser.isTheBigBro()) changeTopicGroup(topic, theTopic, pm);
 		theTopic.setSubject(topic.getSubject());
 		theTopic.setRubricId( topic.getRubricId());
 
 		updatePoll(theTopic, topic, pm);
 
 		pm.makePersistent(theTopic);
-
 	}
 
 	private void changeTopicGroup(Topic topic, VoTopic theTopic, PersistenceManager pm) throws InvalidOperation {
