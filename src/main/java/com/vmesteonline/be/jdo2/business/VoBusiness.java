@@ -24,7 +24,8 @@ import java.util.*;
 public class VoBusiness extends VoUser  {
 	
 	private VoBusiness(String name, String lastName, String email, String password) {
-		super(name, lastName, email, password);		
+		super(name, lastName, email, password);	
+		setEmailConfirmed(true);
 	}
 
 	public static VoBusiness create( BusinessDescription bd, String email, String password, PersistenceManager pm){
@@ -50,7 +51,6 @@ public class VoBusiness extends VoUser  {
 		} catch (InvalidOperation e1) {			
 			e1.printStackTrace();
 		}
-		
 
 		pm.makePersistent(vb);
 		bd.setId( vb.getId() );
