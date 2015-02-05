@@ -11,7 +11,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     businessDescription.longitude = '30';
     businessDescription.latitude = '60';
     businessDescription.radius = 500;
-    businessClient.createBusinesDescription(businessDescription,'z','z');
+    businessClient.createBusinessDescription(businessDescription,'z','z');
 
     console.log('business created');
 

@@ -36,7 +36,8 @@ var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(pr
 
 transport = new Thrift.Transport("/thrift/BusinessService");
 protocol = new Thrift.Protocol(transport);
-businessClient = new com.vmesteonline.be.thrift.businesservice.BuisinessServiceClient(protocol);
+businessClient = new com.vmesteonline.be.thrift.businesservice.BusinessServiceClient(protocol);
+    //BusinessServiceClient(protocol);
 
 if(path != '/blog' && path != '/about' && path != '/contacts') {
     var userClientGroups = userClient.getUserGroups(),
@@ -52,6 +53,7 @@ if(path != '/blog' && path != '/about' && path != '/contacts') {
     if (servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
     if (servicesStr.indexOf('12') != -1) shortUserInfo.countersNotification = true;
 }
+console.log('333',userClientGroups);
 
 transport = new Thrift.Transport("/thrift/UtilityService");
 protocol = new Thrift.Protocol(transport);
