@@ -37,11 +37,13 @@ public class VoBusiness extends VoUser  {
 		
 		vb.setShortName(bd.shortName);
 		vb.setFullInfo(bd.getFullInfo());
+		vb.setFullName(bd.getFullName());
 		vb.setShortInfo(bd.getShortInfo());
 		vb.setAddressLine(bd.address);
 		vb.setRadius(bd.radius);
 		try {
 			VoUserGroup ug = VoUserGroup.createVoUserGroup( new BigDecimal(bd.longitude), new BigDecimal(bd.latitude), bd.radius, (byte)0, (byte)0, bd.shortName, 10000, GroupType.NOBODY.getValue(),pm);
+			pm.makePersistent(ug);
 			vb.setGroups( Arrays.asList( new Long[]{ ug.getId()}));
 		} catch (InvalidOperation e1) {			
 			e1.printStackTrace();
