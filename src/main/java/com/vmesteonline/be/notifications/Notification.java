@@ -94,6 +94,11 @@ public abstract class Notification {
 		messagesToSend.put(u, uns);
 	}
 
+	public static String createContactHref(VoUser nn) {
+		String contactTxt = "<a href=\"https://"+host+"/profile/"+nn.getId()+"\">"+StringEscapeUtils.escapeHtml4(nn.getName() + " " + nn.getLastName())+"</a>";
+		return contactTxt;
+	}
+
 	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users) {
 		// group users by groups and group types
 		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
@@ -259,10 +264,9 @@ public abstract class Notification {
 		String subj = topic.getSubject();
 		String subject =  
 				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
-		String body = "";
-		body += "<i>" + msg.getContent() + "</i>";
-		
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		String body = author.getName()+", <br/><p>" + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"' появился новый комментарий:</p>";
+		body += "<p><i>" + msg.getContent() + "</i></p>";
 		decorateAndSendMessage(author, subject, body);							
 	}
 
@@ -271,9 +275,9 @@ public abstract class Notification {
 		String subj = topic.getSubject();
 		String subject = 
 				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
-		String body = "";
-		body += "<i>" + msg.getContent() + "</i>";
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		String body = author.getName()+", <br/><p>" + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"' появился новый комментарий:</p>";
+		body += "<p><i>" + msg.getContent() + "</i></p>";
 		decorateAndSendMessage(author, subject, body);							
 	}
 }

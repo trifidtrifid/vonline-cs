@@ -29,7 +29,7 @@ public class VoBusiness extends VoUser  {
 
 	public static VoBusiness create( BusinessDescription bd, String email, String password, PersistenceManager pm){
 		
-		List<Long> rslt = VoHelper.executeQuery( pm.newQuery("SQL","SELECT 1 FROM VOUSER WHERE email='"+email+"' UNION SELECT 1 FROM VOBUSINESS where email='"+email+"'"));
+		List<Long> rslt = VoHelper.executeQuery( pm.newQuery("SQL","SELECT 1 FROM VOUSER WHERE email='"+email+"'"));
 		if( !rslt.isEmpty() )
 			return null; // возвращает нул только если не удалось создать бизнес аккаанут т.к. на указанный email уже зарегистрировано пользователь или бизнем
 		

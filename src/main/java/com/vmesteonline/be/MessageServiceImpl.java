@@ -689,14 +689,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		theTopic.setDocuments(updateAttachments(theTopic.getDocuments(), topic.getMessage().getDocuments(), theTopic.getAuthorId(), pm));
 		theTopic.setUsersNum(topic.usersNum);
 		theTopic.setViewers(topic.viewers);
-		changeTopicGroup(topic, theTopic, pm);
+		if (!currentUser.isTheBigBro()) changeTopicGroup(topic, theTopic, pm);
 		theTopic.setSubject(topic.getSubject());
 		theTopic.setRubricId( topic.getRubricId());
 
 		updatePoll(theTopic, topic, pm);
 
 		pm.makePersistent(theTopic);
-
 	}
 
 	private void changeTopicGroup(Topic topic, VoTopic theTopic, PersistenceManager pm) throws InvalidOperation {
