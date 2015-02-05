@@ -3,6 +3,7 @@ package com.vmesteonline.be.utils;
 import com.vmesteonline.be.AuthServiceImpl;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.*;
@@ -155,6 +156,8 @@ public class Defaults {
 		deletePersistentAll(pm, VoInviteCode.class);
 		deletePersistentAll(pm, VoPoll.class);
 		deletePersistentAll(pm, VoRubric.class);
+		deletePersistentAll(pm, VoUser.class);
+		deletePersistentAll(pm, VoBusiness.class);
 	}
 
 	// ======================================================================================================================
