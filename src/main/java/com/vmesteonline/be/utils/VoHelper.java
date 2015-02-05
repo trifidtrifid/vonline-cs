@@ -519,4 +519,18 @@ public class VoHelper {
 		trimPOs = -1 == trimPOs || trimPOs > maxLength ? maxLength : trimPOs; 
 		return msg.substring(0, trimPOs)+"...";
 	}
+
+	public static String createFilterByLocation(GeoLocation ug, int radius) {
+		BigDecimal latitude = ug.getLatitude();
+		BigDecimal longitude = ug.getLongitude();
+		BigDecimal latitudeMax = getLatitudeMax(latitude, radius);
+		BigDecimal latitudeMin = getLatitudeMin(latitude, radius);
+		BigDecimal longitudeMax = getLongitudeMax(longitude, latitude, radius);
+		BigDecimal longitudeMin = getLongitudeMin(longitude, latitude, radius);
+		String locFilter = "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax + "' && latitude >= '" + latitudeMin
+				+ "' && latitude <= '" + latitudeMax + "')";
+		return locFilter;
+	}
 }
+
+
