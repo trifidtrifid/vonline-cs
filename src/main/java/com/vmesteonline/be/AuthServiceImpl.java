@@ -106,12 +106,16 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			MessageServiceImpl msi = new MessageServiceImpl(this);
-			List<WallItem> importantNews = msi.getImportantNews(sess.getUser().getGroup(GroupType.NEIGHBORS, pm).getId(), 0, 0, 100);
-			int count = 0;
-			for (WallItem wi : importantNews)
-				if (wi.getTopic().lastUpdate > lastActivityTs)
-					count++;
-			sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+			VoUser user = sess.getUser();
+			VoUserGroup nbgroup = user.getGroup(GroupType.NEIGHBORS, pm);
+			if(null!=nbgroup){
+				List<WallItem> importantNews = msi.getImportantNews(nbgroup.getId(), 0, 0, 100);
+				int count = 0;
+				for (WallItem wi : importantNews)
+					if (wi.getTopic().lastUpdate > lastActivityTs)
+						count++;
+				sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+			}
 		} catch (InvalidOperation e) {
 			e.printStackTrace();
 		}

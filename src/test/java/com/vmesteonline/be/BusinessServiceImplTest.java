@@ -58,12 +58,13 @@ public class BusinessServiceImplTest extends TestWorkAround {
 
 	@Test
 	public void testCreateBusinessDescription() {
-		 
-				
+		 				
 		try {
 			asi.login("info@vmesteonline.ru", "123456");
 			Assert.assertNull(bsi.createBusinessDescription(bd1, "a", "a"));
-			Assert.assertNull(bsi.createBusinessDescription(bd1, "bzns1", "123456"));
+			BusinessDescription bd = bsi.createBusinessDescription(bd1, "bzns1", "123456");
+			Assert.assertNull(bd);
+			
 		} catch (TException e) {			
 			e.printStackTrace();
 			Assert.fail();
