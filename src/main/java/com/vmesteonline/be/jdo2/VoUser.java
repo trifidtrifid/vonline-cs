@@ -268,7 +268,7 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 			}
 		}
 
-        setAddress(userAddress.getId());
+    setAddress(userAddress.getId());
 		longitude = building.getLongitude().toPlainString();
 		latitude = building.getLatitude().toPlainString();
 
@@ -283,7 +283,7 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 			groups.add(ug.getId());
 		}
 		Collections.reverse(groups);
-        setGroups( groups );
+    setGroups( groups );
 		pm.makePersistent(this);
 	}
 

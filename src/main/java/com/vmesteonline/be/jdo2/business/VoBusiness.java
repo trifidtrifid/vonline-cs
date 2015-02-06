@@ -44,6 +44,8 @@ public class VoBusiness extends VoUser  {
 		vb.setShortInfo(bd.getShortInfo());
 		vb.setAddressLine(bd.address);
 		vb.setRadius(bd.radius);
+		vb.setLatitude(new BigDecimal(bd.getLatitude()));
+		vb.setLongitude(new BigDecimal(bd.getLongitude()));
 		try {
 			VoUserGroup ug = VoUserGroup.createVoUserGroup( new BigDecimal(bd.longitude), new BigDecimal(bd.latitude), bd.radius, (byte)0, (byte)0, bd.shortName, 10000, GroupType.NOBODY.getValue(),pm);
 			pm.makePersistent(ug);
@@ -106,7 +108,7 @@ public class VoBusiness extends VoUser  {
 			logoAttach = pm.getObjectById(VoFileAccessRecord.class,logo).getAttach();
 		return new BusinessDescription(id, shortName, fullName, shortInfo, fullInfo, 
 				logoAttach,
-				imgs, addressLine, latitude, longitude, radius);
+				imgs, addressLine, longitude, latitude, radius);
 	}
 	
 	public BusinessDescription update(BusinessDescription bd,PersistenceManager pm){
