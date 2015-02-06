@@ -133,7 +133,35 @@ public class BusinessServiceImplTest extends TestWorkAround {
 
 	@Test
 	public void testUpdateBusinessDescription() {
-		fail("Not yet implemented");
+		try {
+			asi.login("info@vmesteonline.ru", "123456");
+			
+			BusinessDescription bd = bsi.createBusinessDescription(bd1, "bzns1", "123456");
+			Assert.assertNotNull(bd);
+			Assert.assertEquals( LoginResult.USER_IS_COMERC, asi.login("bzns1", "123456"));
+			
+			BusinessDescription bd1 = new BusinessDescription( 0, "Бизнес2", "Длинное название Бизнеса 2", 
+					"кратакая инфа по Бизнесу 2", "Длинная инфа по Бизнесу2", 
+					new Attach("B1.logo.jpeg", "image/jpeg", "http://www.onlineconversion.com/rf_logo.gif"),
+					new ArrayList<Attach>(), "Адрес Бизнеса 2", "30.0002", "60.0002", 352);
+			bd1.id = bd.id;
+			
+			bsi.updateBusinessDescription(bd1);
+			BusinessDescription mbi = bsi.getMyBusinessInfo();
+			Assert.assertEquals(bd1.shortName, mbi.shortName);
+			Assert.assertEquals(bd1.fullName, mbi.fullName);
+			Assert.assertEquals(bd1.shortInfo, mbi.shortInfo);
+			Assert.assertEquals(bd1.fullInfo, mbi.fullInfo);
+			Assert.assertEquals(bd1.longitude, mbi.longitude);
+			Assert.assertEquals(bd1.latitude, mbi.latitude);
+			Assert.assertEquals(bd1.radius, mbi.radius);
+			Assert.assertTrue(mbi.logo!=null && mbi.logo.isSetURL());
+			Assert.assertTrue(mbi.id!=0L);
+			
+		} catch (TException e) {			
+			e.printStackTrace();
+			Assert.fail();
+		}
 	}
 
 	@Test

@@ -122,10 +122,13 @@ public class VoBusiness extends VoUser  {
 		}
 
 		vb.setShortName(bd.shortName);
+		vb.setFullName(bd.fullName);
 		vb.setFullInfo(bd.getFullInfo());
 		vb.setShortInfo(bd.getShortInfo());
 		vb.setAddressLine(bd.address);
 		vb.setRadius(bd.radius);
+		vb.setLatitude(new BigDecimal(bd.getLatitude()));
+		vb.setLongitude(new BigDecimal(bd.getLongitude()));
 		try {
 			if( vb.getGroups() != null){
 				for( Long gid: vb.getGroups())
