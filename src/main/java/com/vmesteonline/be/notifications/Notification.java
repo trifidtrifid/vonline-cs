@@ -94,6 +94,11 @@ public abstract class Notification {
 		messagesToSend.put(u, uns);
 	}
 
+	public static String createContactHref(VoUser nn) {
+		String contactTxt = "<a href=\"https://"+host+"/profile/"+nn.getId()+"\">"+StringEscapeUtils.escapeHtml4(nn.getName() + " " + nn.getLastName())+"</a>";
+		return contactTxt;
+	}
+
 	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users) {
 		// group users by groups and group types
 		Map<Long, Set<VoUser>> groupUserMap = new TreeMap<Long, Set<VoUser>>();
@@ -257,23 +262,15 @@ public abstract class Notification {
 	public static void sendMessageResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
-		String subject =  
-				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
-		String body = "";
-		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
-		
+		String shortMsg = subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50);
+		String subject = "новый комментарий в обсуждении: " + shortMsg ;
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		String body = author.getName()+", <br/><p>Пользователь " + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"</i>' оставил комментарий:</p>";
+		body += "<p><i>" + msg.getContent() + "</i></p>";
 		decorateAndSendMessage(author, subject, body);							
 	}
 
 	public static void sendTopicResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
-		PersistenceManager pm = PMF.getPm();
-		String subj = topic.getSubject();
-		String subject = 
-				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
-		String body = "";
-		body += "<i>" + StringEscapeUtils.escapeHtml4(msg.getContent()) + "</i>";
-		VoUser author = pm.getObjectById(VoUser.class, authorId);
-		decorateAndSendMessage(author, subject, body);							
+		sendMessageResponse(topic, responder, msg, authorId);
 	}
 }

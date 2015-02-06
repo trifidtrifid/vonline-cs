@@ -16,8 +16,7 @@ service AuthService {
 	void logout() throws (1:error.InvalidOperation exc),
 	bedata.UserLocation checkInviteCode(1:string code) throws (1:error.InvalidOperation exc),
 	string requestInviteCode(1:string address, 2:string email),	
-	
-	
+		
 	bool checkEmailRegistered(1:string email),
 	bool checkIfEmailConfirmed(1:string email),
 	void sendConfirmCode(1:string to, 2:string resourcefileName) throws (1:error.InvalidOperation exc),
