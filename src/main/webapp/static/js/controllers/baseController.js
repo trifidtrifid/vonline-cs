@@ -605,13 +605,13 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         function createWallTopic(ctrl) {
 
-            if(ctrl.isEdit && !$rootScope.currentRubric) {
+            if(ctrl.isEdit && !$rootScope.currentRubric.id) { //
                 ctrl.selectedRubric = ctrl.rubric;
             }else{
                 ctrl.selectedRubric = $rootScope.currentRubric;
             }
 
-            //console.log('WallTopic',ctrl.selectedRubric);
+            //console.log('createWallTopic-1',ctrl.selectedRubric,ctrl.rubric,$rootScope.currentRubric);
 
             if (ctrl.isEdit) {
                 ctrl.attachedImages = getAttachedImages($('#attach-area-edit-' + ctrl.id));
@@ -662,7 +662,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
                 ctrl.isGroupsInMessShow = false;
                 ctrl.isRubricsInMessShow = false;
 
-                //console.log('createWallTopic',ctrl.selectedRubric);
+                //console.log('createWallTopic-2',ctrl.selectedRubric);
 
                 var isWall = 1,
                     newTopic = postTopic(ctrl, isWall, false, $filter);
@@ -689,6 +689,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         $rootScope.createTopic = function (event, ctrl) {
             event.preventDefault();
+            console.log('create Topic');
 
             if (!ctrl.isEdit) {
                 $(event.target).closest('.message-input').find('.topic-textarea').height(TEXTAREA_DEFAULT_HEIGHT);
@@ -1116,7 +1117,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             }
         };
 
-        base.contentLength = 500;
+        base.contentLength = 390;
 
         var lsGroupId = localStorage.getItem('groupId'),
             groupsLength = base.groups.length;

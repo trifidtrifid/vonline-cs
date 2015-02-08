@@ -497,6 +497,7 @@ function getTopicRubric(topic){
 function postTopic(obj,isWall,isAdverts,$filter){
     if(obj.id){
         // значит редактирование
+        console.log('postTopic',obj.selectedRubric);
         if (obj.isPollShow) {
             // с опросом
             if(obj.poll && obj.poll.pollId){
@@ -536,7 +537,7 @@ function postTopic(obj,isWall,isAdverts,$filter){
         obj.tagColor = getTagColor(obj.label);
         obj.selectedRubric.id ? obj.rubricId = obj.selectedRubric.id : obj.rubricId = 0;
 
-        console.log('postTopic-2',obj.rubricId);
+        console.log('postTopic-2',obj.rubricId,obj.selectedRubric);
 
         var newTopic = messageClient.postTopic(obj);
     }else {
