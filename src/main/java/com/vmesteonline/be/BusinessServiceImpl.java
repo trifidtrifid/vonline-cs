@@ -50,13 +50,16 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 				return Integer.compare(o1.distance, o2.distance);
 			}});
 		VoUser currentUser = getCurrentUser(pm);
-		VoHelper.createFilterByLocation(currentUser, 3000);
+		
 		List<VoBusiness> businesses = (List<VoBusiness>) pm.newQuery(VoBusiness.class, VoHelper.createFilterByLocation(currentUser, 3000)).execute();
 		int maxDist = Defaults.radiusByType[ groupType.getValue()];
 		for( VoBusiness b : businesses){
-			if( maxDist <= VoHelper.calculateRadius(currentUser, b))
-				bs.add(b.getBusinessInfo(currentUser, pm));
-				
+			int dist = VoHelper.calculateRadius(currentUser, b);
+			if( maxDist >= dist){
+				BusinessInfo businessInfo = b.getBusinessInfo(currentUser, pm);
+				businessInfo.distance = dist;
+				bs.add(businessInfo);				
+			}				
 		}
 		return new ArrayList<>( bs );
 	}
@@ -94,7 +97,7 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			VoUser user = getCurrentUser(pm);
-			List<VoTopic> topics = (List<VoTopic>) pm.newQuery(VoTopic.class, "userGroupType=='"+GroupType.NOBODY.name()+"' &&"
+			List<VoTopic> topics = (List<VoTopic>) pm.newQuery(VoTopic.class, "userGroupType=="+GroupType.NOBODY.getValue()+" &&"
 					+ "authorId=="+businessId+" && type=='"+MessageType.BUSINESS_PAGE.name()+"'").execute();
 			VoTopic voTopic = topics.get(0);
 			Topic tpc = voTopic.getTopic(user.getId(), pm);
@@ -128,7 +131,7 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 			msg.setContent("Текст сообщения для обсуждения");
 			msg.setAuthorId(newBusiness.getId());
 			msg.setType(MessageType.BUSINESS_PAGE);
-			msg.setGroupId(newBusiness.getGroups().get(0));
+			msg.setGroupId(newBusiness.getGroups().get(0));			
 			VoTopic bt = new VoTopic( new Topic(0,"Заголовок сообщения", msg, 0,0,0,0,0,0,null,null,null,GroupType.NOBODY,false), newBusiness, pm);
 			pm.makePersistent(bt);
 			return newBusiness.getBusinessDescription(pm);

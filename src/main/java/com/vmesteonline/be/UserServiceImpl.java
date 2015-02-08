@@ -1006,53 +1006,50 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	@Override
-	public List<String> getAddressListByGroupId(long groupId) throws InvalidOperation {
+	public List<String> getAddressListByGroupId(long groupId) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
-		Set<String> res = getGroupMembersListById(groupId, pm);
-		return new ArrayList<String>(res);
+		return getVIsibleNamesByGroup(groupId, pm);
 	}
 
-	private Set<String> getGroupMembersListById(long groupId, PersistenceManager pm) {
-		Set<String> res = new TreeSet<String>();
+	public List<String> getVIsibleNamesByGroup(long groupId, PersistenceManager pm) {
+		List<String> objects = new ArrayList<String>();
 		VoUserGroup group = pm.getObjectById(VoUserGroup.class, groupId);
-		GroupType groupType = GroupType.findByValue(group.getGroupType());
-		if( groupType.getValue() <= GroupType.BUILDING.getValue() ) {
-			
-			switch( groupType){
-			case BUILDING:
-				res.add(group.getBuildingAddressString(pm));
-				break;
-			case STAIRCASE:
-				res.add("Парадная №"+group.getStaircase());
-				break;
-			case FLOOR:
-				res.add("Этаж "+group.getStaircase());
-				break;
-			default:
-				break;
-			} 
-			
-		} else {
-			int radius = group.getRadius();
-			String ufilter = "";
-			BigDecimal latitudeMax = VoHelper.getLatitudeMax(group.getLatitude(), radius);
-			BigDecimal latitudeMin = VoHelper.getLatitudeMin(group.getLatitude(), radius);
-			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
-			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
-			ufilter += "longitude >= '" + longitudeMin + "' AND longitude <= '" + longitudeMax +
-					"' AND latitude >= '" + latitudeMin + "' AND latitude <= '" + latitudeMax+"'";
-			List<Long> ulist = executeQuery(pm.newQuery( "SQL", "SELECT ID FROM VOBUILDING WHERE "+ ufilter));
-			for( Long bid : ulist){
-				res.add( pm.getObjectById(VoBuilding.class, bid ).getAddressString() );
+
+		if (group.getGroupType() > GroupType.BUILDING.getValue()) {
+			String filter = VoHelper.createFilterByLocation(group, group.getRadius());
+			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class, filter).execute();
+			for (VoBuilding b : bgs) {
+				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
+				String streetName = vs.getName();
+				VoCity city = pm.getObjectById(VoCity.class, vs.getCity());
+				objects.add(city.getName() + " " + streetName + " " + b.getFullNo());
 			}
+		} else if (group.getGroupType() == GroupType.BUILDING.getValue()) {
+			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class,
+					"longitude='" + group.getLongitude() + "' && latitude='" + group.getLatitude() + "'").execute();
+			for (VoBuilding b : bgs) {
+				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
+				String streetName = vs.getName();
+				VoCity city = pm.getObjectById(VoCity.class, vs.getCity());
+				objects.add(city.getName() + " " + streetName + " " + b.getFullNo());
+			}
+		} else if (group.getGroupType() == GroupType.STAIRCASE.getValue()) {
+			objects.add("Прадная №" + group.getStaircase());
+
+		} else if (group.getGroupType() == GroupType.FLOOR.getValue()) {
+			objects.add("Этаж " + group.getFloor());
 		}
-		return res;
+		return objects;
 	}
 
 	@Override
-	public List<String> getAddressListByMessageId(long msgId) throws InvalidOperation {
+	public List<String> getAddressListByMessageId(long msgId) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
-		Set<String> res = getGroupMembersListById( pm.getObjectById(VoTopic.class, msgId).getUserGroupId(), pm);
-		return new ArrayList<String>(res);
+		try {
+			return getVIsibleNamesByGroup( ((List<VoTopic>)pm.getObjectById(VoTopic.class, msgId)).get(0).getUserGroupId(), pm);
+		} catch(Exception e){
+			e.printStackTrace();
+			return new ArrayList<String>();
+		}
 	}
 }

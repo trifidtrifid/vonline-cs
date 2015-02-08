@@ -2,9 +2,15 @@ package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoFileAccessRecord;
+import com.vmesteonline.be.jdo2.VoGroup;
 import com.vmesteonline.be.jdo2.VoPoll;
 import com.vmesteonline.be.jdo2.VoUser;
+import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
+import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
+import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.jdo2.utility.VoCounter;
+import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
@@ -15,6 +21,7 @@ import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +46,62 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
             Defaults.initDefaultData(PMF.getPm());
             resultText = "Init DONE";
 
-
+        } else if ("moveUser".equalsIgnoreCase(action)) {
+        	
+        	String emailStr = arg0.getParameter("userEmail");
+        	String paIdStr = arg0.getParameter("paId");
+        	String  bIdStr = arg0.getParameter("buildingId");
+        	
+        	
+        	if( null==emailStr || null==paIdStr && null==bIdStr) {
+        		resultText = "Parameters required: userEmail, (paIdStr or buildingId)";
+        		
+        	} else {
+        		
+        		try {
+		        	PersistenceManager pm = PMF.getPm();
+		        	
+		        	VoPostalAddress pa = null!=paIdStr ? 
+		        			pm.getObjectById(VoPostalAddress.class, Long.parseLong(paIdStr)) :
+		        				VoPostalAddress.createVoPostalAddress(pm.getObjectById(VoBuilding.class, Long.parseLong(bIdStr)), (byte)0, (byte)0, 0, "", pm);
+		        				
+		        	List<VoUser> users = (List<VoUser>) pm.newQuery( VoUser.class, "email=='"+emailStr+"'").execute();
+		        	if( 0!=users.size()){
+		        		
+		        		VoUser user = users.get(0);
+		        		VoBuilding building = pm.getObjectById(VoBuilding.class, pa.getBuilding());
+			      		// check if location is set
+			      		if (null == building.getLatitude() || 0 == building.getLatitude().intValue()) {
+			      			try {
+			      				VoGeocoder.getPosition(building, false,pm);
+			      				pm.makePersistent(building);
+			
+			      			} catch (InvalidOperation e) {
+			      				e.printStackTrace();
+			      			}
+			      		}
+		
+			      		user.setAddress(pa.getId());
+			      		Vector<Long> groups = new Vector<>();
+			      		for ( int gid = Defaults.getDefaultGroups().size(); gid>0; gid--  ) {
+			      			VoGroup group = Defaults.getDefaultGroups().get(gid - 1);
+			      			VoUserGroup ug = VoUserGroup.createVoUserGroup(building.getLongitude(), building.getLatitude(), 
+			      					group.getRadius(), pa.getStaircase(), pa.getFloor(),
+			      					group.getVisibleName(), group.getImportantScore(), group.getGroupType(), pm);
+			
+			      			UserServiceImpl.usersByGroup.forget( new Object[]{ ug.getId() });
+			      			groups.add(ug.getId());
+			      		}
+			      		Collections.reverse(groups);
+			          user.setGroups( groups );
+			      		pm.makePersistent(user);
+			      		resultText = user.getName()+" "+user.getLastName() + " moved to "+pa.getAddressText(pm);	
+		        	}
+        		} catch( Exception e){
+		        	resultText = e.getMessage();	
+		        }
+        	}        	
+        	
         } else if ("updateImages".equalsIgnoreCase(action)) {
             resultText = "Download Images: ";
             String host = arg0.getParameter("host");
@@ -194,7 +256,9 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                 pm.close();
             }*/
         }
-        arg1.setHeader("Content-Type","text/html");
+        arg1.setHeader("Content-Type","text/html;encoding=UTF8");
+        arg1.setHeader("Character-Encoding","UTF-8");
+        
         arg1.getOutputStream().write(resultText.getBytes());
             /*sendTheResultNotification(arg0, arg1, now, resultText);*/
     }
