@@ -4,13 +4,14 @@
     <div class="wallitem-message blog nearby">
 
         <div class="post">
-            <div class="topic">
-                <div>{{nearby.info.fullName}}</div>
+            <div class="topic clearfix">
+                <div>{{nearby.info.shortName}}</div>
                 <div>
-                    <div class="pull-left">
-                        <img ng-src="{{nearby.info.logoURL }}"/>
+                    <div class="pull-left cabinet-left">
+                        <!--<img ng-src="{{nearby.info.logoURL }}"/>-->
+                        <img src="/static/images/anna.jpg" alt=""/>
                     </div>
-                    <div>
+                    <div class="cabinet-right">
                         {{nearby.info.shortInfo}}
                     </div>
                 </div>
@@ -34,9 +35,9 @@
                 </div>
             </div>
 
-            <div class="input-group" ng-show="nearby.post.isInputShow">
+            <div class="input-group"> <!-- ng-show="nearby.post.isInputShow"-->
 
-                <input type="text" class="anonName" placeholder="Имя Фамилия" ng-if="!nearby.isAuth" ng-model="nearby.post.anonName"/>
+                <!--<input type="text" class="anonName" placeholder="Имя Фамилия" ng-if="!nearby.isAuth" ng-model="nearby.post.anonName"/>-->
 
                 <textarea class="message-textarea" ng-focus="true" ng-model="nearby.post.commenting"
                           onblur="if(this.value=='') this.value='Ваш ответ';"

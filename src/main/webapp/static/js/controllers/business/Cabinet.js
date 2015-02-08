@@ -13,7 +13,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     businessDescription.radius = 500;
     //businessClient.createBusinessDescription(businessDescription,'w','w');
 
-    console.log('business created');
+    //console.log('business created');
 
     nearby.info = businessClient.getMyBusinessInfo();
 

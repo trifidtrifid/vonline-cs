@@ -3,13 +3,18 @@ forumControllers.controller('Edit',function($rootScope) {
 
     var edit = this;
 
-    edit.info = businessClient.getMyBusinessInfo();
+    edit.businessDescription = businessClient.getMyBusinessInfo();
 
-    edit.businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
+    //edit.businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
 
     edit.save = function(){
 
-        businessClient.createBusinesDescription(businessDescription)
+        //edit.businessDescription.logo = new com.vmesteonline.be.thrift.messageservice.Array();
+        //edit.businessDescription.logo.fileName = '1';
+        //edit.businessDescription.logo.URL = '/static/images/anna.jpg';
+
+        console.log(edit.businessDescription);
+        businessClient.updateBusinessDescription(edit.businessDescription)
 
     }
 

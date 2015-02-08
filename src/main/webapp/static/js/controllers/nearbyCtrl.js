@@ -2,7 +2,8 @@
 forumControllers.controller('nearbyCtrl', function($rootScope) {
     var nearby = this;
 
-    nearby.businessList = businessClient.getBusinessList(groupType,currentRubricId);
+    var groupType = com.vmesteonline.be.thrift.GroupType.NEIGHBORS;
+    nearby.businessList = businessClient.getBusinessList(groupType,0);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";

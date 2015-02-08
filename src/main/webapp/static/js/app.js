@@ -136,7 +136,7 @@ main.config(function($stateProvider, $urlRouterProvider) {
         .state('edit', {
             url: "/edit",
             templateUrl: "/static/partials/business/edit.html",
-            controller: 'Edit'
+            controller: 'Edit as edit'
         })
         .state('statistic', {
             url: "/statistic",
