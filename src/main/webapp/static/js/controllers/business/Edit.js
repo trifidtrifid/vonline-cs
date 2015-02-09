@@ -4,21 +4,31 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
     var edit = this;
 
     $scope.fileBase64 = null;
-    var attach = new com.vmesteonline.be.thrift.messageservice.Attach();
+    var attach = new com.vmesteonline.be.thrift.messageservice.Attach(),
+        isLogoUploader, isImagesUploader;
 
     $scope.setLoadImage = function(fileBase64){
 
-        attach.URL = edit.logoURL = fileClient.saveFileContent(fileBase64, true);
+        var svc = fileClient.saveFileContent(fileBase64, true);
         console.log('setLoadImage',edit.logoURL,fileBase64);
+        if(isLogoUploader){
+            console.log('1');
+            edit.businessDescription.logo.URL = attach.URL = edit.logoURL = svc;
+        }else if(isImagesUploader){
+            console.log('2');
+            edit.businessDescription.images[0].URL = svc;
+        }
+
+        isLogoUploader = isImagesUploader = false;
     };
 
-    var uploader = $scope.uploader = new FileUploader({
-        //url: 'upload.php'
-    });
+    //var uploader = $scope.uploaderLogo = new FileUploader();
+    $scope.uploaderLogo = new FileUploader();
+    $scope.uploaderImages = new FileUploader();
 
     // FILTERS
 
-    uploader.filters.push({
+    $scope.uploaderLogo.filters.push({
         name: 'imageFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
@@ -26,40 +36,49 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
         }
     });
 
-    /*uploader.onWhenAddingFileFailed = function(item *//*{File|FileLikeObject}*//*, filter, options) {
+    /*uploaderLogo.onWhenAddingFileFailed = function(item *//*{File|FileLikeObject}*//*, filter, options) {
         console.info('onWhenAddingFileFailed', item, filter, options);
     };*/
-    uploader.onAfterAddingFile = function(fileItem) {
-        console.info('onAfterAddingFile', fileItem, uploader);
+    $scope.uploaderLogo.onAfterAddingFile = function(fileItem) {
+        console.info('onAfterAddingFile 1', fileItem);
+        isLogoUploader = true;
 
         attach.fileName = fileItem._file.name;
         attach.contentType = fileItem._file.type;
     };
-    /*uploader.onAfterAddingAll = function(addedFileItems) {
+    $scope.uploaderImages.onAfterAddingFile = function(fileItem) {
+        console.info('onAfterAddingFile 2', fileItem);
+        isImagesUploader = true;
+
+        edit.businessDescription.images[0] = new com.vmesteonline.be.thrift.messageservice.Attach();
+        edit.businessDescription.images[0].fileName = fileItem._file.name;
+        edit.businessDescription.images[0].contentType = fileItem._file.type;
+    };
+    /*$scope.uploaderLogo.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
     };
-    uploader.onBeforeUploadItem = function(item) {
+    $scope.uploaderLogo.onBeforeUploadItem = function(item) {
         console.info('onBeforeUploadItem', item);
     };
-    uploader.onProgressItem = function(fileItem, progress) {
+    $scope.uploaderLogo.onProgressItem = function(fileItem, progress) {
         console.info('onProgressItem', fileItem, progress);
     };
-    uploader.onProgressAll = function(progress) {
+    $scope.uploaderLogo.onProgressAll = function(progress) {
         console.info('onProgressAll', progress);
     };
-    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    $scope.uploaderLogo.onSuccessItem = function(fileItem, response, status, headers) {
         console.info('onSuccessItem', fileItem, response, status, headers);
     };
-    uploader.onErrorItem = function(fileItem, response, status, headers) {
+    $scope.uploaderLogo.onErrorItem = function(fileItem, response, status, headers) {
         console.info('onErrorItem', fileItem, response, status, headers);
     };
-    uploader.onCancelItem = function(fileItem, response, status, headers) {
+    $scope.uploaderLogo.onCancelItem = function(fileItem, response, status, headers) {
         console.info('onCancelItem', fileItem, response, status, headers);
     };
-    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+    $scope.uploaderLogo.onCompleteItem = function(fileItem, response, status, headers) {
         console.info('onCompleteItem', fileItem, response, status, headers);
     };
-    uploader.onCompleteAll = function() {
+    $scope.uploaderLogo.onCompleteAll = function() {
         console.info('onCompleteAll');
     };*/
 
@@ -73,13 +92,14 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
         //edit.businessDescription.logo.URL = fileClient.saveFileContent(bg, true);
         // bg - binary data base64
 
+
         edit.businessDescription.logo = attach;
         console.log('save',edit.businessDescription.logo);
         //edit.businessDescription.logo.fileName = '1';
         //edit.businessDescription.logo.URL = '/static/images/anna.jpg';
 
-        console.log(edit.businessDescription);
-        businessClient.updateBusinessDescription(edit.businessDescription)
+        businessClient.updateBusinessDescription(edit.businessDescription);
+        console.log('after save',edit.businessDescription.logo);
 
     }
 

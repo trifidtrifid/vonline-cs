@@ -138,12 +138,10 @@ angular.module('forum.directives', []).
                     canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
 
                     //scope.$parent.fileBase64 = canvas[0].toDataURL();
-                    var bgImg = canvas[0].toDataURL(),
-                        content = bgImg.slice(4,bgImg.length-1);
+                    console.log('dir');
 
-                    scope.$parent.setLoadImage(canvas[0].toDataURL());
+                    scope.$parent.setLoadImage('url('+canvas[0].toDataURL()+')');
 
-                    console.log('dir',bgImg,content);
                 }
             }
         };
