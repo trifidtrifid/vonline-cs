@@ -2,8 +2,18 @@
 <section class="page cabinet-edit">
 
     <label class="block clearfix logo-container">
-        <div class="avatar big" style="background-image: url({{edit.businessDescription.logoURL}})"></div>
-        <a ui-sref="profile.change-avatar" class="change-avatar-link" ng-show="profile.isMayEdit">Изменить аватар</a>
+        <div class="avatar big" style="background-image: url({{edit.businessDescription.logo.URL}})"></div>
+        <!--<a ui-sref="profile.change-avatar" class="change-avatar-link" ng-show="profile.isMayEdit">Изменить аватар</a>-->
+
+        <div ng-repeat="item in uploader.queue" ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+        <div class="btn btn-sm btn-primary no-border load-avatar">
+            <input type="file" nv-file-select="" uploader="uploader" multiple  />
+        </div>
+    </label>
+
+    <label class="block clearfix logo-container">
+        <div class="avatar big" style="background-image: url({{edit.businessDescription.images[0]}})"></div>
+        <a ui-sref="profile.change-avatar" class="change-avatar-link" ng-show="profile.isMayEdit">Изменить иллюстрацию</a>
     </label>
 
     <div>

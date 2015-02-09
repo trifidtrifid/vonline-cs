@@ -337,6 +337,7 @@ function copyImage(attachAreaSelector,fileLabel,type) {
     if (copyImgSrc == 'none' || !copyImgSrc) {
         setTimeout(copyImage, 200,attachAreaSelector,fileLabel,type);
     } else {
+        
         var url = fileClient.saveFileContent(copyImgSrc, true),
             fileName = fileLabel.find('.file-name').attr('data-title');
 
