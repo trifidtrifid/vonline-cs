@@ -136,6 +136,14 @@ angular.module('forum.directives', []).
                     var height = params.height || this.height / this.width * params.width;
                     canvas.attr({ width: width, height: height });
                     canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
+
+                    //scope.$parent.fileBase64 = canvas[0].toDataURL();
+                    var bgImg = canvas[0].toDataURL(),
+                        content = bgImg.slice(4,bgImg.length-1);
+
+                    scope.$parent.setLoadImage(canvas[0].toDataURL());
+
+                    console.log('dir',bgImg,content);
                 }
             }
         };

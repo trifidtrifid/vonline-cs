@@ -3,8 +3,17 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
 
     var edit = this;
 
+    $scope.fileBase64 = null;
+    var attach = new com.vmesteonline.be.thrift.messageservice.Attach();
+
+    $scope.setLoadImage = function(fileBase64){
+
+        attach.URL = edit.logoURL = fileClient.saveFileContent(fileBase64, true);
+        console.log('setLoadImage',edit.logoURL,fileBase64);
+    };
+
     var uploader = $scope.uploader = new FileUploader({
-        url: 'upload.php'
+        //url: 'upload.php'
     });
 
     // FILTERS
@@ -17,13 +26,16 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
         }
     });
 
-    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+    /*uploader.onWhenAddingFileFailed = function(item *//*{File|FileLikeObject}*//*, filter, options) {
         console.info('onWhenAddingFileFailed', item, filter, options);
-    };
+    };*/
     uploader.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile', fileItem, uploader);
+
+        attach.fileName = fileItem._file.name;
+        attach.contentType = fileItem._file.type;
     };
-    uploader.onAfterAddingAll = function(addedFileItems) {
+    /*uploader.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
     };
     uploader.onBeforeUploadItem = function(item) {
@@ -49,7 +61,7 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
     };
     uploader.onCompleteAll = function() {
         console.info('onCompleteAll');
-    };
+    };*/
 
 
     edit.businessDescription = businessClient.getMyBusinessInfo();
@@ -61,7 +73,8 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
         //edit.businessDescription.logo.URL = fileClient.saveFileContent(bg, true);
         // bg - binary data base64
 
-        //edit.businessDescription.logo = new com.vmesteonline.be.thrift.messageservice.Array();
+        edit.businessDescription.logo = attach;
+        console.log('save',edit.businessDescription.logo);
         //edit.businessDescription.logo.fileName = '1';
         //edit.businessDescription.logo.URL = '/static/images/anna.jpg';
 
