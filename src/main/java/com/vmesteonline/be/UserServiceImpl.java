@@ -1011,11 +1011,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		return getVIsibleNamesByGroup(groupId, pm);
 	}
 
-<<<<<<< HEAD
-	public List<String> getVIsibleNamesByGroup(long groupId, PersistenceManager pm) {
-=======
 	public static List<String> getVIsibleNamesByGroup(long groupId, PersistenceManager pm) {
->>>>>>> addrListServlet
 		List<String> objects = new ArrayList<String>();
 		VoUserGroup group = pm.getObjectById(VoUserGroup.class, groupId);
 
@@ -1050,11 +1046,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	public List<String> getAddressListByMessageId(long msgId) throws InvalidOperation, TException {
 		PersistenceManager pm = PMF.getPm();
 		try {
-<<<<<<< HEAD
-			return getVIsibleNamesByGroup( ((List<VoTopic>)pm.getObjectById(VoTopic.class, msgId)).get(0).getUserGroupId(), pm);
-=======
 			return getVIsibleNamesByGroup( pm.getObjectById(VoTopic.class, msgId).getUserGroupId(), pm);
->>>>>>> addrListServlet
 		} catch(Exception e){
 			e.printStackTrace();
 			return new ArrayList<String>();

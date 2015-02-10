@@ -98,16 +98,11 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	public String getDescription() {
 		if( null==description ){
 			PersistenceManager pm = PMF.getPm();
-<<<<<<< HEAD
-			String addressString = getBuildingAddressString(pm);
-			description = addressString + "GT:"+GroupType.findByValue(groupType);
-=======
 			List<VoBuilding> bgs = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='" + getLongitude() + "' && latitude=='" + getLatitude()+"'"));
 			if( 1!=bgs.size()){
 				logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
 			}
 			description = bgs.get(0).getAddressString();
->>>>>>> addrListServlet
 			pm.makePersistent(this);
 		}
 		return description;

@@ -271,14 +271,8 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                 pm.close();
             }*/
         }
-<<<<<<< HEAD
-        arg1.setHeader("Content-Type","text/html;encoding=UTF8");
-        arg1.setHeader("Character-Encoding","UTF-8");
-        
-=======
         arg1.setHeader("Content-Type","text/html");
         resultText = "<html><head><meta charset=\"utf-8\"/></head><body>" + resultText + "</body></html>";
->>>>>>> addrListServlet
         arg1.getOutputStream().write(resultText.getBytes());
             /*sendTheResultNotification(arg0, arg1, now, resultText);*/
     }
