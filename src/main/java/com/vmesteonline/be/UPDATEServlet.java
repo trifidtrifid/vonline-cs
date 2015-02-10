@@ -42,7 +42,22 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         String resultText = "init";
         String action = (String) arg0.getParameter("action");
 
-        if ("init".equalsIgnoreCase(action)) {
+        if ("addrl".equalsIgnoreCase(action)) {
+          
+        	String gid = arg0.getParameter("gid");
+        	if( null==gid ){
+        		resultText = "gid parametr must define a group";
+        	} else {
+        		PersistenceManager pm = PMF.getPm();
+        		resultText = "Visible names for group "+gid+"<br/>";
+        		List<String> vnl = UserServiceImpl.getVIsibleNamesByGroup(Long.parseLong(gid) , pm);
+        		for( String vn : vnl){
+        			resultText += vn + "<br/>";
+        		}
+        	}
+
+
+      } else if ("init".equalsIgnoreCase(action)) {
             Defaults.initDefaultData(PMF.getPm());
             resultText = "Init DONE";
 
@@ -256,9 +271,14 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                 pm.close();
             }*/
         }
+<<<<<<< HEAD
         arg1.setHeader("Content-Type","text/html;encoding=UTF8");
         arg1.setHeader("Character-Encoding","UTF-8");
         
+=======
+        arg1.setHeader("Content-Type","text/html");
+        resultText = "<html><head><meta charset=\"utf-8\"/></head><body>" + resultText + "</body></html>";
+>>>>>>> addrListServlet
         arg1.getOutputStream().write(resultText.getBytes());
             /*sendTheResultNotification(arg0, arg1, now, resultText);*/
     }

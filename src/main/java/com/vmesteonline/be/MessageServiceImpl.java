@@ -75,7 +75,11 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
 				if (VoUser.isHeTheBigBro(user)) {
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
+<<<<<<< HEAD
 					tpc.getMessage().setContent(ug.getName() + ": " + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+=======
+					tpc.getMessage().setContent("ID:" + tpc.getId()+ug.getName() +" UG:"+ ug.getId()+ ": " + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+>>>>>>> addrListServlet
 					tpc.setCanChange(true);
 				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo(user, voTopic.getAuthorId(), pm);

@@ -52,7 +52,10 @@ public class ConfirmEmailServlet extends HttpServlet {
 				} 
 			}
 		}
-		resp.sendRedirect("/main");
+		if( "vmesteonline.ru".equals(req.getServerName()))
+			resp.sendRedirect("https://vmesteonline.ru/main"); //for production to avoid session registration on backend
+		else
+			resp.sendRedirect("/main"); //for demo local and other cases
 		return;
 	}
 

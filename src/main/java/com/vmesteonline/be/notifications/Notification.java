@@ -262,15 +262,23 @@ public abstract class Notification {
 	public static void sendMessageResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
+<<<<<<< HEAD
 		String subject =  
 				(subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50)) + " комментарий от "+responder.getName()+" "+responder.getLastName();
 		VoUser author = pm.getObjectById(VoUser.class, authorId);
 		String body = author.getName()+", <br/><p>" + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"' появился новый комментарий:</p>";
+=======
+		String shortMsg = subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50);
+		String subject = "новый комментарий в обсуждении: " + shortMsg ;
+		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		String body = author.getName()+", <br/><p>Пользователь " + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"</i>' оставил комментарий:</p>";
+>>>>>>> addrListServlet
 		body += "<p><i>" + msg.getContent() + "</i></p>";
 		decorateAndSendMessage(author, subject, body);							
 	}
 
 	public static void sendTopicResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
+<<<<<<< HEAD
 		PersistenceManager pm = PMF.getPm();
 		String subj = topic.getSubject();
 		String subject = 
@@ -279,5 +287,8 @@ public abstract class Notification {
 		String body = author.getName()+", <br/><p>" + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"' появился новый комментарий:</p>";
 		body += "<p><i>" + msg.getContent() + "</i></p>";
 		decorateAndSendMessage(author, subject, body);							
+=======
+		sendMessageResponse(topic, responder, msg, authorId);
+>>>>>>> addrListServlet
 	}
 }
