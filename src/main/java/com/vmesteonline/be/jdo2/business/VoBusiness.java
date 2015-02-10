@@ -90,8 +90,9 @@ public class VoBusiness extends VoUser  {
 		if( null!=from){
 			dist = VoHelper.calculateRadius(from, this);
 		}
+		String logoAttach = null == logo || logo == 0 ? null : pm.getObjectById(VoFileAccessRecord.class,logo).getURL();
 		return new BusinessInfo(id, shortName,shortInfo,
-				pm.getObjectById(VoFileAccessRecord.class,logo).getURL(),addressLine, dist);				
+				logoAttach,addressLine, dist);				
 	}
 	
 	public BusinessDescription getBusinessDescription(PersistenceManager pm){
