@@ -682,6 +682,20 @@ transform()
     &:hover
       color #438eb9
 
+.group-addresses-list
+  position absolute
+  background #fff
+  top 25px
+  margin-left -50px
+  box-shadow 2px 2px 5px #ccc
+  li
+    list-style none
+    color #000
+    text-align left
+    display block
+    padding 5px
+    border-bottom 1px solid #ccc
+
 .folding
   max-height 55px // 3 строки
   overflow hidden
@@ -697,6 +711,7 @@ transform()
   height 18px
   padding 0.2em 0.6em 0.2em
   line-height 1
+  position relative
 
 .label-lg.arrowed:before
   border-width 9px 6px
@@ -1562,8 +1577,10 @@ transform()
 .nearby
   padding 10px
   width auto
-  h2
+  h2,h3
     margin-top 0
+  .topic
+    margin-left 0
 .nearby-more
   font-size 14px
   font-weight normal
@@ -1646,13 +1663,43 @@ transform()
   font-size 14px
   text-transform uppercase
 .rubrics-menu
+  &:before
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 8px;
+    top: 40px;
+    bottom: 0;
+    border: 1px dotted #9dbdd6;
+    border-width: 0 0 0 1px;
   li
     a
       padding 5px 0 5px 25px
       cursor pointer
+      &:before
+        content: "";
+        display: inline-block;
+        position: absolute;
+        width: 7px;
+        left: 10px;
+        top: 17px;
+        border-top: 1px dotted #9dbdd6
+    &:hover
+      a
+        background-color transparent
+        color #000
+      .icon-double-angle-right
+        display block
     &.active a
       background #f2f2f2
       color #1963aa
+  .icon-double-angle-right
+    position absolute
+    top 7px
+    left 11px
+    display none
+
 
 /* backoffice */
 .backoffice

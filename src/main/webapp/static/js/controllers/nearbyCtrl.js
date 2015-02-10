@@ -2,7 +2,8 @@
 forumControllers.controller('nearbyCtrl', function($rootScope) {
     var nearby = this;
 
-    nearby.businessList = businessClient.getBusinessList(groupType,currentRubricId);
+    var groupType = com.vmesteonline.be.thrift.GroupType.NEIGHBORS;
+    nearby.businessList = businessClient.getBusinessList(groupType,0);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
@@ -29,26 +30,25 @@ forumControllers.controller('nearbyCtrl', function($rootScope) {
     }
 
     nearby.toggleComm = function($event,post){
-        $event.preventDefault();
+     $event.preventDefault();
 
-        if (post.isCommentShow){
-            post.isCommentShow = false;
+     if (post.isCommentShow){
+     post.isCommentShow = false;
 
-        }else{
-            post.isCommentShow = true;
+     }else{
+     post.isCommentShow = true;
 
-            if(!post.comments) {
-                post.comments = messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
-            }
-        }
+     if(!post.comments) {
+     post.comments = messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
+     }
+     }
 
-    };
+     };
 
     nearby.toggleInput = function($event,post){
         $event.preventDefault();
 
         post.isInputShow ? post.isInputShow = false : post.isInputShow = true;
-
 
     };
 

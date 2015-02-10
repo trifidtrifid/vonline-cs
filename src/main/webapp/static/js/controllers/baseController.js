@@ -1119,6 +1119,22 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             }
         };
 
+        base.groupAddresesList = [];
+        base.isAddresesListShow = [];
+        base.showGroupAdressesList = function(messageId){
+            console.log('1');
+            if(!base.groupAddresesList[messageId]) {
+                console.log('1-2',messageId);
+                base.groupAddresesList[messageId] = userClient.getAddressListByMessageId(messageId);
+                console.log('1-3',base.groupAddresesList[messageId]);
+                base.isAddresesListShow[messageId] = true;
+            }
+        };
+        base.hideGroupAdressesList = function(){
+            base.isAddresesListShow[messageId] = false;
+            console.log('2');
+        };
+
         base.contentLength = 500;
 
         var lsGroupId = localStorage.getItem('groupId'),

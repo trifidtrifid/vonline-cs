@@ -3,6 +3,18 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     var nearby = this,
         postId;
 
+    var businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
+    businessDescription.shortName = "Мега Пицца";
+    businessDescription.fulltName = "Мега Пицца круто-круто";
+    businessDescription.shortInfo = "Мега Пицца круто-круто быстро-быстро";
+    businessDescription.fullInfo = "Мега Пицца круто-круто быстро-быстро дешево";
+    businessDescription.longitude = '30';
+    businessDescription.latitude = '60';
+    businessDescription.radius = 500;
+    //businessClient.createBusinessDescription(businessDescription,'w','w');
+
+    //console.log('business created');
+
     nearby.info = businessClient.getMyBusinessInfo();
 
     /*if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
@@ -14,7 +26,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
 
     //nearby.isAuth = authClient.checkIfAuthorized();
 
-    nearby.toggleComm = function($event,post){
+    /*nearby.toggleComm = function($event,post){
         $event.preventDefault();
 
         if (post.isCommentShow){
@@ -29,7 +41,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
             }
         }
 
-    };
+    };*/
 
     nearby.toggleInput = function($event,post){
         $event.preventDefault();
@@ -44,8 +56,10 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         $event.preventDefault();
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
 
+        console.log('post',post);
+
         message.id = 0;
-        message.topicId = post.id;
+        message.topicId = nearby.info.id; //post.id;
         message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
         message.groupId = 0;
         message.content = post.commenting;

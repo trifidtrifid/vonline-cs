@@ -772,6 +772,21 @@ h1 {
 .message-tools .fa-pencil:hover {
   color: #438eb9;
 }
+.group-addresses-list {
+  position: absolute;
+  background: #fff;
+  top: 25px;
+  margin-left: -50px;
+  box-shadow: 2px 2px 5px #ccc;
+}
+.group-addresses-list li {
+  list-style: none;
+  color: #000;
+  text-align: left;
+  display: block;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
 .folding {
   max-height: 55px;
   overflow: hidden;
@@ -784,6 +799,7 @@ h1 {
   height: 18px;
   padding: 0.2em 0.6em 0.2em;
   line-height: 1;
+  position: relative;
 }
 .label-lg.arrowed:before {
   border-width: 9px 6px;
@@ -1801,8 +1817,12 @@ h1 {
   padding: 10px;
   width: auto;
 }
-.nearby h2 {
+.nearby h2,
+.nearby h3 {
   margin-top: 0;
+}
+.nearby .topic {
+  margin-left: 0;
 }
 .nearby-more {
   font-size: 14px;
@@ -1905,13 +1925,46 @@ h1 {
   font-size: 14px;
   text-transform: uppercase;
 }
+.rubrics-menu:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 8px;
+  top: 40px;
+  bottom: 0;
+  border: 1px dotted #9dbdd6;
+  border-width: 0 0 0 1px;
+}
 .rubrics-menu li a {
   padding: 5px 0 5px 25px;
   cursor: pointer;
 }
+.rubrics-menu li a:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 7px;
+  left: 10px;
+  top: 17px;
+  border-top: 1px dotted #9dbdd6;
+}
+.rubrics-menu li:hover a {
+  background-color: transparent;
+  color: #000;
+}
+.rubrics-menu li:hover .icon-double-angle-right {
+  display: block;
+}
 .rubrics-menu li.active a {
   background: #f2f2f2;
   color: #1963aa;
+}
+.rubrics-menu .icon-double-angle-right {
+  position: absolute;
+  top: 7px;
+  left: 11px;
+  display: none;
 }
 /* backoffice */
 .backoffice {
@@ -1927,6 +1980,16 @@ h1 {
 .business-logout:hover {
   text-decoration: none;
   color: #fff;
+}
+.cabinet-left {
+  width: 350px;
+}
+.cabinet-left img {
+  width: 100%;
+}
+.cabinet-right {
+  margin-left: 360px;
+  font-size: 16px;
 }
 .cabinet-edit {
   font-size: 14px;
@@ -1948,5 +2011,30 @@ h1 {
   height: 60px;
 }
 .cabinet-edit .cabinet-descr {
+  margin-bottom: 10px;
+}
+.cabinet-edit .load-avatar {
+  margin-left: 15px;
+  width: auto;
+  padding: 10px 15px;
+}
+.cabinet-edit .load-avatar input {
+  display: none;
+}
+.cabinet-edit .logo,
+.cabinet-edit .images {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  min-width: 150px;
+}
+.cabinet-edit .logo img,
+.cabinet-edit .images img {
+  width: 100%;
+}
+.cabinet-edit .images {
+  width: 300px;
+}
+.statistic-analytics {
+  font-size: 15px;
   margin-bottom: 10px;
 }

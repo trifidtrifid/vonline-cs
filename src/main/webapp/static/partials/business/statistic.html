@@ -3,11 +3,12 @@
 
 <div class="maps">
 
-    <div>Соседей в округе: </div>
-    <div>Просмотров: </div>
+    <div class="statistic-analytics">Соседей в округе: </div>
+    <div class="statistic-analytics">Просмотров: </div>
+    <br/>
 
     <div>
-        <!--<img ng-src="{{ maps.url }}" alt=""/>-->
+        <h4>Карта пользователей</h4>
 
         <ya-map ya-zoom="{{maps.zoom}}" ya-center="{{ maps.center }}" ya-controls="smallMapDefaultSet" ya-after-init="maps.afterMapInit($target)" style="width: 100%; height: 400px; display: block;">
             <ya-geo-object ya-source="maps.baloon"></ya-geo-object>
