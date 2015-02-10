@@ -15,6 +15,7 @@ import javax.jdo.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +36,22 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         String resultText = "init";
         String action = (String) arg0.getParameter("action");
 
-        if ("init".equalsIgnoreCase(action)) {
+        if ("addrl".equalsIgnoreCase(action)) {
+          
+        	String gid = arg0.getParameter("gid");
+        	if( null==gid ){
+        		resultText = "gid parametr must define a group";
+        	} else {
+        		PersistenceManager pm = PMF.getPm();
+        		resultText = "Visible names for group "+gid+"<br/>";
+        		List<String> vnl = UserServiceImpl.getVIsibleNamesByGroup(Long.parseLong(gid) , pm);
+        		for( String vn : vnl){
+        			resultText += vn + "<br/>";
+        		}
+        	}
+
+
+      } else if ("init".equalsIgnoreCase(action)) {
             Defaults.initDefaultData(PMF.getPm());
             resultText = "Init DONE";
 
@@ -195,6 +211,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
             }*/
         }
         arg1.setHeader("Content-Type","text/html");
+        resultText = "<html><head><meta charset=\"utf-8\"/></head><body>" + resultText + "</body></html>";
         arg1.getOutputStream().write(resultText.getBytes());
             /*sendTheResultNotification(arg0, arg1, now, resultText);*/
     }
