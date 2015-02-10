@@ -112,20 +112,24 @@
 						} catch (e) {
 						}
 					</script>
-                    <ul class="nav nav-list" ng-if="IS_BUSINESS">
+                    <!--<ul class="nav nav-list" ng-if="IS_BUSINESS">
                         <li><a ui-sref="cabinet"> <span class="menu-text">Главная</span> </a></li>
                         <li><a ui-sref="edit"> <span class="menu-text">Редактировать</span> </a></li>
                         <li><a ui-sref="statistic"> <span class="menu-text">Статистика</span> </a></li>
                         <li><a ui-sref="nearby"> <span class="menu-text">Рядом</span> </a></li>
-                    </ul>
-					<ul class="nav nav-list" ng-if="!IS_BUSINESS">
+                    </ul>-->
+					<ul class="nav nav-list"> <!--   ng-if="!IS_BUSINESS" -->
                         <li>
                             <a ui-sref="main" ng-click="setRubric(0)"> <span class="menu-text">Главная</span> </a>
                             <ul class="nav nav-list rubrics-menu">
                                 <li ng-repeat="rubric in base.rubrics" ng-class="{active: currentRubric.id == rubric.id}">
+                                    <i class="icon-double-angle-right"></i>
                                     <a ng-click="setRubric(rubric)">{{rubric.visibleName}}</a>
                                 </li>
-                                <li><a ui-sref="profit"> <span class="menu-text">Полезные соседи</span> </a></li>
+                                <li>
+                                    <i class="icon-double-angle-right"></i>
+                                    <a ui-sref="profit"> <span class="menu-text">Полезные соседи</span> </a>
+                                </li>
                             </ul>
                         </li>
                         <li>

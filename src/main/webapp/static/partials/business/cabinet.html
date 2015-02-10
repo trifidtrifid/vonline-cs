@@ -8,10 +8,12 @@
                 <h3>{{nearby.info.shortName}}</h3>
                 <div>
                     <div class="pull-left cabinet-left">
-                        <img ng-src="{{nearby.info.logo.URL }}"/>
+                        <img ng-src="{{nearby.info.images[0].URL }}"/>
                     </div>
                     <div class="cabinet-right">
-                        {{nearby.info.shortInfo}}
+                        <div>{{nearby.info.fullInfo}}</div>
+                        <br/>
+                        <div><b>Адрес:</b> {{nearby.info.address}}</div>
                     </div>
                 </div>
             </div>

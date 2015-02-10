@@ -129,8 +129,14 @@
                                     <a href="#" title="Редактировать" ng-click="base.setEdit($event,wallItem.topic,false)" class="fa fa-pencil pull-right"></a>
                                 </div>
 
-                                <span class="label label-lg arrowed lenta-item-hashtag pull-right"
-                                        ng-class="wallItem.tagColor">{{wallItem.label}}</span>
+                                <span ng-mouseenter="base.showGroupAdressesList(wallItem.topic.message.id)" ng-mouseenter="base.hideGroupAdressesList(wallItem.topic.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
+                                        ng-class="wallItem.tagColor">
+                                    {{wallItem.label}}
+                                    <ul ng-show="base.isAddresesListShow[wallItem.topic.message.id]" class="pull-right group-addresses-list">
+                                        <li ng-repeat="item in base.groupAddresesList[wallItem.topic.message.id]">{{item}}</li>
+                                    </ul>
+                                </span>
+
                                 <div class="name">
                                     <a ui-sref="profile({userId: {{ wallItem.topic.userInfo.id }} })">{{wallItem.topic.authorName}}</a>
                                 </div>
@@ -310,8 +316,14 @@
                     <div class="wallitem-topic" ng-switch-when="1">
                         <div class="talks-title">
                             <div class="talks-title-right">
-                                <span class="label label-lg arrowed lenta-item-hashtag pull-right"
-                                      ng-class="wallItem.tagColor">{{wallItem.label}}</span>
+                                <span ng-mouseenter="base.showGroupAdressesList(wallItem.topic.message.id)" ng-mouseenter="base.hideGroupAdressesList(wallItem.topic.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
+                                      ng-class="wallItem.tagColor">
+                                    {{wallItem.label}}
+                                    <ul ng-show="base.isAddresesListShow[wallItem.topic.message.id]" class="pull-right group-addresses-list">
+                                        <li ng-repeat="item in base.groupAddresesList[wallItem.topic.message.id]">{{item}}</li>
+                                    </ul>
+                                </span>
+
 
                                 <a class="pull-right important-status" ng-class="{'important' : wallItem.topic.message.important == 1}" title='{{ wallItem.topic.message.importantText }}' href="#" ng-click="base.markImportant($event,wallItem.topic.message)"><i class="fa fa-star"></i></a>
                                 <a class="pull-right like-status" ng-class="{'isLike' : wallItem.topic.message.like == 1}" title='Нравится' href="#" ng-click="base.markLike($event,wallItem.topic.message)"><i class="fa fa-heart"></i></a>

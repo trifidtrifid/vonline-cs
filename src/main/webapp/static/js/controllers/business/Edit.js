@@ -3,19 +3,16 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
 
     var edit = this;
 
-    $scope.fileBase64 = null;
     var attach = new com.vmesteonline.be.thrift.messageservice.Attach(),
         isLogoUploader, isImagesUploader;
 
     $scope.setLoadImage = function(fileBase64){
 
         var svc = fileClient.saveFileContent(fileBase64, true);
-        console.log('setLoadImage',edit.logoURL,fileBase64);
+        //console.log('setLoadImage',edit.logoURL,fileBase64);
         if(isLogoUploader){
-            console.log('1');
             edit.businessDescription.logo.URL = attach.URL = edit.logoURL = svc;
         }else if(isImagesUploader){
-            console.log('2');
             edit.businessDescription.images[0].URL = svc;
         }
 
@@ -83,7 +80,7 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
     };*/
 
 
-    edit.businessDescription = businessClient.getMyBusinessInfo();
+    $rootScope.businessDescription = edit.businessDescription = businessClient.getMyBusinessInfo();
 
     //edit.businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
 
@@ -94,12 +91,20 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
 
 
         edit.businessDescription.logo = attach;
-        console.log('save',edit.businessDescription.logo);
+        console.log('save',edit.businessDescription);
         //edit.businessDescription.logo.fileName = '1';
         //edit.businessDescription.logo.URL = '/static/images/anna.jpg';
 
-        businessClient.updateBusinessDescription(edit.businessDescription);
-        console.log('after save',edit.businessDescription.logo);
+        try {
+            businessClient.updateBusinessDescription(edit.businessDescription);
+            edit.statusText = "Сохранено";
+            edit.status = 1;
+        }catch(e){
+            edit.statusText = "При сохранении произошла ошибка";
+            edit.status = 0;
+        }
+
+        console.log('after save',edit.businessDescription);
 
     }
 

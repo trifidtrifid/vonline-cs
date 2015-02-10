@@ -1,7 +1,12 @@
 
 forumControllers.controller('Statistic',function($rootScope) {
 
-    var maps = this;
+    var maps = this,
+        businessDescription;
+
+    ($rootScope.businessDescription) ?
+    businessDescription = $rootScope.businessDescription :
+    businessDescription = businessClient.getMyBusinessInfo() ;
 
     var yaMap;
     maps.afterMapInit=function(nMap){
@@ -9,6 +14,20 @@ forumControllers.controller('Statistic',function($rootScope) {
     };
 
     //var location = userClient.getGroupView(groupId);
-    //maps.center = [location.longitude,location.latitude];
+    maps.center = [businessDescription.longitude,businessDescription.latitude];
+    maps.zoom = 16;
+    maps.radius = businessDescription.radius;
+    maps.color = MAP_COLOR;
+
+    maps.baloon = {
+        geometry: {
+            type: 'Point',
+            coordinates: maps.center
+        },
+        // Свойства
+        properties: {
+            hintContent: "Я здесь"
+        }
+    };
 
 });

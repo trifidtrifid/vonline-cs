@@ -26,7 +26,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
 
     //nearby.isAuth = authClient.checkIfAuthorized();
 
-    nearby.toggleComm = function($event,post){
+    /*nearby.toggleComm = function($event,post){
         $event.preventDefault();
 
         if (post.isCommentShow){
@@ -41,7 +41,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
             }
         }
 
-    };
+    };*/
 
     nearby.toggleInput = function($event,post){
         $event.preventDefault();
@@ -56,8 +56,10 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         $event.preventDefault();
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
 
+        console.log('post',post);
+
         message.id = 0;
-        message.topicId = post.id;
+        message.topicId = nearby.info.id; //post.id;
         message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
         message.groupId = 0;
         message.content = post.commenting;

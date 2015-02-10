@@ -142,7 +142,7 @@ main.config(function($stateProvider, $urlRouterProvider) {
         .state('statistic', {
             url: "/statistic",
             templateUrl: "/static/partials/business/statistic.html",
-            controller: 'Statistic'
+            controller: 'Statistic as maps'
         })
 });
 
