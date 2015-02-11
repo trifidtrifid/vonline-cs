@@ -81,8 +81,10 @@ public class VoTopic extends VoBaseMessage {
 				VoPoll voPoll = pm.getObjectById(VoPoll.class, pollId);
 				tpc.poll = voPoll.getPoll(userId);
 			} catch (RuntimeException e) {
+				tpc.poll = null;
 				e.printStackTrace();
 		  } catch (Exception e) {
+		  	tpc.poll = null;
 		  	e.printStackTrace();
 			}
 		}

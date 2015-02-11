@@ -66,7 +66,15 @@ public class NewNeigboursNotification extends Notification {
 			List<Long> usersToNotify = executeQuery(visibleUSersSQL);*/
 		
 			if( null == u.getLongitude() && null!=u.getGroups() && u.getGroups().size() > 0) {
-				VoUserGroup group = pm.getObjectById(VoUserGroup.class, u.getGroups().get(0));
+				VoUserGroup group = null;
+				for( Long gid: u.getGroups() ){ //fix if group not found in database
+					try {
+						group = pm.getObjectById(VoUserGroup.class, gid);
+						break;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				u.setLongitude( group.getLongitude());
 				u.setLatitude( group.getLatitude());
 			}
