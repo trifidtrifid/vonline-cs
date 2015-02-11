@@ -2,9 +2,9 @@ var forumControllers = angular.module('forum.controllers', ['ui.select2','infini
 
 forumControllers.controller('baseController',function($scope,$rootScope,$state,$filter,$location) {
 
-    //$rootScope.IS_BUSINESS = localStorage.getItem('VO_is_business');
-    $rootScope.IS_BUSINESS = 1;
-    localStorage.removeItem('VO_is_business');
+    $rootScope.IS_BUSINESS = localStorage.getItem('VO_is_business');
+    //$rootScope.IS_BUSINESS = 1;
+    //localStorage.removeItem('VO_is_business');
 
         var base = this;
         base.url = $location.url();
@@ -1132,8 +1132,13 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         };
         base.hideGroupAdressesList = function(){
             base.isAddresesListShow[messageId] = false;
-            console.log('2');
         };
+
+        base.userMenuToggle = function($event){
+            $event.preventDefault();
+            $event.stopPropagation();
+            base.isUserMenuShow ? base.isUserMenuShow = false : base.isUserMenuShow = true;
+        }
 
         base.contentLength = 500;
 
