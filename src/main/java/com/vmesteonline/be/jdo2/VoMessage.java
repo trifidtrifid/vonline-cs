@@ -69,7 +69,7 @@ public class VoMessage extends VoBaseMessage {
 		try {
 			topic = pm.getObjectById(VoTopic.class, msg.getTopicId());
 		} catch (JDOObjectNotFoundException e1) {
-			throw new InvalidOperation(com.vmesteonline.be.thrift.VoError.IncorrectParametrs, "Topic deleted" + msg.getParentId());
+			throw new InvalidOperation(com.vmesteonline.be.thrift.VoError.IncorrectParametrs, "No topic found by ID:" + msg.getParentId());
 		}
 	
 		// вставка времени последнего апдейта

@@ -154,6 +154,7 @@ public class VoBusiness extends VoUser  {
 			}
 			if(logoChanged){
 				VoFileAccessRecord cfar;
+			
 				try {
 					cfar = StorageHelper.loadAttach(pm, vb.getId(), bd.logo);
 					vb.setLogo(cfar.getId());
