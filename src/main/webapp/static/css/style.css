@@ -1830,10 +1830,26 @@ h1 {
 .nearby .topic {
   margin-left: 0;
 }
+.nearby-list {
+  border: 1px solid #000;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.nearby-list-left {
+  width: 150px;
+}
+.nearby-list-left img {
+  width: 100%;
+}
+.nearby-list-right {
+  margin-left: 15px;
+  max-width: 400px;
+}
 .nearby-more {
   font-size: 14px;
   font-weight: normal;
-  margin-top: -26px;
+  margin-top: -36px;
+  margin-right: 20px;
 }
 /* --- */
 .unconfirm {
@@ -1971,13 +1987,6 @@ h1 {
   top: 7px;
   left: 11px;
   display: none;
-}
-/* backoffice */
-.backoffice {
-  text-align: left;
-}
-.backoffice .broadcast textarea {
-  width: 100%;
 }
 .business-logout {
   color: #fff;

@@ -153,6 +153,79 @@
                     <span class="counter-init-status "></span>
 
                 </div>
+
+                <div class="cabinet-edit">
+                    <h2>Создание кабинета для бизнеса</h2>
+
+                    <!--<div class="block clearfix logo-container clearfix">
+                        <div>Логотип</div>
+
+                        &lt;!&ndash;<div class="pull-left avatar big" ng-style="{'background-image': 'url(' + edit.businessDescription.logo.URL + ')' }"></div>&ndash;&gt;
+                        <div class="pull-left logo"><img ng-src="{{edit.businessDescription.logo.URL}}" alt=""/></div>
+
+                        <label class="btn btn-sm btn-primary no-border pull-left load-avatar">
+                            Загрузить
+                            <input type="file" class="logo-input" uploader="uploaderLogo" />
+                        </label>
+
+                        <div ng-repeat="item in uploaderLogo.queue" ng-show="uploaderLogo.isHTML5 && !uploaderLogo.queue.length" ng-thumb="{ file: item._file, height: 100 }"></div>
+
+                    </div>
+
+                    <div class="block clearfix logo-container clearfix">
+                        <div>Иллюстрация</div>
+
+                        <div class="pull-left images"><img ng-src="{{edit.businessDescription.images[0].URL}}" alt=""/></div>
+
+                        <label class="btn btn-sm btn-primary no-border pull-left load-avatar">
+                            Загрузить
+                            <input type="file" nv-file-select="" uploader="uploaderImages" />
+                        </label>
+
+                        <div ng-repeat="item in uploaderImages.queue" ng-show="uploaderImages.isHTML5 && !uploaderImages.queue.length" ng-thumb="{ file: item._file, height: 100 }"></div>
+                    </div>-->
+
+                    <label>
+                        <span>Имя пользователя</span>
+                        <input type="text"  class="business-username"/>
+                    </label>
+                    <label>
+                        <span>Пароль</span>
+                        <input type="password"  class="business-pass"/>
+                    </label>
+                    <label>
+                        <span>Название</span>
+                        <input type="text" class="business-name" />
+                    </label>
+                    <label>
+                        <span>Короткое описание</span>
+                        <input type="text"  class="business-shortDescr"/>
+                    </label>
+                    <label>
+                        <span>Адрес</span>
+                        <input type="text"  class="business-address"/>
+                    </label>
+                    <label>
+                        <span>longitude</span>
+                        <input type="text"  class="business-longitude"/>
+                    </label>
+                    <label>
+                        <span>latitude</span>
+                        <input type="text"  class="business-latitude"/>
+                    </label>
+                    <label>
+                        <span>Радиус</span>
+                        <input type="text"  class="business-radius"/>
+                    </label>
+
+                    <div class="cabinet-descr">
+                        <div>Полное описание</div>
+                        <textarea class="business-fullDescr"></textarea>
+                    </div>
+
+                    <button class="btn btn-sm btn-primary no-border save-cabinet">Сохранить</button>
+
+                </div>
 			</div>
 		</div>
 
@@ -172,6 +245,10 @@
 <script src="/gen-js/UserService.js" type="text/javascript"></script>
 <script src="/gen-js/utilityservces_types.js" type="text/javascript"></script>
 <script src="/gen-js/UtilityService.js" type="text/javascript"></script>
+<script src="/gen-js/business_types.js" type="text/javascript"></script>
+<script src="/gen-js/BusinessService.js" type="text/javascript"></script>
+<script src="/gen-js/fileutils_types.js" type="text/javascript"></script>
+<script src="/gen-js/FileService.js" type="text/javascript"></script>
 <!-- -->
 
 
@@ -189,6 +266,14 @@
         transport = new Thrift.Transport("/thrift/UtilityService");
         protocol = new Thrift.Protocol(transport);
         var utilityClient = new com.vmesteonline.be.thrift.utilityservice.UtilityServiceClient(protocol);
+
+        transport = new Thrift.Transport("/thrift/BusinessService");
+        protocol = new Thrift.Protocol(transport);
+        var businessClient = new com.vmesteonline.be.thrift.businesservice.BusinessServiceClient(protocol);
+
+        transport = new Thrift.Transport("/thrift/fs");
+        protocol = new Thrift.Protocol(transport);
+        var fileClient = new com.vmesteonline.be.thrift.fileservice.FileServiceClient(protocol);
 
         $('.send-post').click(function(e){
             e.preventDefault();
@@ -306,6 +391,27 @@
             utilityClient.createCounterService(buildingId,startDate,endDate,countersList);
 
             $('.counter-init-status').addClass('info-good').text('Успешно');
+        });
+
+        $('.save-cabinet').click(function(){
+
+            var username = $('.business-username').val(),
+                pass = $('.business-pass').val(),
+            businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
+            businessDescription.shortName = $('.business-name').val();
+            //businessDescription.fulltName = "Мега Пицца круто-круто";
+            businessDescription.shortInfo = $('.business-shortDescr').val();
+            businessDescription.fullInfo = $('.business-fullDescr').val();
+            businessDescription.address = $('.business-address').val();
+            businessDescription.longitude = $('.business-longitude').val();
+            businessDescription.latitude = $('.business-latitude').val();
+            businessDescription.radius = $('.business-radius').val();
+
+            console.log('save',businessDescription,username);
+
+            businessClient.createBusinessDescription(businessDescription,username,pass);
+
+            console.log('save fin');
         });
 
     });

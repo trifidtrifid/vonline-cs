@@ -1,11 +1,13 @@
 
 forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams) {
     var nearby = this,
-        postId;
+        businessId;
 
     if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
-        postId = $stateParams.nearbyId;
+        businessId = $stateParams.nearbyId;
     }
+
+    nearby.info = businessClient.getBusinessDescription(businessId);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
@@ -22,8 +24,8 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
     if(nearby.posts.topics) {
         var len = nearby.posts.topics.length;
         for (var i = 0; i < len; i++) {
-            console.log(nearby.posts.topics[i].id,parseInt(postId));
-            if(nearby.posts.topics[i].id == parseInt(postId)){
+            console.log(nearby.posts.topics[i].id,parseInt(businessId));
+            if(nearby.posts.topics[i].id == parseInt(businessId)){
                 nearby.posts.topics[i].isCommentShow = true;
                 nearby.posts.topics[i].isInputShow = true;
                 nearby.posts.topics[i].full = nearby.posts.topics[i].message.content.split(';')[1];
