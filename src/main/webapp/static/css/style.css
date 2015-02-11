@@ -357,7 +357,7 @@ h1 {
   float: left;
 }
 .sidebar {
-  padding-top: 20px;
+  padding-top: 10px;
   vertical-align: top;
 }
 .main-content {
@@ -777,9 +777,10 @@ h1 {
 }
 .group-addresses-list {
   position: absolute;
+  z-index: 2;
   background: #fff;
   top: 25px;
-  margin-left: -50px;
+  right: 0;
   box-shadow: 2px 2px 5px #ccc;
 }
 .group-addresses-list li {
@@ -789,6 +790,9 @@ h1 {
   display: block;
   padding: 5px;
   border-bottom: 1px solid #ccc;
+}
+.label .group-addresses-list {
+  right: -50px;
 }
 .folding {
   max-height: 55px;
@@ -802,7 +806,6 @@ h1 {
   height: 18px;
   padding: 0.2em 0.6em 0.2em;
   line-height: 1;
-  position: relative;
 }
 .label-lg.arrowed:before {
   border-width: 9px 6px;
@@ -1128,7 +1131,7 @@ h1 {
 }
 .talks-title {
   padding: 10px;
-  overflow: auto;
+  overflow: visible;
   position: relative;
   border-top: 1px solid #5090c1;
 }

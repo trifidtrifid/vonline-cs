@@ -25,8 +25,11 @@
                                         <a href="#" title="Редактировать" ng-click="base.setEdit($event,adverts.fullTalkTopic)" class="fa fa-pencil pull-right"></a>
                                     </div>
 
-                                    <a ui-sref="profit" class="label label-lg arrowed lenta-item-hashtag pull-right"
+                                    <a ui-sref="profit" ng-mouseenter="base.showGroupAdressesList(adverts.fullTalkTopic.message.id)" ng-mouseleave="base.hideGroupAdressesList(adverts.fullTalkTopic.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
                                       ng-class="adverts.fullTalkTopic.tagColor">{{adverts.fullTalkTopic.label}}</a>
+                                    <ul ng-show="base.isAddresesListShow[adverts.fullTalkTopic.message.id]" class="pull-right group-addresses-list">
+                                        <li ng-repeat="item in base.groupAddresesList[adverts.fullTalkTopic.message.id]">{{item}}</li>
+                                    </ul>
 
                                     <div ng-hide="adverts.fullTalkTopic.isEdit">
                                         <h2>

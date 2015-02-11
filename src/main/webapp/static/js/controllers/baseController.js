@@ -1124,13 +1124,12 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         base.showGroupAdressesList = function(messageId){
             console.log('1');
             if(!base.groupAddresesList[messageId]) {
-                console.log('1-2',messageId);
                 base.groupAddresesList[messageId] = userClient.getAddressListByMessageId(messageId);
-                console.log('1-3',base.groupAddresesList[messageId]);
-                base.isAddresesListShow[messageId] = true;
             }
+            base.isAddresesListShow[messageId] = true;
         };
-        base.hideGroupAdressesList = function(){
+        base.hideGroupAdressesList = function(messageId){
+            console.log('2');
             base.isAddresesListShow[messageId] = false;
         };
 
