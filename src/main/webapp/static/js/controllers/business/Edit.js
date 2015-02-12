@@ -9,7 +9,7 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
     $scope.setLoadImage = function(fileBase64){
 
         var svc = fileClient.saveFileContent(fileBase64, true);
-        //console.log('setLoadImage',edit.logoURL,fileBase64);
+        console.log('setLoadImage',edit.logoURL,fileBase64);
         if(isLogoUploader){
             edit.businessDescription.logo.URL = attach.URL = edit.logoURL = svc;
         }else if(isImagesUploader){
