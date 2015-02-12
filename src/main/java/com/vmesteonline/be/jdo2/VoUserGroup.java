@@ -97,7 +97,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			if( 1!=bgs.size()){
 				logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
 			}
-			description = bgs.get(0).getAddressString() + "GT:"+GroupType.findByValue(groupType);
+			description = bgs.get(0).getAddressString();
 			pm.makePersistent(this);
 		}
 		return description;
