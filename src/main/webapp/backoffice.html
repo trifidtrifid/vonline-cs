@@ -156,14 +156,6 @@
 
                 <div class="cabinet-edit">
                     <h2>Создание кабинета для бизнеса</h2>
-                    <div class="ace-file-input">
-                        <input type="file" id="id-input-file-2">
-                        <label class="file-label" data-title="Choose">
-                            <span class="file-name" data-title="No File ...">
-                                <i class="icon-upload-alt"></i></span>
-                        </label>
-                        <a class="remove" href="#"><i class="icon-remove"></i></a>
-                    </div>
 
                     <!--<div class="block clearfix logo-container clearfix">
                         <div>Логотип</div>
@@ -206,12 +198,10 @@
                         <input type="text" class="business-name" />
                     </label>
                     <label>
-                        <span>Логотип</span>
-                        <input type="file"  class="business-logo"/>
+                        <input type="file" class="business-logo"/>
                     </label>
                     <label>
-                        <span>Иллюстрация</span>
-                        <input type="file"  class="business-image"/>
+                        <input type="file"  class="business-images" multiple/>
                     </label>
                     <label>
                         <span>Короткое описание</span>
@@ -291,17 +281,85 @@
         protocol = new Thrift.Protocol(transport);
         var fileClient = new com.vmesteonline.be.thrift.fileservice.FileServiceClient(protocol);
 
-        $('#id-input-file-2').ace_file_input({
-            no_file:'No File ...',
-            btn_choose:'Choose',
-            btn_change:'Change',
+
+        var title,logoURL,logoName,logoType,
+                business_images = [];
+
+        $('.business-logo').ace_file_input({
+            style:'well',
+            btn_choose:'Загрузить логотип',
+            btn_change:null,
+            no_icon:'',
             droppable:false,
-            onchange:null,
-            thumbnail:false //| true | large
-            //whitelist:'gif|png|jpg|jpeg'
-            //blacklist:'exe|php'
-            //onchange:''
-            //
+            thumbnail: 'large',
+            icon_remove:null,
+            before_change: function(files, dropped){
+                title = $(this).find('+.file-label').data('title');
+                return true;
+            }
+        }).on('change', function(){
+            var fileLabel = $(this).find('+.file-label');
+
+            setTimeout(copyImage, 200,fileLabel,'logo');
+
+        });
+
+        function copyImage(fileLabel,type){
+
+            if(type == 'logo'){
+                var copyImgSrc = fileLabel.find('.file-name img').css('background-image');
+
+                if (copyImgSrc == 'none' || !copyImgSrc) {
+                    setTimeout(copyImage, 200,fileLabel,'logo');
+                } else {
+                    logoURL = fileClient.saveFileContent(copyImgSrc, true);
+                    logoName = fileLabel.find('.file-name').data('title');
+
+                    console.log($('.business-logo')[0].files);
+                    //logoType = $('.business-logo')[0].files[0].type;
+               }
+
+            }else{
+                var files = $('.business-images')[0].files,
+                    len = files.length;
+
+                for(var i = 0; i < len; i++){
+                    business_images[i] = new com.vmesteonline.be.thrift.messageservice.Attach();
+                    business_images[i].contentType = files[i].type;
+                };
+
+                i = 0;
+                var copyImgSrc = [];
+                fileLabel.find('.file-name').each(function(){
+
+                    copyImgSrc[i] = $(this).find('img').css('background-image');
+
+                    business_images[i].URL = fileClient.saveFileContent(copyImgSrc[i], true);
+                    business_images[i].fileName = $(this).data('title');
+
+                    i++;
+                })
+            }
+
+        }
+
+        $('.business-images').ace_file_input({
+            style:'well',
+            btn_choose:'Загрузить слайды',
+            btn_change:null,
+            no_icon:'',
+            droppable:false,
+            thumbnail: 'small',
+            icon_remove:null,
+            before_change: function(files, dropped){
+                title = $(this).find('+.file-label').data('title');
+                return true;
+            }
+        }).on('change', function(){
+            var fileLabel = $(this).parent();
+
+            setTimeout(copyImage, 200,fileLabel);
+
         });
 
         $('.send-post').click(function(e){
@@ -435,6 +493,15 @@
             businessDescription.longitude = $('.business-longitude').val();
             businessDescription.latitude = $('.business-latitude').val();
             businessDescription.radius = $('.business-radius').val();
+
+            businessDescription.logo = new com.vmesteonline.be.thrift.messageservice.Attach();
+            businessDescription.logo.fileName = logoName;
+            businessDescription.logo.contentType = logoType;
+            businessDescription.logo.URL = logoURL;
+
+            businessDescription.images = business_images;
+
+            console.log('save',businessDescription.images);
 
             var svc = fileClient.saveFileContent(fileBase64, true);
 
