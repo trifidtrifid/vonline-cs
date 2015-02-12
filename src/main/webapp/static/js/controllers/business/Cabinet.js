@@ -21,27 +21,20 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         postId = $stateParams.nearbyId;
     }*/
 
+    nearby.carouselInterval = 5000;
+    /*nearby.addSlide = function() {
+        var newWidth = 600 + slides.length + 1;
+        slides.push({
+            image: 'http://placekitten.com/' + newWidth + '/300',
+            text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
+                ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
+        });
+    };
+    for (var i=0; i<4; i++) {
+        nearby.addSlide();
+    }*/
+
     $rootScope.base.isFooterBottom = true;
-    //$rootScope.base.pageTitle = "Рядом";
-
-    //nearby.isAuth = authClient.checkIfAuthorized();
-
-    /*nearby.toggleComm = function($event,post){
-        $event.preventDefault();
-
-        if (post.isCommentShow){
-            post.isCommentShow = false;
-
-        }else{
-            post.isCommentShow = true;
-
-            if(!post.comments) {
-                post.comments = messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
-                console.log('finish');
-            }
-        }
-
-    };*/
 
     nearby.toggleInput = function($event,post){
         $event.preventDefault();

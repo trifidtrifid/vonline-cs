@@ -4,19 +4,23 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
     var edit = this;
 
     var attach = new com.vmesteonline.be.thrift.messageservice.Attach(),
-        isLogoUploader, isImagesUploader;
+        isLogoUploader, isImagesUploader, imagesCounter = 0,imagesLength;
 
     $scope.setLoadImage = function(fileBase64){
 
         var svc = fileClient.saveFileContent(fileBase64, true);
-        console.log('setLoadImage',edit.logoURL,fileBase64);
+        console.log('setLoadImage',fileBase64);
         if(isLogoUploader){
             edit.businessDescription.logo.URL = attach.URL = edit.logoURL = svc;
+            isLogoUploader = false;
         }else if(isImagesUploader){
-            edit.businessDescription.images[0].URL = svc;
+            edit.businessDescription.images[imagesCounter].URL = svc;
+            imagesCounter++;
+            if(imagesCounter == imagesLength) isImagesUploader = false;
+
+            console.log('images',imagesCounter,edit.businessDescription.images);
         }
 
-        isLogoUploader = isImagesUploader = false;
     };
 
     //var uploader = $scope.uploaderLogo = new FileUploader();
@@ -45,16 +49,22 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
     };
     $scope.uploaderImages.onAfterAddingFile = function(fileItem) {
         console.info('onAfterAddingFile 2', fileItem);
-        isImagesUploader = true;
-
-        edit.businessDescription.images[0] = new com.vmesteonline.be.thrift.messageservice.Attach();
-        edit.businessDescription.images[0].fileName = fileItem._file.name;
-        edit.businessDescription.images[0].contentType = fileItem._file.type;
     };
-    /*$scope.uploaderLogo.onAfterAddingAll = function(addedFileItems) {
+    $scope.uploaderImages.onAfterAddingAll = function(addedFileItems) {
         console.info('onAfterAddingAll', addedFileItems);
+
+        isImagesUploader = true;
+        //imagesCounter = 0;
+
+        imagesLength = addedFileItems.length;
+        for(var i = 0; i < imagesLength; i++){
+            edit.businessDescription.images[i] = new com.vmesteonline.be.thrift.messageservice.Attach();
+            edit.businessDescription.images[i].fileName = addedFileItems[i]._file.name;
+            edit.businessDescription.images[i].contentType = addedFileItems[i]._file.type;
+        }
+
     };
-    $scope.uploaderLogo.onBeforeUploadItem = function(item) {
+    /*$scope.uploaderLogo.onBeforeUploadItem = function(item) {
         console.info('onBeforeUploadItem', item);
     };
     $scope.uploaderLogo.onProgressItem = function(fileItem, progress) {

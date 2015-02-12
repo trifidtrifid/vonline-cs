@@ -8,7 +8,16 @@
                 <h3>{{nearby.info.shortName}}</h3>
                 <div>
                     <div class="pull-left cabinet-left">
-                        <img ng-src="{{nearby.info.images[0].URL }}"/>
+                        <carousel interval="nearby.carouselInterval">
+                            <slide ng-repeat="slide in nearby.info.images" active="slide.active">
+                                <img ng-src="{{slide.URL}}" style="margin:auto;">
+                                <!--<div class="carousel-caption">
+                                    <h4>Slide {{$index}}</h4>
+                                    <p>{{slide.text}}</p>
+                                </div>-->
+                            </slide>
+                        </carousel>
+                        <!--<img ng-src="{{nearby.info.images[0].URL }}"/>-->
                     </div>
                     <div class="cabinet-right">
                         <div>{{nearby.info.fullInfo}}</div>

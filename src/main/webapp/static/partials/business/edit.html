@@ -17,13 +17,17 @@
     </div>
 
     <div class="block clearfix logo-container clearfix">
-        <div>Иллюстрация</div>
+        <div>Слайды</div>
 
-        <div class="pull-left images"><img ng-src="{{edit.businessDescription.images[0].URL}}" alt=""/></div>
+        <div class="pull-left images">
+            <div ng-repeat="image in edit.businessDescription.images">
+                <img ng-src="{{image.URL}}" alt=""/>
+            </div>
+        </div>
 
         <label class="btn btn-sm btn-primary no-border pull-left load-avatar">
             Загрузить
-            <input type="file" nv-file-select="" uploader="uploaderImages" />
+            <input type="file" nv-file-select="" uploader="uploaderImages" multiple/>
         </label>
 
         <div ng-repeat="item in uploaderImages.queue" ng-show="uploaderImages.isHTML5 && !uploaderImages.queue.length" ng-thumb="{ file: item._file, width: 500 }"></div>
