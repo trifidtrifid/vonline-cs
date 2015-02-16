@@ -287,6 +287,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		user.setCurrentPostalAddress(pa, pm);
 		user.setAddressConfirmed(false);
 		VoInviteCode ic = VoHelper.createNewInviteCode(3, 3, pa, null, pm);
+		pm.makePersistent(ic);
 		pm.makePersistent(user);
 
 		try {
