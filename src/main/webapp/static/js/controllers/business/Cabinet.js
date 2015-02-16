@@ -60,6 +60,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         message.topicId = nearby.wallItem.topic.id;
         message.parentId = 0;
         message.created = Date.parse(new Date())/1000;
+        post.commenting = "";
 
         if(!nearby.isAuth){
             message.anonName = post.anonName;
@@ -70,11 +71,14 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         console.log('post',message);
         //var returnComment = messageClient.postBusinessTopics(message);
         var returnComment = messageClient.postMessage(message);
-        if(post.comments && post.comments.length) {
-            post.comments.push(returnComment);
+        console.log('post2',returnComment);
+
+
+        if(nearby.wallItem.messages && nearby.wallItem.messages.length) {
+            nearby.wallItem.messages.push(returnComment);
         }else{
-            post.comments = [];
-            post.comments[0] = returnComment;
+            nearby.wallItem.messages = [];
+            nearby.wallItem.messages[0] = returnComment;
         }
 
     };
