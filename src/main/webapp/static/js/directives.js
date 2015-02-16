@@ -138,7 +138,7 @@ angular.module('forum.directives', []).
                     canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
 
                     //scope.$parent.fileBase64 = canvas[0].toDataURL();
-                    console.log('dir');
+                    console.log('dir',width,height);
 
                     scope.$parent.setLoadImage('url('+canvas[0].toDataURL()+')');
 

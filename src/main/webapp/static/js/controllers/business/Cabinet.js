@@ -21,27 +21,20 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         postId = $stateParams.nearbyId;
     }*/
 
+    nearby.carouselInterval = 5000;
+    /*nearby.addSlide = function() {
+        var newWidth = 600 + slides.length + 1;
+        slides.push({
+            image: 'http://placekitten.com/' + newWidth + '/300',
+            text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
+                ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
+        });
+    };
+    for (var i=0; i<4; i++) {
+        nearby.addSlide();
+    }*/
+
     $rootScope.base.isFooterBottom = true;
-    //$rootScope.base.pageTitle = "Рядом";
-
-    //nearby.isAuth = authClient.checkIfAuthorized();
-
-    /*nearby.toggleComm = function($event,post){
-        $event.preventDefault();
-
-        if (post.isCommentShow){
-            post.isCommentShow = false;
-
-        }else{
-            post.isCommentShow = true;
-
-            if(!post.comments) {
-                post.comments = messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
-                console.log('finish');
-            }
-        }
-
-    };*/
 
     nearby.toggleInput = function($event,post){
         $event.preventDefault();
@@ -55,6 +48,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     nearby.sendComm = function($event,post){
         $event.preventDefault();
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
+        var wallItem = businessClient.getWallItem(nearby.info.id);
 
         console.log('post',post);
 
@@ -63,7 +57,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
         message.groupId = 0;
         message.content = post.commenting;
-        message.parentId = 0;
+        message.parentId = wallItem.id;
         message.created = Date.parse(new Date())/1000;
 
         if(!nearby.isAuth){
@@ -72,7 +66,8 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
             message.anonName = "";
         };
 
-        var returnComment = messageClient.postBusinessTopics(message);
+        //var returnComment = messageClient.postBusinessTopics(message);
+        var returnComment = messageClient.postMessage(message);
         if(post.comments && post.comments.length) {
             post.comments.push(returnComment);
         }else{

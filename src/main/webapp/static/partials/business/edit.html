@@ -9,25 +9,28 @@
 
         <label class="btn btn-sm btn-primary no-border pull-left load-avatar">
             Загрузить
-            <input type="file" class="logo-input" uploader="uploaderLogo" />
+            <input type="file" class="logo-input" nv-file-select=""  uploader="uploaderLogo" />
         </label>
 
-        <div ng-repeat="item in uploaderLogo.queue" ng-show="uploaderLogo.isHTML5 && !uploaderLogo.queue.length" ng-thumb="{ file: item._file, height: 100 }"></div>
+        <div ng-repeat="item in uploaderLogo.queue" ng-show="uploaderLogo.isHTML5 && !uploaderLogo.queue.length" ng-thumb="{ file: item._file,width: 300 }"></div>
 
     </div>
 
     <div class="block clearfix logo-container clearfix">
-        <div>Иллюстрация</div>
+        <div>Слайды</div>
 
-        <!--<div class="pull-left avatar big" ng-style="{'background-image': 'url(' + edit.businessDescription.images[0].URL + ')' }"></div>-->
-        <div class="pull-left images"><img ng-src="{{edit.businessDescription.images[0].URL}}" alt=""/></div>
+        <div class="pull-left images">
+            <div ng-repeat="image in edit.businessDescription.images">
+                <img ng-src="{{image.URL}}" alt=""/>
+            </div>
+        </div>
 
         <label class="btn btn-sm btn-primary no-border pull-left load-avatar">
             Загрузить
-            <input type="file" nv-file-select="" uploader="uploaderImages" />
+            <input type="file" nv-file-select="" uploader="uploaderImages" multiple/>
         </label>
 
-        <div ng-repeat="item in uploaderImages.queue" ng-show="uploaderImages.isHTML5 && !uploaderImages.queue.length" ng-thumb="{ file: item._file, height: 100 }"></div>
+        <div ng-repeat="item in uploaderImages.queue" ng-show="uploaderImages.isHTML5 && !uploaderImages.queue.length" ng-thumb="{ file: item._file, width: 500 }"></div>
     </div>
 
     <label>

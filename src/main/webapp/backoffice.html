@@ -198,6 +198,12 @@
                         <input type="text" class="business-name" />
                     </label>
                     <label>
+                        <input type="file" class="business-logo"/>
+                    </label>
+                    <label>
+                        <input type="file"  class="business-images" multiple/>
+                    </label>
+                    <label>
                         <span>Короткое описание</span>
                         <input type="text"  class="business-shortDescr"/>
                     </label>
@@ -274,6 +280,87 @@
         transport = new Thrift.Transport("/thrift/fs");
         protocol = new Thrift.Protocol(transport);
         var fileClient = new com.vmesteonline.be.thrift.fileservice.FileServiceClient(protocol);
+
+
+        var title,logoURL,logoName,logoType,
+                business_images = [];
+
+        $('.business-logo').ace_file_input({
+            style:'well',
+            btn_choose:'Загрузить логотип',
+            btn_change:null,
+            no_icon:'',
+            droppable:false,
+            thumbnail: 'large',
+            icon_remove:null,
+            before_change: function(files, dropped){
+                title = $(this).find('+.file-label').data('title');
+                return true;
+            }
+        }).on('change', function(){
+            var fileLabel = $(this).find('+.file-label');
+
+            setTimeout(copyImage, 200,fileLabel,'logo');
+
+        });
+
+        function copyImage(fileLabel,type){
+
+            if(type == 'logo'){
+                var copyImgSrc = fileLabel.find('.file-name img').css('background-image');
+
+                if (copyImgSrc == 'none' || !copyImgSrc) {
+                    setTimeout(copyImage, 200,fileLabel,'logo');
+                } else {
+                    logoURL = fileClient.saveFileContent(copyImgSrc, true);
+                    logoName = fileLabel.find('.file-name').data('title');
+
+                    console.log($('.business-logo')[0].files);
+                    //logoType = $('.business-logo')[0].files[0].type;
+               }
+
+            }else{
+                var files = $('.business-images')[0].files,
+                    len = files.length;
+
+                for(var i = 0; i < len; i++){
+                    business_images[i] = new com.vmesteonline.be.thrift.messageservice.Attach();
+                    business_images[i].contentType = files[i].type;
+                };
+
+                i = 0;
+                var copyImgSrc = [];
+                fileLabel.find('.file-name').each(function(){
+
+                    copyImgSrc[i] = $(this).find('img').css('background-image');
+
+                    business_images[i].URL = fileClient.saveFileContent(copyImgSrc[i], true);
+                    business_images[i].fileName = $(this).data('title');
+
+                    i++;
+                })
+            }
+
+        }
+
+        $('.business-images').ace_file_input({
+            style:'well',
+            btn_choose:'Загрузить слайды',
+            btn_change:null,
+            no_icon:'',
+            droppable:false,
+            thumbnail: 'small',
+            icon_remove:null,
+            before_change: function(files, dropped){
+                title = $(this).find('+.file-label').data('title');
+                return true;
+            }
+        }).on('change', function(){
+            var fileLabel = $(this).parent();
+
+            setTimeout(copyImage, 200,fileLabel);
+
+        });
 
         $('.send-post').click(function(e){
             e.preventDefault();
@@ -406,6 +493,17 @@
             businessDescription.longitude = $('.business-longitude').val();
             businessDescription.latitude = $('.business-latitude').val();
             businessDescription.radius = $('.business-radius').val();
+
+            businessDescription.logo = new com.vmesteonline.be.thrift.messageservice.Attach();
+            businessDescription.logo.fileName = logoName;
+            businessDescription.logo.contentType = logoType;
+            businessDescription.logo.URL = logoURL;
+
+            businessDescription.images = business_images;
+
+            console.log('save',businessDescription.images);
+
+            //var svc = fileClient.saveFileContent(fileBase64, true);
 
             console.log('save',businessDescription,username);
 

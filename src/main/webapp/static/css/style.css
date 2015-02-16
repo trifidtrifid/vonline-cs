@@ -1831,7 +1831,7 @@ h1 {
   margin-left: 0;
 }
 .nearby-list {
-  border: 1px solid #000;
+  border: 1px solid #438eb9;
   margin-bottom: 10px;
   padding: 10px;
 }
@@ -2006,6 +2006,31 @@ h1 {
   margin-left: 360px;
   font-size: 16px;
 }
+.carousel-control .glyphicon {
+  font-family: Arial, sans-serif;
+}
+.carousel-control span {
+  margin-top: -15px;
+  cursor: pointer;
+}
+.carousel-control.left span {
+  left: 10px;
+}
+.carousel-control.right span {
+  left: auto;
+  right: 10px;
+}
+.carousel-control span:before {
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 30px;
+  margin-top: -15px;
+}
+.carousel-control.left span:before {
+  content: "\f053";
+}
+.carousel-control.right span:before {
+  content: "\f054";
+}
 .cabinet-edit {
   font-size: 14px;
 }
@@ -2045,6 +2070,7 @@ h1 {
 .cabinet-edit .logo img,
 .cabinet-edit .images img {
   width: 100%;
+  margin-bottom: 10px;
 }
 .cabinet-edit .images {
   width: 300px;
