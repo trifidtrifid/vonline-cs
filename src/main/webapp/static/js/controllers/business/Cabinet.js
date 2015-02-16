@@ -48,6 +48,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     nearby.sendComm = function($event,post){
         $event.preventDefault();
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
+        var wallItem = businessClient.getWallItem(nearby.info.id);
 
         console.log('post',post);
 
@@ -56,7 +57,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
         message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
         message.groupId = 0;
         message.content = post.commenting;
-        message.parentId = 0;
+        message.parentId = wallItem.id;
         message.created = Date.parse(new Date())/1000;
 
         if(!nearby.isAuth){
@@ -65,7 +66,8 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
             message.anonName = "";
         };
 
-        var returnComment = messageClient.postBusinessTopics(message);
+        //var returnComment = messageClient.postBusinessTopics(message);
+        var returnComment = messageClient.postMessage(message);
         if(post.comments && post.comments.length) {
             post.comments.push(returnComment);
         }else{
