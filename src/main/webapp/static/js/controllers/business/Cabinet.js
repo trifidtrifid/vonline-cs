@@ -45,19 +45,20 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
 
     };
 
+    nearby.wallItem = businessClient.getWallItem(nearby.info.id);
+    //console.log('1',nearby.wallItem);
+
     nearby.sendComm = function($event,post){
         $event.preventDefault();
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
-        var wallItem = businessClient.getWallItem(nearby.info.id);
-
-        console.log('post',post);
 
         message.id = 0;
         message.topicId = nearby.info.id; //post.id;
-        message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
+        message.type = com.vmesteonline.be.thrift.messageservice.MessageType.WALL;//8;
         message.groupId = 0;
         message.content = post.commenting;
-        message.parentId = wallItem.id;
+        message.topicId = nearby.wallItem.topic.id;
+        message.parentId = 0;
         message.created = Date.parse(new Date())/1000;
 
         if(!nearby.isAuth){
@@ -66,6 +67,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
             message.anonName = "";
         };
 
+        console.log('post',message);
         //var returnComment = messageClient.postBusinessTopics(message);
         var returnComment = messageClient.postMessage(message);
         if(post.comments && post.comments.length) {

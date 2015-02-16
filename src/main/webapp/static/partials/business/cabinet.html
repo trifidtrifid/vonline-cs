@@ -28,7 +28,7 @@
             </div>
 
             <div class="dialogs">
-                <div class="itemdiv dialogdiv new" ng-repeat="comm in nearby.post.comments" ng-show="nearby.post.isCommentShow">
+                <div class="itemdiv dialogdiv new" ng-repeat="comm in nearby.wallItem.messages">
                     <a ui-href="profile-{{comm.userInfo.id}}" class="user" ng-class="{'no-link': !comm.userInfo}">
                         <div class="avatar short2" style="background-image: url({{comm.userInfo.avatar}})"></div>
                     </a>
