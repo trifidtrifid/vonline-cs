@@ -263,7 +263,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 					filter += " ( ";
 					for (int gIdx = 0; gIdx <= ug.getGroupType() - Defaults.FIRST_USERS_GROUP; gIdx++) {
 						int groupTypeValue = GroupType.values()[gIdx + Defaults.FIRST_USERS_GROUP].getValue();
-						filter += "userGroupType>=" + groupTypeValue + " && ";
+						filter += "userGroupType==" + groupTypeValue + " && ";
 						if (groupTypeValue > GroupType.BUILDING.getValue()) {
 							// int radius = ug.getRadius();
 							int radius = 3000; // set radius 3KM and filter messages later
@@ -318,8 +318,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				ArrayList<VoTopic> allTopicsFiltered = new ArrayList<>();
 				for (VoTopic tpc : allTopics) {
 					if (VoHelper.calculateRadius(ug, tpc) <= Defaults.radiusByType[tpc.getUserGroupType()]) {
+						
 						allTopicsFiltered.add(tpc);
-					}
+					} 
 				}
 				allTopics = allTopicsFiltered;
 			}

@@ -200,7 +200,7 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 	}
 
 	public long getAddress() {
-		return address;
+		return null==address ? 0 : address;
 	}
 	
 	public void setAddress( long addr) {
@@ -347,6 +347,11 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 /*	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;*/
+
+	public void setAddressStringsByGroupType(Map<Integer, String> addressStringsByGroupType) {
+		this.addressStringsByGroupType = addressStringsByGroupType;
+	}
+
 
 	@Persistent
 	private Long address;

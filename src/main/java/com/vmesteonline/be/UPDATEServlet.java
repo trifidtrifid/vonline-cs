@@ -3,17 +3,25 @@ package com.vmesteonline.be;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoFileAccessRecord;
 import com.vmesteonline.be.jdo2.VoGroup;
+import com.vmesteonline.be.jdo2.VoMulticastMessage;
 import com.vmesteonline.be.jdo2.VoPoll;
+import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
+import com.vmesteonline.be.jdo2.postaladdress.VoCity;
+import com.vmesteonline.be.jdo2.postaladdress.VoCountry;
 import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
+import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
 import com.vmesteonline.be.jdo2.utility.VoCounter;
+import com.vmesteonline.be.jdo2.utility.VoCounterService;
+import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
+import com.vmesteonline.be.utils.VoHelper;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -55,7 +63,6 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
         			resultText += vn + "<br/>";
         		}
         	}
-
 
       } else if ("init".equalsIgnoreCase(action)) {
             Defaults.initDefaultData(PMF.getPm());
@@ -109,10 +116,14 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 			      		}
 			      		Collections.reverse(groups);
 			          user.setGroups( groups );
+			          user.setLongitude(building.getLongitude());
+			          user.setLatitude(building.getLatitude());
+			          
 			      		pm.makePersistent(user);
 			      		resultText = user.getName()+" "+user.getLastName() + " moved to "+pa.getAddressText(pm);	
 		        	}
         		} catch( Exception e){
+        			e.printStackTrace();
 		        	resultText = e.getMessage();	
 		        }
         	}        	
@@ -215,61 +226,123 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
                }
             }
 
-        } else if ("updateTopics".equalsIgnoreCase(action)) {
-           /* PersistenceManager pm = PMF.getPm();
-            try {
-                Extent<VoUserGroup> vugs = pm.getExtent(VoUserGroup.class);
-                ArrayList<VoUserGroup> vugssrtd = new ArrayList<VoUserGroup>();
-                for (VoUserGroup vug : vugs) { //collect all UserGroups and sort it from lowest to higest
-                    vugssrtd.add(vug);
-                }
-                Collections.sort(vugssrtd, new Comparator<VoUserGroup>() {
-
-                    @Override
-                    public int compare(VoUserGroup o1, VoUserGroup o2) {
-                        return -Integer.compare(o1.getGroupType(), o2.getGroupType());
-                    }
-                });
-                for (VoUserGroup vug : vugssrtd) { //collect all UserGroups and sort it from highest to lowest
-                    try {
-                        vug.setVisibleGroups(null);
-                        vug.getVisibleGroups(pm);
-
-                    } catch (Exception e) {
-                        resultText += " </br>\r\ngetVisibleGroups ERROR: " + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                for (VoUserGroup vug : vugssrtd) { //collect all UserGroups and sort it from highest to lowest
-                    try {
-                        vug.setUpperLevelGroups(null);
-                        vug.getUpperLevelGroups(pm);
-
-                    } catch (Exception e) {
-                        resultText += " </br>\r\ngetUpperLevelGroups ERROR: " + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-
-
-                Extent<VoTopic> topics = pm.getExtent(VoTopic.class);
-                for (VoTopic voTopic : topics) {
-                    try {
-                        voTopic.setVisibleGroups(new ArrayList<Long>(pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId()).getUpperLevelGroups(pm)));
-                    } catch (Exception e) {
-                        resultText += " </br>\r\nvoTopic.setVisibleGroups ERROR: " + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage());
-                        e.printStackTrace();
-                    }
-                }
-                Extent<VoUser> users = pm.getExtent(VoUser.class);
-                for (VoUser user : users) {
-                    user.initRootGroup(pm);
-                }
-            } catch (Exception e) {
-                resultText += " </br>\r\nERROR: " + (e instanceof InvalidOperation ? ((InvalidOperation) e).why : e.getMessage());
-            } finally {
-                pm.close();
-            }*/
+        } else if ("joinBuildings".equalsIgnoreCase(action)) {
+        	
+        	String srcId = arg0.getParameter("srcId");
+        	String dstId = arg0.getParameter("dstId");
+        	if( null!=srcId && null != dstId){
+	        	PersistenceManager pm = PMF.getPm();
+	        	VoBuilding srcB = pm.getObjectById(VoBuilding.class, Long.parseLong(srcId));
+	        	long dstBuildingId = Long.parseLong(dstId);
+						VoBuilding dstB = pm.getObjectById(VoBuilding.class, dstBuildingId);
+	        	
+						resultText = "Join:<br/>";
+						resultText += "From:" + srcB.getAddressString() + "<br/>";
+						resultText += "To: " + dstB.getAddressString() + "<br/>";
+						resultText += "<br/>";
+						
+					  //replace all postal addresses of source to dest if postal address exsits for dest building,
+						//move VoCounterService to dest building's postalAddressId
+	        	List<VoPostalAddress> srcPA = executeQuery(pm.newQuery(VoPostalAddress.class, "buildingId=="+srcId));
+	        	List<VoPostalAddress> dstPA = new ArrayList<>(); 
+	        	Map< Long, Long> paMap = new HashMap<>();
+		        for( VoPostalAddress spa : srcPA){
+		        	try {
+								VoPostalAddress dpa = VoPostalAddress.createVoPostalAddress( dstB, spa.getStaircase(), spa.getFloor(), spa.getFlatNo(),"",pm);
+								dstPA.add( dpa );
+								paMap.put(spa.getId(),dpa.getId());								
+							} catch (InvalidOperation e) {	
+								dstPA.add(null);
+								e.printStackTrace();
+							}
+		        }
+		        
+						//move VoCounterService from src to dest	
+	        	List<VoCounterService> csS = executeQuery(pm.newQuery(VoCounterService.class, "buildingId=="+srcId));
+	        	for( VoCounterService vcs:csS){
+	        		vcs.setBuildingId(dstBuildingId);
+	        	}
+	        	pm.makePersistentAll(csS);
+	        	
+	        	//get user groups for both of buildings
+	        	if( srcB.getLongitude().equals(dstB.getLongitude()) && srcB.getLatitude().equals(dstB.getLatitude())){ //groups are the same  
+	        		resultText += "Building Locations are the same, so UserGroups a the same too<br/>";
+							
+	        	} else {
+	        		resultText += "Building Locations don't mutch<br/>";
+	        		List<Long> srcGroups = executeQuery(pm.newQuery("SQL", "SELECT ID from VOUSERGROUP WHERE longitude='"+srcB.getLongitude()+"' AND latitude='"+srcB.getLatitude()+"'"));
+	        		List<Long> dstGroups = executeQuery(pm.newQuery("SQL", "SELECT ID from VOUSERGROUP WHERE longitude='"+dstB.getLongitude()+"' AND latitude='"+dstB.getLatitude()+"'"));
+		        	//replace all user groups of source building with groups of dest building
+	        		List<VoUser> srcUsers = executeQuery(pm.newQuery(VoUser.class, "longitude=='"+srcB.getLongitude()+"' && latitude=='"+srcB.getLatitude()+"'"));
+		        	for( VoUser su:srcUsers) {
+		        		resultText += "Move user " + Notification.createContactHref(su) +"<br/>";
+		        		su.setAddress( paMap.get( su.getAddress()));
+		        		su.setAddressStringsByGroupType(null);
+		        		su.setGroups(dstGroups);
+		        		su.setLongitude( dstB.getLongitude());
+		        		su.setLatitude(dstB.getLatitude());
+		        	}
+		        	resultText += "<br/>";
+	        		
+		        	//replace topic groups
+		        	int groupLevel = 0;
+	        		for( Long sgId:srcGroups){
+	        			List<VoTopic> srcTopics = executeQuery(pm.newQuery(VoTopic.class, "userGroupId=="+sgId));
+	        			for( VoTopic st : srcTopics){
+	        				resultText += "Move topic " + VoHelper.getShortMessageForm(st.getContent(), 32, 45) +"<br/>";
+	        				st.setUserGroupId(dstGroups.get(groupLevel));
+	        				st.setLongitude( dstB.getLongitude());
+			        		st.setLatitude(dstB.getLatitude());
+	        			}
+	        			pm.makePersistentAll(srcTopics);
+	        			
+	        			//move all multicast messages
+	        			List<VoMulticastMessage> mmSA = executeQuery(pm.newQuery(VoMulticastMessage.class, "userGroup==:ug"), 
+	        					pm.getObjectById( VoUserGroup.class,sgId));
+	        			for( VoMulticastMessage smm : mmSA){
+	        				resultText += "Move multicast message " + VoHelper.getShortMessageForm(smm.getMessage(), 32, 45) +"<br/>";
+	        				smm.setUserGroup( pm.getObjectById( VoUserGroup.class, dstGroups.get(groupLevel)));	        				
+	        			}	        			
+	        			groupLevel ++;
+	        		}
+	        		resultText += "<br/>";
+	        	}
+	        	
+	        	
+		        long sid = srcB.getStreetId();
+		        //remove src building
+		        pm.deletePersistent(dstB);
+	        	//check if it was the only building on street - remove street
+		        List<VoBuilding> ssBuildings = executeQuery(pm.newQuery(VoBuilding.class, "streetId=="+sid));
+	        	if( null==ssBuildings || ssBuildings.size()== 0){
+	        		VoStreet street = pm.getObjectById(VoStreet.class, sid);
+							long cityId = street.getCity();
+	        		pm.deletePersistent(street);
+	        		//check if it was the only street of cвity - remove the city 
+	        		VoCity city = pm.getObjectById(VoCity.class, cityId);
+							List<VoStreet> cslist = executeQuery(pm.newQuery(VoStreet.class, "city==:cityP"),
+	        				city);
+	        		if( null==cslist || cslist.size()== 0){
+	        			long countryId = city.getCountry();
+		        		pm.deletePersistent(city);
+		        		//check if it was the only city of country - remove the country 
+		        		VoCountry country = pm.getObjectById(VoCountry.class, countryId);
+								List<VoCity> cylist = executeQuery(pm.newQuery(VoCity.class, "countryId=="+countryId));
+								if( null==cylist || cylist.size()== 0){
+									pm.deletePersistent(country);
+								} else {
+									resultText += "Country contains at least one more city: " + cylist.get(0).getName() + "<br/>";
+								}
+	        		} else {
+	        			resultText += "City contains at least one more street: " + cslist.get(0).getName() + "<br/>";
+	        		}
+	        	} else {
+	        		resultText += "Street contains at least one more building: " + ssBuildings.get(0).getAddressString() + "<br/>";
+	        	}	         	
+	        	
+        	} else {
+        		resultText = "srcId and dstId parameters must be defined";        		
+        	}
         }
         arg1.setHeader("Content-Type","text/html");
         resultText = "<html><head><meta charset=\"utf-8\"/></head><body>" + resultText + "</body></html>";
