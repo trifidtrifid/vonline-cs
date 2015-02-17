@@ -1012,7 +1012,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	public static List<String> getVIsibleNamesByGroup(long groupId, PersistenceManager pm) {
-		List<String> objects = new ArrayList<String>();
+		Set<String> objects = new HashSet<String>();
 		VoUserGroup group = pm.getObjectById(VoUserGroup.class, groupId);
 
 		if (group.getGroupType() > GroupType.BUILDING.getValue()) {
@@ -1039,7 +1039,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		} else if (group.getGroupType() == GroupType.FLOOR.getValue()) {
 			objects.add("Этаж " + group.getFloor());
 		}
-		return objects;
+		return new ArrayList<String>(objects);
 	}
 
 	@Override
