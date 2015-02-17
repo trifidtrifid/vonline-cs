@@ -1030,8 +1030,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			for (VoBuilding b : bgs) {
 				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
 				String streetName = vs.getName();
-				VoCity city = pm.getObjectById(VoCity.class, vs.getCity());
-				objects.add(city.getName() + " " + streetName + " " + b.getFullNo());
+				objects.add(streetName + " " + b.getFullNo());
 			}
 		} else if (group.getGroupType() == GroupType.STAIRCASE.getValue()) {
 			objects.add("Прадная №" + group.getStaircase());
