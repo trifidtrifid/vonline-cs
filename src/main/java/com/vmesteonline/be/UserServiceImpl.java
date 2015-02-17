@@ -963,7 +963,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoInviteCode inviteCode = VoInviteCode.getInviteCode(code, pm);
 			boolean addrConfirmed = (inviteCode.getPostalAddressId() == user.getAddress());
 			logger.info("User address ID="+user.getAddress()+" InviteCode address=" + inviteCode.getPostalAddressId() 
-					+" So adress confirmed=" + addrConfirmed);
+					+" So address confirmed=" + addrConfirmed);
 			user.setAddressConfirmed(addrConfirmed);
 			return addrConfirmed;
 		} catch (Exception e) {
@@ -1026,7 +1026,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			}
 		} else if (group.getGroupType() == GroupType.BUILDING.getValue()) {
 			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class,
-					"longitude='" + group.getLongitude() + "' && latitude='" + group.getLatitude() + "'").execute();
+					"longitude=='" + group.getLongitude() + "' && latitude=='" + group.getLatitude() + "'").execute();
 			for (VoBuilding b : bgs) {
 				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
 				String streetName = vs.getName();
