@@ -46,7 +46,7 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     };
 
     nearby.wallItem = businessClient.getWallItem(nearby.info.id);
-    //console.log('1',nearby.wallItem);
+    console.log('1',nearby.wallItem);
 
     nearby.sendComm = function($event,post){
         $event.preventDefault();

@@ -8,6 +8,7 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
     }
 
     nearby.info = businessClient.getBusinessDescription(businessId);
+    nearby.wallItem = businessClient.getWallItem(nearby.info.id);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
@@ -68,12 +69,14 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
 
         message.id = 0;
-        message.topicId = post.id;
-        message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
+        message.topicId = nearby.info.id; //post.id;
+        message.type = com.vmesteonline.be.thrift.messageservice.MessageType.WALL;//8;
         message.groupId = 0;
         message.content = post.commenting;
+        message.topicId = nearby.wallItem.topic.id;
         message.parentId = 0;
         message.created = Date.parse(new Date())/1000;
+        post.commenting = "";
 
         if(!nearby.isAuth){
             message.anonName = post.anonName;
@@ -81,12 +84,17 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
             message.anonName = "";
         };
 
-        var returnComment = messageClient.postBusinessTopics(message);
-        if(post.comments && post.comments.length) {
-            post.comments.push(returnComment);
+        console.log('post',message);
+        //var returnComment = messageClient.postBusinessTopics(message);
+        var returnComment = messageClient.postMessage(message);
+        console.log('post2',returnComment);
+
+
+        if(nearby.wallItem.messages && nearby.wallItem.messages.length) {
+            nearby.wallItem.messages.push(returnComment);
         }else{
-            post.comments = [];
-            post.comments[0] = returnComment;
+            nearby.wallItem.messages = [];
+            nearby.wallItem.messages[0] = returnComment;
         }
 
     };
