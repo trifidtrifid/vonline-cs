@@ -181,6 +181,9 @@ $(document).ready(function(){
                 document.location.replace(toURL);
             } else if(loginResult == 3){
                 $('.login-error').text('Ваш email не подтвержден').removeClass('info-good').show();
+            }else if(loginResult == 4) {
+                localStorage.setItem('VO_is_business',1);
+                document.location.replace('/cabinet');
             }else{
                 $('.login-error').text('Вы ввели некорректный e-mail или пароль').removeClass('info-good').show();
             }

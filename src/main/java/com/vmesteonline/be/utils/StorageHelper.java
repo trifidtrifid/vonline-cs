@@ -364,6 +364,8 @@ public class StorageHelper {
 
 	//===================================================================================================================
 	public static FileSource createFileSource( Attach att ) throws IOException {
+		if( null == att.URL)
+			throw new IOException("Failed to save empty content. Attach.URL==null");
 		return createFileSource( att.URL.getBytes(), att.contentType, att.fileName); 
 	}
 	

@@ -34,6 +34,11 @@ transport = new Thrift.Transport("/thrift/UserService");
 protocol = new Thrift.Protocol(transport);
 var userClient = new com.vmesteonline.be.thrift.userservice.UserServiceClient(protocol);
 
+transport = new Thrift.Transport("/thrift/BusinessService");
+protocol = new Thrift.Protocol(transport);
+businessClient = new com.vmesteonline.be.thrift.businesservice.BusinessServiceClient(protocol);
+    //BusinessServiceClient(protocol);
+
 if(path != '/blog' && path != '/about' && path != '/contacts') {
     var userClientGroups = userClient.getUserGroups(),
         userClientRubrics = userClient.getUserRubrics();
@@ -48,6 +53,7 @@ if(path != '/blog' && path != '/about' && path != '/contacts') {
     if (servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
     if (servicesStr.indexOf('12') != -1) shortUserInfo.countersNotification = true;
 }
+console.log('333',userClientGroups);
 
 transport = new Thrift.Transport("/thrift/UtilityService");
 protocol = new Thrift.Protocol(transport);
@@ -331,6 +337,7 @@ function copyImage(attachAreaSelector,fileLabel,type) {
     if (copyImgSrc == 'none' || !copyImgSrc) {
         setTimeout(copyImage, 200,attachAreaSelector,fileLabel,type);
     } else {
+        
         var url = fileClient.saveFileContent(copyImgSrc, true),
             fileName = fileLabel.find('.file-name').attr('data-title');
 

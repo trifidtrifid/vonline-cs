@@ -8,11 +8,12 @@ forumControllers.controller('navbarController', function($rootScope) {
             event.preventDefault();
 
             localStorage.removeItem('groupId');
+            localStorage.removeItem('VO_is_business');
             authClient.logout();
 
             document.location.replace("/login");
 
-        }
+        };
 
         //$('.ng-cloak').removeClass('ng-cloak');
 

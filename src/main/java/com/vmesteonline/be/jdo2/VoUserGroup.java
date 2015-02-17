@@ -6,10 +6,12 @@ import com.vmesteonline.be.thrift.Group;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
+
 import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,6 +39,9 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		
 		if( gType <= GroupType.FLOOR.getValue() )
 			queryStr += " && floor==" + floor;
+		
+		if( gType == GroupType.NOBODY.getValue() )
+			queryStr += " && name=='" + name + "'";
 		
 		List<VoUserGroup> ugl =  executeQuery(pm.newQuery(VoUserGroup.class, queryStr));
 		
@@ -103,10 +108,18 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		return description;
 	}
 
+	public String getBuildingAddressString(PersistenceManager pm) {
+		List<VoBuilding> bgs = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='" + getLongitude() + "' && latitude=='" + getLatitude()+"'"));
+		if( 1!=bgs.size()){
+			logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
+		}
+		String addressString = bgs.get(0).getAddressString();
+		return addressString;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	@Persistent
 	private String description;

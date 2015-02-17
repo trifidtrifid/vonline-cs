@@ -44,6 +44,15 @@ public class VoCounterService {
     @Persistent
     private short endDate;
 
-    @Persistent(serialized = "true")
+    
+    public long getBuildingId() {
+			return buildingId;
+		}
+
+		public void setBuildingId(long buildingId) {
+			this.buildingId = buildingId;
+		}
+
+		@Persistent(serialized = "true")
     List<CounterType> defaultCounterTypes;
 }

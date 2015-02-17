@@ -102,7 +102,11 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 				// insert Building address
 				csvData.add(Arrays.asList(new String[] { firstLine.get(0), firstLine.get(1), firstLine.get(2), firstLine.get(3), firstLine.get(4),
 						firstLine.get(5), firstLine.get(6), "0", "0", "0" }));
-				currentPos = initPostalAddresses(csvData, pm, vb, currentPos, codeSet);
+				try {
+					currentPos = initPostalAddresses(csvData, pm, vb, currentPos, codeSet);
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
 			} while (currentPos != -1);
 			baos = new ByteArrayOutputStream();
 			List<List<String>> fullcsvData = new ArrayList<>();
@@ -133,25 +137,28 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 
 		List<String> nextItem = rows.get(offset);
 		String addrLIneToCheck = nextItem.get(2) + nextItem.get(3) + nextItem.get(4) + nextItem.get(5) + nextItem.get(6);
+		List<VoInviteCode> codeGenerated = new ArrayList<>();
+		try {
+			for (int index = offset; index < rows.size(); index++) {
 
-		for (int index = offset; index < rows.size(); index++) {
+				List<String> items = rows.get(index);
+				if (addrLIneToCheck.equalsIgnoreCase(nextItem.get(2) + nextItem.get(3) + nextItem.get(4) + nextItem.get(5) + nextItem.get(6))) {
 
-			List<String> items = rows.get(index);
-			if (addrLIneToCheck.equalsIgnoreCase(nextItem.get(2) + nextItem.get(3) + nextItem.get(4) + nextItem.get(5) + nextItem.get(6))) {
+					VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(vb, Byte.parseByte(items.get(7)), (byte) Integer.parseInt(items.get(9)),
+							Integer.parseInt(items.get(8)), null, pm);
+					pm.makePersistent(pa);
 
-				VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(vb, Byte.parseByte(items.get(7)), (byte) Integer.parseInt(items.get(9)),
-						Integer.parseInt(items.get(8)), null, pm);
-				pm.makePersistent(pa);
-
-				VoInviteCode ic = VoHelper.createNewInviteCode(2, 4, pa, codeSet, pm);
-
-				pm.makePersistent(ic);
-				items.set(0, ic.getCode());
-			} else {
-				return offset;
+					VoInviteCode ic;
+					codeGenerated.add( ic = VoHelper.createNewInviteCode(2, 4, pa, codeSet, pm));
+					items.set(0, ic.getCode());
+				} else {					
+					return index;
+				}
 			}
-		}
+		} finally {
+			if( codeGenerated.size() > 0 ) 
+				pm.makePersistentAll(codeGenerated);
+		}		
 		return -1;
 	}
-
 }

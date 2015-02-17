@@ -6,7 +6,7 @@ enum CurrentAttributeType {
 	/* FORUM ATTRIBUTES*/ CATEGORY=1, RUBRIC=2, GROUP=3 
 }
 
-enum LoginResult { NOT_MATCH=0, SUCCESS=1, EMAIL_NOT_CONFIRMED=3}
+enum LoginResult { NOT_MATCH=0, SUCCESS=1, EMAIL_NOT_CONFIRMED=3, USER_IS_COMERC=4 }
 
 
 service AuthService {

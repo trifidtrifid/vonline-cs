@@ -63,6 +63,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>BusinessServiceServlet</servlet-name>
+        <servlet-class>com.vmesteonline.be.BusinessServiceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BusinessServiceServlet</servlet-name>
+        <url-pattern>/thrift/BusinessService</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>FileAccess</servlet-name>
         <servlet-class>com.vmesteonline.be.VoFileAccess</servlet-class>
     </servlet>

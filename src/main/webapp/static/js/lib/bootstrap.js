@@ -660,7 +660,7 @@
       clearMenus()
 
       if (!isActive) {
-        $parent.toggleClass('open')
+        $parent.toggleClass('open');
       }
 
       $this.focus()

@@ -21,7 +21,7 @@ import java.util.*;
         @Index(name="VOUSER_EML_IDX", members={"email"}),
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
         @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
-
+@Discriminator(strategy=DiscriminatorStrategy.CLASS_NAME)
 public class VoUser extends GeoLocation implements Comparable<VoUser> {
 
 	public static int BASE_USER_SCORE = 100;
@@ -200,7 +200,7 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 	}
 
 	public long getAddress() {
-		return address;
+		return null==address ? 0 : address;
 	}
 	
 	public void setAddress( long addr) {
@@ -268,7 +268,7 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 			}
 		}
 
-        setAddress(userAddress.getId());
+    setAddress(userAddress.getId());
 		longitude = building.getLongitude().toPlainString();
 		latitude = building.getLatitude().toPlainString();
 
@@ -283,7 +283,7 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 			groups.add(ug.getId());
 		}
 		Collections.reverse(groups);
-        setGroups( groups );
+    setGroups( groups );
 		pm.makePersistent(this);
 	}
 
@@ -347,6 +347,11 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 /*	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;*/
+
+	public void setAddressStringsByGroupType(Map<Integer, String> addressStringsByGroupType) {
+		this.addressStringsByGroupType = addressStringsByGroupType;
+	}
+
 
 	@Persistent
 	private Long address;

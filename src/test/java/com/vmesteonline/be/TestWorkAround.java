@@ -20,6 +20,7 @@ public class TestWorkAround {
 	protected AuthServiceImpl asi;
 	protected UserServiceImpl usi;
 	protected MessageServiceImpl msi;
+	protected BusinessServiceImpl bsi;
 
 	private static final PersistenceManagerFactory persistenceManagerFactory = JDOHelper.getPersistenceManagerFactory("votest");
 	protected static PersistenceManager pm;
@@ -36,6 +37,7 @@ public class TestWorkAround {
 				return false;
 			usi = new UserServiceImpl();
 			msi = new MessageServiceImpl();
+			bsi = new BusinessServiceImpl();
 
 			return true;
 
