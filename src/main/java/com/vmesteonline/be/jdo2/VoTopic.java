@@ -42,7 +42,9 @@ public class VoTopic extends VoBaseMessage {
 		rubricId = topic.getRubricId();
 		userGroupId = topic.getMessage().getGroupId();
 		createDate = lastUpdate = (int) (System.currentTimeMillis() / 1000);
-		userGroupType =  topic.groupType.getValue(); //pm.getObjectById(VoUserGroup.class, userGroupId ).getGroupType();
+		userGroupType =  null == topic.groupType ?  
+				pm.getObjectById(VoUserGroup.class, userGroupId ).getGroupType() : 
+					topic.groupType.getValue();;
 		latitude = author.getLatitude().toPlainString();
 		longitude = author.getLongitude().toPlainString();
 		authorId = author.getId();
