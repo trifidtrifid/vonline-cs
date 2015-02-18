@@ -77,6 +77,9 @@ h1 {
 .ace-nav .user-menu {
   right: 0 !important;
 }
+.dropdown-menu.user-menu {
+  display: block;
+}
 .ace-nav .user-info {
   max-width: none;
 }
@@ -354,7 +357,7 @@ h1 {
   float: left;
 }
 .sidebar {
-  padding-top: 20px;
+  padding-top: 10px;
   vertical-align: top;
 }
 .main-content {
@@ -772,6 +775,25 @@ h1 {
 .message-tools .fa-pencil:hover {
   color: #438eb9;
 }
+.group-addresses-list {
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  top: 25px;
+  right: 0;
+  box-shadow: 2px 2px 5px #ccc;
+}
+.group-addresses-list li {
+  list-style: none;
+  color: #000;
+  text-align: left;
+  display: block;
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+.label .group-addresses-list {
+  right: -50px;
+}
 .folding {
   max-height: 55px;
   overflow: hidden;
@@ -1109,7 +1131,7 @@ h1 {
 }
 .talks-title {
   padding: 10px;
-  overflow: auto;
+  overflow: visible;
   position: relative;
   border-top: 1px solid #5090c1;
 }
@@ -1801,13 +1823,33 @@ h1 {
   padding: 10px;
   width: auto;
 }
-.nearby h2 {
+.nearby h2,
+.nearby h3 {
   margin-top: 0;
+}
+.nearby .topic {
+  margin-left: 0;
+}
+.nearby-list {
+  border: 1px solid #438eb9;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.nearby-list-left {
+  width: 150px;
+}
+.nearby-list-left img {
+  width: 100%;
+}
+.nearby-list-right {
+  margin-left: 15px;
+  max-width: 400px;
 }
 .nearby-more {
   font-size: 14px;
   font-weight: normal;
-  margin-top: -26px;
+  margin-top: -36px;
+  margin-right: 20px;
 }
 /* --- */
 .unconfirm {
@@ -1905,18 +1947,135 @@ h1 {
   font-size: 14px;
   text-transform: uppercase;
 }
+.rubrics-menu:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 8px;
+  top: 40px;
+  bottom: 0;
+  border: 1px dotted #9dbdd6;
+  border-width: 0 0 0 1px;
+}
 .rubrics-menu li a {
   padding: 5px 0 5px 25px;
   cursor: pointer;
+}
+.rubrics-menu li a:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 7px;
+  left: 10px;
+  top: 17px;
+  border-top: 1px dotted #9dbdd6;
+}
+.rubrics-menu li:hover a {
+  background-color: transparent;
+  color: #000;
+}
+.rubrics-menu li:hover .icon-double-angle-right {
+  display: block;
 }
 .rubrics-menu li.active a {
   background: #f2f2f2;
   color: #1963aa;
 }
-/* backoffice */
-.backoffice {
-  text-align: left;
+.rubrics-menu .icon-double-angle-right {
+  position: absolute;
+  top: 7px;
+  left: 11px;
+  display: none;
 }
-.backoffice .broadcast textarea {
+.business-logout {
+  color: #fff;
+  margin: 12px 20px 0 0;
+}
+.business-logout:hover {
+  text-decoration: none;
+  color: #fff;
+}
+.cabinet-left {
+  width: 350px;
+}
+.cabinet-left img {
   width: 100%;
+}
+.cabinet-right {
+  margin-left: 360px;
+  font-size: 16px;
+}
+.carousel-control .glyphicon {
+  font-family: Arial, sans-serif;
+}
+.carousel-control span {
+  margin-top: -15px;
+  cursor: pointer;
+}
+.carousel-control.left span {
+  left: 10px;
+}
+.carousel-control.right span {
+  left: auto;
+  right: 10px;
+}
+.carousel-control span:before {
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 30px;
+  margin-top: -15px;
+}
+.carousel-control.left span:before {
+  content: "\f053";
+}
+.carousel-control.right span:before {
+  content: "\f054";
+}
+.cabinet-edit {
+  font-size: 14px;
+}
+.cabinet-edit label {
+  display: block;
+}
+.cabinet-edit label span {
+  display: inline-block;
+  width: 150px;
+}
+.cabinet-edit label input {
+  display: inline-block;
+  width: 300px;
+}
+.cabinet-edit textarea {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+.cabinet-edit .cabinet-descr {
+  margin-bottom: 10px;
+}
+.cabinet-edit .load-avatar {
+  margin-left: 15px;
+  width: auto;
+  padding: 10px 15px;
+}
+.cabinet-edit .load-avatar input {
+  display: none;
+}
+.cabinet-edit .logo,
+.cabinet-edit .images {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  min-width: 150px;
+}
+.cabinet-edit .logo img,
+.cabinet-edit .images img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.cabinet-edit .images {
+  width: 300px;
+}
+.statistic-analytics {
+  font-size: 15px;
+  margin-bottom: 10px;
 }

@@ -143,7 +143,7 @@ public abstract class Notification {
 		try {
 			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
 		} catch (Exception e) {
-			body += "Адрес: пользовтеля не существует address="+author.getAddress()+"<br/>";
+			body += "Адрес: пользовтеля не существует address="+author.getAddress() +"<br/>";
 		}
 		body += "Тип: "+msg.getType()+"<br/>";
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType().toString()) :

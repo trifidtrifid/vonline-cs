@@ -6,7 +6,8 @@ var main = angular.module('forum', [
  /* 'forum.filters',*/
   'forum.services',
   'forum.directives',
-  'forum.controllers'
+  'forum.controllers',
+  'angularFileUpload'
 ]);
 
 main.config(function($stateProvider, $urlRouterProvider) {
@@ -127,6 +128,21 @@ main.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('contacts', {
             url: "/contacts"
+        })
+        .state('cabinet', {
+            url: "/cabinet",
+            templateUrl: "/static/partials/business/cabinet.html",
+            controller: 'Cabinet as nearby'
+        })
+        .state('edit', {
+            url: "/edit",
+            templateUrl: "/static/partials/business/edit.html",
+            controller: 'Edit as edit'
+        })
+        .state('statistic', {
+            url: "/statistic",
+            templateUrl: "/static/partials/business/statistic.html",
+            controller: 'Statistic as maps'
         })
 });
 

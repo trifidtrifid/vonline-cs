@@ -1,11 +1,14 @@
 
 forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams) {
     var nearby = this,
-        postId;
+        businessId;
 
     if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
-        postId = $stateParams.nearbyId;
+        businessId = $stateParams.nearbyId;
     }
+
+    nearby.info = businessClient.getBusinessDescription(businessId);
+    nearby.wallItem = businessClient.getWallItem(nearby.info.id);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
@@ -22,8 +25,8 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
     if(nearby.posts.topics) {
         var len = nearby.posts.topics.length;
         for (var i = 0; i < len; i++) {
-            console.log(nearby.posts.topics[i].id,parseInt(postId));
-            if(nearby.posts.topics[i].id == parseInt(postId)){
+            console.log(nearby.posts.topics[i].id,parseInt(businessId));
+            if(nearby.posts.topics[i].id == parseInt(businessId)){
                 nearby.posts.topics[i].isCommentShow = true;
                 nearby.posts.topics[i].isInputShow = true;
                 nearby.posts.topics[i].full = nearby.posts.topics[i].message.content.split(';')[1];
@@ -66,12 +69,14 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
         var message = new com.vmesteonline.be.thrift.messageservice.Message();
 
         message.id = 0;
-        message.topicId = post.id;
-        message.type = com.vmesteonline.be.thrift.messageservice.MessageType.BUSINESS_PAGE;//8;
+        message.topicId = nearby.info.id; //post.id;
+        message.type = com.vmesteonline.be.thrift.messageservice.MessageType.WALL;//8;
         message.groupId = 0;
         message.content = post.commenting;
+        message.topicId = nearby.wallItem.topic.id;
         message.parentId = 0;
         message.created = Date.parse(new Date())/1000;
+        post.commenting = "";
 
         if(!nearby.isAuth){
             message.anonName = post.anonName;
@@ -79,12 +84,17 @@ forumControllers.controller('nearbySingleCtrl', function($rootScope,$stateParams
             message.anonName = "";
         };
 
-        var returnComment = messageClient.postBusinessTopics(message);
-        if(post.comments && post.comments.length) {
-            post.comments.push(returnComment);
+        console.log('post',message);
+        //var returnComment = messageClient.postBusinessTopics(message);
+        var returnComment = messageClient.postMessage(message);
+        console.log('post2',returnComment);
+
+
+        if(nearby.wallItem.messages && nearby.wallItem.messages.length) {
+            nearby.wallItem.messages.push(returnComment);
         }else{
-            post.comments = [];
-            post.comments[0] = returnComment;
+            nearby.wallItem.messages = [];
+            nearby.wallItem.messages[0] = returnComment;
         }
 
     };

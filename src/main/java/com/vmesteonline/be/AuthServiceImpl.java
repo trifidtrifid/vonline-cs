@@ -5,6 +5,7 @@ import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.jdo2.postaladdress.*;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.GroupType;
@@ -68,7 +69,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 					return LoginResult.EMAIL_NOT_CONFIRMED;
 				logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
 				saveUserInSession(getCurrentSession(), pm, u);
-				return LoginResult.SUCCESS;
+				return u instanceof VoBusiness ? LoginResult.USER_IS_COMERC : LoginResult.SUCCESS;
 			} else
 				logger.info("incorrect password " + email + " pass " + pwd);
 
@@ -105,12 +106,16 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			MessageServiceImpl msi = new MessageServiceImpl(this);
-			List<WallItem> importantNews = msi.getImportantNews(sess.getUser().getGroup(GroupType.NEIGHBORS, pm).getId(), 0, 0, 100);
-			int count = 0;
-			for (WallItem wi : importantNews)
-				if (wi.getTopic().lastUpdate > lastActivityTs)
-					count++;
-			sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+			VoUser user = sess.getUser();
+			VoUserGroup nbgroup = user.getGroup(GroupType.NEIGHBORS, pm);
+			if(null!=nbgroup){
+				List<WallItem> importantNews = msi.getImportantNews(nbgroup.getId(), 0, 0, 100);
+				int count = 0;
+				for (WallItem wi : importantNews)
+					if (wi.getTopic().lastUpdate > lastActivityTs)
+						count++;
+				sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+			}
 		} catch (InvalidOperation e) {
 			e.printStackTrace();
 		}
@@ -282,6 +287,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		user.setCurrentPostalAddress(pa, pm);
 		user.setAddressConfirmed(false);
 		VoInviteCode ic = VoHelper.createNewInviteCode(3, 3, pa, null, pm);
+		pm.makePersistent(ic);
 		pm.makePersistent(user);
 
 		try {

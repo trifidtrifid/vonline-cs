@@ -963,7 +963,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoInviteCode inviteCode = VoInviteCode.getInviteCode(code, pm);
 			boolean addrConfirmed = (inviteCode.getPostalAddressId() == user.getAddress());
 			logger.info("User address ID="+user.getAddress()+" InviteCode address=" + inviteCode.getPostalAddressId() 
-					+" So adress confirmed=" + addrConfirmed);
+					+" So address confirmed=" + addrConfirmed);
 			user.setAddressConfirmed(addrConfirmed);
 			return addrConfirmed;
 		} catch (Exception e) {
@@ -1012,7 +1012,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	public static List<String> getVIsibleNamesByGroup(long groupId, PersistenceManager pm) {
-		List<String> objects = new ArrayList<String>();
+		Set<String> objects = new HashSet<String>();
 		VoUserGroup group = pm.getObjectById(VoUserGroup.class, groupId);
 
 		if (group.getGroupType() > GroupType.BUILDING.getValue()) {
@@ -1021,17 +1021,15 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			for (VoBuilding b : bgs) {
 				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
 				String streetName = vs.getName();
-				VoCity city = pm.getObjectById(VoCity.class, vs.getCity());
-				objects.add(city.getName() + " " + streetName + " " + b.getFullNo());
+				objects.add(streetName + " " + b.getFullNo());
 			}
 		} else if (group.getGroupType() == GroupType.BUILDING.getValue()) {
 			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class,
-					"longitude='" + group.getLongitude() + "' && latitude='" + group.getLatitude() + "'").execute();
+					"longitude=='" + group.getLongitude() + "' && latitude=='" + group.getLatitude() + "'").execute();
 			for (VoBuilding b : bgs) {
 				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
 				String streetName = vs.getName();
-				VoCity city = pm.getObjectById(VoCity.class, vs.getCity());
-				objects.add(city.getName() + " " + streetName + " " + b.getFullNo());
+				objects.add(streetName + " " + b.getFullNo());
 			}
 		} else if (group.getGroupType() == GroupType.STAIRCASE.getValue()) {
 			objects.add("Прадная №" + group.getStaircase());
@@ -1039,7 +1037,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		} else if (group.getGroupType() == GroupType.FLOOR.getValue()) {
 			objects.add("Этаж " + group.getFloor());
 		}
-		return objects;
+		return new ArrayList<String>(objects);
 	}
 
 	@Override

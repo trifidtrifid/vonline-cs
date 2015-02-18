@@ -15,8 +15,6 @@ import java.util.TreeSet;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
@@ -107,7 +105,7 @@ public class NewNeigboursNotification extends Notification {
 			if( null != newNbrs && !newNbrs.isEmpty()){
 				body+= "<p><b>В группе '"+Defaults.getDefaultGroups().get(gt.getValue() - Defaults.FIRST_USERS_GROUP).getVisibleName()+"':</b><br/>";
 				for( VoUser nn: newNbrs ){
-					String contactTxt = "<a href=\"https://"+host+"/profile/"+nn.getId()+"\">"+StringEscapeUtils.escapeHtml4(nn.getName() + " " + nn.getLastName())+"</a>";
+					String contactTxt = Notification.createContactHref(nn);
 					body += contactTxt + " : " + nn.getAddressString(gt, pm)+"<br/>";
 				}
 				body += "</p>";
@@ -147,7 +145,7 @@ public class NewNeigboursNotification extends Notification {
 	private String createUserContactContent(PersistenceManager pm, int ugt, VoUser vuc) {
 		
 		VoPostalAddress address = pm.getObjectById(VoPostalAddress.class,vuc.getAddress());
-		String contactTxt = "<a href=\"https://"+host+"/profile/"+vuc.getId()+"\">"+StringEscapeUtils.escapeHtml4(vuc.getName() + " " + vuc.getLastName())+"</a>";
+		String contactTxt = Notification.createContactHref(vuc);
 		
 		if( ugt <= GroupType.BUILDING.getValue() && 0!=address.getStaircase()) 
 				contactTxt += " живет в парадной " + address.getStaircase();

@@ -507,7 +507,7 @@ public class VoHelper {
 		if (null!=usedCodeSet) 
 			usedCodeSet.add(passCode);
 		VoInviteCode ic = new VoInviteCode(passCode, pa.getId());
-		pm.makePersistent(ic);
+		//pm.makePersistent(ic);
 		return ic;
 	}
 	
