@@ -29,7 +29,6 @@
         <class>com.vmesteonline.be.jdo2.utility.VoCounter</class>
         <class>com.vmesteonline.be.jdo2.VoMulticastMessage</class>
         <class>com.vmesteonline.be.jdo2.business.VoBusiness</class>
-        
         <exclude-unlisted-classes/>
         <properties>
             <!-- PRODUCTION DATABASE VONLINE -->
