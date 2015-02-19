@@ -74,18 +74,18 @@
                     </div>
 
                     <div class="btn-group attach-dropdown pull-left">
-                        <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+                        <button data-toggle="dropdown" ng-click="base.toggleAttachDropdown($event)" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
                             <span class="btn-group-text">Прикрепить</span>
                             <span class="icon-caret-down icon-on-right"></span>
                         </button>
 
-                        <ul class="dropdown-menu dropdown-blue" ng-show="lenta.isEdit">
+                        <ul class="dropdown-menu dropdown-blue" ng-show="lenta.isEdit && base.isAttachDropdownShow">
                             <li><input id="attachImage-edit-{{lenta.id}}" type="file"/></li>
                             <li><input id="attachDoc-edit-{{lenta.id}}" type="file"/></li>
                             <li><a href="#" ng-click="base.showPoll($event,lenta)" ng-show="lenta.isPollAvailable">Опрос</a></li>
                         </ul>
 
-                        <ul class="dropdown-menu dropdown-blue" ng-hide="lenta.isEdit">
+                        <ul class="dropdown-menu dropdown-blue" ng-hide="lenta.isEdit || !base.isAttachDropdownShow">
                             <li><input id="attachImage-{{lenta.attachId}}" type="file"/></li>
                             <li><input id="attachDoc-{{lenta.attachId}}" type="file"/></li>
                             <li><a href="#" ng-click="base.showPoll($event,lenta)" ng-show="lenta.isPollAvailable">Опрос</a></li>

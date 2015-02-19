@@ -1137,7 +1137,30 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             $event.preventDefault();
             $event.stopPropagation();
             base.isUserMenuShow ? base.isUserMenuShow = false : base.isUserMenuShow = true;
-        }
+        };
+
+        base.isAttachDropdownShow = false;
+        base.isHashtagDropdownShow = false;
+        base.isRubricsDropdownShow = false;
+        base.toggleAttachDropdown = function($event){
+            $event.stopPropagation();
+            base.isAttachDropdownShow ? base.isAttachDropdownShow = false : base.isAttachDropdownShow = true;
+        };
+        base.toggleHashtagDropdown = function($event){
+            $event.stopPropagation();
+            base.isHashtagDropdownShow ? base.isHashtagDropdownShow = false : base.isHashtagDropdownShow = true;
+        };
+        base.toggleRubricsDropdown = function($event){
+            $event.stopPropagation();
+            base.isRubricsDropdownShow ? base.isRubricsDropdownShow = false : base.isRubricsDropdownShow = true;
+        };
+
+        base.hideDropdown = function(){
+            base.isUserMenuShow = false;
+            base.isAttachDropdownShow = false;
+            base.isHashtagDropdownShow = false;
+            base.isRubricsDropdownShow = false;
+        };
 
         base.contentLength = 500;
 

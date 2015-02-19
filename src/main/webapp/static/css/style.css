@@ -1942,6 +1942,10 @@ h1 {
 .create-wall-wrap .error-info {
   top: 14px;
 }
+.message-input-bottom .dropdown-menu,
+.input-group-btn .dropdown-menu {
+  display: block;
+}
 /**/
 .staff-title {
   font-size: 14px;

@@ -55,18 +55,18 @@
     <div class="message-input-bottom">
 
         <div class="btn-group attach-dropdown pull-right">
-            <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+            <button data-toggle="dropdown"  ng-click="base.toggleAttachDropdown($event)" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
                 <span class="btn-group-text">Прикрепить</span>
                 <span class="icon-caret-down icon-on-right"></span>
             </button>
 
-                    <ul class="dropdown-menu dropdown-blue" ng-show="ctrl.isEdit">
+                    <ul class="dropdown-menu dropdown-blue" ng-show="ctrl.isEdit && base.isAttachDropdownShow">
                         <li><input id="attachImage-edit-{{ctrl.id}}" type="file"/></li>
                         <li><input id="attachDoc-edit-{{ctrl.id}}" type="file"/></li>
                         <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
                     </ul>
 
-                    <ul class="dropdown-menu dropdown-blue" ng-hide="ctrl.isEdit">
+                    <ul class="dropdown-menu dropdown-blue" ng-hide="ctrl.isEdit || !base.isAttachDropdownShow">
                         <li><input id="attachImage-{{ctrl.attachId}}" type="file"/></li>
                         <li><input id="attachDoc-{{ctrl.attachId}}" type="file"/></li>
                         <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
@@ -78,12 +78,12 @@
         <div class="hashtag pull-left">
             <span>группа</span>
             <div class="btn-group hashtag-dropdown">
-                <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border">
+                <button data-toggle="dropdown" ng-click="base.toggleHashtagDropdown($event)" class="btn btn-info btn-sm dropdown-toggle no-border">
                     <span class="btn-group-text"># {{base.bufferSelectedGroup.visibleName}}</span>
                     <span class="icon-caret-down icon-on-right"></span>
                 </button>
 
-                <ul class="dropdown-menu dropdown-blue">
+                <ul class="dropdown-menu dropdown-blue" ng-show="base.isHashtagDropdownShow">
                     <li ng-repeat="group in base.groups" ng-hide="group.type < 4 && ctrl.isAdvert"><a href="#" ng-click="base.selectGroupInDropdown(group.id,ctrl)"># {{group.visibleName}}</a></li>
                 </ul>
             </div>
@@ -92,14 +92,14 @@
         <div class="hashtag pull-left" ng-if="ctrl.isTalk || (ctrl.isEdit && !ctrl.isAdvert)">
             <span>рубрика</span>
             <div class="btn-group hashtag-dropdown">
-                <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border">
+                <button data-toggle="dropdown" ng-click="base.toggleRubricsDropdown($event)" class="btn btn-info btn-sm dropdown-toggle no-border">
                     <span class="btn-group-text" ng-if="!ctrl.selRubricName">#{{ctrl.rubric.visibleName}}</span>
                     <!--<span class="btn-group-text" ng-if="ctrl.selRubricName">#{{ctrl.selRubricName}}</span>-->
                     <span class="btn-group-text" ng-if="ctrl.selRubricName">#{{ctrl.selRubricName}}</span>
                     <span class="icon-caret-down icon-on-right"></span>
                 </button>
 
-                <ul class="dropdown-menu dropdown-blue">
+                <ul class="dropdown-menu dropdown-blue" ng-show="base.isRubricsDropdownShow">
                     <li>
                         <a href="#" ng-if="lenta" ng-click="lenta.selectRubricNew(0,ctrl)">Общее</a>
                         <a href="#" ng-if="!lenta" ng-click="ctrl.selectRubricNew(0)">Общее</a>
