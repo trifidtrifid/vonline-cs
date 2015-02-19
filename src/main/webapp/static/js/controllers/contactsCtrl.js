@@ -26,7 +26,9 @@ forumControllers.controller('contactsCtrl', function($rootScope) {
         }
 
         messageClient.sendInfoEmail(email,name,content);
-        console.log(email,name,content);
+        ctrl.isSend = true;
+        ctrl.content = "";
+        //console.log(email,name,content);
     };
 
     var oldTextLength = 0;

@@ -132,10 +132,10 @@
                                 <span ng-mouseenter="base.showGroupAdressesList(wallItem.topic.message.id)" ng-mouseleave="base.hideGroupAdressesList(wallItem.topic.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
                                         ng-class="wallItem.tagColor">
                                     {{wallItem.label}}
-                                    <ul ng-show="base.isAddresesListShow[wallItem.topic.message.id]" class="pull-right group-addresses-list">
-                                        <li ng-repeat="item in base.groupAddresesList[wallItem.topic.message.id]">{{item}}</li>
-                                    </ul>
                                 </span>
+                                <ul ng-show="base.isAddresesListShow[wallItem.topic.message.id]" class="pull-right group-addresses-list group-addresses-list-type2">
+                                    <li ng-repeat="item in base.groupAddresesList[wallItem.topic.message.id]">{{item}}</li>
+                                </ul>
 
                                 <div class="name">
                                     <a ui-sref="profile({userId: {{ wallItem.topic.userInfo.id }} })">{{wallItem.topic.authorName}}</a>
