@@ -1019,23 +1019,31 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			String filter = VoHelper.createFilterByLocation(group, group.getRadius());
 			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class, filter).execute();
 			for (VoBuilding b : bgs) {
-				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
-				String streetName = vs.getName();
-				objects.add(streetName + " " + b.getFullNo());
+				try {
+					VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
+					String streetName = vs.getName();
+					objects.add(streetName + " " + b.getFullNo());
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
 			}
 		} else if (group.getGroupType() == GroupType.BUILDING.getValue()) {
 			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class,
 					"longitude=='" + group.getLongitude() + "' && latitude=='" + group.getLatitude() + "'").execute();
 			for (VoBuilding b : bgs) {
-				VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
-				String streetName = vs.getName();
-				objects.add(streetName + " " + b.getFullNo());
+				try {
+					VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
+					String streetName = vs.getName();
+					objects.add(streetName + " " + b.getFullNo());
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
 			}
 		} else if (group.getGroupType() == GroupType.STAIRCASE.getValue()) {
 			objects.add("Прадная №" + group.getStaircase());
 
 		} else if (group.getGroupType() == GroupType.FLOOR.getValue()) {
-			objects.add("Этаж " + group.getFloor());
+			objects.add( group.getFloor() + " этаж");
 		}
 		return new ArrayList<String>(objects);
 	}
