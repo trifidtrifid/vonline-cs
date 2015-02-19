@@ -87,7 +87,8 @@ $(document).ready(function(){
                     map;
                 myGeocoder.then(
                     function (res) {
-                        var center = res.geoObjects.get(0).geometry._$g;
+                        //var center = res.geoObjects.get(0).geometry._$g;
+                        var center = res.geoObjects.get(0).geometry['_Lc'];
                         console.log(center);
 
                         if (!map) {
