@@ -1,7 +1,9 @@
 package com.vmesteonline.be.utils;
 
 import com.vmesteonline.be.jdo2.VoUser;
+
 import org.apache.log4j.Logger;
+import org.datanucleus.util.Base64;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,11 +16,14 @@ public class EMailHelper {
 
     private static Logger logger = Logger.getLogger(EMailHelper.class.getName());
 
-    private static String fromAddress = "ВместеОнлайн.ру <info@vmesteonline.ru>";
+    //$from = "=?UTF-8?B?".base64_encode($from_user)."?= <" . $from_email . ">"
+    private static String fromAddress = "=?UTF-8?B?"+Base64.encodeString("ВместеОнлайн.ру")+"?= <info@vmesteonline.ru>";
+    private static String fromAddressText = "ВместеОнлайн.ру <info@vmesteonline.ru>";
+    
 
     public static void sendSimpleEMail(String from, String to, String subject, String body) throws IOException {
 
-        logger.debug("Try to send MEssage to '" + to + "' from '" + fromAddress + "' Subj: '" + subject + "'");
+        logger.debug("Try to send MEssage to '" + to + "' from '" + fromAddressText + "' Subj: '" + subject + "'");
         if (!Defaults.isItTests) {
             try {
                 URL url = new URL("https://mail.vmesteonline.ru/send.php");
@@ -76,7 +81,10 @@ public class EMailHelper {
     }
 
     public static void sendSimpleEMail(VoUser to, String subject, String body) throws IOException {
-        sendSimpleEMail(null == to ? null : to.getName() + " " + to.getLastName() + " <" + to.getEmail() + ">",
+    	if( null==to)
+    		throw new IOException("Can't send message to NULL recipient");
+    	logger.debug("Try to send MEssage to '" + to + "' from '" + fromAddressText + "' Subj: '" + subject + "'");
+        sendSimpleEMail( "=?UTF-8?B?"+Base64.encodeString(to.getName() + " " + to.getLastName()) + "?= <" + to.getEmail() + ">",
                 subject, body);
     }
 
