@@ -80,7 +80,7 @@ $(document).ready(function(){
                 var mapUrl = mapUrlTemp.join('=');
                 $('.mapUrl').attr('src', mapUrl).removeClass('hidden');
             }else{
-                console.log(address);
+                console.log('login addr',address);
                 $('#map').removeClass('hidden');
                 ymaps.ready(function(){
                     var myGeocoder = ymaps.geocode(address),

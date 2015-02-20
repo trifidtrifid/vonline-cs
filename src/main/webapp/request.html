@@ -130,7 +130,8 @@
                         protocol = new Thrift.Protocol(transport),
                         authClient = new com.vmesteonline.be.thrift.authservice.AuthServiceClient(protocol),
                         addressStreet = $('#city').val()+", "+$('#street').val(),
-                        address = addressStreet+", квартира "+$('#flat-number').val(),
+                        addressFlat = $('#flat-number').val(),
+                        address = addressStreet+", квартира " + addressFlat,
                         email = $('#email').val(),
                         hasUser = authClient.checkEmailRegistered(email);
 
@@ -190,7 +191,8 @@
                                     $('.confirm-forward').click(function(e){
                                         e.preventDefault();
 
-                                        var addr = encodeURIComponent(yaAddr);
+                                        var addr = encodeURIComponent(yaAddr+', кв '+addressFlat);
+                                        console.log('addr',addr);
                                         document.location.replace('registration.html#email='+ email+ ";address="+ addr);
                                     });
 
