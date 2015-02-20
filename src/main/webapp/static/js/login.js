@@ -80,14 +80,15 @@ $(document).ready(function(){
                 var mapUrl = mapUrlTemp.join('=');
                 $('.mapUrl').attr('src', mapUrl).removeClass('hidden');
             }else{
-                console.log(address);
+                console.log('login addr',address);
                 $('#map').removeClass('hidden');
                 ymaps.ready(function(){
                     var myGeocoder = ymaps.geocode(address),
                     map;
                 myGeocoder.then(
                     function (res) {
-                        var center = res.geoObjects.get(0).geometry._$g;
+                        //var center = res.geoObjects.get(0).geometry._$g;
+                        var center = res.geoObjects.get(0).geometry['_Lc'];
                         console.log(center);
 
                         if (!map) {

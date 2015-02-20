@@ -13,7 +13,7 @@
             <div class="auth" ng-if="ctrl.isAuth">
 
                 <div class="contacts-user clearfix">
-                    <div class="avatar short pull-left" style="background : url('{{ctrl.user.avatar}}')"></div>
+                    <div class="avatar short pull-left" ng-style="{'background-image': 'url({{ctrl.user.avatar}})'}"></div>
 
                     <div class="user-name">{{ctrl.user_name}}</div>
                 </div>
@@ -30,7 +30,7 @@
             <textarea class="content no-resize" ng-model="ctrl.content" onblur="if(this.value=='') this.value='Сообщение';" onfocus="if(this.value=='Сообщение') this.value='';">Сообщение</textarea>
 
             <button class="btn btn-sm btn-primary no-border send" ng-click="ctrl.send($event)">Отправить</button>
-            <span class="info-good hidden">Ваше сообщение отправлено</span>
+            <span class="info-good" ng-show="ctrl.isSend">Ваше сообщение отправлено</span>
         </form>
             <br/>
             <div>

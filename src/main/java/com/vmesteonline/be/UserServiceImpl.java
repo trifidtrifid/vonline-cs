@@ -1045,7 +1045,9 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 		} else if (group.getGroupType() == GroupType.FLOOR.getValue()) {
 			objects.add( group.getFloor() + " этаж");
 		}
-		return new ArrayList<String>(objects);
+		ArrayList<String> addressesList = new ArrayList<String>(objects);
+		Collections.sort(addressesList);
+		return addressesList;
 	}
 
 	@Override

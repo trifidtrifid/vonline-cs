@@ -700,8 +700,8 @@ transform()
     padding 5px
     border-bottom 1px solid #ccc
 
-.label .group-addresses-list
-  right -50px
+.group-addresses-list-type2
+  right 50px
 
 .folding
   max-height 55px // 3 строки
@@ -1030,6 +1030,10 @@ transform()
         font-weight bold
         font-size 16px
         margin-bottom 7px
+    &:after
+      content ""
+      display block
+      clear left
   .talks-title-right
     float right
     .adverts-comments
@@ -1676,6 +1680,10 @@ transform()
       text-decoration none
   .error-info
     top 14px
+
+.message-input-bottom .dropdown-menu
+.input-group-btn .dropdown-menu
+  display block
 
 /**/
 .staff-title

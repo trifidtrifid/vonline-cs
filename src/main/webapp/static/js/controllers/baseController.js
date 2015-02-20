@@ -1122,14 +1122,12 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         base.groupAddresesList = [];
         base.isAddresesListShow = [];
         base.showGroupAdressesList = function(messageId){
-            console.log('1');
             if(!base.groupAddresesList[messageId]) {
                 base.groupAddresesList[messageId] = userClient.getAddressListByMessageId(messageId);
             }
             base.isAddresesListShow[messageId] = true;
         };
         base.hideGroupAdressesList = function(messageId){
-            console.log('2');
             base.isAddresesListShow[messageId] = false;
         };
 
@@ -1137,7 +1135,43 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             $event.preventDefault();
             $event.stopPropagation();
             base.isUserMenuShow ? base.isUserMenuShow = false : base.isUserMenuShow = true;
-        }
+        };
+
+        base.isAttachDropdownShow = [];
+        base.isHashtagDropdownShow = false;
+        base.isRubricsDropdownShow = false;
+
+        base.toggleAttachDropdown = function($event,ctrl,ctrlId){
+            $event.stopPropagation();
+
+            var id;
+            if(ctrl) {
+                (ctrl.isEdit) ? id = ctrl.id : id = ctrl.attachId;
+            }else{
+                id = ctrlId;
+            }
+
+            base.isAttachDropdownShow[id] ?
+                base.isAttachDropdownShow[id] = false :
+                    base.isAttachDropdownShow[id] = true;
+
+            //console.log('3',id,base.isAttachDropdownShow[id]);
+        };
+        base.toggleHashtagDropdown = function($event){
+            $event.stopPropagation();
+            base.isHashtagDropdownShow ? base.isHashtagDropdownShow = false : base.isHashtagDropdownShow = true;
+        };
+        base.toggleRubricsDropdown = function($event){
+            $event.stopPropagation();
+            base.isRubricsDropdownShow ? base.isRubricsDropdownShow = false : base.isRubricsDropdownShow = true;
+        };
+
+        base.hideDropdown = function(){
+            base.isUserMenuShow = false;
+            base.isAttachDropdownShow = [];
+            base.isHashtagDropdownShow = false;
+            base.isRubricsDropdownShow = false;
+        };
 
         base.contentLength = 500;
 
