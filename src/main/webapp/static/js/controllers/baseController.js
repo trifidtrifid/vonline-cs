@@ -1122,14 +1122,12 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
         base.groupAddresesList = [];
         base.isAddresesListShow = [];
         base.showGroupAdressesList = function(messageId){
-            console.log('1');
             if(!base.groupAddresesList[messageId]) {
                 base.groupAddresesList[messageId] = userClient.getAddressListByMessageId(messageId);
             }
             base.isAddresesListShow[messageId] = true;
         };
         base.hideGroupAdressesList = function(messageId){
-            console.log('2');
             base.isAddresesListShow[messageId] = false;
         };
 
@@ -1139,12 +1137,25 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             base.isUserMenuShow ? base.isUserMenuShow = false : base.isUserMenuShow = true;
         };
 
-        base.isAttachDropdownShow = false;
+        base.isAttachDropdownShow = [];
         base.isHashtagDropdownShow = false;
         base.isRubricsDropdownShow = false;
-        base.toggleAttachDropdown = function($event){
+
+        base.toggleAttachDropdown = function($event,ctrl,ctrlId){
             $event.stopPropagation();
-            base.isAttachDropdownShow ? base.isAttachDropdownShow = false : base.isAttachDropdownShow = true;
+
+            var id;
+            if(ctrl) {
+                (ctrl.isEdit) ? id = ctrl.id : id = ctrl.attachId;
+            }else{
+                id = ctrlId;
+            }
+
+            base.isAttachDropdownShow[id] ?
+                base.isAttachDropdownShow[id] = false :
+                    base.isAttachDropdownShow[id] = true;
+
+            //console.log('3',id,base.isAttachDropdownShow[id]);
         };
         base.toggleHashtagDropdown = function($event){
             $event.stopPropagation();
@@ -1157,7 +1168,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         base.hideDropdown = function(){
             base.isUserMenuShow = false;
-            base.isAttachDropdownShow = false;
+            base.isAttachDropdownShow = [];
             base.isHashtagDropdownShow = false;
             base.isRubricsDropdownShow = false;
         };

@@ -1156,6 +1156,11 @@ h1 {
   font-size: 16px;
   margin-bottom: 7px;
 }
+.talks-title .talks-title-left:after {
+  content: "";
+  display: block;
+  clear: left;
+}
 .talks-title .talks-title-right {
   float: right;
 }

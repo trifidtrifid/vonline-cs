@@ -55,22 +55,22 @@
     <div class="message-input-bottom">
 
         <div class="btn-group attach-dropdown pull-right">
-            <button data-toggle="dropdown"  ng-click="base.toggleAttachDropdown($event)" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+            <button data-toggle="dropdown"  ng-click="base.toggleAttachDropdown($event,ctrl)" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
                 <span class="btn-group-text">Прикрепить</span>
                 <span class="icon-caret-down icon-on-right"></span>
             </button>
 
-                    <ul class="dropdown-menu dropdown-blue" ng-show="ctrl.isEdit && base.isAttachDropdownShow">
-                        <li><input id="attachImage-edit-{{ctrl.id}}" type="file"/></li>
-                        <li><input id="attachDoc-edit-{{ctrl.id}}" type="file"/></li>
-                        <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
-                    </ul>
+            <ul class="dropdown-menu dropdown-blue" ng-show="ctrl.isEdit && base.isAttachDropdownShow[ctrl.id]">
+                <li><input id="attachImage-edit-{{ctrl.id}}" type="file"/></li>
+                <li><input id="attachDoc-edit-{{ctrl.id}}" type="file"/></li>
+                <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
+            </ul>
 
-                    <ul class="dropdown-menu dropdown-blue" ng-hide="ctrl.isEdit || !base.isAttachDropdownShow">
-                        <li><input id="attachImage-{{ctrl.attachId}}" type="file"/></li>
-                        <li><input id="attachDoc-{{ctrl.attachId}}" type="file"/></li>
-                        <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
-                    </ul>
+            <ul class="dropdown-menu dropdown-blue" ng-hide="ctrl.isEdit || !base.isAttachDropdownShow[ctrl.attachId]">
+                <li><input id="attachImage-{{ctrl.attachId}}" type="file"/></li>
+                <li><input id="attachDoc-{{ctrl.attachId}}" type="file"/></li>
+                <li><a href="#" ng-click="base.showPoll($event,ctrl)" ng-show="ctrl.isPollAvailable">Опрос</a></li>
+            </ul>
 
         </div>
         <a class="btn btn-sm no-border btn-primary pull-left" href="#" ng-click="createTopic($event,ctrl)">Отправить</a>
