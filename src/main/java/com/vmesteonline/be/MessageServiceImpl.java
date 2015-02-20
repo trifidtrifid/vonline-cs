@@ -311,7 +311,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 					"rubricId=="+rubricId;
 			
 			Query q = pm.newQuery(VoTopic.class, filter);
-			q.setOrdering("lastUpdate DESC");
+			q.setOrdering("createDate DESC");
 			allTopics = executeQuery(q);
 
 			if (null != ug && ug.getGroupType() > GroupType.BUILDING.getValue() && !bigBro) {

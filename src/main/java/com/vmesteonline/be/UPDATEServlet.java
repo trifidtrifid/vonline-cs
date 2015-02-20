@@ -17,6 +17,7 @@ import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
 import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.jdo2.utility.VoCounterService;
 import com.vmesteonline.be.notifications.Notification;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.*;
 
@@ -67,7 +69,42 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 				Defaults.initDefaultData(PMF.getPm());
 				resultText = "Init DONE";
 
-			} else if ("moveUser".equalsIgnoreCase(action)) {
+			} else if ("broadcastTopic".equalsIgnoreCase(action)) {
+				String topicId = arg0.getParameter("topicId");
+				String radius = arg0.getParameter("radius");
+				
+				if( null==radius || null==topicId){
+					resultText += "<h1>topicId and radius parameters must be set</h1>";
+				} else {
+					PersistenceManager pm = PMF.getPm();
+					VoTopic topic = pm.getObjectById(VoTopic.class,Long.parseLong(topicId));
+					BigDecimal baseLat = topic.getLatitude();
+					BigDecimal baseLong = topic.getLongitude();
+					int dist = Defaults.radiusNeighbors*2;
+					
+					int rad = Integer.parseInt(radius);
+					if( topic.getUserGroupType() == GroupType.BUILDING.getValue()){
+						
+					} if( topic.getUserGroupType() == GroupType.NEIGHBORS.getValue()){
+						for( int stepLat = 1; stepLat <  rad/dist; stepLat ++){
+							BigDecimal maxLat = VoHelper.getLatitudeMax(baseLat, stepLat*dist);
+							BigDecimal minLat = VoHelper.getLatitudeMin(baseLat, stepLat*dist);
+							
+							for( int stepLong = 1; stepLong <  rad/dist; stepLong ++){
+								
+								BigDecimal maxLatMaxLongLong = VoHelper.getLongitudeMax(baseLong, maxLat, stepLong*dist);
+								BigDecimal minLatMaxLongLong = VoHelper.getLongitudeMax(baseLong, minLat, stepLong*dist);
+								BigDecimal minLatMinLongLong = VoHelper.getLongitudeMin(baseLong, minLat, stepLong*dist);
+								BigDecimal maxLatMinLongLong = VoHelper.getLongitudeMin(baseLong, maxLat, stepLong*dist);
+								//++++++++++++++++++								
+								
+							}
+						}
+					}
+				}
+				
+
+			}else if ("moveUser".equalsIgnoreCase(action)) {
 
 				String emailStr = arg0.getParameter("userEmail");
 				String paIdStr = arg0.getParameter("paId");
