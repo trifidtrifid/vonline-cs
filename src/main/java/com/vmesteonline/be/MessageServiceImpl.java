@@ -37,7 +37,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public MessageServiceImpl(HttpServletRequest req) throws InvalidOperation {
 		super(req);
 	}
-	
+
 	public MessageServiceImpl(ServiceImpl si) throws InvalidOperation {
 		super(si);
 	}
@@ -75,7 +75,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				Topic tpc = voTopic.getTopic(user.getId(), pm);
 				if (VoUser.isHeTheBigBro(user)) {
 					VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
-					tpc.getMessage().setContent("ID:" + tpc.getId()+ug.getName() +" UG:"+ ug.getId()+ ": " + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
+					tpc.getMessage().setContent(
+							"ID:" + tpc.getId() + ug.getName() + " UG:" + ug.getId() + ": " + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
 					tpc.setCanChange(true);
 				}
 				tpc.userInfo = UserServiceImpl.getShortUserInfo(user, voTopic.getAuthorId(), pm);
@@ -137,7 +138,8 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		return createMessagesList(topicId, lastLoadedId, length, userId, pm);
 	}
 
-	public static MessageListPart createMessagesList(long topicId, long lastLoadedId, int length, long userId, PersistenceManager pm) throws InvalidOperation {
+	public static MessageListPart createMessagesList(long topicId, long lastLoadedId, int length, long userId, PersistenceManager pm)
+			throws InvalidOperation {
 		Query q = pm.newQuery(VoMessage.class);
 		q.setFilter("topicId == " + topicId);
 		List<VoMessage> voMsgs = executeQuery(q);
@@ -158,14 +160,20 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	public List<MessageListPart> getMessagesAsList(final List<Topic> topicIds, MessageType messageType, long lastLoadedId, boolean archived, int length)
 			throws InvalidOperation {
 		long userId = 0;
-		if (messageType != MessageType.BLOG)
-			userId = getCurrentUserId();
+		boolean isBigBro = false;
+		if (messageType != MessageType.BLOG){
+			VoUser currentUser = getCurrentUser();
+			userId = currentUser.getId();
+			isBigBro = currentUser.isTheBigBro();
+		}
 
 		String query = "";
 		List<List<VoMessage>> msgsm = new ArrayList<>();
 		Map<Long, Integer> idPos = new TreeMap<>();
+		
 		for (Topic tid : topicIds) {
 			query += "|| topicId == " + tid.getId();
+			
 			idPos.put(tid.getId(), msgsm.size());
 			msgsm.add(new ArrayList<>());
 
@@ -305,11 +313,14 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				else
 					filter += filter.length() > 0 ? "&& type=='" + type + "'" : "type=='" + type + "'";
 			}
-			
-			if( 0!=rubricId  )
-				filter = filter.length() > 0 ? filter + " && rubricId=="+rubricId : 
-					"rubricId=="+rubricId;
-			
+
+			if (0 != rubricId)
+				filter = filter.length() > 0 ? filter + " && rubricId==" + rubricId : "rubricId==" + rubricId;
+
+			if (bigBro) {
+				filter = filter.length() > 0 ? filter + " && original==0" : " original==0";
+			}
+
 			Query q = pm.newQuery(VoTopic.class, filter);
 			q.setOrdering("lastUpdate DESC");
 			allTopics = executeQuery(q);
@@ -318,9 +329,9 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				ArrayList<VoTopic> allTopicsFiltered = new ArrayList<>();
 				for (VoTopic tpc : allTopics) {
 					if (VoHelper.calculateRadius(ug, tpc) <= Defaults.radiusByType[tpc.getUserGroupType()]) {
-						
+
 						allTopicsFiltered.add(tpc);
-					} 
+					}
 				}
 				allTopics = allTopicsFiltered;
 			}
@@ -547,12 +558,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 				if (msg.type != MessageType.BLOG) {
 					msg.userInfo = currentUser.getShortUserInfo(null, pm);
 					Notification.sendMessageCopy(vomsg, currentUser);
-					List<Long> usersToNotify = executeQuery( pm.newQuery("SQL","SELECT DISTINCT authorId FROM VOMESSAGE where topicId="+topic.getId()+" AND authorId!="+msg.getAuthorId() + " AND authorId!="+topic.getAuthorId()));
-					for( Long uid: usersToNotify){
-						Notification.sendMessageResponse(topic, currentUser, vomsg, uid);	
+					List<Long> usersToNotify = executeQuery(pm.newQuery("SQL", "SELECT DISTINCT authorId FROM VOMESSAGE where topicId=" + topic.getId()
+							+ " AND authorId!=" + msg.getAuthorId() + " AND authorId!=" + topic.getAuthorId()));
+					for (Long uid : usersToNotify) {
+						Notification.sendMessageResponse(topic, currentUser, vomsg, uid);
 					}
-					if( topic.getAuthorId() != msg.getAuthorId()){
-								Notification.sendTopicResponse(topic, currentUser, vomsg, topic.getAuthorId());
+					if (topic.getAuthorId() != msg.getAuthorId()) {
+						Notification.sendTopicResponse(topic, currentUser, vomsg, topic.getAuthorId());
 					}
 				}
 
@@ -616,24 +628,24 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			VoMessage storedMsg = pm.getObjectById(VoMessage.class, msg.getId());
 			VoUser currentUser = getCurrentUser(pm);
 			if (storedMsg.getAuthorId() != currentUser.getId())
-				if(!currentUser.isTheBigBro())
+				if (!currentUser.isTheBigBro())
 					throw new InvalidOperation(VoError.IncorrectParametrs, "User is not author of message");
 				else
 					msg.setAuthorId(storedMsg.getAuthorId());
-			
+
 			VoTopic topic = pm.getObjectById(VoTopic.class, storedMsg.getTopicId());
 
 			/* Check if content changed, then update edit date */
 			if (!storedMsg.getContent().equals(msg.getContent())) {
 				// int editedAt = 0 == msg.getEdited() ? now : msg.getEdited();
-				if(!currentUser.isTheBigBro()){ 					
+				if (!currentUser.isTheBigBro()) {
 					storedMsg.setEditedAt(now);
 				}
 				storedMsg.setContent(msg.getContent());
 			}
-			
-			if (storedMsg.getTopicId() != msg.getTopicId() || storedMsg.getAuthorId() != msg.getAuthorId() 
-					|| storedMsg.getRecipient() != msg.getRecipientId() || storedMsg.getCreatedAt() != msg.getCreated() || storedMsg.getType() != msg.getType()){
+
+			if (storedMsg.getTopicId() != msg.getTopicId() || storedMsg.getAuthorId() != msg.getAuthorId()
+					|| storedMsg.getRecipient() != msg.getRecipientId() || storedMsg.getCreatedAt() != msg.getCreated() || storedMsg.getType() != msg.getType()) {
 				logger.error("Parameters: topic, author, recipient, createdAt, type could not be changed!");
 				throw new InvalidOperation(VoError.IncorrectParametrs, "Parameters: topic, author, recipient, createdAt, type could not be changed!");
 			}
@@ -641,7 +653,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			storedMsg.setImages(updateAttachments(storedMsg.getImages(), msg.getImages(), storedMsg.getAuthorId(), pm));
 			storedMsg.setDocuments(updateAttachments(storedMsg.getDocuments(), msg.getDocuments(), storedMsg.getAuthorId(), pm));
 
-			pm.makePersistent(storedMsg);			
+			pm.makePersistent(storedMsg);
 
 		} catch (JDOObjectNotFoundException onfe) {
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Message not found");
@@ -656,13 +668,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		/* Check if content changed, then update edit date */
 		if (!topic.getContent().equals(msg.getContent())) {
 			// int editedAt = 0 == msg.getEdited() ? now : msg.getEdited();
-			if(!currentUser.isTheBigBro()){ 
+			if (!currentUser.isTheBigBro()) {
 				topic.setEditedAt(now);
 				topic.setLastUpdate(now);
 			}
 			topic.setContent(msg.getContent());
 		}
-		
+
 		if (topic.getAuthorId() != msg.getAuthorId() || topic.getCreatedAt() != msg.getCreated() || topic.getType() != msg.getType())
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Parameters: topic, author, recipient, createdAt, type could not be changed!");
 
@@ -673,7 +685,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	private void updateTopic(Topic topic) throws InvalidOperation {
 
 		PersistenceManager pm = PMF.getPm();
-		
+
 		VoTopic theTopic;
 		try {
 			theTopic = pm.getObjectById(VoTopic.class, topic.getId());
@@ -690,9 +702,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		theTopic.setDocuments(updateAttachments(theTopic.getDocuments(), topic.getMessage().getDocuments(), theTopic.getAuthorId(), pm));
 		theTopic.setUsersNum(topic.usersNum);
 		theTopic.setViewers(topic.viewers);
-		if (!currentUser.isTheBigBro()) changeTopicGroup(topic, theTopic, pm);
+		if (!currentUser.isTheBigBro())
+			changeTopicGroup(topic, theTopic, pm);
 		theTopic.setSubject(topic.getSubject());
-		theTopic.setRubricId( topic.getRubricId());
+		theTopic.setRubricId(topic.getRubricId());
 
 		updatePoll(theTopic, topic, pm);
 
@@ -863,8 +876,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			long topicId = msg.getTopicId();
 			VoTopic topic = pm.getObjectById(VoTopic.class, topicId);
 
-			if (msg.getAuthorId() != cu.getId() && !(isModerator = cu.isGroupModerator(topic.getUserGroupId()))
-					&& !cu.isTheBigBro())
+			if (msg.getAuthorId() != cu.getId() && !(isModerator = cu.isGroupModerator(topic.getUserGroupId())) && !cu.isTheBigBro())
 				throw new InvalidOperation(VoError.IncorrectParametrs, "USer is not the author and not moderator");
 
 			topic.setMessageNum(topic.getMessageNum() - 1);
@@ -926,8 +938,7 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		try {
 			VoTopic tpc = pm.getObjectById(VoTopic.class, topicId);
 			VoUser cu = getCurrentUser();
-			if (tpc.getAuthorId() != cu.getId() && cu.isGroupModerator(tpc.getUserGroupId())
-					&& !cu.isTheBigBro())
+			if (tpc.getAuthorId() != cu.getId() && cu.isGroupModerator(tpc.getUserGroupId()) && !cu.isTheBigBro())
 				throw new InvalidOperation(VoError.IncorrectParametrs, "USer is not the author and not a moderator");
 
 			deleteAttachments(pm, tpc.getImages());
@@ -997,23 +1008,21 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 	}
 
 	private VoMulticastMessage getCurrentMessage(PersistenceManager pm, VoUser cu) {
-	
-		 int lastShownTimestamp = cu.getLastMulticastShown();
-		 
-		 int now = (int)(System.currentTimeMillis() / 1000L);
-		 try {
-			List<Long> results = executeQuery( pm.newQuery("SQL",
-					 "SELECT MM.ID FROM VOMULTICASTMESSAGE AS MM LEFT JOIN USERGROUPS AS UG ON MM.USERGROUP_ID_OID=UG.GROUP WHERE UG.ID="
-			  + cu.getId() + " AND startAfter > " + lastShownTimestamp +" AND endBefore < " + now 
-			  		+ " order by startAfter"
-			  ));
-			 if( results.size() > 0){
-				 return pm.getObjectById(VoMulticastMessage.class, results.get(0));
-			 }
+
+		int lastShownTimestamp = cu.getLastMulticastShown();
+
+		int now = (int) (System.currentTimeMillis() / 1000L);
+		try {
+			List<Long> results = executeQuery(pm.newQuery("SQL",
+					"SELECT MM.ID FROM VOMULTICASTMESSAGE AS MM LEFT JOIN USERGROUPS AS UG ON MM.USERGROUP_ID_OID=UG.GROUP WHERE UG.ID=" + cu.getId()
+							+ " AND startAfter > " + lastShownTimestamp + " AND endBefore < " + now + " order by startAfter"));
+			if (results.size() > 0) {
+				return pm.getObjectById(VoMulticastMessage.class, results.get(0));
+			}
 		} catch (Exception e) {
-			logger.warn("Error while loading multicast messages: "+e,e);
+			logger.warn("Error while loading multicast messages: " + e, e);
 		}
-		 
+
 		return null;
 	}
 
@@ -1023,14 +1032,13 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 		// get floor's group as a root of all other groups
 		PersistenceManager pm = PMF.getPm();
 		Set<Long> vgs = new HashSet<Long>();
-		for( Long gid: visibleGroups ){
-			VoUserGroup ug = pm.getObjectById( VoUserGroup.class, gid );
-			
-			List<Long> groups = executeQuery( 
-					pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP where groupType=" + GroupType.FLOOR.getValue() + 
-					" AND && longitude='" + ug.getLongitude()+"' AND latitude='"+ug.getLatitude()+"'"));
-			vgs.addAll( groups );
-			
+		for (Long gid : visibleGroups) {
+			VoUserGroup ug = pm.getObjectById(VoUserGroup.class, gid);
+
+			List<Long> groups = executeQuery(pm.newQuery("SQL", "SELECT ID FROM VOUSERGROUP where groupType=" + GroupType.FLOOR.getValue()
+					+ " AND && longitude='" + ug.getLongitude() + "' AND latitude='" + ug.getLatitude() + "'"));
+			vgs.addAll(groups);
+
 		}
 		sendFloorGroupMulticastMessage(vgs, message, startDate, expireDate, pm);
 	}
@@ -1044,11 +1052,10 @@ public class MessageServiceImpl extends ServiceImpl implements Iface {
 			for (Long ugId : vgs) {
 				usersToUpdate.addAll(UserServiceImpl.getUsersByGroup(ugId, pm));
 				pm.makePersistent(new VoMulticastMessage(pm.getObjectById(VoUserGroup.class, ugId), startDate, expireDate, message));
-				
+
 				String sqlQ = "SELECT S.ID FROM VOSESSION AS S LEFT JOIN USERGROUPS AS UG ON S.USER_ID_OID=UG.ID WHERE UG.GROUP=" + ugId
 						+ " AND S.LASTACTIVITYTS >" + weekAgo + " OR S.LASTACTIVITYTS=0";
-				List<String> sessList = executeQuery(pm.newQuery("SQL",
-						sqlQ));
+				List<String> sessList = executeQuery(pm.newQuery("SQL", sqlQ));
 				List<VoSession> updatedSessions = new ArrayList<>();
 				for (String sid : sessList) {
 					try {

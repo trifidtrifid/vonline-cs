@@ -20,6 +20,12 @@ public class GeoLocation {
 		latitude = "0";
 	}
 
+	public GeoLocation(String longitude, String latitude) {
+		super();
+		this.longitude = longitude;
+		this.latitude = latitude;
+	}
+
 	/*
 	 * GeoLocation(float longitude, float latitude) { this.longitude = longitude; this.latitude = latitude; }
 	 */
