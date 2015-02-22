@@ -1,0 +1,274 @@
+/* nextdoors */
+.nextdoors {
+  padding: 5px;
+}
+.nextdoors .form-search {
+  margin-bottom: 20px;
+  width: 100%;
+  clear: both;
+}
+.nextdoors .form-search .icon-search:hover {
+  text-decoration: none;
+}
+.nextdoors .nextdoor-single {
+  padding: 10px;
+  overflow: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+.nextdoors .nextdoor-single .nextdoor-left span {
+  display: block;
+}
+.nextdoors .nextdoor-single .nextdoor-left .nextdoor-ava img {
+  width: 70px;
+}
+.nextdoors .nextdoor-single .nextdoor-left .nextdoor-name {
+  margin-left: 58px;
+}
+.nextdoors .nextdoors-amount {
+  margin: 15px 0 0 0;
+}
+.nextdoors .nextdoor-address {
+  clear: left;
+  float: left;
+  margin-left: 58px;
+  margin-top: -20px;
+  font-size: 12px;
+}
+/* coming soon */
+.coming-soon {
+  text-align: center;
+  min-height: 0;
+  width: 768px;
+  margin: 0 auto;
+  padding-left: 0;
+}
+.coming-soon p {
+  font-size: 16px;
+}
+.coming-soon h1 {
+  font-size: 40px;
+}
+.coming-soon .navbar-brand {
+  padding-left: 0;
+}
+.maps img {
+  width: 100%;
+  display: block;
+}
+.set-info {
+  clear: right;
+}
+.set-info label {
+  display: block;
+}
+.set-info label input {
+  width: 150px;
+  display: inline-block;
+}
+.set-info label span {
+  width: 80px;
+  display: inline-block;
+}
+.set-info .set-info-save {
+  color: #fff;
+}
+.wrap {
+  width: 990px;
+  margin: 0 auto;
+  text-align: left;
+}
+.wrap.contacts .input {
+  width: 300px;
+  display: block;
+  margin-bottom: 10px;
+}
+.wrap.contacts textarea {
+  width: 500px;
+  height: 100px;
+  display: block;
+  margin-bottom: 10px;
+}
+.wrap.contacts .contacts-user {
+  margin-bottom: 10px;
+}
+.wrap.contacts .contacts-user .user-name {
+  margin-left: 50px;
+}
+.wrap.contacts .send {
+  margin-right: 15px;
+}
+.blog {
+  text-align: left;
+  width: 760px;
+  margin: 0 auto;
+}
+.blog .post {
+  padding: 5px 0;
+  border-top: 1px solid #ccc;
+}
+.blog .post:first-child {
+  border-top: 0;
+}
+.blog .post p,
+.blog .post li {
+  font-size: 14px;
+}
+.blog .post .post-team {
+  text-align: center;
+}
+.blog .post .post-team li {
+  list-style: none;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 15px;
+  width: 200px;
+}
+.blog .post .post-team li img {
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+.blog .post .input-group {
+  display: block;
+}
+.blog .post .input-group .btn {
+  display: inline-block;
+  margin-bottom: 15px;
+}
+.blog .dialogs {
+  padding: 0;
+}
+.blog .anonName {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.blog .message-textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.blog .input-group {
+  padding-top: 10px;
+}
+.blog .no-link {
+  cursor: default;
+  color: #000;
+}
+.blog .no-link:hover {
+  color: #000;
+  text-decoration: none;
+}
+.blog .post-date {
+  margin-left: 210px;
+}
+.blog .post-avatar {
+  width: 200px;
+}
+.blog .topic,
+.blog .topic-stuff {
+  margin-left: 10px;
+  padding-bottom: 10px;
+}
+.blog .lenta-item-bottom span,
+.blog .lenta-item-bottom a {
+  display: inline-block;
+}
+.blog .lenta-item-bottom a {
+  margin-left: 5px;
+}
+.blog .itemdiv.dialogdiv > .body {
+  padding-bottom: 0;
+}
+.about {
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.about p,
+.about li {
+  font-size: 14px;
+}
+.about .footer li {
+  font-size: 13px;
+}
+.contacts {
+  padding-left: 10px;
+}
+.contacts textarea.content {
+  overflow: hidden;
+}
+.user-notification {
+  width: 100%;
+  background: #ffc89a;
+}
+.user-notification span {
+  color: #fff;
+  padding: 4px 10px;
+  display: block;
+  margin-right: 20px;
+}
+.user-notification a {
+  color: #fff;
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 4px;
+}
+.user-notification a:hover {
+  text-decoration: none;
+}
+.login-layout .user-notification {
+  position: absolute;
+  top: -60px;
+}
+/* nearby */
+.nearby {
+  padding: 10px;
+  width: auto;
+}
+.nearby h2,
+.nearby h3 {
+  margin-top: 0;
+}
+.nearby .topic {
+  margin-left: 0;
+}
+.nearby-list {
+  border: 1px solid #438eb9;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.nearby-list-left {
+  width: 150px;
+}
+.nearby-list-left img {
+  width: 100%;
+}
+.nearby-list-right {
+  margin-left: 15px;
+  max-width: 400px;
+}
+.nearby-more {
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: -36px;
+  margin-right: 20px;
+}
+/* --- */
+.unconfirm {
+  padding: 15px;
+}
+.unconfirm h2 {
+  margin-top: 0;
+}
+.unconfirm .error-info {
+  left: 0;
+}
+.code-block {
+  text-align: center;
+  float: none !important;
+}
+.code-block .error-info {
+  left: 0;
+}

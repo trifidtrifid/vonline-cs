@@ -133,6 +133,186 @@
 .loading {
   width: 40px;
 }
+.fa-star,
+.fa-heart {
+  color: #ccc;
+  font-size: 16px;
+  margin-right: 3px;
+  margin-top: 4px;
+}
+/* profle */
+.user-body .user-body-left .logo-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+.user-body .user-body-left .logo-container .change-avatar-link {
+  background: rgba(0,0,0,0.3);
+  text-align: center;
+  color: #fff;
+  display: block;
+  position: relative;
+  top: -26px;
+}
+.user-body .user-body-left .logo-container .change-avatar-link:hover {
+  text-decoration: none;
+}
+.user-body .user-body-left .ace-file-input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.user-body .user-body-left .ace-file-input input {
+  height: 0;
+}
+.user-body .user-body-left .ace-file-input .file-label {
+  height: 150px;
+  width: 150px;
+  background: rgba(255,255,255,0.1);
+  line-height: 100px;
+  border: none;
+}
+.user-body .user-body-left .ace-file-input .file-label:before {
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  bottom: 0;
+  top: auto;
+  height: 30px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+}
+.user-body .user-body-left .ace-file-input .file-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+.user-body .user-body-left .rating {
+  text-align: center;
+/*margin-top -20px
+      position relative
+      z-index 2*/
+}
+.user-body .user-body-left .rating .rating-item {
+  display: inline-block;
+  margin: 0 10px;
+}
+.user-body .user-body-left .rating .rating-item a {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 18px;
+}
+.user-body .user-body-left .rating .rating-item span {
+  display: inline-block;
+}
+.user-body .user-body-left .rating .rating-item .fa-star {
+  color: #ffea4a;
+}
+.user-body .user-body-left .rating .rating-item .fa-heart {
+  color: #f00;
+}
+.user-body .user-body-left img {
+  max-width: 150px;
+  max-height: 150px;
+  display: block;
+  margin: 0 auto;
+}
+.user-body .user-body-left img.new {
+  width: 150px;
+  height: 150px;
+  background-position: center center;
+}
+.user-body .user-body-right {
+  margin-left: 170px;
+}
+.user-body .user-body-right .home-map {
+  padding: 0 10px 10px 0;
+}
+.user-body .user-body-right .home-map img {
+  width: 100%;
+  display: block;
+}
+/* change-avatar */
+.ui-dialog .ui-dialog-titlebar {
+  background: #fff;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+  float: right;
+}
+.ui-dialog .ui-dialog-content {
+  padding: 0;
+}
+.loadAvatar-area h2 {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+.load-avatar {
+  display: block;
+  width: 150px;
+  margin: 0 auto;
+  padding: 0;
+  border-width: 0;
+  border: 0;
+}
+.load-avatar:active,
+.load-avatar:focus {
+  border: 0;
+  outline: none;
+}
+.load-avatar .ace-file-input,
+.load-avatar .file-label {
+  margin-bottom: 0;
+}
+.load-avatar .file-label {
+  font-weight: normal;
+  color: #fff;
+  background-color: inherit;
+  margin: 0;
+  border: 0;
+}
+.load-avatar .file-label:before {
+  color: #fff;
+  background-color: inherit;
+  font-weight: normal;
+  border: 0;
+  margin: 0;
+  font-size: 16px;
+}
+.load-avatar img {
+  max-width: 500px;
+  max-height: 500px;
+}
+.btn-back {
+  margin: 10px 0;
+}
+.ui-dialog-content {
+  text-align: center;
+}
+#image-for-crop {
+  min-width: 200px;
+  min-height: 200px;
+}
+.preview-container {
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+.jcrop-holder {
+  background: transparent !important;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.load-avatar-error {
+  padding: 0 10px;
+}
+.crop-area .loading {
+  width: 30px !important;
+  height: auto;
+  padding: 0;
+}
 @media all and (max-width: 1024px) {
   .user-descr .ava-area {
     width: 120px;
