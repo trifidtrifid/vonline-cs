@@ -263,6 +263,8 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 	public long registerNewUserByAddress(String firstname, String lastname, String password, String email, String addressString, short gender)
 			throws InvalidOperation {
 
+		if( null==addressString || -1==addressString.indexOf(','))
+			throw new InvalidOperation(VoError.IncorrectParametrs, "Incorrect address '"+addressString+"'");
 		VoUser userByEmail = getUserByEmail(email);
 		if (userByEmail != null && userByEmail.isEmailConfirmed())
 			throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
@@ -279,7 +281,8 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		VoStreet voStreet = VoStreet.createVoStreet(voCity, addressInfo.getStreetName(), pm);
 		VoBuilding voBuilding = VoBuilding.createVoBuilding(addressInfo.getZipCode(), voStreet, addressInfo.getBuildingNo(), addressInfo.getLongitude(),
 				addressInfo.getLattitude(), pm);
-		VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(voBuilding, (byte) 0, (byte) 0, 0, "", pm);
+		String flatNo =  addressString.substring( addressString.lastIndexOf(',') + 1);
+		VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(voBuilding, (byte) 0, (byte) 0, Integer.parseInt(flatNo), "", pm);
 
 		final VoUser user = null == userByEmail ? new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
 		user.setGender(gender);
