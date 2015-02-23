@@ -139,7 +139,7 @@ function getStrFromHTMLCode(str){
 function getDefaultGroup(groups){
     var len = groups.length;
     for(var i = 0; i < len;i++){
-        if(groups[i].type == 3) return groups[i];
+        if(groups[i].type == 5) return groups[i];
     }
 
     return groups[0];
