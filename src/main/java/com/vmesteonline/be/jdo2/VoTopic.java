@@ -98,7 +98,7 @@ public class VoTopic extends VoBaseMessage {
 		return tpc;
 	}
 
-	private VoTopic( VoTopic t, String latitude, String longitude){
+	private VoTopic( VoTopic t, String latitude, String longitude) throws InvalidOperation{
 		super(t);
 		//coptTopic
 		subject = t.getSubject();
@@ -113,9 +113,13 @@ public class VoTopic extends VoBaseMessage {
 		this.longitude = longitude;
 		authorId = t.authorId;
 		this.original = t.getId();
+		if( userGroupType <= GroupType.BUILDING.getValue()){
+			userGroupId = VoUserGroup.getDefaultGroup( latitude, longitude, userGroupType );
+			
+		}
 	}
 	
-	public VoTopic createCopy(BigDecimal lat, BigDecimal lon) {		
+	public VoTopic createCopy(BigDecimal lat, BigDecimal lon) throws InvalidOperation {		
 		return new VoTopic( this, lat.toPlainString(), lon.toPlainString());
 	}
 	public GroupType getGroupType(){

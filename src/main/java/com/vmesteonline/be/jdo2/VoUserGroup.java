@@ -6,6 +6,7 @@ import com.vmesteonline.be.thrift.Group;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
+import com.vmesteonline.be.utils.Defaults;
 
 import org.apache.log4j.Logger;
 
@@ -168,4 +169,21 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	public byte getStaircase() {
 		return staircase;
 	}
+
+	public static Long getDefaultGroup(String latitude, String longitude, int userGroupType) throws InvalidOperation {
+		if( userGroupType <= GroupType.BUILDING.getValue() ){
+			PersistenceManager pm = PMF.getPm();
+			List<VoBuilding> nearestBuildings = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='"+longitude+"' && latitude=='"+latitude+"'"));
+			if( null==nearestBuildings || 0==nearestBuildings.size() )
+				throw new InvalidOperation( VoError.IncorrectParametrs, "No BUILDING found at  " + longitude+":"+latitude+" There is NO GROUP could be created!");
+			
+			VoGroup defGroup = Defaults.getDefaultGroups().get(userGroupType);
+			return VoUserGroup.createVoUserGroup( new BigDecimal(longitude), new BigDecimal(latitude), Defaults.radiusByType[userGroupType],
+					(byte)0, (byte)0, defGroup.getVisibleName(), defGroup.getImportantScore(), userGroupType, pm).getId();
+		} else { 
+			return 0L;//does not matter
+		}
+	}
+	
+	
 }
