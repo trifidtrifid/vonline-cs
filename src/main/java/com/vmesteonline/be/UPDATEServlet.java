@@ -92,7 +92,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 							Extent<VoBuilding> buildings = pm.getExtent(VoBuilding.class);
 							for (VoBuilding b : buildings)
 								if (rad > VoHelper.calculateRadius(new GeoLocation(b.getLongitude().toPlainString(), b.getLatitude().toPlainString()), topic))
-									newTopics.add(topic.createCopy(b.getLatitude(), b.getLongitude()));
+									newTopics.add(topic.createCopy(b.getLatitude(), b.getLongitude(), null, pm));
 
 						} else if (topic.getUserGroupType() == GroupType.NEIGHBORS.getValue()) {
 

@@ -170,9 +170,9 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		return staircase;
 	}
 
-	public static Long getDefaultGroup(String latitude, String longitude, int userGroupType) throws InvalidOperation {
+	public static Long getDefaultGroup(String latitude, String longitude, int userGroupType, PersistenceManager pm) throws InvalidOperation {
 		if( userGroupType <= GroupType.BUILDING.getValue() ){
-			PersistenceManager pm = PMF.getPm();
+
 			List<VoBuilding> nearestBuildings = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='"+longitude+"' && latitude=='"+latitude+"'"));
 			if( null==nearestBuildings || 0==nearestBuildings.size() )
 				throw new InvalidOperation( VoError.IncorrectParametrs, "No BUILDING found at  " + longitude+":"+latitude+" There is NO GROUP could be created!");

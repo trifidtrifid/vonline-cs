@@ -5,6 +5,7 @@ import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.userservice.UserService;
@@ -118,7 +119,7 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 				if( vb != lastVB && topicsToCopy!=null){
 					List<VoTopic> createdTopics = new ArrayList<VoTopic>();
 					for( VoTopic topic: topicsToCopy){
-						createdTopics.add(topic.createCopy(vb.getLatitude(), vb.getLongitude()));
+						createdTopics.add(topic.createCopy(vb.getLatitude(), vb.getLongitude(), GroupType.BUILDING, pm));
 					}
 					pm.makePersistentAll(createdTopics);
 				}

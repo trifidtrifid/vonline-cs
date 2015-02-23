@@ -98,7 +98,7 @@ public class VoTopic extends VoBaseMessage {
 		return tpc;
 	}
 
-	private VoTopic( VoTopic t, String latitude, String longitude) throws InvalidOperation{
+	private VoTopic( VoTopic t, String latitude, String longitude, GroupType gt, PersistenceManager pm) throws InvalidOperation{
 		super(t);
 		//coptTopic
 		subject = t.getSubject();
@@ -108,19 +108,17 @@ public class VoTopic extends VoBaseMessage {
 		rubricId = t.getRubricId();
 		userGroupId = t.getUserGroupId();
 		createDate = lastUpdate = (int) (System.currentTimeMillis() / 1000);
-		userGroupType =  t.getUserGroupType();
+		userGroupType =  null == gt ? t.getUserGroupType() : gt.getValue();
 		this.latitude = latitude;
 		this.longitude = longitude;
 		authorId = t.authorId;
 		this.original = t.getId();
-		if( userGroupType <= GroupType.BUILDING.getValue()){
-			userGroupId = VoUserGroup.getDefaultGroup( latitude, longitude, userGroupType );
-			
-		}
+		userGroupId = VoUserGroup.getDefaultGroup( latitude, longitude, userGroupType, pm );
+		
 	}
 	
-	public VoTopic createCopy(BigDecimal lat, BigDecimal lon) throws InvalidOperation {		
-		return new VoTopic( this, lat.toPlainString(), lon.toPlainString());
+	public VoTopic createCopy(BigDecimal lat, BigDecimal lon, GroupType gt, PersistenceManager pm) throws InvalidOperation {		
+		return new VoTopic( this, lat.toPlainString(), lon.toPlainString(), gt, pm);
 	}
 	public GroupType getGroupType(){
 		return GroupType.findByValue( userGroupType );
