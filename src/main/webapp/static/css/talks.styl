@@ -1,3 +1,4 @@
+
 .talks-single .widget-main
 .adverts-single .widget-main
   overflow inherit
@@ -15,7 +16,7 @@
       line-height 37px
       &:after
         clear none
-      .widget-toolbar
+      /*.widget-toolbar
         float right
         vertical-align middle
         padding-left 10px
@@ -30,7 +31,7 @@
           color #fff
           font-size 1.5em
           &:hover
-            text-decoration none
+            text-decoration none*/
       h2
         margin 0 100px 0 90px
         vertical-align middle
@@ -95,7 +96,7 @@
           display inline-block
           &:hover
             text-decoration none
-    footer
+    /*footer
       clear left
       line-height 30px
       border-radius 0 0 main-radius main-radius
@@ -137,16 +138,15 @@
       .topic-statistic
         display inline-block
         vertical-align middle
-        margin-left 10px
-    &.one-message
-      //margin 10px 0
+        margin-left 10px*/
+    /*&.one-message
       .answer-date
         color #808080
         float left
         margin-top 5px
       .message-author
         margin-bottom 10px
-        font-size 14px
+        font-size 14px*/
 
 .dd .topic-right
   margin-left 95px
@@ -159,25 +159,21 @@
 .dd-list .dd-list .topic-right //.topic-item
   margin-left 60px
 
-.one-message
+/*.one-message
   .like-item
     .fa
-      margin-right 5px
+      margin-right 5px*/
 
-.alert
-  padding 0
-  margin-bottom 5px
+/*.one-message
+  border-radius second-radius !important*/
 
-.one-message
-  border-radius second-radius !important
-
-.wysiwig-box
+/*.wysiwig-box
   display none
 
 .one-message+.wysiwig-box
-  border 1px solid #5090c1
+  border 1px solid #5090c1*/
 
-.widget-header.fixed
+/*.widget-header.fixed
   position fixed
   top 0
   z-index 10
@@ -195,7 +191,7 @@
       &.fa-plus
         font-size 30px
   .topic-header-date
-    display none
+    display none*/
 
 .dd>.dd-list>.topic-item
   &.list-view
@@ -213,14 +209,14 @@
   min-height 0
   margin 10px 0
 
-.wysiwyg-editor
+/*.wysiwyg-editor
   a
-    cursor pointer
+    cursor pointer*/
 
-.empty-messages
+/*.empty-messages
   font-size 20px
   text-align center
-  color #ccc
+  color #ccc*/
 
 /* создание темы */
 .create-topic
@@ -234,12 +230,12 @@
   >.btn-group
     float right
     margin-left 5px
-  .wysiwig-box
+  /*.wysiwig-box
     display block
     .pull-left .btn
       margin-right 5px
   .wysiwyg-editor
-    border-left 1px solid #ccc
+    border-left 1px solid #ccc*/
   .message-input-bottom
     margin-top 10px
 
@@ -432,8 +428,6 @@
         display inline-block
         width 15%
 
-
-
 .answer-block
   width 100%
   .input-group-btn
@@ -504,8 +498,6 @@
 .itemdiv.dialogdiv > .body
   margin-left 58px
   font-size 12px
-
-
 
 .user-ribbon.short2
   width 48px
@@ -661,10 +653,12 @@
   .write-message-bottom
     padding-top 10px
 
-.ui-autocomplete
-  list-style none
-  a:hover
-    text-decoration none
 
-.ui-helper-hidden-accessible
-  display none
+@media all and (max-width: 1000px)
+  /*.navbar .form-search
+    width 10%*/
+  .create-topic-btn
+    clear right
+    float left !important
+    margin-left 10px
+    margin-top -30px

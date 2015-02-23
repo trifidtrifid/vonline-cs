@@ -1,4 +1,6 @@
 
+// staff settings
+
 //.fancybox-lock
 .fancybox-lock body
   overflow: visible !important;
@@ -13,14 +15,6 @@ body
   background #fff
   min-height 100%
 
-body.height100
-  min-height 0
-  height 100%
-  padding-bottom 45px
-
-body.height100-2
-  padding-bottom 105px
-
 a
   outline none !important
 
@@ -31,6 +25,51 @@ h1
 .bold
   font-weight bold
 
+.top-overflow-auto
+  overflow auto
+  border-bottom 1px solid #ccc
+
+.heightAuto
+  height auto !important
+
+.alert
+  padding 0
+  margin-bottom 5px
+
+.error-info
+.confirm-info
+  //display none
+  color #ff0000
+  font-size 14px
+
+.red-text
+  color #ff0000
+
+.login-error
+  text-align center
+  clear right
+
+//.login-good
+.info-good
+  color #62c462
+  font-size 14px
+
+.gray-text
+  color #cccccc
+
+.fa:hover{
+  text-decoration none
+}
+
+.btn
+  border-radius main-radius !important
+
+.btn-group>.btn
+  border-radius main-radius !important
+
+.dropdown-menu
+  min-width 115px
+
 transform()
   -moz-transform rotate(arguments); /* Для Firefox */
   -ms-transform rotate(arguments); /* Для IE */
@@ -38,16 +77,26 @@ transform()
   -o-transform rotate(arguments); /* Для Opera */
   transform rotate(arguments);
 
-.btn-primary
-.header-color-blue2
-  background-color #438eb9 !important
 
-.top-overflow-auto
-  overflow auto
-  border-bottom 1px solid #ccc
+// main container
+body.height100
+  min-height 0
+  height 100%
+  padding-bottom 45px
+
+body.height100-2
+  padding-bottom 105px
+
+.page-title
+  padding 15px 0 0 10px
+  font-size 20px
 
 .page
   padding 10px
+
+.btn-primary
+.header-color-blue2
+  background-color #438eb9 !important
 
 .container
   padding 0
@@ -61,9 +110,20 @@ transform()
 .main-container > .main-container-inner
   height 100%
 
-.heightAuto
-  height auto !important
+.main-content
+  border-right 1px solid #ccc;
+  border-left 1px solid #ccc;
+  min-height 100%
+  &.no-margin
+    margin-left 0
+//margin-right 190px
 
+.widget-main
+  overflow auto
+  padding 0
+  padding-bottom 35px
+
+// header
 .navbar-container
   text-align center
   .navbar-brand img
@@ -157,6 +217,7 @@ transform()
 .nav-list > li.active:hover>a
   background #f2f2f2
 
+// sidebar
 .sidebar#sidebar
   height 100%
   left 0
@@ -169,6 +230,11 @@ transform()
   .show-left
     display none
 
+.sidebar
+  padding-top 10px
+  vertical-align top
+
+// footer
 .footer
   text-align left
   color #a6a6a6
@@ -204,8 +270,7 @@ transform()
     a
       color #fff
 
-
-.sidebar-right
+/*.sidebar-right
   position absolute
   right 0
   top 0
@@ -246,21 +311,9 @@ transform()
     border-bottom 1px solid #438eb9
   .importantly-top
     font-size 18px
-    border-top 1px solid #438eb9
+    border-top 1px solid #438eb9*/
 
-.btn
-  border-radius main-radius !important
-
-.page-title
-  padding 15px 0 0 10px
-  font-size 20px
-
-.important
-  .page-title.top-overflow-auto
-    margin-bottom 15px
-
-/*.main-content-top
-  border-bottom 1px solid #ccc*/
+// groups
 .submenu
   padding 15px 10px 15px 0
   .btn
@@ -298,13 +351,7 @@ transform()
   &:hover
     border-color #4f99c6
 
-.btn-group>.btn
-  border-radius main-radius !important
-
-.dropdown-menu
-  min-width 115px
-
-.options
+/*.options
   padding 8px 0 5px 10px
   height 44px
   text-align center
@@ -325,28 +372,7 @@ transform()
     text-align left
   .btn-primary
     font-size 14px
-    float left
-
-.sidebar
-  padding-top 10px
-  vertical-align top
-
-.main-content
-  border-right 1px solid #ccc;
-  border-left 1px solid #ccc;
-  min-height 100%
-  &.no-margin
-    margin-left 0
-//margin-right 190px
-
-.widget-main
-  overflow auto
-  padding 0
-  padding-bottom 35px
-
-.fa:hover{
-    text-decoration none
-}
+    float left*/
 
 .avatar
   width 80px
@@ -367,9 +393,10 @@ transform()
     width 150px
     height 150px
 
-.staff-title
+/*.staff-title
   font-size 14px
-  text-transform uppercase
+  text-transform uppercase*/
+
 .rubrics-menu
   &:before
     content: "";
@@ -429,45 +456,13 @@ transform()
     margin 0 auto
     display block
 
-.error-info
-.confirm-info
-  //display none
-  color #ff0000
-  font-size 14px
-
-.red-text
-  color #ff0000
-
-.login-error
-  text-align center
-  clear right
-
-//.login-good
-.info-good
-  color #62c462
-  font-size 14px
-
-.gray-text
-  color #cccccc
-
-
-
 
 @media all and (max-width: 1280px)
-  .navbar .form-search
-    width 30%
+  /*.navbar .form-search
+    width 30%*/
   .navbar-brand
     padding-left 0
     padding-right 0
-
-@media all and (max-width: 1000px)
-  .navbar .form-search
-    width 10%
-  .create-topic-btn
-    clear right
-    float left !important
-    margin-left 10px
-    margin-top -30px
 
 @media all and (max-width: 768px),screen and (device-width: 320px)
   .sidebar#sidebar

@@ -8,6 +8,57 @@
 .topic-item .topic-descr {
   border-bottom: 1px solid #5090c1;
   border-radius: main-radius;
+/*footer
+      clear left
+      line-height 30px
+      border-radius 0 0 main-radius main-radius
+      padding 0
+      height 38px
+      .answers-ctrl
+        display inline-block
+        vertical-align middle
+        text-align center
+        width 115px
+        height 37px
+        border-right 1px solid rgb(204, 204, 204)
+        a
+          display inline-block
+          vertical-align top
+          font-size 30px
+          line-height 40px
+          &:hover
+            text-decoration none
+        span
+          display inline-block
+          vertical-align middle
+          line-height 35px
+          margin-left 10px
+          span
+            margin-left 0
+          a
+            font-size 12px
+            display inline-block
+            color #000
+            font-weight bold
+            line-height 35px
+            vertical-align middle
+            &:hover
+              text-decoration underline
+      .ans-btn
+        float right
+        margin 3px 8px 0 0
+      .topic-statistic
+        display inline-block
+        vertical-align middle
+        margin-left 10px*/
+/*&.one-message
+      .answer-date
+        color #808080
+        float left
+        margin-top 5px
+      .message-author
+        margin-bottom 10px
+        font-size 14px*/
 }
 .topic-item .topic-descr .topic-header-left {
   display: none;
@@ -15,28 +66,25 @@
 .topic-item .topic-descr header {
   height: 40px;
   line-height: 37px;
+/*.widget-toolbar
+        float right
+        vertical-align middle
+        padding-left 10px
+        margin-right 8px
+        padding-right 0
+        border-left 1px solid #fff
+        height 100%
+        a
+          display inline-block
+          vertical-align middle
+          margin 0 4px
+          color #fff
+          font-size 1.5em
+          &:hover
+            text-decoration none*/
 }
 .topic-item .topic-descr header:after {
   clear: none;
-}
-.topic-item .topic-descr header .widget-toolbar {
-  float: right;
-  vertical-align: middle;
-  padding-left: 10px;
-  margin-right: 8px;
-  padding-right: 0;
-  border-left: 1px solid #fff;
-  height: 100%;
-}
-.topic-item .topic-descr header .widget-toolbar a {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 4px;
-  color: #fff;
-  font-size: 1.5em;
-}
-.topic-item .topic-descr header .widget-toolbar a:hover {
-  text-decoration: none;
 }
 .topic-item .topic-descr header h2 {
   margin: 0 100px 0 90px;
@@ -118,68 +166,6 @@
 .topic-item .topic-descr .topic-left .author-rating a:hover {
   text-decoration: none;
 }
-.topic-item .topic-descr footer {
-  clear: left;
-  line-height: 30px;
-  border-radius: 0 0 main-radius main-radius;
-  padding: 0;
-  height: 38px;
-}
-.topic-item .topic-descr footer .answers-ctrl {
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
-  width: 115px;
-  height: 37px;
-  border-right: 1px solid #ccc;
-}
-.topic-item .topic-descr footer .answers-ctrl a {
-  display: inline-block;
-  vertical-align: top;
-  font-size: 30px;
-  line-height: 40px;
-}
-.topic-item .topic-descr footer .answers-ctrl a:hover {
-  text-decoration: none;
-}
-.topic-item .topic-descr footer .answers-ctrl span {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 35px;
-  margin-left: 10px;
-}
-.topic-item .topic-descr footer .answers-ctrl span span {
-  margin-left: 0;
-}
-.topic-item .topic-descr footer .answers-ctrl span a {
-  font-size: 12px;
-  display: inline-block;
-  color: #000;
-  font-weight: bold;
-  line-height: 35px;
-  vertical-align: middle;
-}
-.topic-item .topic-descr footer .answers-ctrl span a:hover {
-  text-decoration: underline;
-}
-.topic-item .topic-descr footer .ans-btn {
-  float: right;
-  margin: 3px 8px 0 0;
-}
-.topic-item .topic-descr footer .topic-statistic {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 10px;
-}
-.topic-item .topic-descr.one-message .answer-date {
-  color: #808080;
-  float: left;
-  margin-top: 5px;
-}
-.topic-item .topic-descr.one-message .message-author {
-  margin-bottom: 10px;
-  font-size: 14px;
-}
 .dd .topic-right {
   margin-left: 95px;
 }
@@ -192,46 +178,36 @@
 .dd-list .dd-list .topic-right {
   margin-left: 60px;
 }
-.one-message .like-item .fa {
-  margin-right: 5px;
-}
-.alert {
-  padding: 0;
-  margin-bottom: 5px;
-}
-.one-message {
-  border-radius: second-radius !important;
-}
-.wysiwig-box {
-  display: none;
-}
-.one-message+.wysiwig-box {
-  border: 1px solid #5090c1;
-}
-.widget-header.fixed {
-  position: fixed;
-  top: 0;
-  z-index: 10;
-  margin-left: -1px;
-}
-.widget-header.fixed .topic-header-left {
-  display: inline-block;
-  line-height: 40px;
-  width: 101px;
-}
-.widget-header.fixed .topic-header-left i {
-  cursor: pointer;
-  font-size: 1.5em;
-  margin-left: 20px;
-  vertical-align: middle;
-}
-.widget-header.fixed .topic-header-left i.fa-minus,
-.widget-header.fixed .topic-header-left i.fa-plus {
-  font-size: 30px;
-}
-.widget-header.fixed .topic-header-date {
-  display: none;
-}
+/*.one-message
+  .like-item
+    .fa
+      margin-right 5px*/
+/*.one-message
+  border-radius second-radius !important*/
+/*.wysiwig-box
+  display none
+
+.one-message+.wysiwig-box
+  border 1px solid #5090c1*/
+/*.widget-header.fixed
+  position fixed
+  top 0
+  z-index 10
+  margin-left -1px
+  .topic-header-left
+    display inline-block
+    line-height 40px
+    width 101px
+    i
+      cursor pointer
+      font-size 1.5em
+      margin-left 20px
+      vertical-align middle
+      &.fa-minus,
+      &.fa-plus
+        font-size 30px
+  .topic-header-date
+    display none*/
 .dd>.dd-list>.topic-item.list-view .dd-list {
   padding-left: 0;
 }
@@ -247,18 +223,23 @@
   min-height: 0;
   margin: 10px 0;
 }
-.wysiwyg-editor a {
-  cursor: pointer;
-}
-.empty-messages {
-  font-size: 20px;
-  text-align: center;
-  color: #ccc;
-}
+/*.wysiwyg-editor
+  a
+    cursor pointer*/
+/*.empty-messages
+  font-size 20px
+  text-align center
+  color #ccc*/
 /* создание темы */
 .create-topic {
   padding: 0 10px;
   background: #ddedf6;
+/*.wysiwig-box
+    display block
+    .pull-left .btn
+      margin-right 5px
+  .wysiwyg-editor
+    border-left 1px solid #ccc*/
 }
 .create-topic .topic-body textarea {
   width: 100%;
@@ -267,15 +248,6 @@
 .create-topic >.btn-group {
   float: right;
   margin-left: 5px;
-}
-.create-topic .wysiwig-box {
-  display: block;
-}
-.create-topic .wysiwig-box .pull-left .btn {
-  margin-right: 5px;
-}
-.create-topic .wysiwyg-editor {
-  border-left: 1px solid #ccc;
 }
 .create-topic .message-input-bottom {
   margin-top: 10px;
@@ -749,12 +721,11 @@
 .write-message .write-message-bottom {
   padding-top: 10px;
 }
-.ui-autocomplete {
-  list-style: none;
-}
-.ui-autocomplete a:hover {
-  text-decoration: none;
-}
-.ui-helper-hidden-accessible {
-  display: none;
+@media all and (max-width: 1000px) {
+  .create-topic-btn {
+    clear: right;
+    float: left !important;
+    margin-left: 10px;
+    margin-top: -30px;
+  }
 }

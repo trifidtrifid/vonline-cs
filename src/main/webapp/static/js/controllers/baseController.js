@@ -1175,12 +1175,12 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
 
         base.contentLength = 500;
 
-        var lsGroupId = localStorage.getItem('groupId'),
-            groupsLength = base.groups.length;
+        /*var lsGroupId = localStorage.getItem('groupId'),
+            groupsLength = base.groups.length;*/
 
-        if (!lsGroupId) {
+        /*if (!lsGroupId) {*/
             $rootScope.currentGroup = getDefaultGroup(base.groups);
-        } else {
+        /*} else {
             for (var i = 0; i < groupsLength; i++) {
                 if (base.groups[i].id == lsGroupId) {
                     $rootScope.currentGroup = base.groups[i];
@@ -1189,7 +1189,7 @@ forumControllers.controller('baseController',function($scope,$rootScope,$state,$
             if (!$rootScope.currentGroup) {
                 $rootScope.currentGroup = getDefaultGroup(base.groups);
             }
-        }
+        }*/
 
         base.isLentaFocus = false;
 

@@ -1,4 +1,13 @@
 /* nextdoors */
+.ui-autocomplete {
+  list-style: none;
+}
+.ui-autocomplete a:hover {
+  text-decoration: none;
+}
+.ui-helper-hidden-accessible {
+  display: none;
+}
 .nextdoors {
   padding: 5px;
 }
@@ -72,6 +81,9 @@
 }
 .set-info .set-info-save {
   color: #fff;
+}
+.important .page-title.top-overflow-auto {
+  margin-bottom: 15px;
 }
 .wrap {
   width: 990px;
