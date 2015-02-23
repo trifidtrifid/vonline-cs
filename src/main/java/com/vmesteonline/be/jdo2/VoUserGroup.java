@@ -177,7 +177,7 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			if( null==nearestBuildings || 0==nearestBuildings.size() )
 				throw new InvalidOperation( VoError.IncorrectParametrs, "No BUILDING found at  " + longitude+":"+latitude+" There is NO GROUP could be created!");
 			
-			VoGroup defGroup = Defaults.getDefaultGroups().get(userGroupType);
+			VoGroup defGroup = Defaults.getDefaultGroups().get(userGroupType - Defaults.FIRST_USERS_GROUP);
 			return VoUserGroup.createVoUserGroup( new BigDecimal(longitude), new BigDecimal(latitude), Defaults.radiusByType[userGroupType],
 					(byte)0, (byte)0, defGroup.getVisibleName(), defGroup.getImportantScore(), userGroupType, pm).getId();
 		} else { 

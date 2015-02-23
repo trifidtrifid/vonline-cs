@@ -499,9 +499,9 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 		/* sendTheResultNotification(arg0, arg1, now, resultText); */
 	}
 
-	public void checkDiatanceAndAddTopic(VoTopic topic, List<VoTopic> newTopics, int rad, BigDecimal maxLat, BigDecimal maxLatMaxLongLong) {
+	public void checkDiatanceAndAddTopic(VoTopic topic, List<VoTopic> newTopics, int rad, BigDecimal maxLat, BigDecimal maxLatMaxLongLong) throws InvalidOperation {
 		if( VoHelper.calculateRadius( topic, new GeoLocation(maxLatMaxLongLong.toPlainString(),maxLat.toPlainString())) < rad)
-			newTopics.add(topic.createCopy(maxLat, maxLatMaxLongLong));
+			newTopics.add(topic.createCopy(maxLat, maxLatMaxLongLong, null, null));
 	}
 
 	private <T> List<T> loadListFromString(String s, T obj) {
