@@ -1,6 +1,7 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoFileAccessRecord;
 import com.vmesteonline.be.jdo2.VoGroup;
 import com.vmesteonline.be.jdo2.VoMulticastMessage;
@@ -72,39 +73,90 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 			} else if ("broadcastTopic".equalsIgnoreCase(action)) {
 				String topicId = arg0.getParameter("topicId");
 				String radius = arg0.getParameter("radius");
-				
-				if( null==radius || null==topicId){
+
+				if (null == radius || null == topicId) {
 					resultText += "<h1>topicId and radius parameters must be set</h1>";
 				} else {
 					PersistenceManager pm = PMF.getPm();
-					VoTopic topic = pm.getObjectById(VoTopic.class,Long.parseLong(topicId));
+					VoTopic topic = pm.getObjectById(VoTopic.class, Long.parseLong(topicId));
 					BigDecimal baseLat = topic.getLatitude();
 					BigDecimal baseLong = topic.getLongitude();
-					int dist = Defaults.radiusNeighbors*2;
-					
+					int dist = Defaults.radiusNeighbors * 2;
+					List<VoTopic> newTopics = new ArrayList<VoTopic>();
 					int rad = Integer.parseInt(radius);
-					if( topic.getUserGroupType() == GroupType.BUILDING.getValue()){
-						
-					} if( topic.getUserGroupType() == GroupType.NEIGHBORS.getValue()){
-						for( int stepLat = 1; stepLat <  rad/dist; stepLat ++){
-							BigDecimal maxLat = VoHelper.getLatitudeMax(baseLat, stepLat*dist);
-							BigDecimal minLat = VoHelper.getLatitudeMin(baseLat, stepLat*dist);
-							
-							for( int stepLong = 1; stepLong <  rad/dist; stepLong ++){
+
+					pm.currentTransaction().begin();
+					try {
+
+						if (topic.getUserGroupType() == GroupType.BUILDING.getValue()) {
+							Extent<VoBuilding> buildings = pm.getExtent(VoBuilding.class);
+							for (VoBuilding b : buildings)
+								if (rad > VoHelper.calculateRadius(new GeoLocation(b.getLongitude().toPlainString(), b.getLatitude().toPlainString()), topic))
+									newTopics.add(topic.createCopy(b.getLatitude(), b.getLongitude(), null, pm));
+
+						} else if (topic.getUserGroupType() == GroupType.NEIGHBORS.getValue()) {
+
+							float stepLimit = ((float) rad) / ((float) dist);
+							for (int stepLat = 0; stepLat < stepLimit; stepLat++) {
+								BigDecimal maxLat = VoHelper.getLatitudeMax(baseLat, stepLat * dist);
+								BigDecimal minLat = VoHelper.getLatitudeMin(baseLat, stepLat * dist);
+
+								if( 0!=stepLat ){
+									checkDiatanceAndAddTopic(topic, newTopics, rad, maxLat, baseLong);
+									checkDiatanceAndAddTopic(topic, newTopics, rad, minLat, baseLong);
+								}
 								
-								BigDecimal maxLatMaxLongLong = VoHelper.getLongitudeMax(baseLong, maxLat, stepLong*dist);
-								BigDecimal minLatMaxLongLong = VoHelper.getLongitudeMax(baseLong, minLat, stepLong*dist);
-								BigDecimal minLatMinLongLong = VoHelper.getLongitudeMin(baseLong, minLat, stepLong*dist);
-								BigDecimal maxLatMinLongLong = VoHelper.getLongitudeMin(baseLong, maxLat, stepLong*dist);
-								//++++++++++++++++++								
-								
+								for (int stepLong = 1; stepLong < stepLimit; stepLong++) {
+
+									BigDecimal maxLatMaxLongLong = VoHelper.getLongitudeMax(baseLong, maxLat, stepLong * dist);
+									BigDecimal maxLatMinLongLong = VoHelper.getLongitudeMin(baseLong, maxLat, stepLong * dist);
+
+									checkDiatanceAndAddTopic(topic, newTopics, rad, maxLat, maxLatMaxLongLong); 
+									checkDiatanceAndAddTopic(topic, newTopics, rad, maxLat, maxLatMinLongLong); 
+									 
+									if( 0!=stepLat ){
+										BigDecimal minLatMaxLongLong = VoHelper.getLongitudeMax(baseLong, minLat, stepLong * dist);
+										BigDecimal minLatMinLongLong = VoHelper.getLongitudeMin(baseLong, minLat, stepLong * dist);
+										
+										checkDiatanceAndAddTopic(topic, newTopics, rad, minLat, minLatMaxLongLong); 
+										checkDiatanceAndAddTopic(topic, newTopics, rad, minLat, minLatMinLongLong);	
+									}
+								}
 							}
+						} else {
+							resultText += "Invalid group Type: " + topic.getUserGroupType();
+							pm.currentTransaction().rollback();
+							return;
 						}
+
+						String href = "http://static-maps.yandex.ru/1.x/?l=map&size=600,450&pt=";
+						Collections.sort(newTopics, new Comparator<VoTopic>() {
+							@Override
+							public int compare(VoTopic o1, VoTopic o2) {
+								return o1.getLongitude().compareTo(o2.getLongitude()) == 0 ? o1.getLatitude().compareTo(o2.getLatitude()) : o1.getLongitude()
+										.compareTo(o2.getLongitude());
+							}
+						});
+						pm.makePersistentAll(newTopics);
+						resultText += "Created " + newTopics.size() + " copy of topics</br>";
+						resultText += "<table><tr><td>ID</td><td>latitude</td><td>longitude</td></tr>";
+						for (VoTopic t : newTopics) {
+							resultText += "<tr><td>" + t.getId() + "</td><td>" + t.getLatitude() + "</td><td>" + t.getLongitude() + "</td></tr>";
+							href += t.getLongitude().toPlainString() + "," + t.getLatitude().toPlainString() + ",pm2gnm~";
+						}
+						href += topic.getLongitude().toPlainString() + "," + topic.getLatitude().toPlainString() + ",pm2rdl";
+						resultText += "</table><p><a href=" + href + ">Карта размещения</a></p>";
+
+						pm.currentTransaction().commit();
+
+					} catch (Exception e) {
+						pm.currentTransaction().rollback();
+						e.printStackTrace();
+						resultText += "<h1>" + e.getMessage() + "</h1>";
 					}
 				}
-				
 
-			}else if ("moveUser".equalsIgnoreCase(action)) {
+			} else if ("moveUser".equalsIgnoreCase(action)) {
 
 				String emailStr = arg0.getParameter("userEmail");
 				String paIdStr = arg0.getParameter("paId");
@@ -196,35 +248,55 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 				}
 
 			} else if ("enableCounters".equalsIgnoreCase(action)) {
-				resultText = "Enable counters: ";
-
-				{
+				
+				String bId = arg0.getParameter("buildingId");
+				String start = arg0.getParameter("start");
+				String end = arg0.getParameter("end");
+				
+				
+				if( null!=bId && null != start && null!=end){
 					PersistenceManager pm = PMF.getPm();
-					Extent<VoUser> files = pm.getExtent(VoUser.class);
-					for (Iterator<VoUser> it = files.iterator(); it.hasNext();) {
-						VoUser nfar = it.next();
-						Set<ServiceType> services = nfar.getServices();
-						if (null == services)
-							services = new HashSet();
-						else
-							services = new HashSet<>(services);
-						if (!services.contains(ServiceType.CountersEnabled)) {
-							services.add(ServiceType.CountersEnabled);
-							nfar.setServices(services);
-							pm.makePersistent(nfar);
-							resultText += "\n<br/> Enabled for: " + nfar.getName() + " " + nfar.getLastName();
-						}
-						long address = nfar.getAddress();
-						List cntrs = executeQuery(pm.newQuery(VoCounter.class, "postalAddressId==" + address));
-						if (null == cntrs || cntrs.size() == 0) {
-							pm.makePersistent(new VoCounter(CounterType.COLD_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.HOT_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.COLD_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.HOT_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.ELECTRICITY_DAY, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.ELECTRICITY_NIGHT, "", "", address));
+					VoBuilding vb = pm.getObjectById(VoBuilding.class, Long.parseLong(bId.trim()));
+					ArrayList<CounterType> defaultCounterTypes = new ArrayList<CounterType>();
+					defaultCounterTypes.add(CounterType.COLD_WATER);
+					defaultCounterTypes.add(CounterType.HOT_WATER);
+					defaultCounterTypes.add(CounterType.COLD_WATER);
+					defaultCounterTypes.add(CounterType.HOT_WATER);
+					defaultCounterTypes.add(CounterType.ELECTRICITY_DAY);
+					defaultCounterTypes.add(CounterType.ELECTRICITY_NIGHT);
+					
+					
+					pm.makePersistent( new VoCounterService(vb.getId(), 
+							Short.parseShort(start),
+							Short.parseShort(end), 
+									defaultCounterTypes));
+					resultText = "<p>Enable counters in: "+vb.getAddressString()+"</p>";
+					
+					{
+						List<VoUser> users = executeQuery(pm.newQuery( VoUser.class, "longitude=='"+vb.getLongitude().toPlainString()+"' && latitude=='"+vb.getLatitude().toPlainString()+"'"));
+						for (Iterator<VoUser> it = users.iterator(); it.hasNext();) {
+							VoUser user = it.next();
+							Set<ServiceType> services = user.getServices();
+							if (null == services)
+								services = new HashSet();
+							else
+								services = new HashSet<>(services);
+							if (!services.contains(ServiceType.CountersEnabled)) {
+								services.add(ServiceType.CountersEnabled);
+								user.setServices(services);
+								pm.makePersistent(user);
+								resultText += "<br/> Enabled for: " + user.getName() + " " + user.getLastName();
+							}
+							long address = user.getAddress();
+							List<VoCounter> cntrs = executeQuery(pm.newQuery(VoCounter.class, "postalAddressId==" + address));
+							if (null == cntrs || cntrs.size() == 0) {
+								for( CounterType ct : defaultCounterTypes)
+									pm.makePersistent(new VoCounter(ct, "", "", address));
+							}
 						}
 					}
+				} else {
+					resultText = "Enable countesr comand required parameter absend: buildingId, start, end";
 				}
 
 			} else if ("updatePools".equalsIgnoreCase(action)) {
@@ -267,9 +339,9 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 				String dstId = arg0.getParameter("dstId");
 				if (null != srcId && null != dstId) {
 					PersistenceManager pm = PMF.getPm();
-					
+
 					pm.currentTransaction().begin();
-					
+
 					VoBuilding srcB = pm.getObjectById(VoBuilding.class, Long.parseLong(srcId));
 					long dstBuildingId = Long.parseLong(dstId);
 					VoBuilding dstB = pm.getObjectById(VoBuilding.class, dstBuildingId);
@@ -373,7 +445,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 					long sid = srcB.getStreetId();
 					// remove src building
 					pm.deletePersistent(srcB);
-					
+
 					// check if it was the only building on street - remove street
 					List<VoBuilding> ssBuildings = executeQuery(pm.newQuery(VoBuilding.class, "streetId==" + sid));
 					if (null == ssBuildings || ssBuildings.size() == 0) {
@@ -381,10 +453,10 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 						try {
 							street = pm.getObjectById(VoStreet.class, sid);
 						} catch (Exception e) {
-							resultText += "Street "+sid+" not found!<br/>";
+							resultText += "Street " + sid + " not found!<br/>";
 							e.printStackTrace();
 						}
-						if (null!=street) {
+						if (null != street) {
 							long cityId = street.getCity();
 							resultText += "Street " + street.getId() + " '" + street.getName() + "' became empty and deleted<br/>";
 							pm.deletePersistent(street);
@@ -393,18 +465,19 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 							try {
 								city = pm.getObjectById(VoCity.class, cityId);
 							} catch (Exception e) {
-								resultText += "City "+cityId+" not found!<br/>";
+								resultText += "City " + cityId + " not found!<br/>";
 								e.printStackTrace();
 							}
-							if(null!=city){
+							if (null != city) {
 								List<VoStreet> cslist = executeQuery(pm.newQuery(VoStreet.class, "cityId==" + cityId));
-							
+
 								if (null == cslist || cslist.size() == 0) {
 									long countryId = city.getCountry();
 									resultText += "City " + city.getId() + " '" + city.getName() + "' became empty and deleted<br/>";
 									pm.deletePersistent(city);
-	
-									// check if it was the only city of country - remove the country
+
+									// check if it was the only city of country - remove the
+									// country
 									try {
 										VoCountry country = pm.getObjectById(VoCountry.class, countryId);
 										List<VoCity> cylist = executeQuery(pm.newQuery(VoCity.class, "countryId==" + countryId));
@@ -416,7 +489,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 											resultText += "Country contains at least one more city: '" + cylist.get(0).getName() + "' so Country will not be deleted<br/>";
 										}
 									} catch (Exception e) {
-										resultText += "Country "+countryId+" not found!<br/>";
+										resultText += "Country " + countryId + " not found!<br/>";
 										e.printStackTrace();
 									}
 								} else {
@@ -425,21 +498,30 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 							}
 						}
 					} else {
-						resultText += "Street contains at least one more building: '" + ssBuildings.get(0).getAddressString() + "' so Street will not be deleted<br/>";
+						resultText += "Street contains at least one more building: '" + ssBuildings.get(0).getAddressString()
+								+ "' so Street will not be deleted<br/>";
 					}
 					pm.currentTransaction().commit();
 
 				} else {
 					resultText = "srcId and dstId parameters must be defined";
 				}
-				
+
 			}
+		} catch (Exception e) {
+			resultText = "EXCEPTION: " + e.getMessage();
+			e.printStackTrace();
 		} finally {
 			arg1.setHeader("Content-Type", "text/html");
 			resultText = "<html><head><meta charset=\"utf-8\"/></head><body>" + resultText + "</body></html>";
 			arg1.getOutputStream().write(resultText.getBytes());
 		}
 		/* sendTheResultNotification(arg0, arg1, now, resultText); */
+	}
+
+	public void checkDiatanceAndAddTopic(VoTopic topic, List<VoTopic> newTopics, int rad, BigDecimal maxLat, BigDecimal maxLatMaxLongLong) throws InvalidOperation {
+		if( VoHelper.calculateRadius( topic, new GeoLocation(maxLatMaxLongLong.toPlainString(),maxLat.toPlainString())) < rad)
+			newTopics.add(topic.createCopy(maxLat, maxLatMaxLongLong, null, null));
 	}
 
 	private <T> List<T> loadListFromString(String s, T obj) {

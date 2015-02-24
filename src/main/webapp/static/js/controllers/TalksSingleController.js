@@ -12,12 +12,13 @@ forumControllers.controller('TalksSingleController',function($rootScope,$statePa
         $rootScope.base.endOfLoaded = false;
 
         talk.attachId = "00";
-        talk.selectedGroup = $rootScope.currentGroup;
+        talk.selectedGroup = getDefaultGroup($rootScope.base.groups);//$rootScope.currentGroup;
 
         /*if(!$rootScope.importantIsLoadedFromTop)
             $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
         $rootScope.importantIsLoadedFromTop = false;*/
 
+    //console.log('0',talk.selectedGroup,getDefaultGroup($rootScope.base.groups));
         talk.topics = messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
         talk.fullTalkTopic = {};
         talk.fullTalkMessages = {};

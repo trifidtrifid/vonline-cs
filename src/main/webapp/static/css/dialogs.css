@@ -1,0 +1,106 @@
+/* private-messages */
+.dialog-send {
+  border-bottom: 1px solid #ccc;
+}
+.dialog-send .dialog-send-center {
+  margin: 0 60px;
+}
+.dialog-send .dialog-send-center textarea {
+  display: block;
+  width: 100%;
+}
+.dialog-send .dialog-send-center .dialog-send-bottom {
+  margin-top: 10px;
+}
+.page-title.top-overflow-auto {
+  height: 66px;
+  margin: -10px -10px 0 -10px;
+  padding-right: 10px;
+}
+.dialog,
+.private-messages {
+  padding: 10px;
+}
+.dialog .dialogs-container,
+.private-messages .dialogs-container {
+  margin-top: 15px;
+}
+.dialog .dialogs-container .dialog-item,
+.private-messages .dialogs-container .dialog-item {
+  overflow: auto;
+  padding: 10px;
+  padding-left: 0;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+.dialog .dialogs-container .dialog-item:first-child,
+.private-messages .dialogs-container .dialog-item:first-child {
+  border-top: 1px solid #ccc;
+}
+.dialog .dialogs-container .dialog-item:hover,
+.private-messages .dialogs-container .dialog-item:hover {
+  background-color: #f6fcff;
+}
+.dialog h2,
+.private-messages h2 {
+  margin-top: 0;
+}
+.dialog .private-message-single,
+.private-messages .private-message-single {
+  padding: 10px;
+  padding-bottom: 12px;
+  padding-left: 0;
+  border-bottom: 1px solid #ccc;
+}
+.dialog .private-message-single:first-child,
+.private-messages .private-message-single:first-child {
+  border-top: 1px solid #ccc;
+}
+.dialog .private-message-single .private-message-left,
+.private-messages .private-message-single .private-message-left {
+  width: 100%;
+  padding-right: 100px;
+}
+.dialog .private-message-single .private-message-ava img,
+.private-messages .private-message-single .private-message-ava img {
+  width: 70px;
+}
+.dialog .private-message-single .private-message-author,
+.private-messages .private-message-single .private-message-author {
+  margin-left: 50px;
+}
+.dialog .private-message-single .private-message-author .attached,
+.private-messages .private-message-single .private-message-author .attached {
+  padding-bottom: 0;
+}
+.dialog .private-message-single .private-message-author p,
+.private-messages .private-message-single .private-message-author p {
+  margin-bottom: 0;
+}
+.dialog .private-message-single .private-message-author a:hover,
+.private-messages .private-message-single .private-message-author a:hover {
+  text-decoration: none;
+}
+.private-message-right {
+  margin-top: 24px;
+  color: #2b7dbc;
+}
+.private-messages .private-message-single .private-message-left,
+.private-messages .dialog-item .private-message-left {
+  line-height: 65px;
+}
+.private-messages .private-message-single .private-message-left .private-message-left,
+.private-messages .dialog-item .private-message-left .private-message-left {
+  width: 300px;
+}
+.private-messages .private-message-single .private-message-left .private-message-author,
+.private-messages .dialog-item .private-message-left .private-message-author {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 18px;
+  margin-left: 10px;
+  width: 220px;
+}
+.dialog .private-message-single {
+  cursor: default;
+}

@@ -3,7 +3,9 @@ package com.vmesteonline.be;
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoInviteCode;
+import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
 import com.vmesteonline.be.thrift.userservice.UserService;
@@ -60,6 +62,7 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 	private void processReq(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String fileLink = req.getParameter("file");
 		String l4n = req.getParameter("l4n");
+		String topicsToCreate = req.getParameter("topics");
 		if (null == fileLink) {
 			resp.getOutputStream().write("Error: Parameter 'file' must be set".getBytes());
 			return;
@@ -92,6 +95,16 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 			int currentPos = 0;
 
 			Set<String> codeSet = new HashSet<>();
+			VoBuilding lastVB = null;
+			
+			List<VoTopic> topicsToCopy = null;
+			if( null!=topicsToCreate){
+				topicsToCopy = new ArrayList<VoTopic>();
+				for( String tiS : topicsToCreate.split(",")){
+					topicsToCopy.add(pm.getObjectById(VoTopic.class, Long.parseLong(tiS.trim())));
+				}
+			}
+			
 			do {
 				List<String> firstLine = csvData.get(currentPos);
 
@@ -102,6 +115,15 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 				String fullNo = null == korp || 0 == korp.trim().length() || korp.trim().equals("0") ? firstLine.get(5) : firstLine.get(5)
 						+ (korp.matches("[1-9]+") ? "к" + korp : korp);
 				vb = VoBuilding.createVoBuilding(firstLine.get(1), cs, fullNo, null, null, pm);
+				
+				if( vb != lastVB && topicsToCopy!=null){
+					List<VoTopic> createdTopics = new ArrayList<VoTopic>();
+					for( VoTopic topic: topicsToCopy){
+						createdTopics.add(topic.createCopy(vb.getLatitude(), vb.getLongitude(), GroupType.BUILDING, pm));
+					}
+					pm.makePersistentAll(createdTopics);
+				}
+				lastVB = vb;
 
 				// insert Building address
 				csvData.add(new ArrayList<String>(Arrays.asList(new String[] { firstLine.get(0), firstLine.get(1), firstLine.get(2), firstLine.get(3), firstLine.get(4),

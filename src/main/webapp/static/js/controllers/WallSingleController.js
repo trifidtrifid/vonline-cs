@@ -7,8 +7,11 @@ forumControllers.controller('WallSingleController',function($rootScope, $statePa
         initFancyBox($('.lenta-item'));
 
         // временно, нужна функция getWallItem(topicId)
-        var wallItems = messageClient.getWallItems($rootScope.currentGroup.id,0,1000),
+        $rootScope.currentGroup.id = getDefaultGroup($rootScope.base.groups).id;
+        var wallItems = messageClient.getWallItems($rootScope.currentGroup.id,0,0,1000),
         wallItemsLength = wallItems.length;
+
+    //console.log('0',wallItems,$stateParams.topicId);
         for(var i = 0; i < wallItemsLength; i++){
             if(wallItems[i].topic.id == $stateParams.topicId){
                 wallSingle.wallItem = wallItems[i];
@@ -16,6 +19,7 @@ forumControllers.controller('WallSingleController',function($rootScope, $statePa
             }
         }
 
+    //console.log('11',wallSingle.wallItem,$rootScope.currentGroup.id);
         $rootScope.base.initStartParamsForCreateMessage(wallSingle.wallItem);
         $rootScope.base.initStartParamsForCreateTopic(wallSingle.wallItem.topic);
 

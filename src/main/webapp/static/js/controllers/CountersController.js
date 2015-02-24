@@ -16,6 +16,7 @@ forumControllers.controller('CountersController',function($rootScope,$modal,$cou
         var currentDate = (new Date()).getDate();
 
         counters.endDateOfMonth = counterService.endDateOfMonth;
+        counters.startDateOfMonth = counterService.startDateOfMonth;
 
     console.log(counterService.startDateOfMonth+" " +
         counterService.endDateOfMonth+" "+
@@ -36,7 +37,8 @@ forumControllers.controller('CountersController',function($rootScope,$modal,$cou
             counters.state = 0;
         }
 
-    console.log('state '+counters.state);
+
+    //console.log('state '+counters.state);
 
         for(var i = 0; i < typesEnumLength; i++){
             counters.typesArray[i] = {};
