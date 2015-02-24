@@ -15,12 +15,10 @@ import com.vmesteonline.be.jdo2.postaladdress.VoCountry;
 import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
-import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.jdo2.utility.VoCounterService;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
-import com.vmesteonline.be.thrift.ServiceType;
 import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.VoHelper;
@@ -275,24 +273,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 					{
 						List<VoUser> users = executeQuery(pm.newQuery( VoUser.class, "longitude=='"+vb.getLongitude().toPlainString()+"' && latitude=='"+vb.getLatitude().toPlainString()+"'"));
 						for (Iterator<VoUser> it = users.iterator(); it.hasNext();) {
-							VoUser user = it.next();
-							Set<ServiceType> services = user.getServices();
-							if (null == services)
-								services = new HashSet();
-							else
-								services = new HashSet<>(services);
-							if (!services.contains(ServiceType.CountersEnabled)) {
-								services.add(ServiceType.CountersEnabled);
-								user.setServices(services);
-								pm.makePersistent(user);
-								resultText += "<br/> Enabled for: " + user.getName() + " " + user.getLastName();
-							}
-							long address = user.getAddress();
-							List<VoCounter> cntrs = executeQuery(pm.newQuery(VoCounter.class, "postalAddressId==" + address));
-							if (null == cntrs || cntrs.size() == 0) {
-								for( CounterType ct : defaultCounterTypes)
-									pm.makePersistent(new VoCounter(ct, "", "", address));
-							}
+							resultText += it.next().enableCountersFor(defaultCounterTypes, pm);
 						}
 					}
 				} else {

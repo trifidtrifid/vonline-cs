@@ -6,7 +6,9 @@ import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
+import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.thrift.*;
+import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -704,5 +706,28 @@ public class VoUser extends GeoLocation implements Comparable<VoUser> {
 	@Override
 	public int compareTo(VoUser that) {
 		return Long.compare(this.id, that.id);
+	}
+
+	public String enableCountersFor(ArrayList<CounterType> defaultCounterTypes, PersistenceManager pm) {
+		String resultText = "";
+		Set<ServiceType> services = getServices();
+		if (null == services)
+			services = new HashSet<>();
+		else
+			services = new HashSet<>(services);
+		
+		if (!services.contains(ServiceType.CountersEnabled)) {
+			services.add(ServiceType.CountersEnabled);
+			setServices(services);
+			pm.makePersistent(this);
+			resultText += "<br/> Enabled for: " + getName() + " " + getLastName();
+			long address = getAddress();
+			for( CounterType ct : defaultCounterTypes)
+				pm.makePersistent(new VoCounter(ct, "", "", address));
+			
+		} else {
+			resultText += "<br/> " + getName() + " " + getLastName() + "Already has Counters enables";
+		}		
+		return resultText;
 	}
 }

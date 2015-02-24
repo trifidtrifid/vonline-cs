@@ -7,6 +7,7 @@ import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.jdo2.utility.VoCounterService;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
@@ -17,6 +18,7 @@ import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.thrift.messageservice.Dialog;
 import com.vmesteonline.be.thrift.messageservice.MessageService.AsyncProcessor.getTopics;
 import com.vmesteonline.be.thrift.messageservice.WallItem;
+import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.VoHelper;
@@ -32,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -254,6 +257,18 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		// Add the send welcomeMessage Task to the default queue.
 		if (needConfirmEmail) {
 			Notification.welcomeMessageNotification(user, pm);
+		}
+		
+		List<VoCounterService> cs = executeQuery( pm.newQuery(VoCounterService.class, "buildingId=="+uaddress.getBuilding()));
+		if( null != cs && cs.size() > 0){ //enable counter for the user
+			ArrayList<CounterType> defaultCounterTypes = new ArrayList<CounterType>();
+			defaultCounterTypes.add(CounterType.COLD_WATER);
+			defaultCounterTypes.add(CounterType.HOT_WATER);
+			defaultCounterTypes.add(CounterType.COLD_WATER);
+			defaultCounterTypes.add(CounterType.HOT_WATER);
+			defaultCounterTypes.add(CounterType.ELECTRICITY_DAY);
+			defaultCounterTypes.add(CounterType.ELECTRICITY_NIGHT);
+			user.enableCountersFor(defaultCounterTypes, pm);			
 		}
 
 		return user.getId();
