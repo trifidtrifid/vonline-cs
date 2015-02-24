@@ -92,7 +92,7 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 							Extent<VoBuilding> buildings = pm.getExtent(VoBuilding.class);
 							for (VoBuilding b : buildings)
 								if (rad > VoHelper.calculateRadius(new GeoLocation(b.getLongitude().toPlainString(), b.getLatitude().toPlainString()), topic))
-									newTopics.add(topic.createCopy(b.getLatitude(), b.getLongitude()));
+									newTopics.add(topic.createCopy(b.getLatitude(), b.getLongitude(), null, pm));
 
 						} else if (topic.getUserGroupType() == GroupType.NEIGHBORS.getValue()) {
 
@@ -248,35 +248,55 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 				}
 
 			} else if ("enableCounters".equalsIgnoreCase(action)) {
-				resultText = "Enable counters: ";
-
-				{
+				
+				String bId = arg0.getParameter("buildingId");
+				String start = arg0.getParameter("start");
+				String end = arg0.getParameter("end");
+				
+				
+				if( null!=bId && null != start && null!=end){
 					PersistenceManager pm = PMF.getPm();
-					Extent<VoUser> files = pm.getExtent(VoUser.class);
-					for (Iterator<VoUser> it = files.iterator(); it.hasNext();) {
-						VoUser nfar = it.next();
-						Set<ServiceType> services = nfar.getServices();
-						if (null == services)
-							services = new HashSet();
-						else
-							services = new HashSet<>(services);
-						if (!services.contains(ServiceType.CountersEnabled)) {
-							services.add(ServiceType.CountersEnabled);
-							nfar.setServices(services);
-							pm.makePersistent(nfar);
-							resultText += "\n<br/> Enabled for: " + nfar.getName() + " " + nfar.getLastName();
-						}
-						long address = nfar.getAddress();
-						List cntrs = executeQuery(pm.newQuery(VoCounter.class, "postalAddressId==" + address));
-						if (null == cntrs || cntrs.size() == 0) {
-							pm.makePersistent(new VoCounter(CounterType.COLD_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.HOT_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.COLD_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.HOT_WATER, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.ELECTRICITY_DAY, "", "", address));
-							pm.makePersistent(new VoCounter(CounterType.ELECTRICITY_NIGHT, "", "", address));
+					VoBuilding vb = pm.getObjectById(VoBuilding.class, Long.parseLong(bId.trim()));
+					ArrayList<CounterType> defaultCounterTypes = new ArrayList<CounterType>();
+					defaultCounterTypes.add(CounterType.COLD_WATER);
+					defaultCounterTypes.add(CounterType.HOT_WATER);
+					defaultCounterTypes.add(CounterType.COLD_WATER);
+					defaultCounterTypes.add(CounterType.HOT_WATER);
+					defaultCounterTypes.add(CounterType.ELECTRICITY_DAY);
+					defaultCounterTypes.add(CounterType.ELECTRICITY_NIGHT);
+					
+					
+					pm.makePersistent( new VoCounterService(vb.getId(), 
+							Short.parseShort(start),
+							Short.parseShort(end), 
+									defaultCounterTypes));
+					resultText = "<p>Enable counters in: "+vb.getAddressString()+"</p>";
+					
+					{
+						List<VoUser> users = executeQuery(pm.newQuery( VoUser.class, "longitude=='"+vb.getLongitude().toPlainString()+"' && latitude=='"+vb.getLatitude().toPlainString()+"'"));
+						for (Iterator<VoUser> it = users.iterator(); it.hasNext();) {
+							VoUser user = it.next();
+							Set<ServiceType> services = user.getServices();
+							if (null == services)
+								services = new HashSet();
+							else
+								services = new HashSet<>(services);
+							if (!services.contains(ServiceType.CountersEnabled)) {
+								services.add(ServiceType.CountersEnabled);
+								user.setServices(services);
+								pm.makePersistent(user);
+								resultText += "<br/> Enabled for: " + user.getName() + " " + user.getLastName();
+							}
+							long address = user.getAddress();
+							List<VoCounter> cntrs = executeQuery(pm.newQuery(VoCounter.class, "postalAddressId==" + address));
+							if (null == cntrs || cntrs.size() == 0) {
+								for( CounterType ct : defaultCounterTypes)
+									pm.makePersistent(new VoCounter(ct, "", "", address));
+							}
 						}
 					}
+				} else {
+					resultText = "Enable countesr comand required parameter absend: buildingId, start, end";
 				}
 
 			} else if ("updatePools".equalsIgnoreCase(action)) {
@@ -499,9 +519,9 @@ public class UPDATEServlet extends QueuedServletWithKeyHelper {
 		/* sendTheResultNotification(arg0, arg1, now, resultText); */
 	}
 
-	public void checkDiatanceAndAddTopic(VoTopic topic, List<VoTopic> newTopics, int rad, BigDecimal maxLat, BigDecimal maxLatMaxLongLong) {
+	public void checkDiatanceAndAddTopic(VoTopic topic, List<VoTopic> newTopics, int rad, BigDecimal maxLat, BigDecimal maxLatMaxLongLong) throws InvalidOperation {
 		if( VoHelper.calculateRadius( topic, new GeoLocation(maxLatMaxLongLong.toPlainString(),maxLat.toPlainString())) < rad)
-			newTopics.add(topic.createCopy(maxLat, maxLatMaxLongLong));
+			newTopics.add(topic.createCopy(maxLat, maxLatMaxLongLong, null, null));
 	}
 
 	private <T> List<T> loadListFromString(String s, T obj) {
