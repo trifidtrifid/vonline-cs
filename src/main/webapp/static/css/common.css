@@ -60,6 +60,11 @@ h1 {
 .dropdown-menu {
   min-width: 115px;
 }
+.empty-messages {
+  font-size: 20px;
+  text-align: center;
+  color: #ccc;
+}
 body.height100 {
   min-height: 0;
   height: 100%;
