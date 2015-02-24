@@ -22,10 +22,18 @@ forumControllers.controller('CountersController',function($rootScope,$modal,$cou
         counterService.endDateOfMonth+" "+
         counterService.infoProvided);
 
-        if(currentDate >= counterService.startDateOfMonth &&
-            currentDate <= counterService.endDateOfMonth ){
+    var isNow;
+    if(counterService.endDateOfMonth > counterService.startDateOfMonth){
+        isNow = (currentDate >= counterService.startDateOfMonth &&
+            currentDate <= counterService.endDateOfMonth); 
+    }else{
+        isNow = (currentDate >= counterService.endDateOfMonth &&
+            currentDate <= counterService.startDateOfMonth);
+    }
 
-                if(counterService.infoProvided){
+        if(isNow ){
+
+            if(counterService.infoProvided){
                 // с 14 по 24, отправлено
                 counters.state = 2;
             }else{
