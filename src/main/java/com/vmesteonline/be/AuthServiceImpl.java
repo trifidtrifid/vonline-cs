@@ -269,7 +269,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		if (userByEmail != null && userByEmail.isEmailConfirmed())
 			throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
 
-		AddressInfo addressInfo = VoGeocoder.resolveAddressString(addressString);
+		AddressInfo addressInfo = VoGeocoder.resolveAddressString(addressString.substring(0,addressString.lastIndexOf(',')));
 		if (!addressInfo.isExact() || !addressInfo.isKindHouse()) {
 			logger.warn("Failed to resolve address '" + addressString + "'");
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Failed to resolve address '" + addressString + "'");
@@ -281,7 +281,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		VoStreet voStreet = VoStreet.createVoStreet(voCity, addressInfo.getStreetName(), pm);
 		VoBuilding voBuilding = VoBuilding.createVoBuilding(addressInfo.getZipCode(), voStreet, addressInfo.getBuildingNo(), addressInfo.getLongitude(),
 				addressInfo.getLattitude(), pm);
-		String flatNo =  addressString.substring( addressString.lastIndexOf(',') + 1);
+		String flatNo =  addressString.substring( addressString.lastIndexOf(',') + 1).replaceAll("[^0-9]*", "").trim();
 		VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(voBuilding, (byte) 0, (byte) 0, Integer.parseInt(flatNo), "", pm);
 
 		final VoUser user = null == userByEmail ? new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
