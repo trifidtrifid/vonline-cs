@@ -49,6 +49,8 @@ if(isLogin) { //path != '/blog' && path != '/about' && path != '/contacts'
     var shortUserInfo = userClient.getShortUserInfo();
 
     var servicesStr = shortUserInfo.services.join(';');
+
+    console.log(shortUserInfo);
     if (servicesStr.indexOf('10') != -1) shortUserInfo.countersEnabled = true;
     if (servicesStr.indexOf('11') != -1) shortUserInfo.countersConfirmed = true;
     if (servicesStr.indexOf('12') != -1) shortUserInfo.countersNotification = true;
