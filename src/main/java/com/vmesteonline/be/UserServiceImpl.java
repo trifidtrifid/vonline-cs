@@ -1,6 +1,7 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
@@ -1022,7 +1023,9 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				try {
 					VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
 					String streetName = vs.getName();
-					objects.add(streetName + " " + b.getFullNo());
+					String shortName = streetName + " " + b.getFullNo();
+					//objects.add(shortName) ;
+					objects.add(shortName + " " + VoHelper.calculateRadius( group, new GeoLocation( b.getLongitude().toPlainString(), b.getLatitude().toPlainString()))+"m") ;
 				} catch (Exception e) {					
 					e.printStackTrace();
 				}

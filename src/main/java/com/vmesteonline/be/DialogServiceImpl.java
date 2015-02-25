@@ -69,16 +69,31 @@ public class DialogServiceImpl extends ServiceImpl implements Iface {
 	@Override
 	public List<Dialog> getDialogs(int before) throws InvalidOperation {
 		PersistenceManager pm = PMF.getPm();
-		long currentUserId = getCurrentUserId();
+		VoUser currentUser = getCurrentUser();
+		long currentUserId = currentUser.getId();
 		String filter = "users.contains(" + currentUserId + ")";
 		if( before!=0 )
 			filter += " && lastMessageDate < "+before;
-
+		if( currentUser.isTheBigBro() ){
+			filter += " && createDate+1<lastMessageDate";
+		}
 		Query q = pm.newQuery(VoDialog.class, filter);
 		q.setOrdering("lastMessageDate DESC");
 		List<VoDialog> oldDialogs = executeQuery(q);
 
 		List<Dialog> dialogs = VoHelper.convertMutableSet(oldDialogs, new ArrayList<>(), new Dialog(), pm);
+		/*if( currentUser.isTheBigBro() ){
+			executeQuery(pm.newQuery("SQL","SELECT ID FROM , COUNT(*) as c FROM VODIALOG as v JOIN VODIALOGMESAGES as dm ON d.ID=dm.dialogId WHERE "))
+			List<Dialog> sdialogs = new ArrayList<Dialog>();
+			for( Dialog dlg: dialogs)
+				try {
+					if( getDialogMessages(dlg.getId(), 0, 0, 0).size() > 1 )
+						sdialogs.add(dlg);
+				} catch (TException e) {
+					e.printStackTrace();
+				}
+			dialogs = sdialogs;
+		}*/
 		return dialogs;
 	}
 
