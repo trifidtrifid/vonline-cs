@@ -771,7 +771,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			users = new ArrayList<>(ulist);
 			
 			List<Long> pgids = executeQuery(pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP WHERE longitude='"
-					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1) + " AND address != 0"));
+					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1)));
 			
 			if( pgids.size() > 0 )
 				users.removeAll( getUsersByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm));
