@@ -766,12 +766,12 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
 			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
 			ufilter += "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
-					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"' && address<>0";
+					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"' && address!=0";
 			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
 			users = new ArrayList<>(ulist);
 			
 			List<Long> pgids = executeQuery(pm.newQuery("SQL","SELECT ID FROM VOUSERGROUP WHERE longitude='"
-					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1) + " AND address <> 0"));
+					+ group.getLongitude()+"' AND latitude='"+group.getLatitude()+"' AND groupType="+(group.getGroupType() - 1) + " AND address != 0"));
 			
 			if( pgids.size() > 0 )
 				users.removeAll( getUsersByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm));
