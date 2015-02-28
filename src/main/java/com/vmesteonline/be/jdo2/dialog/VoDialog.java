@@ -23,7 +23,8 @@ import static com.vmesteonline.be.utils.VoHelper.executeQuery;
 import static com.vmesteonline.be.utils.VoHelper.logger;
 
 @PersistenceCapable
-@Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"lastMessageDate"})
+@Indices({ @Index(name = "VO_DIALOG_USERS_LAST_UPDATE", members = {"lastMessageDate"}), 
+	@Index(name = "CREATEDATE_IDX", members = {"createDate"})})
 public class VoDialog {
 
     public Dialog getDialog(PersistenceManager pm) throws InvalidOperation {
