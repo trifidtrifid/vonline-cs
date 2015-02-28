@@ -6,7 +6,8 @@ var main = angular.module('forum', [
  /* 'forum.filters',*/
   'forum.services',
   'forum.directives',
-  'forum.controllers',
+  //'forum.controllers',
+  'VOControllers',
   'angularFileUpload'
 ]);
 
