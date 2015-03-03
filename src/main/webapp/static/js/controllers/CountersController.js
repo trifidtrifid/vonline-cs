@@ -27,8 +27,8 @@ forumControllers.controller('CountersController',function($rootScope,$modal,$cou
         isNow = (currentDate >= counterService.startDateOfMonth &&
             currentDate <= counterService.endDateOfMonth);
     }else{
-        isNow = (currentDate >= counterService.endDateOfMonth &&
-            currentDate <= counterService.startDateOfMonth);
+        isNow = (currentDate <= counterService.endDateOfMonth ||
+            currentDate >= counterService.startDateOfMonth);
     }
 
         if(isNow ){
