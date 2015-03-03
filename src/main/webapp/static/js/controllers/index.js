@@ -1,6 +1,41 @@
 'use strict';
 
-module.exports = angular.module('VOControllers', [])
-    // Иерархия контроллеров
+module.exports = angular.module('VOControllers', ['ui.select2','infinite-scroll','ngSanitize','yaMap','ui.bootstrap'])
+
+    .controller('baseCtrl', require('./base.js'))
+
     .controller('aboutCtrl', require('./about.js'))
+    .controller('advertsCtrl', require('./adverts.js'))
+    .controller('advertsSingleCtrl', require('./advertsSingle.js'))
+    .controller('blogCtrl', require('./blog.js'))
+    .controller('changeAvatarCtrl', require('./changeAvatar.js'))
+    .controller('contactsCtrl', require('./contacts.js'))
+    .controller('countersCtrl', require('./counters.js'))
+    .controller('countersHistoryCtrl', require('./countersHistory.js'))
+    .controller('dialogCtrl', require('./dialog.js'))
+    .controller('dialogsCtrl', require('./dialogs.js'))
+    .controller('importantCtrl', require('./important.js'))
+    .controller('leftBarCtrl', require('./leftBar.js'))
+    .controller('wallCtrl', require('./wall.js'))
+    .controller('mainContentTopCtrl', require('./mainContentTop.js'))
+    .controller('mapsCtrl', require('./maps.js'))
+    .controller('modalInstanceCtrl', require('./modalInstance.js'))
+    .controller('navbarCtrl', require('./navbar.js'))
+    .controller('nearbyCtrl', require('./nearby.js'))
+    .controller('nearbySingleCtrl', require('./nearbySingle.js'))
+    .controller('neighboursCtrl', require('./neighbours.js'))
+    .controller('profileCtrl', require('./profile.js'))
+    .controller('rubricsCtrl', require('./rubrics.js'))
+    .controller('rubricsSingleCtrl', require('./rubricsSingle.js'))
+    .controller('setInfoCtrl', require('./setInfo.js'))
+    .controller('settingsCtrl', require('./settings.js'))
+    .controller('talksCtrl', require('./talks.js'))
+    .controller('talksSingleCtrl', require('./talksSingle.js'))
+    .controller('unconfirmedCtrl', require('./unconfirmed.js'))
+    .controller('wallSingleCtrl', require('./wallSingle.js'))
+
+    // business
+    .controller('cabinetCtrl', require('./business/cabinet.js'))
+    .controller('editCtrl', require('./business/edit.js'))
+    .controller('statisticCtrl', require('./business/statistic.js'))
 ;

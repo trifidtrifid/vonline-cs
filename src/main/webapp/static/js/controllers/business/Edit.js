@@ -1,5 +1,5 @@
 
-forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
+var editCtrl = function($rootScope,$scope, FileUploader) {
 
     var edit = this;
 
@@ -118,4 +118,6 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
 
     }
 
-});
+};
+
+module.exports = [ '$rootScope','$scope','FileUploader', editCtrl ];

@@ -1,5 +1,5 @@
 
-forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
+var cabinetCtrl = function($rootScope) {
     var nearby = this,
         postId;
 
@@ -129,4 +129,6 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
 
     $('.ng-cloak').removeClass('ng-cloak');
 
-});
+};
+
+module.exports = [ '$rootScope', cabinetCtrl ];

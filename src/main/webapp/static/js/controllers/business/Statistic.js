@@ -1,5 +1,5 @@
 
-forumControllers.controller('Statistic',function($rootScope) {
+var statisticCtrl = function($rootScope) {
 
     var maps = this,
         businessDescription;
@@ -30,4 +30,6 @@ forumControllers.controller('Statistic',function($rootScope) {
         }
     };
 
-});
+};
+
+module.exports = [ '$rootScope', statisticCtrl ];

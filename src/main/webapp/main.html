@@ -31,9 +31,10 @@
     <script src="/static/js/bower_components/select2/select2.min.js"></script>
     <script src="/static/js/bower_components/angular-ui-select2/src/select2.js"></script>
     <script src="/static/js/angular/ng-infinite-scroll.js"></script>
+    <script src="/static/js/angular/ng-infinite-scroll.js"></script>
 
 </head>
-<body ng-controller="baseController as base" ng-cloak ng-click="base.hideDropdown()" ng-class="{'height100': !base.isFooterBottom}"> <!--  -->
+<body ng-controller="baseCtrl as base" ng-cloak ng-click="base.hideDropdown()" ng-class="{'height100': !base.isFooterBottom}"> <!--  -->
 <div class="navbar navbar-default" id="navbar">
     <script type="text/javascript">
         try {
@@ -42,7 +43,7 @@
         }
     </script>
 
-    <div class="navbar-container ng-cloak" id="navbar-container" ng-controller="navbarController as navbar">
+    <div class="navbar-container ng-cloak" id="navbar-container" ng-controller="navbarCtrl as navbar">
         <div class="navbar-header pull-left">
             <a href="/" class="navbar-brand">
                 <img src="/static/i/logo.png" alt="логотип"/>
@@ -106,7 +107,7 @@
 
 			<div class="main-container-inner" ng-if="base.url != '/blog' && base.url != '/about' && base.url != '/contacts'">
 
-				<aside class="sidebar" id="sidebar" ng-if="!base.hideSidebar" ng-controller="leftBarController as leftbar">
+				<aside class="sidebar" id="sidebar" ng-if="!base.hideSidebar" ng-controller="leftBarCtrl as leftbar">
 					<script type="text/javascript">
 						try {
 							ace.settings.check('sidebar', 'fixed')
@@ -178,7 +179,7 @@
                         </span>
                     </div>
 
-                    <div class="main-content-top" ng-hide="base.mainContentTopIsHide || IS_BUSINESS" ng-controller="mainContentTopController as mainContentTop"
+                    <div class="main-content-top" ng-hide="base.mainContentTopIsHide || IS_BUSINESS" ng-controller="mainContentTopCtrl as mainContentTop"
                          ng-class="{'top-overflow-auto' : base.pageTitle.length}" ng-cloak>
 
                         <div class="ng-cloak">
@@ -266,51 +267,52 @@
 
 	<!-- собственные скрипты  -->
 <script src="/static/js/common.js"></script>
-<script src="/static/js/directives.js"></script>
-<script src="/static/js/services.js"></script>
+<!--<script src="/static/js/directives.js"></script>
+<script src="/static/js/services.js"></script>-->
 
-<script src="/static/js/controllers/baseController.js"></script>
-<script src="/static/js/controllers/mainContentTopController.js"></script>
-<script src="/static/js/controllers/leftbarController.js"></script>
-<script src="/static/js/controllers/navbarController.js"></script>
-<script src="/static/js/controllers/LentaController.js"></script>
-<script src="/static/js/controllers/WallSingleController.js"></script>
-<script src="/static/js/controllers/TalksController.js"></script>
-<script src="/static/js/controllers/TalksSingleController.js"></script>
-<script src="/static/js/controllers/AdvertsController.js"></script>
-<script src="/static/js/controllers/AdvertsSingleController.js"></script>
-<script src="/static/js/controllers/neighboursController.js"></script>
-<script src="/static/js/controllers/ProfileController.js"></script>
-<script src="/static/js/controllers/SettingsController.js"></script>
-<script src="/static/js/controllers/dialogsController.js"></script>
-<script src="/static/js/controllers/dialogController.js"></script>
-<script src="/static/js/controllers/changeAvatarController.js"></script>
-<script src="/static/js/controllers/MapsController.js"></script>
-<script src="/static/js/controllers/SetInfoController.js"></script>
-<script src="/static/js/controllers/CountersController.js"></script>
-<script src="/static/js/controllers/ModalInstanceCtrl.js"></script>
-<script src="/static/js/controllers/CountersHistoryController.js"></script>
-<script src="/static/js/controllers/importantController.js"></script>
-<script src="/static/js/controllers/UnconfirmedCtrl.js"></script>
-<script src="/static/js/controllers/blogController.js"></script>
-<script src="/static/js/controllers/contactsCtrl.js"></script>
+<!--<script src="/static/js/controllers/base.js"></script>
+<script src="/static/js/controllers/mainContentTop.js"></script>
+<script src="/static/js/controllers/leftBar.js"></script>
+<script src="/static/js/controllers/navbar.js"></script>
+<script src="/static/js/controllers/wall.js"></script>
+<script src="/static/js/controllers/wallSingle.js"></script>
+<script src="/static/js/controllers/talks.js"></script>
+<script src="/static/js/controllers/talksSingle.js"></script>
+<script src="/static/js/controllers/adverts.js"></script>
+<script src="/static/js/controllers/advertsSingle.js"></script>
+<script src="/static/js/controllers/neighbours.js"></script>
+<script src="/static/js/controllers/profile.js"></script>
+<script src="/static/js/controllers/settings.js"></script>
+<script src="/static/js/controllers/dialogs.js"></script>
+<script src="/static/js/controllers/dialog.js"></script>
+<script src="/static/js/controllers/changeAvatar.js"></script>
+<script src="/static/js/controllers/maps.js"></script>
+<script src="/static/js/controllers/setInfo.js"></script>
+<script src="/static/js/controllers/counters.js"></script>
+<script src="/static/js/controllers/modalInstance.js"></script>
+<script src="/static/js/controllers/countersHistory.js"></script>
+<script src="/static/js/controllers/important.js"></script>
+<script src="/static/js/controllers/unconfirmed.js"></script>
+<script src="/static/js/controllers/blog.js"></script>
+<script src="/static/js/controllers/contacts.js"></script>
 <script src="/static/js/controllers/about.js"></script>
-<script src="/static/js/controllers/nearbyCtrl.js"></script>
-<script src="/static/js/controllers/nearbySingleCtrl.js"></script>
-<script src="/static/js/controllers/business/Cabinet.js"></script>
-<script src="/static/js/controllers/business/Edit.js"></script>
-<script src="/static/js/controllers/business/Statistic.js"></script>
+<script src="/static/js/controllers/nearby.js"></script>
+<script src="/static/js/controllers/nearbySingle.js"></script>
+<script src="/static/js/controllers/business/cabinet.js"></script>
+<script src="/static/js/controllers/business/edit.js"></script>
+<script src="/static/js/controllers/business/statistic.js"></script>
 <script src="/static/js/controllers/rubrics.js"></script>
-<script src="/static/js/controllers/rubrics-single.js"></script>
+<script src="/static/js/controllers/rubricsSingle.js"></script>-->
 
 <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="/static/js/angular/angular-file-upload.js"></script>
-<script src="/static/js/angular/angular-ui-router.js"></script>
+<!--<script src="/static/js/angular/angular-file-upload.js"></script>
+<script src="/static/js/angular/angular-ui-router.js"></script>-->
 <script src="/static/js/angular/sanitize.js"></script>
 <script src="/static/js/angular/linky-custom.js"></script>
 <script src="/static/js/angular/ui-bootstrap-tpls-0.11.2.min.js"></script>
 
-	<script src="/static/js/app.js"></script>
+<script src="/static/js/app-build.js"></script>
+	<!--<script src="/static/js/app.js"></script>-->
 
 <script src="/static/js/angular/ya-map-2.1.min.js" type="text/javascript"></script>
 

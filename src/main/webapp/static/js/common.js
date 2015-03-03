@@ -47,6 +47,7 @@ if(isLogin) { //path != '/blog' && path != '/about' && path != '/contacts'
     if (userClientGroups.length == 0) document.location.replace('/login');
 
     var shortUserInfo = userClient.getShortUserInfo();
+    console.log('0',shortUserInfo);
 
     var servicesStr = shortUserInfo.services.join(';');
 

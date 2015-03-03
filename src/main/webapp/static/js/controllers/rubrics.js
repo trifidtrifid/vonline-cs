@@ -1,5 +1,5 @@
 
-forumControllers.controller('rubrics',function($rootScope,$stateParams) {
+var rubricsCtrl = function($rootScope,$stateParams) {
         /*
         * при работе с обсждениями нужно учесть следующее:
         * есть три типа сообщения :
@@ -107,4 +107,6 @@ forumControllers.controller('rubrics',function($rootScope,$stateParams) {
 
         $('.ng-cloak').removeClass('ng-cloak');
 
-    })
+    };
+
+module.exports = [ '$rootScope','$stateParams', rubricsCtrl ];
