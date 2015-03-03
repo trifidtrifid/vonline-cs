@@ -3,6 +3,8 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     var nearby = this,
         postId;
 
+    console.log('1');
+
     var businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
     businessDescription.shortName = "Мега Пицца";
     businessDescription.fulltName = "Мега Пицца круто-круто";
@@ -13,9 +15,12 @@ forumControllers.controller('Cabinet',function($rootScope,$stateParams) {
     businessDescription.radius = 500;
     //businessClient.createBusinessDescription(businessDescription,'w','w');
 
+    console.log('2');
     //console.log('business created');
 
     nearby.info = businessClient.getMyBusinessInfo();
+    //nearby.info.fullInfo = nearby.info.fullInfo.replace('\n','<br>');
+    console.log('3');
 
     /*if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
         postId = $stateParams.nearbyId;
