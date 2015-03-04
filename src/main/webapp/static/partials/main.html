@@ -143,15 +143,15 @@
 
                                 <div ng-hide="wallItem.topic.isEdit">
 
-                                    <div ng-class="{folding:!wallItem.topic.isFullText}" class="text" ng-bind-html="wallItem.topic.message.content"></div>
+                                    <!--<div ng-class="{folding:!wallItem.topic.isFullText}" class="text" ng-bind-html="wallItem.topic.message.content"></div>
 
                                     <div ng-if="wallItem.topic.message.content.length >= base.contentLength">
                                         <a href="#" ng-click="base.toggleFullText(wallItem.topic)">
                                             <span ng-hide="wallItem.topic.isFullText">читать далее...</span>
                                             <span ng-show="wallItem.topic.isFullText">свернуть</span>
                                         </a>
-                                    </div>
-                                    <!--<div ng-if="wallItem.topic.message.content.length >= base.contentLength">
+                                    </div>-->
+                                    <div ng-if="wallItem.topic.message.content.length >= base.contentLength">
                                         <div class="text" ng-hide="wallItem.topic.isFullText">
                                             <div ng-bind-html="wallItem.topic.message.content.slice(0,base.contentLength-1)"></div>
                                             <div><a href="#" ng-click="base.toggleFullText(wallItem.topic)">читать далее...</a></div>
@@ -161,7 +161,7 @@
 
                                             <div><a href="#" ng-click="base.toggleFullText(wallItem.topic)">свернуть</a></div>
                                         </div>
-                                    </div>-->
+                                    </div>
 
                                     <div class="attached" ng-show="wallItem.topic.message.images.length || wallItem.topic.message.documents.length">
                                         <div class="attached-img-wrap" ng-class="{foldingImg : !wallItem.topic.isFullText}">
@@ -258,23 +258,22 @@
 
                                     <div ng-hide="wallMessage.isEdit">
 
-                                        <div ng-class="{folding:!wallMessage.isFullText}" class="text" ng-bind-html="wallMessage.content"></div>
+                                        <!--<div ng-class="{folding:!wallMessage.isFullText}" class="text" ng-bind-html="wallMessage.content"></div>
 
                                         <div ng-if="wallMessage.content.length >= base.contentLength">
                                             <a href="#" ng-click="base.toggleFullText(wallMessage)">
                                                 <span ng-hide="wallMessage.isFullText">читать далее...</span>
                                                 <span ng-show="wallMessage.isFullText">свернуть</span>
                                             </a>
-                                        </div>
+                                        </div>-->
 
-                                        <!--<div ng-if="wallMessage.content.length < base.contentLength">
+                                        <div ng-if="wallMessage.content.length < base.contentLength">
 
                                             <div class="text" ng-bind-html="wallMessage.content"></div>
                                         </div>
                                         <div ng-if="wallMessage.content.length >= base.contentLength">
                                             <div class="text" ng-hide="wallMessage.isFullText">
-                                                <!-- .slice(0,base.contentLength-1)
-                                                <div class="folding" ng-bind-html="wallMessage.content"></div>
+                                                <div ng-bind-html="wallMessage.content.slice(0,base.contentLength-1)"></div>
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">читать далее...</a></div>
                                             </div>
                                             <div class="text" ng-show="wallMessage.isFullText">
@@ -282,7 +281,7 @@
 
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">свернуть</a></div>
                                             </div>
-                                        </div>-->
+                                        </div>
 
                                         <div class="attached" ng-show="wallMessage.images.length || wallMessage.documents.length">
                                             <div class="attached-img-wrap" ng-class="{foldingImg : !wallMessage.isFullText}">

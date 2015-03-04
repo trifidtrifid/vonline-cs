@@ -39,16 +39,16 @@
 
                                         <div>
 
-                                            <div ng-class="{folding:!talks.fullTalkTopic.message.isFullText}" class="text" ng-bind-html="talks.fullTalkTopic.message.content"></div>
+                                            <!--<div ng-class="{folding:!talks.fullTalkTopic.message.isFullText}" class="text" ng-bind-html="talks.fullTalkTopic.message.content"></div>
 
                                             <div ng-if="talks.fullTalkTopic.message.content.length >= base.contentLength">
                                                 <a href="#" ng-click="base.toggleFullText(talks.fullTalkTopic.message)">
                                                     <span ng-hide="talks.fullTalkTopic.message.isFullText">читать далее...</span>
                                                     <span ng-show="talks.fullTalkTopic.message.isFullText">свернуть</span>
                                                 </a>
-                                            </div>
+                                            </div>-->
 
-                                            <!--<div ng-if="talks.fullTalkTopic.message.content.length < base.contentLength">
+                                            <div ng-if="talks.fullTalkTopic.message.content.length < base.contentLength">
                                                 <div class="text" ng-bind-html="talks.fullTalkTopic.message.content"></div>
                                             </div>
                                             <div ng-if="talks.fullTalkTopic.message.content.length >= base.contentLength">
@@ -61,7 +61,7 @@
 
                                                     <div><a href="#" ng-click="base.toggleFullText(talks.fullTalkTopic.message)">свернуть</a></div>
                                                 </div>
-                                            </div>-->
+                                            </div>
 
                                         </div>
 
@@ -165,16 +165,16 @@
 
                                             <div ng-hide="firstMessage.isEdit">
 
-                                                <div ng-class="{folding:!firstMessage.isFullText}" class="text" ng-bind-html="firstMessage.content"></div>
+                                                <!--<div ng-class="{folding:!firstMessage.isFullText}" class="text" ng-bind-html="firstMessage.content"></div>
 
                                                 <div ng-if="firstMessage.content.length >= base.contentLength">
                                                     <a href="#" ng-click="base.toggleFullText(firstMessage)">
                                                         <span ng-hide="firstMessage.isFullText">читать далее...</span>
                                                         <span ng-show="firstMessage.isFullText">свернуть</span>
                                                     </a>
-                                                </div>
+                                                </div>-->
 
-                                                <!--<div ng-if="firstMessage.content.length < base.contentLength">
+                                                <div ng-if="firstMessage.content.length < base.contentLength">
                                                     <div class="text" ng-bind-html="firstMessage.content"></div>
                                                 </div>
                                                 <div ng-if="firstMessage.content.length >= base.contentLength">
@@ -187,7 +187,7 @@
 
                                                         <div><a href="#" ng-click="base.toggleFullText(firstMessage)">свернуть</a></div>
                                                     </div>
-                                                </div>-->
+                                                </div>
 
                                                 <div class="attached">
                                                     <div class="attached-img-wrap" ng-class="{foldingImg : !firstMessage.isFullText}">
@@ -251,16 +251,16 @@
 
                                                     <div ng-hide="message.isEdit">
 
-                                                        <div ng-class="{folding:!message.isFullText}" class="text" ng-bind-html="message.content"></div>
+                                                        <!--<div ng-class="{folding:!message.isFullText}" class="text" ng-bind-html="message.content"></div>
 
                                                         <div ng-if="message.content.length  >= base.contentLength">
                                                             <a href="#" ng-click="base.toggleFullText(message)">
                                                                 <span ng-hide="message.isFullText">читать далее...</span>
                                                                 <span ng-show="message.isFullText">свернуть</span>
                                                             </a>
-                                                        </div>
+                                                        </div>-->
 
-                                                        <!--<div ng-if="message.content.length < base.contentLength">
+                                                        <div ng-if="message.content.length < base.contentLength">
 
                                                             <div class="text" ng-bind-html="message.content"></div>
                                                         </div>
@@ -274,7 +274,7 @@
 
                                                                 <div><a href="#" ng-click="base.toggleFullText(message)">свернуть</a></div>
                                                             </div>
-                                                        </div>-->
+                                                        </div>
 
                                                         <div class="attached">
                                                             <div class="attached-img-wrap" ng-class="{foldingImg : !message.isFullText}">
