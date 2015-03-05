@@ -143,9 +143,9 @@
 
                                 <div ng-hide="wallItem.topic.isEdit">
 
-                                    <!--<div ng-class="{folding:!wallItem.topic.isFullText}" class="text" ng-bind-html="wallItem.topic.message.content"></div>
+                                    <div ng-if="wallItem.topic.message.content.length < base.contentLength" class="text" ng-bind-html="wallItem.topic.message.content"></div>
 
-                                    <div ng-if="wallItem.topic.message.content.length >= base.contentLength">
+                                    <!--<div ng-if="wallItem.topic.message.content.length >= base.contentLength">
                                         <a href="#" ng-click="base.toggleFullText(wallItem.topic)">
                                             <span ng-hide="wallItem.topic.isFullText">читать далее...</span>
                                             <span ng-show="wallItem.topic.isFullText">свернуть</span>
