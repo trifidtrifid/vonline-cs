@@ -114,7 +114,7 @@ forumControllers.controller('Edit',function($rootScope,$scope, FileUploader) {
             edit.status = 0;
         }
 
-        console.log('after save',edit.businessDescription);
+        console.log('after save',edit.businessDescription.fullInfo);
 
     }
 

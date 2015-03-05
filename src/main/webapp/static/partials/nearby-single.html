@@ -297,14 +297,12 @@
                     </carousel>
                 </div>
                 <div class="cabinet-right">
-                    <div>{{nearby.info.fullInfo}}</div>
+                    <div ng-bind-html="nearby.info.fullInfo"></div>
                     <br/>
                     <div><b>Адрес:</b> {{nearby.info.address}}</div>
                 </div>
             </div>
         </div>
-
-
 
         <div class="dialogs">
             <div class="itemdiv dialogdiv new" ng-repeat="comm in nearby.wallItem.messages">
@@ -331,7 +329,6 @@
             <textarea class="message-textarea" ng-focus="true" ng-model="nearby.post.commenting"
                       onblur="if(this.value=='') this.value='Ваш ответ';"
                       onfocus="if(this.value=='Ваш ответ') this.value='';" ></textarea>
-
 
             <span class="input-group-btn">
                 <button class="btn btn-sm btn-info no-radius no-border send-in-blog" type="button" ng-click="nearby.sendComm($event,nearby.post)">
