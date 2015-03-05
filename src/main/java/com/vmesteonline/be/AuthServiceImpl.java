@@ -258,7 +258,14 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		if (needConfirmEmail) {
 			Notification.welcomeMessageNotification(user, pm);
 		}
+		if(  uaddress.getFlatNo() != 0 ){			
 		
+			enableCountersForUser(user, uaddress, pm);
+		}
+		return user.getId();
+	}
+
+	public void enableCountersForUser(final VoUser user, VoPostalAddress uaddress, PersistenceManager pm) {
 		List<VoCounterService> cs = executeQuery( pm.newQuery(VoCounterService.class, "buildingId=="+uaddress.getBuilding()));
 		if( null != cs && cs.size() > 0){ //enable counter for the user
 			ArrayList<CounterType> defaultCounterTypes = new ArrayList<CounterType>();
@@ -270,8 +277,6 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 			defaultCounterTypes.add(CounterType.ELECTRICITY_NIGHT);
 			user.enableCountersFor(defaultCounterTypes, pm);			
 		}
-
-		return user.getId();
 	}
 
 	@Override

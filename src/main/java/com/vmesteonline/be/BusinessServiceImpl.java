@@ -101,11 +101,7 @@ public class BusinessServiceImpl extends ServiceImpl implements Iface {
 					+ "authorId=="+businessId+" && type=='"+MessageType.BUSINESS_PAGE.name()+"'").execute();
 			VoTopic voTopic = topics.get(0);
 			Topic tpc = voTopic.getTopic(user.getId(), pm);
-			if (VoUser.isHeTheBigBro(user)) {
-				VoUserGroup ug = pm.getObjectById(VoUserGroup.class, voTopic.getUserGroupId());
-				tpc.getMessage().setContent(ug.getName() + ": " + ug.getDescription() + "<br/>" + tpc.getMessage().getContent());
-				tpc.setCanChange(true);
-			}
+	
 			tpc.userInfo = UserServiceImpl.getShortUserInfo(user, voTopic.getAuthorId(), pm);
 			MessageListPart mlp = MessageServiceImpl.createMessagesList(tpc.id, 0L, 10, user.getId(), pm );
 			if (mlp.totalSize > 0)
