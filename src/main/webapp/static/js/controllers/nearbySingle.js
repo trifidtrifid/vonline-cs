@@ -8,6 +8,7 @@ var nearbySingleCtrl =  function($rootScope,$stateParams) {
     }
 
     nearby.info = businessClient.getBusinessDescription(businessId);
+    nearby.info.fullInfo = nearby.info.fullInfo.replace('\n','<br>');
     nearby.wallItem = businessClient.getWallItem(nearby.info.id);
 
     $rootScope.base.isFooterBottom = true;

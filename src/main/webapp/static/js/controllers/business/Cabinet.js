@@ -16,6 +16,7 @@ var cabinetCtrl = function($rootScope) {
     //console.log('business created');
 
     nearby.info = businessClient.getMyBusinessInfo();
+    nearby.info.fullInfo = nearby.info.fullInfo.replace('\n','<br>');
 
     /*if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
         postId = $stateParams.nearbyId;

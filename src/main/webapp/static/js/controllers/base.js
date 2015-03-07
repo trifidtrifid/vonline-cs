@@ -1,6 +1,7 @@
 //var forumControllers = angular.module('forum.controllers', ['ui.select2','infinite-scroll','ngSanitize','yaMap','ui.bootstrap']);
 
 var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
+    console.log('base');
 
     $rootScope.IS_BUSINESS = localStorage.getItem('VO_is_business');
     //$rootScope.IS_BUSINESS = 1;
