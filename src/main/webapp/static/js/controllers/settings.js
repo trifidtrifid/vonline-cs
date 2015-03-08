@@ -1,19 +1,19 @@
 
-var settingsCtrl= function($rootScope,$scope) {
+var settingsCtrl= function($rootScope,$scope,$c) {
         $rootScope.isTopSearchShow = false;
         $rootScope.leftbar.tab = 0;
 
-        resetPages($rootScope.base);
+        $c.resetPages($rootScope.base);
         $rootScope.base.settingsIsActive = true;
         $rootScope.base.isFooterBottom = true;
 
-        resetAceNavBtns($rootScope.navbar);
+        $c.resetAceNavBtns($rootScope.navbar);
         $rootScope.base.mainContentTopIsHide = true;
 
         $rootScope.base.settingsLoadStatus = "isLoaded";
 
         var settings = this,
-            userProfileMeta = userClient.getUserProfile(),
+            userProfileMeta = $c.userClient.getUserProfile(),
             userContatcsMeta = userProfileMeta.contacts,
             userInfoMeta = userProfileMeta.userInfo,
             userPrivacyMeta = userProfileMeta.privacy,
@@ -25,17 +25,17 @@ var settingsCtrl= function($rootScope,$scope) {
             userFamilyMeta = new com.vmesteonline.be.thrift.UserFamily();
         }
 
-        settings.userContacts = clone(userContatcsMeta);
-        settings.userInfo = clone(userInfoMeta);
-        settings.userPrivacy = clone(userPrivacyMeta);
-        settings.userNotifications = clone(userNotificationsMeta);
+        settings.userContacts = $c.clone(userContatcsMeta);
+        settings.userInfo = $c.clone(userInfoMeta);
+        settings.userPrivacy = $c.clone(userPrivacyMeta);
+        settings.userNotifications = $c.clone(userNotificationsMeta);
         if(!settings.userNotifications){
             settings.userNotifications = new com.vmesteonline.be.thrift.Notifications();
             settings.userNotifications.freq = 4;
         }
 
-        settings.family = clone(userFamilyMeta);
-        settings.interests = clone(userInterestsMeta);
+        settings.family = $c.clone(userFamilyMeta);
+        settings.interests = $c.clone(userInterestsMeta);
 
         if (settings.userInfo.gender == 1) {
             settings.married = "Замужем";
@@ -139,14 +139,14 @@ var settingsCtrl= function($rootScope,$scope) {
             var temp = new com.vmesteonline.be.thrift.UserInfo();
 
             settings.userInfo.birthdayMeta ?
-                temp.birthday = Date.parse(getCorrectDate(settings.userInfo.birthdayMeta))/1000 :
+                temp.birthday = Date.parse($c.getCorrectDate(settings.userInfo.birthdayMeta))/1000 :
                 temp.birthday = 0;
 
             temp.gender = settings.userInfo.gender;
             temp.firstName = $rootScope.base.me.firstName = settings.userInfo.firstName;
             temp.lastName = $rootScope.base.me.lastName = settings.userInfo.lastName;
 
-            userClient.updateUserInfo(temp);
+            $c.userClient.updateUserInfo(temp);
             settings.isProfileResult = true;
             settings.isProfileError = false;
             settings.profileInfo = "Сохранено";
@@ -163,7 +163,7 @@ var settingsCtrl= function($rootScope,$scope) {
             }else{
                 settings.isPasswResult = true;
                 try {
-                    userClient.changePassword(settings.oldPassw, settings.newPassw);
+                    $c.userClient.changePassword(settings.oldPassw, settings.newPassw);
                     settings.isPasswError = false;
                     settings.passwInfo = "Сохранено";
                 }catch(e){
@@ -177,7 +177,7 @@ var settingsCtrl= function($rootScope,$scope) {
         settings.isPrivacyError = false;
         settings.isPrivacyResult = false;
         settings.updatePrivacy = function(){
-            userClient.updatePrivacy(settings.userPrivacy);
+            $c.userClient.updatePrivacy(settings.userPrivacy);
 
             settings.isPrivacyResult = true;
             settings.isPrivacyError = false;
@@ -190,7 +190,7 @@ var settingsCtrl= function($rootScope,$scope) {
             var temp = new com.vmesteonline.be.thrift.UserContacts();
             temp.email = settings.userContacts.email;
             temp.mobilePhone = settings.userContacts.mobilePhone;
-            userClient.updateContacts(temp);
+            $c.userClient.updateContacts(temp);
 
             settings.isContactsError = false;
             settings.isContactsResult = true;
@@ -204,7 +204,7 @@ var settingsCtrl= function($rootScope,$scope) {
                 temp.email = settings.userNotifications.email;
                 temp.freq = settings.userNotifications.freq;
 
-                userClient.updateNotifications(temp);
+                $c.userClient.updateNotifications(temp);
 
                 settings.isAlertsError = false;
                 settings.isAlertsResult = true;
@@ -231,8 +231,8 @@ var settingsCtrl= function($rootScope,$scope) {
                     if(tempMonth.length < 2) tempMonth = "0" + tempMonth;
 
                     if(settings.family.childs[i].year && settings.family.childs[i].year != '1911' && settings.family.childs[i].month) {
-                        temp.childs[i].birthday = Date.parse(getCorrectDate("15."+tempMonth +"." + settings.family.childs[i].year)) / 1000;
-                        //alert(tempMonth+" "+getCorrectDate("15."+tempMonth +"." + settings.family.childs[i].year));
+                        temp.childs[i].birthday = Date.parse($c.getCorrectDate("15."+tempMonth +"." + settings.family.childs[i].year)) / 1000;
+                        //alert(tempMonth+" "+$c.getCorrectDate("15."+tempMonth +"." + settings.family.childs[i].year));
                     }else{
                         temp.childs[i].birthday = null;
                     }
@@ -245,7 +245,7 @@ var settingsCtrl= function($rootScope,$scope) {
                 }
             }
 
-            userClient.updateFamily(temp);
+            $c.userClient.updateFamily(temp);
 
             settings.isFamilyError = false;
             settings.isFamilyResult = true;
@@ -257,7 +257,7 @@ var settingsCtrl= function($rootScope,$scope) {
             var temp = new com.vmesteonline.be.thrift.UserInterests();
             temp.job = settings.interests.job;
             temp.userInterests = settings.interests.userInterests;
-            userClient.updateInterests(temp);
+            $c.userClient.updateInterests(temp);
 
             settings.isInterestsError = false;
             settings.isInterestsResult = true;
@@ -270,7 +270,7 @@ var settingsCtrl= function($rootScope,$scope) {
             newChild.name = " ";
             var nowYear = new Date();
             nowYear = nowYear.getFullYear();
-            newChild.birthday = Date.parse(getCorrectDate('15.01.'+nowYear));
+            newChild.birthday = Date.parse($c.getCorrectDate('15.01.'+nowYear));
 
             var birthDate = new Date(newChild.birthday);
             //newChild.month = ""+birthDate.getMonth();
@@ -354,4 +354,4 @@ var settingsCtrl= function($rootScope,$scope) {
 
     };
 
-module.exports = [ '$rootScope','$scope', settingsCtrl ];
+module.exports = [ '$rootScope','$scope','$c', settingsCtrl ];

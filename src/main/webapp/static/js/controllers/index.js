@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = angular.module('VOControllers', ['ui.select2','infinite-scroll','ngSanitize','yaMap','ui.bootstrap'])
+module.exports = angular.module('VOControllers', ['ui.select2','infinite-scroll','ngSanitize','yaMap','ui.bootstrap','FileUploader'])
 
     .controller('baseCtrl', require('./base.js'))
 

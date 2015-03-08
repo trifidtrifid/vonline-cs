@@ -1,12 +1,12 @@
 
-var leftBarCtrl = function($rootScope,$state) {
+var leftBarCtrl = function($rootScope,$state,$c) {
 
     $rootScope.setTab = function(newValue){
 
         $rootScope.leftbar.tab = newValue;
         $rootScope.isTopSearchShow = true;
-        resetPages($rootScope.base);
-        resetAceNavBtns($rootScope.navbar);
+        $c.resetPages($rootScope.base);
+        $c.resetAceNavBtns($rootScope.navbar);
 
         switch(newValue){
             case 1:
@@ -71,4 +71,4 @@ var leftBarCtrl = function($rootScope,$state) {
     }
   };
 
-module.exports = [ '$rootScope','$state', leftBarCtrl ];
+module.exports = [ '$rootScope','$state','$c', leftBarCtrl ];

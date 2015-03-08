@@ -1,5 +1,5 @@
 
-var countersHistoryCtrl = function($scope,$stateParams,$rootScope,$counters) {
+var countersHistoryCtrl = function($scope,$stateParams,$rootScope,$counters,$c) {
 
         $rootScope.base.mainContentTopIsHide = true;
         $rootScope.base.pageTitle = "История показаний счетчика";
@@ -15,7 +15,7 @@ var countersHistoryCtrl = function($scope,$stateParams,$rootScope,$counters) {
         }
 
         var now = Date.parse(new Date())/1000,
-            history = utilityClient.getCounterHistory($stateParams.counterId,0,now),
+            history = $c.utilityClient.getCounterHistory($stateParams.counterId,0,now),
             counter = 0;
 
         $scope.history = [];
@@ -32,4 +32,4 @@ var countersHistoryCtrl = function($scope,$stateParams,$rootScope,$counters) {
 
     };
 
-module.exports = [ '$state','$stateParams','$rootScope','$counters', countersHistoryCtrl ];
+module.exports = [ '$state','$stateParams','$rootScope','$counters','$c', countersHistoryCtrl ];

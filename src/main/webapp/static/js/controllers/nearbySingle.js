@@ -1,5 +1,5 @@
 
-var nearbySingleCtrl =  function($rootScope,$stateParams) {
+var nearbySingleCtrl =  function($rootScope,$stateParams,$c) {
     var nearby = this,
         businessId;
 
@@ -7,21 +7,21 @@ var nearbySingleCtrl =  function($rootScope,$stateParams) {
         businessId = $stateParams.nearbyId;
     }
 
-    nearby.info = businessClient.getBusinessDescription(businessId);
+    nearby.info = $c.businessClient.getBusinessDescription(businessId);
     nearby.info.fullInfo = nearby.info.fullInfo.replace('\n','<br>');
-    nearby.wallItem = businessClient.getWallItem(nearby.info.id);
+    nearby.wallItem = $c.businessClient.getWallItem(nearby.info.id);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
 
-    nearby.isAuth = authClient.checkIfAuthorized();
+    nearby.isAuth = $c.authClient.checkIfAuthorized();
 
     if(nearby.isAuth){
-        //me = userClient.getUserProfile();
+        //me = c.userClient.getUserProfile();
         //$('.anonName').removeClass('hidden');
     }
 
-    nearby.posts = messageClient.getBusinessTopics(0,1000);
+    nearby.posts = $c.messageClient.getBusinessTopics(0,1000);
 
     if(nearby.posts.topics) {
         var len = nearby.posts.topics.length;
@@ -49,7 +49,7 @@ var nearbySingleCtrl =  function($rootScope,$stateParams) {
             post.isCommentShow = true;
 
             if(!post.comments) {
-                post.comments = messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
+                post.comments = $c.messageClient.getMessagesAsList(post.id, 8, 0, false, 1000).messages;
                 console.log('finish');
             }
         }
@@ -86,8 +86,8 @@ var nearbySingleCtrl =  function($rootScope,$stateParams) {
         };
 
         console.log('post',message);
-        //var returnComment = messageClient.postBusinessTopics(message);
-        var returnComment = messageClient.postMessage(message);
+        //var returnComment = c.messageClient.postBusinessTopics(message);
+        var returnComment = $c.messageClient.postMessage(message);
         console.log('post2',returnComment);
 
 
@@ -148,4 +148,4 @@ var nearbySingleCtrl =  function($rootScope,$stateParams) {
 
 };
 
-module.exports = [ '$rootScope','$stateParams', nearbySingleCtrl ];
+module.exports = [ '$rootScope','$stateParams','$c', nearbySingleCtrl ];

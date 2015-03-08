@@ -1,5 +1,5 @@
 
-var editCtrl = function($rootScope,$scope, FileUploader) {
+var editCtrl = function($rootScope,$scope,$c,FileUploader) {
 
     var edit = this;
 
@@ -8,7 +8,7 @@ var editCtrl = function($rootScope,$scope, FileUploader) {
 
     $scope.setLoadImage = function(fileBase64){
 
-        var svc = fileClient.saveFileContent(fileBase64, true);
+        var svc = $c.fileClient.saveFileContent(fileBase64, true);
         console.log('setLoadImage',fileBase64);
         if(isLogoUploader){
             edit.businessDescription.logo.URL = attach.URL = edit.logoURL = svc;
@@ -90,13 +90,13 @@ var editCtrl = function($rootScope,$scope, FileUploader) {
     };*/
 
 
-    $rootScope.businessDescription = edit.businessDescription = businessClient.getMyBusinessInfo();
+    $rootScope.businessDescription = edit.businessDescription = $c.businessClient.getMyBusinessInfo();
 
     //edit.businessDescription = new com.vmesteonline.be.thrift.businesservice.BusinessDescription;
 
     edit.save = function(){
 
-        //edit.businessDescription.logo.URL = fileClient.saveFileContent(bg, true);
+        //edit.businessDescription.logo.URL = $c.fileClient.saveFileContent(bg, true);
         // bg - binary data base64
 
 
@@ -106,7 +106,7 @@ var editCtrl = function($rootScope,$scope, FileUploader) {
         //edit.businessDescription.logo.URL = '/static/images/anna.jpg';
 
         try {
-            businessClient.updateBusinessDescription(edit.businessDescription);
+            $c.businessClient.updateBusinessDescription(edit.businessDescription);
             edit.statusText = "Сохранено";
             edit.status = 1;
         }catch(e){
@@ -120,4 +120,4 @@ var editCtrl = function($rootScope,$scope, FileUploader) {
 
 };
 
-module.exports = [ '$rootScope','$scope','FileUploader', editCtrl ];
+module.exports = [ '$rootScope','$scope','$c','FileUploader', editCtrl ];

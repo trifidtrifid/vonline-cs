@@ -1,5 +1,5 @@
 
-var setInfoCtrl = function($state, $rootScope) {
+var setInfoCtrl = function($c) {
         var setInfo = this;
 
         setInfo.isSaveResult = false;
@@ -14,7 +14,7 @@ var setInfoCtrl = function($state, $rootScope) {
 
             setInfo.isSaveResult = true;
             //try {
-                userClient.updateUserAddress(staircase, floor, flat);
+                $c.userClient.updateUserAddress(staircase, floor, flat);
                 setInfo.info = "Сохранено";
                 window.location.replace('/');
                 //$rootScope.$apply();
@@ -26,4 +26,4 @@ var setInfoCtrl = function($state, $rootScope) {
 
     };
 
-module.exports = [ '$state','$rootScope', setInfoCtrl ];
+module.exports = [ '$c', setInfoCtrl ];

@@ -1,5 +1,5 @@
 
-var countersCtrl = function($rootScope,$modal,$counters) {
+var countersCtrl = function($rootScope,$modal,$counters,$c) {
         var counters = this;
         //counters = $scope;
 
@@ -11,7 +11,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
         counters.typesArray = [];
         var typesEnumLength = 6;
 
-        var counterService = utilityClient.getCounterService();
+        var counterService = $c.utilityClient.getCounterService();
 
         var currentDate = (new Date()).getDate();
 
@@ -84,7 +84,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
                         currentValue = counters.counters[i].currentValue;
 
                         if (!currentValue) currentValue = 0;
-                        utilityClient.setCurrentCounterValue(counters.counters[i].id, currentValue, date);
+                        $c.utilityClient.setCurrentCounterValue(counters.counters[i].id, currentValue, date);
                         counters.counters[i].lastValue = currentValue;
                         counters.counters[i].currentValue = "";
                         counters.state = 2;
@@ -98,7 +98,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
 
         counters.addCounter = function(){
             var counter = new com.vmesteonline.be.thrift.utilityservice.Counter();
-            counter.id = utilityClient.registerCounter(counter);
+            counter.id = $c.utilityClient.registerCounter(counter);
             counter.isEdit = true;
             counters.counters.push(counter);
         };
@@ -118,7 +118,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
             correctCounter.number = counter.number;
             correctCounter.lastValue = counter.lastValue;
 
-            utilityClient.updateCounter(correctCounter);
+            $c.utilityClient.updateCounter(correctCounter);
             counter.isEdit = false;
             counter.typeString = $counters.getTypeString(counter.type);
         };
@@ -133,7 +133,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
 
             modal.result.then(function () {
 
-                utilityClient.removeCounter(counter.id);
+                $c.utilityClient.removeCounter(counter.id);
                 var countersLength = counters.counters.length;
                 for(var i = 0; i< countersLength; i++){
 
@@ -152,7 +152,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
             var newServicesStatuses = [];
             newServicesStatuses['11'] = true;
 
-            userClient.updateUserServices(newServicesStatuses);
+            $c.userClient.updateUserServices(newServicesStatuses);
 
             $rootScope.base.me.countersConfirmed = true;
         };
@@ -170,7 +170,7 @@ var countersCtrl = function($rootScope,$modal,$counters) {
               $rootScope.base.me.countersNotification = newServicesStatuses['12'] = true;
           }
 
-            userClient.updateUserServices(newServicesStatuses);
+            $c.userClient.updateUserServices(newServicesStatuses);
 
         };
 
@@ -183,4 +183,4 @@ var countersCtrl = function($rootScope,$modal,$counters) {
 
     };
 
-module.exports = [ '$rootScope','$modal','$counters', countersCtrl ];
+module.exports = [ '$rootScope','$modal','$counters','$c', countersCtrl ];

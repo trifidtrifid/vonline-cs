@@ -1,17 +1,17 @@
 
-var blogCtrl = function($rootScope) {
+var blogCtrl = function($rootScope,$c) {
     var blog = this;
 
     $rootScope.base.isFooterBottom = true;
 
-    blog.isAuth = authClient.checkIfAuthorized();
+    blog.isAuth = $c.authClient.checkIfAuthorized();
 
     if(blog.isAuth){
         //me = userClient.getUserProfile();
         //$('.anonName').removeClass('hidden');
     }
 
-    blog.posts = messageClient.getBlog(0,1000);
+    blog.posts = $c.messageClient.getBlog(0,1000);
 
     var len = blog.posts.topics.length;
     for(var i = 0; i < len; i++){
@@ -29,7 +29,7 @@ var blogCtrl = function($rootScope) {
             post.isCommentShow = true;
 
             if(!post.comments) {
-                post.comments = messageClient.getMessagesAsList(post.id, 7, 0, false, 1000).messages;
+                post.comments = $c.messageClient.getMessagesAsList(post.id, 7, 0, false, 1000).messages;
                 console.log('finish');
             }
         }
@@ -70,7 +70,7 @@ var blogCtrl = function($rootScope) {
             message.anonName = "";
         };
 
-        var returnComment = messageClient.postBlogMessage(message);
+        var returnComment = $c.messageClient.postBlogMessage(message);
         if(post.comments && post.comments.length) {
             post.comments.push(returnComment);
         }else{
@@ -154,7 +154,7 @@ var blogCtrl = function($rootScope) {
             dialogs = $(this).closest('.post').find('.dialogs');
 
         //if(!isCommentsLoaded[topicId]){
-        var comments = messageClient.getMessagesAsList(topicId, 7, 0,false,1000).messages;
+        var comments = c.messageClient.getMessagesAsList(topicId, 7, 0,false,1000).messages;
         //alert(comments.length);
 
         if(comments){
@@ -260,7 +260,7 @@ var blogCtrl = function($rootScope) {
             message.anonName = "";
         };
 
-        var returnComment = messageClient.postBlogMessage(message);
+        var returnComment = c.messageClient.postBlogMessage(message);
         var comments = $(this).closest('.post').find('.dialogs');
 
         var classNoLink = "";
@@ -377,4 +377,4 @@ var blogCtrl = function($rootScope) {
 
 };
 
-module.exports = [ '$rootScope', blogCtrl ];
+module.exports = [ '$rootScope','$c', blogCtrl ];

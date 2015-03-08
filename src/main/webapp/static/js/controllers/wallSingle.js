@@ -1,14 +1,14 @@
 
-var wallSingleCtrl = function($rootScope, $stateParams){
+var wallSingleCtrl = function($rootScope, $stateParams,$c){
         var wallSingle = this;
 
         $rootScope.base.mainContentTopIsHide = true;
         $rootScope.base.isFooterBottom = false;
-        initFancyBox($('.lenta-item'));
+        $c.initFancyBox($('.lenta-item'));
 
         // временно, нужна функция getWallItem(topicId)
-        $rootScope.currentGroup.id = getDefaultGroup($rootScope.base.groups).id;
-        var wallItems = messageClient.getWallItems($rootScope.currentGroup.id,0,0,1000),
+        $rootScope.currentGroup.id = $c.getDefaultGroup($rootScope.base.groups).id;
+        var wallItems = $c.messageClient.getWallItems($rootScope.currentGroup.id,0,0,1000),
         wallItemsLength = wallItems.length;
 
     //console.log('0',wallItems,$stateParams.topicId);
@@ -37,18 +37,18 @@ var wallSingleCtrl = function($rootScope, $stateParams){
         }
 
         //  lenta.wallItems[i].topic.message.groupId сейчас не задана почему-то
-        wallSingle.wallItem.label = getLabel(userClientGroups,wallSingle.wallItem.topic.groupType);
+        wallSingle.wallItem.label = $c.getLabel($c.userClientGroups,wallSingle.wallItem.topic.groupType);
 
-        wallSingle.wallItem.tagColor = getTagColor(wallSingle.wallItem.label);
+        wallSingle.wallItem.tagColor = $c.getTagColor(wallSingle.wallItem.label);
 
         if(wallSingle.wallItem.topic.message.type == 1){
 
-            wallSingle.wallItem.topic.lastUpdateEdit = getTiming(wallSingle.wallItem.topic.lastUpdate);
+            wallSingle.wallItem.topic.lastUpdateEdit = $c.getTiming(wallSingle.wallItem.topic.lastUpdate);
 
         }else if(wallSingle.wallItem.topic.message.type == 5){
 
             wallSingle.wallItem.topic.message.createdEdit = getTiming(wallSingle.wallItem.topic.message.created);
-            wallSingle.wallItem.topic.authorName = getAuthorName(wallSingle.wallItem.topic.userInfo);
+            wallSingle.wallItem.topic.authorName = $c.getAuthorName(wallSingle.wallItem.topic.userInfo);
             wallSingle.wallItem.topic.metaType = "message";
 
             var mesLen;
@@ -58,7 +58,7 @@ var wallSingleCtrl = function($rootScope, $stateParams){
 
             for(var j = 0; j < mesLen; j++){
                 wallSingle.wallItem.messages[j].createdEdit = getTiming(wallSingle.wallItem.messages[j].created);
-                wallSingle.wallItem.messages[j].authorName = getAuthorName(wallSingle.wallItem.messages[j].userInfo);
+                wallSingle.wallItem.messages[j].authorName = $c.getAuthorName(wallSingle.wallItem.messages[j].userInfo);
                 wallSingle.wallItem.messages[j].isEdit = false;
 
                 $rootScope.base.initStartParamsForCreateMessage(wallSingle.wallItem.messages[j]);
@@ -67,7 +67,7 @@ var wallSingleCtrl = function($rootScope, $stateParams){
 
             if(wallSingle.wallItem.topic.poll != null){
                 //значит это опрос
-                setPollEditNames(wallSingle.wallItem.topic.poll);
+                $c.setPollEditNames(wallSingle.wallItem.topic.poll);
 
                 wallSingle.wallItem.topic.metaType = "poll";
             }
@@ -104,4 +104,4 @@ var wallSingleCtrl = function($rootScope, $stateParams){
         $('.ng-cloak').removeClass('ng-cloak');
     };
 
-module.exports = [ '$rootScope','$stateParams', wallSingleCtrl ];
+module.exports = [ '$rootScope','$stateParams','$c', wallSingleCtrl ];

@@ -1,5 +1,5 @@
 
-var changeAvatarCtrl = function($state,$rootScope){
+var changeAvatarCtrl = function($state,$rootScope,$c){
 
         var changeAvatar = this, newSrc,
             x1 = 50, y1 = 50, x2 = 200, y2 = 200,
@@ -8,7 +8,7 @@ var changeAvatarCtrl = function($state,$rootScope){
         changeAvatar.save = function(){
 
             var saveSrc = newSrc+"?w="+ imageWidth +"&h="+ imageHeight +"&s="+x1+","+y1+","+x2+","+y2;
-            userClient.updateUserAvatar(saveSrc);
+            $c.userClient.updateUserAvatar(saveSrc);
             $rootScope.base.user.avatar = $rootScope.base.avatarBuffer = saveSrc;
 
             $("#dialog-message").dialog('close');
@@ -84,7 +84,7 @@ var changeAvatarCtrl = function($state,$rootScope){
                                 var bg = avaImg.css('background-image'),
                                     src = avaImg.attr('src');
 
-                                newSrc = fileClient.saveFileContent(bg, true);
+                                newSrc = $c.fileClient.saveFileContent(bg, true);
 
                                 $('#preview').attr('src', newSrc);
 
@@ -147,4 +147,4 @@ var changeAvatarCtrl = function($state,$rootScope){
         }
     };
 
-module.exports = [ '$state','$rootScope', changeAvatarCtrl ];
+module.exports = [ '$state','$rootScope','$c', changeAvatarCtrl ];

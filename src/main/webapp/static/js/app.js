@@ -16,25 +16,22 @@ require('../../gen-js/FileService.js');
 require('../../gen-js/business_types.js');
 require('../../gen-js/BusinessService.js');*/
 
-var c = require('./common.js')();
-console.log('c2',c);
-
-require('./directives.js');
-require('./services.js');
-require('./controllers');
-
 require('angular-ui-router');
 require('angular-file-upload');
+
+require('./directives.js');
+require('./services');
+require('./controllers');
 
 var main = angular.module('forum', [
   //'ngRoute',
   'ui.router',
+  'angularFileUpload',
  /* 'forum.filters',*/
   'forum.services',
   'forum.directives',
   //'forum.controllers',
-  'VOControllers',
-  'angularFileUpload'
+  'VOControllers'
 ])
     .config(require('./config'));
 

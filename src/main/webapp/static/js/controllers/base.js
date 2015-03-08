@@ -1,22 +1,19 @@
 //var forumControllers = angular.module('forum.controllers', ['ui.select2','infinite-scroll','ngSanitize','yaMap','ui.bootstrap']);
 
-var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
-    console.log('base');
+var baseCtrl = function($scope,$rootScope,$state,$filter,$location,$c) {
 
     $rootScope.IS_BUSINESS = localStorage.getItem('VO_is_business');
-    //$rootScope.IS_BUSINESS = 1;
-    //localStorage.removeItem('VO_is_business');
 
         var base = this;
         base.url = $location.url();
         $scope.$on('$locationChangeSuccess', function($event,newState,oldState){
             console.log('change');
             if (newState.indexOf('blog') == -1 && newState.indexOf('about') == -1 && newState.indexOf('contacts') == -1) {
-                var isLogin = authClient.checkIfAuthorized();
+                var isLogin = $c.authClient.checkIfAuthorized();
                 if(!isLogin) document.location.replace('/login');
 
-                if(!userClientGroups) userClientGroups = userClient.getUserGroups();
-                if(!shortUserInfo) shortUserInfo = userClient.getShortUserInfo();
+                if(!$c.userClientGroups) $c.userClientGroups = $c.userClient.getUserGroups();
+                if(!$c.shortUserInfo) $c.shortUserInfo = $c.userClient.getShortUserInfo();
                 if(!hasStart) start();
                 base.url = $location.url();
             }
@@ -28,7 +25,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
     var hasStart = false;
 
     function start(){
-        console.log('1',shortUserInfo);
+        console.log('1',$c.shortUserInfo);
         hasStart = true;
         $rootScope.isTopSearchShow = true;
         base.neighboursLoadStatus = "";
@@ -39,13 +36,13 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
         base.mainContentTopIsHide = false;
         base.createTopicIsHide = true;
-        base.me = shortUserInfo;
+        base.me = $c.shortUserInfo;
 
         base.isFooterBottom = false;
 
         base.isTalkTitles = true;
 
-        resetPages(base);
+        $c.resetPages(base);
         base.lentaIsActive = true;
         base.emptyMessage = "Сообщений пока нет";
 
@@ -116,11 +113,11 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 }
             }
 
-            var tempPoll = messageClient.doPoll(poll.pollId, item);
+            var tempPoll = $c.messageClient.doPoll(poll.pollId, item);
             poll.alreadyPoll = true;
             poll.values = tempPoll.values;
 
-            setPollEditNames(poll);
+            $c.setPollEditNames(poll);
 
         };
 
@@ -135,7 +132,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 textLengthPX, newHeight, removeRowCount,
                 defaultHeight, newRowCount;
 
-            defaultHeight = TEXTAREA_DEFAULT_HEIGHT;
+            defaultHeight = $c.TEXTAREA_DEFAULT_HEIGHT;
 
             /*
              Исходные данные:
@@ -188,7 +185,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 var rowCount = parseInt(stringLen / clientWidth); // сколько строк
                 var areaHeight = rowCount * k2;
             } else {
-                areaHeight = TEXTAREA_DEFAULT_HEIGHT;
+                areaHeight = $c.TEXTAREA_DEFAULT_HEIGHT;
             }
 
             return areaHeight;
@@ -210,8 +207,8 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 firstMessages[i].answerInputIsShow = false;
                 firstMessages[i].isTreeOpen = false;
                 firstMessages[i].isLoaded = false;
-                firstMessages[i].answerMessage = TEXT_DEFAULT_2;
-                firstMessages[i].createdEdit = getTiming(firstMessages[i].created);
+                firstMessages[i].answerMessage = $c.TEXT_DEFAULT_2;
+                firstMessages[i].createdEdit = $c.getTiming(firstMessages[i].created);
 
             }
 
@@ -227,7 +224,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                     if (result) {
 
                         try {
-                            var deleteResult = messageClient.deleteTopic(message.id);
+                            var deleteResult = $c.messageClient.deleteTopic(message.id);
                             message.message.content = deleteResult.message.content;
                         } catch (e) {
                             // вернул null, значит потомков нет
@@ -245,7 +242,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 });
             } else if (isTopic) {
                 try {
-                    var deleteResult = messageClient.deleteTopic(message.id);
+                    var deleteResult = $c.messageClient.deleteTopic(message.id);
                     message.message.content = deleteResult.message.content;
                 } catch (e) {
                     // вернул null, значит удаление произошло чисто
@@ -265,7 +262,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 }
             } else {
                 if (isDialog) {
-                    dialogClient.deleteDialogMessage(message.id);
+                    $c.dialogClient.deleteDialogMessage(message.id);
 
                     messagesArrayLength = messagesArray.length;
                     for (var i = 0; i < messagesArrayLength; i++) {
@@ -277,7 +274,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
                 } else {
                     try {
-                        deleteResult = messageClient.deleteMessage(message.id);
+                        deleteResult = $c.messageClient.deleteMessage(message.id);
                         message.content = deleteResult.content;
                     }
                     catch (e) {
@@ -313,18 +310,18 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
                 if (isTopic) {
                     message.message.content = $filter('linky')(message.message.content, 'blank');
-                    message.message.content = withTags(message.message.content);
+                    message.message.content = $c.withTags(message.message.content);
                 } else {
                     message.content = $filter('linky')(message.commentText, 'blank');
-                    message.content = withTags(message.content);
+                    message.content = $c.withTags(message.content);
                 }
 
             } else {
 
                 if (isTopic) {
-                    message.message.content = withoutTags(message.message.content);
+                    message.message.content = $c.withoutTags(message.message.content);
                 } else {
-                    message.commentText = withoutTags(message.content);
+                    message.commentText = $c.withoutTags(message.content);
                 }
 
                 var el = event.target;
@@ -349,7 +346,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                  h = (textLen/base.contentLength).toFixed(0)*(h-24);
                  }*/
 
-                if (h < TEXTAREA_DEFAULT_HEIGHT) h = TEXTAREA_DEFAULT_HEIGHT;
+                if (h < $c.TEXTAREA_DEFAULT_HEIGHT) h = $c.TEXTAREA_DEFAULT_HEIGHT;
 
                 $(el).closest('.text-container').find('.edit-message textarea').height(h + 'px');
             }
@@ -364,9 +361,9 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 // здесь рассматривается ситуация когда мы возвращаемся из редактирования,
                 // но выше мы уже переключиди флаг, поэтому пишу message.isEdit, а не !message.isEdit
                 if (isTopic) {
-                    message.message.content = withoutTags(message.message.content);
+                    message.message.content = $c.withoutTags(message.message.content);
                 } else {
-                    message.commentText = withoutTags(message.content);
+                    message.commentText = $c.withoutTags(message.content);
                 }
             }
 
@@ -374,9 +371,9 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
         base.pageTitle = "Новости";
 
-        base.user = shortUserInfo;
+        base.user = $c.shortUserInfo;
 
-        base.bufferSelectedGroup = userClientGroups[3];
+        base.bufferSelectedGroup = $c.userClientGroups[3];
 
         base.markImportant = function (event, message) {
             event.preventDefault();
@@ -392,7 +389,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 message.importantText = 'Пометить как "Важное"';
             }
 
-            messageClient.markMessageImportant(message.id, isImportant);
+            $c.messageClient.markMessageImportant(message.id, isImportant);
         };
 
         base.markLike = function (event, message) {
@@ -408,7 +405,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             }
 
             message.like = 1;
-            messageClient.markMessageLike(message.id);
+            $c.messageClient.markMessageLike(message.id);
         };
 
         base.initStartParamsForCreateTopic = function (ctrl) {
@@ -468,19 +465,19 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             $rootScope.base.bufferSelectedGroup = $rootScope.groups[0];
         };
 
-        base.groups = userClientGroups;
-        base.rubrics = userClientRubrics;
+        base.groups = $c.userClientGroups;
+        base.rubrics = $c.userClientRubrics;
 
         base.goToDialog = function (userId) {
             var users = [];
             users[0] = userId;
-            var dialog = dialogClient.getDialog(users, 0);
+            var dialog = $c.dialogClient.getDialog(users, 0);
 
             $state.go('dialog-single', { 'dialogId': dialog.id});
         };
 
         base.selectGroupInDropdown = function (groupId, ctrl) {
-            $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            $rootScope.base.bufferSelectedGroup = $c.selectGroupInDropdown(groupId);
 
             //if(!ctrl.isEdit){
             ctrl.selectedGroup = $rootScope.base.bufferSelectedGroup;
@@ -527,15 +524,15 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
             if (isEdit) {
                 if ($('#attachImage-edit-' + ctrlId).length) {
-                    initAttachImage($('#attachImage-edit-' + ctrlId), $('#attach-area-edit-' + ctrlId)); // ��� ����� ��������
-                    initAttachDoc($('#attachDoc-edit-' + ctrlId), $('#attach-doc-area-edit-' + ctrlId), isEdit);
+                    $c.initAttachImage($('#attachImage-edit-' + ctrlId), $('#attach-area-edit-' + ctrlId)); // ��� ����� ��������
+                    $c.initAttachDoc($('#attachDoc-edit-' + ctrlId), $('#attach-doc-area-edit-' + ctrlId), isEdit);
                 } else {
                     setTimeout(pollAttach, 200, ctrlId, true);
                 }
             } else {
                 if ($('#attachImage-' + ctrlId).length) {
-                    initAttachImage($('#attachImage-' + ctrlId), $('#attach-area-' + ctrlId)); // ��� ����� ��������
-                    initAttachDoc($('#attachDoc-' + ctrlId), $('#attach-doc-area-' + ctrlId));
+                    $c.initAttachImage($('#attachImage-' + ctrlId), $('#attach-area-' + ctrlId)); // ��� ����� ��������
+                    $c.initAttachDoc($('#attachDoc-' + ctrlId), $('#attach-doc-area-' + ctrlId));
                 } else {
                     setTimeout(pollAttach, 200, ctrlId, false);
                 }
@@ -552,20 +549,20 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             }
 
             if (talk.isEdit) {
-                talk.attachedImages = getAttachedImages($('#attach-area-edit-' + talk.id));
-                talk.attachedDocs = getAttachedDocs($('#attach-doc-area-edit-' + talk.id), talk.isEdit);
+                talk.attachedImages = $c.getAttachedImages($('#attach-area-edit-' + talk.id));
+                talk.attachedDocs = $c.getAttachedDocs($('#attach-doc-area-edit-' + talk.id), talk.isEdit);
             } else {
-                talk.attachedImages = getAttachedImages($('#attach-area-' + talk.attachId));
-                talk.attachedDocs = getAttachedDocs($('#attach-doc-area-' + talk.attachId));
+                talk.attachedImages = $c.getAttachedImages($('#attach-area-' + talk.attachId));
+                talk.attachedDocs = $c.getAttachedDocs($('#attach-doc-area-' + talk.attachId));
             }
 
-            if (talk.subject == TEXT_DEFAULT_4 || talk.subject == "") {
+            if (talk.subject == $c.TEXT_DEFAULT_4 || talk.subject == "") {
 
                 talk.isCreateTalkError = true;
                 talk.createTalkErrorText = "Вы не указали заголовок";
 
             } else if (talk.attachedImages.length == 0 && (talk.attachedDocs === undefined || talk.attachedDocs.length == 0) && !talk.isPollShow
-                && (talk.message.content == TEXT_DEFAULT_3 || !talk.message.content)) {
+                && (talk.message.content == $c.TEXT_DEFAULT_3 || !talk.message.content)) {
 
                 talk.isCreateTalkError = true;
                 talk.createTalkErrorText = "Вы не ввели сообщение";
@@ -577,7 +574,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
             } else {
 
-                if (talk.message.content == TEXT_DEFAULT_3 && (talk.attachedImages || talk.attachedDocs || talk.isPollShow)) {
+                if (talk.message.content == $c.TEXT_DEFAULT_3 && (talk.attachedImages || talk.attachedDocs || talk.isPollShow)) {
                     talk.message.content = "";
                 }
                 talk.isCreateTalkError = false;
@@ -586,24 +583,24 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 if (talk.isAdvert) isAdvert = true;
 
                 console.log('addSingleTalk',$rootScope.currentRubric);
-                var newTopic = postTopic(talk, isWall, isAdvert, $filter);
+                var newTopic = $c.postTopic(talk, isWall, isAdvert, $filter);
 
                 if (newTopic.poll && talk.poll) talk.poll.pollId = newTopic.poll.pollId;
 
-                newTopic.label = getLabel(base.groups, newTopic.groupType);
-                newTopic.tagColor = getTagColor(newTopic.label);
+                newTopic.label = $c.getLabel(base.groups, newTopic.groupType);
+                newTopic.tagColor = $c.getTagColor(newTopic.label);
 
                 $rootScope.base.createTopicIsHide = true;
 
                 if (talk.isEdit) {
-                    cleanAttached($('#attach-area-edit-' + talk.id));
-                    cleanAttached($('#attach-doc-area-edit-' + talk.id));
+                    $c.cleanAttached($('#attach-area-edit-' + talk.id));
+                    $c.cleanAttached($('#attach-doc-area-edit-' + talk.id));
                     talk.isEdit = false;
                 } else {
-                    cleanAttached($('#attach-area-' + talk.attachId));
-                    cleanAttached($('#attach-doc-area-' + talk.attachId));
+                    $c.cleanAttached($('#attach-area-' + talk.attachId));
+                    $c.cleanAttached($('#attach-doc-area-' + talk.attachId));
                     $rootScope.selectGroup($rootScope.base.bufferSelectedGroup);
-                    talk.subject = TEXT_DEFAULT_4;
+                    talk.subject = $c.TEXT_DEFAULT_4;
                 }
             }
         }
@@ -619,15 +616,15 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             //console.log('WallTopic',ctrl.selectedRubric);
 
             if (ctrl.isEdit) {
-                ctrl.attachedImages = getAttachedImages($('#attach-area-edit-' + ctrl.id));
-                ctrl.attachedDocs = getAttachedDocs($('#attach-doc-area-edit-' + ctrl.id), ctrl.isEdit);
+                ctrl.attachedImages = $c.getAttachedImages($('#attach-area-edit-' + ctrl.id));
+                ctrl.attachedDocs = $c.getAttachedDocs($('#attach-doc-area-edit-' + ctrl.id), ctrl.isEdit);
             } else {
-                ctrl.attachedImages = getAttachedImages($('#attach-area-' + ctrl.attachId));
-                ctrl.attachedDocs = getAttachedDocs($('#attach-doc-area-' + ctrl.attachId));
+                ctrl.attachedImages = $c.getAttachedImages($('#attach-area-' + ctrl.attachId));
+                ctrl.attachedDocs = $c.getAttachedDocs($('#attach-doc-area-' + ctrl.attachId));
             }
 
             if (ctrl.attachedImages.length == 0 && ctrl.attachedDocs && ctrl.attachedDocs.length == 0 && !ctrl.isPollShow
-                && (ctrl.message.content == TEXT_DEFAULT_1 || !ctrl.message.content)) {
+                && (ctrl.message.content == $c.TEXT_DEFAULT_1 || !ctrl.message.content)) {
 
                 ctrl.isCreateMessageError = true;
                 ctrl.isCreateMessageGroupError = false;
@@ -659,7 +656,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
             }else{
 
-                if (ctrl.message.content == TEXT_DEFAULT_1 && (ctrl.attachedImages || ctrl.attachedDocs || ctrl.isPollShow)) {
+                if (ctrl.message.content == $c.TEXT_DEFAULT_1 && (ctrl.attachedImages || ctrl.attachedDocs || ctrl.isPollShow)) {
                     ctrl.message.content = "";
                 }
                 ctrl.isCreateMessageError = false;
@@ -670,11 +667,11 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 //console.log('createWallTopic',ctrl.selectedRubric);
 
                 var isWall = 1,
-                    newTopic = postTopic(ctrl, isWall, false, $filter);
+                    newTopic = $c.postTopic(ctrl, isWall, false, $filter);
 
                 if (ctrl.isEdit) {
-                    cleanAttached($('#attach-area-edit-' + ctrl.id));
-                    cleanAttached($('#attach-doc-area-edit-' + ctrl.id));
+                    $c.cleanAttached($('#attach-area-edit-' + ctrl.id));
+                    $c.cleanAttached($('#attach-doc-area-edit-' + ctrl.id));
                     ctrl.isEdit = false;
                     if (ctrl.poll && newTopic.poll) {
                         ctrl.poll.alreadyPoll = newTopic.poll.alreadyPoll;
@@ -683,8 +680,8 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 } else {
                     ctrl.selectedGroup = ctrl.selGroupName = ctrl.selRubricName = null;
                     ctrl.selectedRubric = {};
-                    cleanAttached($('#attach-area-' + ctrl.attachId));
-                    cleanAttached($('#attach-doc-area-' + ctrl.attachId));
+                    $c.cleanAttached($('#attach-area-' + ctrl.attachId));
+                    $c.cleanAttached($('#attach-doc-area-' + ctrl.attachId));
                 }
 
                 if (!ctrl.isWallSingle) $rootScope.selectGroup($rootScope.base.bufferSelectedGroup);
@@ -696,7 +693,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             event.preventDefault();
 
             if (!ctrl.isEdit) {
-                $(event.target).closest('.message-input').find('.topic-textarea').height(TEXTAREA_DEFAULT_HEIGHT);
+                $(event.target).closest('.message-input').find('.topic-textarea').height($c.TEXTAREA_DEFAULT_HEIGHT);
             }
 
             if (ctrl.isTalk) {
@@ -713,7 +710,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             wallItem.groupId = $rootScope.base.bufferSelectedGroup.id;
 
             var isWall = true,
-                message = postMessageMy(wallItem, isWall, false, $filter);
+                message = $c.postMessageMy(wallItem, isWall, false, $filter);
 
             if (message == 0) {
                 wallItem.isCreateCommentError = true;
@@ -749,7 +746,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
             var isWall = false,
                 isFirstLevel = true,
-                newMessage = postMessageMy(talk, isWall, isFirstLevel, $filter);
+                newMessage = $c.postMessageMy(talk, isWall, isFirstLevel, $filter);
 
             if (newMessage == 0) {
                 talk.isCreateFirstMessageError = true;
@@ -794,7 +791,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
         function addSingleMessage(firstMessage, topicId, talk, message) {
             if (!talk.fullTalkMessages[firstMessage.id])
                 talk.fullTalkMessages[firstMessage.id] =
-                    messageClient.getMessages(topicId, talk.selectedGroup.id, 1, firstMessage.id, 0, 1000).messages;
+                    $c.messageClient.getMessages(topicId, talk.selectedGroup.id, 1, firstMessage.id, 0, 1000).messages;
 
             var fullTalkMessagesLength;
             talk.fullTalkMessages[firstMessage.id] ?
@@ -810,7 +807,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
                 answer = firstMessage.commentText;
                 firstMessage.isTreeOpen = true;
-                firstMessage.commentText = TEXT_DEFAULT_2;
+                firstMessage.commentText = $c.TEXT_DEFAULT_2;
                 parentId = firstMessage.id;
 
                 if (!firstMessage.childCount || firstMessage.childCount == 0) firstMessage.childCount = 1;
@@ -826,7 +823,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                         talk.fullTalkMessages[firstMessage.id][i].isTreeOpen = true;
                         talk.fullTalkMessages[firstMessage.id][i].isOpen = true;
                         talk.fullTalkMessages[firstMessage.id][i].isParentOpen = true;
-                        talk.fullTalkMessages[firstMessage.id][i].createdEdit = getTiming(talk.fullTalkMessages[firstMessage.id][i].created);
+                        talk.fullTalkMessages[firstMessage.id][i].createdEdit = $c.getTiming(talk.fullTalkMessages[firstMessage.id][i].created);
                         answer = talk.fullTalkMessages[firstMessage.id][i].commentText;
                     }
                 }
@@ -839,7 +836,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             talk.parentId = parentId;
             talk.commentText = answer;
 
-            newMessage = postMessageMy(talk, isWall, isFirstLevel, $filter);
+            newMessage = $c.postMessageMy(talk, isWall, isFirstLevel, $filter);
 
             if (newMessage == 0) {
                 if (!message) {
@@ -865,7 +862,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                     }
                 }
 
-                talk.fullTalkMessages[firstMessage.id] = messageClient.getMessages(topicId, talk.selectedGroup.id, 1, firstMessage.id, 0, 1000).messages;
+                talk.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(topicId, talk.selectedGroup.id, 1, firstMessage.id, 0, 1000).messages;
 
                 talk.fullTalkMessages[firstMessage.id] ?
                     fullTalkMessagesLength = talk.fullTalkMessages[firstMessage.id].length :
@@ -876,8 +873,8 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                     talk.fullTalkMessages[firstMessage.id][i].isTreeOpen = true;
                     talk.fullTalkMessages[firstMessage.id][i].isOpen = true;
                     talk.fullTalkMessages[firstMessage.id][i].isParentOpen = true;
-                    talk.fullTalkMessages[firstMessage.id][i].createdEdit = getTiming(talk.fullTalkMessages[firstMessage.id][i].created);
-                    talk.fullTalkMessages[firstMessage.id][i].commentText = TEXT_DEFAULT_2;
+                    talk.fullTalkMessages[firstMessage.id][i].createdEdit = $c.getTiming(talk.fullTalkMessages[firstMessage.id][i].created);
+                    talk.fullTalkMessages[firstMessage.id][i].commentText = $c.TEXT_DEFAULT_2;
                 }
             }
         }
@@ -885,22 +882,22 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
         function addDialogMessage(ctrl) {
             var attach = [];
 
-            if ((ctrl.commentText != TEXT_DEFAULT_1 && ctrl.commentText != "") || attach.length != 0) {
+            if ((ctrl.commentText != $c.TEXT_DEFAULT_1 && ctrl.commentText != "") || attach.length != 0) {
 
                 if (ctrl.isEdit) {
                     // значит редактирование
 
-                    var attachImg = getAttachedImages($('#attach-area-edit-' + ctrl.attachId));
-                    var attachDoc = getAttachedDocs($('#attach-doc-area-edit-' + ctrl.attachId), true);
+                    var attachImg = $c.getAttachedImages($('#attach-area-edit-' + ctrl.attachId));
+                    var attachDoc = $c.getAttachedDocs($('#attach-doc-area-edit-' + ctrl.attachId), true);
                     attach = attachImg.concat(attachDoc);
 
                     // еще attach
                     ctrl.commentText = $filter('linky')(ctrl.commentText, 'blank');
-                    ctrl.commentText = withTags(ctrl.commentText);
-                    dialogClient.updateDialogMessage(ctrl.id, ctrl.commentText, attach);
+                    ctrl.commentText = $c.withTags(ctrl.commentText);
+                    $c.dialogClient.updateDialogMessage(ctrl.id, ctrl.commentText, attach);
 
-                    cleanAttached($('#attach-area-edit-' + ctrl.attachId));
-                    cleanAttached($('#attach-doc-area-edit-' + ctrl.attachId));
+                    $c.cleanAttached($('#attach-area-edit-' + ctrl.attachId));
+                    $c.cleanAttached($('#attach-doc-area-edit-' + ctrl.attachId));
 
                     ctrl.content = ctrl.commentText;
 
@@ -910,22 +907,22 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
                 } else {
                     // значит создание
-                    attach = getAttachedImages($('#attach-area-' + ctrl.attachId)).concat(getAttachedDocs($('#attach-doc-area-' + ctrl.attachId)));
+                    attach = $c.getAttachedImages($('#attach-area-' + ctrl.attachId)).concat($c.getAttachedDocs($('#attach-doc-area-' + ctrl.attachId)));
 
                     var newDialogMessage = new com.vmesteonline.be.thrift.messageservice.DialogMessage();
 
-                    (ctrl.commentText == TEXT_DEFAULT_1) ?
+                    (ctrl.commentText == $c.TEXT_DEFAULT_1) ?
                         newDialogMessage.content = "" :
                         newDialogMessage.content = ctrl.commentText;
 
                     newDialogMessage.author = $rootScope.base.me.id;
 
                     newDialogMessage.created = Date.parse(new Date()) / 1000;
-                    newDialogMessage.authorProfile = userClient.getUserProfile(newDialogMessage.author);
+                    newDialogMessage.authorProfile = $c.userClient.getUserProfile(newDialogMessage.author);
 
                     newDialogMessage.content = $filter('linky')(newDialogMessage.content, 'blank');
-                    newDialogMessage.content = withTags(newDialogMessage.content);
-                    var tempMessage = dialogClient.postMessage(ctrl.dialogId, newDialogMessage.content, attach);
+                    newDialogMessage.content = $c.withTags(newDialogMessage.content);
+                    var tempMessage = $c.dialogClient.postMessage(ctrl.dialogId, newDialogMessage.content, attach);
 
                     newDialogMessage.images = tempMessage.images;
                     newDialogMessage.documents = tempMessage.documents;
@@ -943,10 +940,10 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                         $rootScope.base.lastLoadedId = newDialogMessage.id;
                     }
 
-                    ctrl.commentText = TEXT_DEFAULT_1;
+                    ctrl.commentText = $c.TEXT_DEFAULT_1;
 
-                    cleanAttached($('#attach-area-' + ctrl.attachId));
-                    cleanAttached($('#attach-doc-area-' + ctrl.attachId));
+                    $c.cleanAttached($('#attach-area-' + ctrl.attachId));
+                    $c.cleanAttached($('#attach-doc-area-' + ctrl.attachId));
                 }
 
             }
@@ -957,7 +954,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             e.preventDefault();
 
             if (!ctrl.isEdit) {
-                $(e.target).closest('.answer-block').find('.message-textarea').height(TEXTAREA_DEFAULT_HEIGHT);
+                $(e.target).closest('.answer-block').find('.message-textarea').height($c.TEXTAREA_DEFAULT_HEIGHT);
             }
 
             if (ctrl.isTalk) {
@@ -991,9 +988,9 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             ctrl.isCreateCommentError = false;
 
             if (ctrl.isDialog) {
-                ctrl.default = ctrl.commentText = TEXT_DEFAULT_1;
+                ctrl.default = ctrl.commentText = $c.TEXT_DEFAULT_1;
             } else {
-                ctrl.default = ctrl.commentText = TEXT_DEFAULT_2;
+                ctrl.default = ctrl.commentText = $c.TEXT_DEFAULT_2;
             }
 
             if (ctrl.id || ctrl.isDialog) {
@@ -1007,7 +1004,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
         };
 
         base.getUserColor = function (groupType) {
-            return getTagColor(getLabel(base.groups, groupType));
+            return $c.getTagColor($c.getLabel(base.groups, groupType));
         };
 
         base.toggleFullText = function (ctrl) {
@@ -1016,7 +1013,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
         base.setPrivateMessages = function (dialogId, loadedLength) {
             try {
-                $rootScope.base.privateMessages = dialogClient.getDialogMessages(dialogId, 0, loadedLength, 0);
+                $rootScope.base.privateMessages = $c.dialogClient.getDialogMessages(dialogId, 0, loadedLength, 0);
             } catch (e) {
                 $state.go('dialogs');
             }
@@ -1025,7 +1022,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             if (privateMessagesLength != 0) $rootScope.base.lastLoadedId = $rootScope.base.privateMessages[privateMessagesLength - 1].id;
 
             for (var i = 0; i < privateMessagesLength; i++) {
-                $rootScope.base.privateMessages[i].authorProfile = userClient.getUserProfile($rootScope.base.privateMessages[i].author);
+                $rootScope.base.privateMessages[i].authorProfile = $c.userClient.getUserProfile($rootScope.base.privateMessages[i].author);
                 $rootScope.base.privateMessages[i].isDialog = true;
                 $rootScope.base.privateMessages[i].attachId = dialogId + "-" + $rootScope.base.privateMessages[i].id;
                 $rootScope.base.initStartParamsForCreateMessage($rootScope.base.privateMessages[i]);
@@ -1040,7 +1037,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
         var timeStamp = 0;
         base.checkUpdates = function () {
             try {
-                timeStamp = messageClient.checkUpdates(timeStamp);
+                timeStamp = $c.messageClient.checkUpdates(timeStamp);
             } catch (e) {
                 document.location.replace('/login');
             }
@@ -1052,7 +1049,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
             if (timeStamp == 0) {
                 try {
-                    updateMap = messageClient.getDialogUpdates();
+                    updateMap = $c.messageClient.getDialogUpdates();
                 } catch (e) {
                     document.location.replace('/login');
                 }
@@ -1095,7 +1092,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 // notification
                 $rootScope.newMessages = [];
                 base.me.notificationIsShow = true;
-                base.me.userNotification = messageClient.getMulticastMessage();
+                base.me.userNotification = $c.messageClient.getMulticastMessage();
 
             } else if (timeStamp >= 2 && timeStamp < 10000) {
                 // important messages
@@ -1103,7 +1100,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 $rootScope.newMessages = [];
                 $rootScope.newImportantCount = timeStamp;
 
-                $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
+                $rootScope.importantTopics = $c.messageClient.getImportantNews($rootScope.currentGroup.id);
 
             } else {
                 $rootScope.newMessages = [];
@@ -1115,7 +1112,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
         setInterval(base.checkUpdates, 5000);
 
         base.nextNotification = function () {
-            base.me.userNotification = messageClient.getNextMulticastMessage();
+            base.me.userNotification = $c.messageClient.getNextMulticastMessage();
             if (!base.me.userNotification) {
                 base.me.notificationIsShow = false;
             }
@@ -1125,7 +1122,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
         base.isAddresesListShow = [];
         base.showGroupAdressesList = function(messageId){
             if(!base.groupAddresesList[messageId]) {
-                base.groupAddresesList[messageId] = userClient.getAddressListByMessageId(messageId);
+                base.groupAddresesList[messageId] = $c.userClient.getAddressListByMessageId(messageId);
             }
             base.isAddresesListShow[messageId] = true;
         };
@@ -1181,7 +1178,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
             groupsLength = base.groups.length;*/
 
         /*if (!lsGroupId) {*/
-            $rootScope.currentGroup = getDefaultGroup(base.groups);
+            $rootScope.currentGroup = $c.getDefaultGroup(base.groups);
         /*} else {
             for (var i = 0; i < groupsLength; i++) {
                 if (base.groups[i].id == lsGroupId) {
@@ -1189,7 +1186,7 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
                 }
             }
             if (!$rootScope.currentGroup) {
-                $rootScope.currentGroup = getDefaultGroup(base.groups);
+                $rootScope.currentGroup = $c.getDefaultGroup(base.groups);
             }
         }*/
 
@@ -1206,4 +1203,4 @@ var baseCtrl = function($scope,$rootScope,$state,$filter,$location) {
 
     };
 
-module.exports = [ '$scope','$rootScope','$state','$filter','$location', baseCtrl ];
+module.exports = [ '$scope','$rootScope','$state','$filter','$location','$c', baseCtrl ];

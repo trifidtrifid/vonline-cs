@@ -1,5 +1,5 @@
 
-var advertsSingleCtrl = function($rootScope,$stateParams) {
+var advertsSingleCtrl = function($rootScope,$stateParams,$c) {
         var advert = this,
             fullTalkMessagesLength,
             advertId = $stateParams.advertId;
@@ -16,11 +16,11 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
         advert.attachId = "00000";
         advert.selectedGroup = $rootScope.currentGroup;
-        advert.topics = messageClient.getAdverts(advert.selectedGroup.id, 0, 1000).topics;
+        advert.topics = $c.messageClient.getAdverts(advert.selectedGroup.id, 0, 1000).topics;
         advert.fullTalkTopic = {};
         advert.fullTalkMessages = {};
         advert.fullTalkFirstMessages = [];
-        advert.groups = userClientGroups;
+        advert.groups = $c.userClientGroups;
 
         advert.isTalk = true;
 
@@ -28,7 +28,7 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
         var showFullTalk = function(advert,advertOutsideId){
 
-            initFancyBox($('.adverts-single'));
+            $c.initFancyBox($('.adverts-single'));
             var topicLength;
             advert.topics ? topicLength = advert.topics.length : topicLength = 0;
 
@@ -42,20 +42,20 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
                     advert.fullTalkTopic.isTalk = true;
                     advert.fullTalkTopic.isAdvert = true;
-                    advert.fullTalkTopic.message.createdEdit = getTiming(advert.fullTalkTopic.message.created);
-                    advert.fullTalkTopic.label = getLabel(advert.groups,advert.fullTalkTopic.groupType);
-                    advert.fullTalkTopic.tagColor = getTagColor(advert.fullTalkTopic.label);
+                    advert.fullTalkTopic.message.createdEdit = $c.getTiming(advert.fullTalkTopic.message.created);
+                    advert.fullTalkTopic.label = $c.getLabel(advert.groups,advert.fullTalkTopic.groupType);
+                    advert.fullTalkTopic.tagColor = $c.getTagColor(advert.fullTalkTopic.label);
 
                 }
             }
             if(advert.fullTalkTopic.poll != null){
-                setPollEditNames(advert.fullTalkTopic.poll);
+                $c.setPollEditNames(advert.fullTalkTopic.poll);
                 advert.fullTalkTopic.metaType = "poll";
             }else{
                 advert.fullTalkTopic.metaType = "message";
             }
 
-            advert.fullTalkFirstMessages = messageClient.getFirstLevelMessages(advertId,advert.selectedGroup.id,6,$rootScope.base.lastLoadedId,0,10).messages;
+            advert.fullTalkFirstMessages = $c.messageClient.getFirstLevelMessages(advertId,advert.selectedGroup.id,6,$rootScope.base.lastLoadedId,0,10).messages;
 
             $rootScope.base.lastLoadedId = $rootScope.base.initFirstMessages(advert.fullTalkFirstMessages);
 
@@ -97,7 +97,7 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
                 firstMessage.isTalk = true;
 
-                if(!advert.fulladvertFirstMessages) advert.fulladvertFirstMessages = messageClient.getFirstLevelMessages(advertId,advert.selectedGroup.id,6,0,0,1000).messages;
+                if(!advert.fulladvertFirstMessages) advert.fulladvertFirstMessages = $c.messageClient.getFirstLevelMessages(advertId,advert.selectedGroup.id,6,0,0,1000).messages;
                 var fulladvertFirstMessagesLength = advert.fulladvertFirstMessages.length;
 
                 $rootScope.base.initStartParamsForCreateMessage(firstMessage);
@@ -113,7 +113,7 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
                 message.isTalk = true;
 
-                if(!advert.fullTalkMessages[firstMessage.id]) advert.fullTalkMessages[firstMessage.id] = messageClient.getMessages(advertId,advert.selectedGroup.id,6,firstMessage.id,0,1000).messages;
+                if(!advert.fullTalkMessages[firstMessage.id]) advert.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(advertId,advert.selectedGroup.id,6,firstMessage.id,0,1000).messages;
                 var  fullTalkMessagesLength = advert.fullTalkMessages[firstMessage.id].length;
 
                 $rootScope.base.initStartParamsForCreateMessage(message);
@@ -143,7 +143,7 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
             // --------
 
-            advert.fullTalkMessages[firstMessage.id] = messageClient.getMessages(advertId,advert.selectedGroup.id,1,firstMessage.id,0,1000).messages;
+            advert.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(advertId,advert.selectedGroup.id,1,firstMessage.id,0,1000).messages;
             advert.fullTalkMessages[firstMessage.id] ?
                 fullTalkMessagesLength = advert.fullTalkMessages[firstMessage.id].length:
                 fullTalkMessagesLength = 0;
@@ -154,8 +154,8 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
                 advert.fullTalkMessages[firstMessage.id][i].isTreeOpen = true;
                 advert.fullTalkMessages[firstMessage.id][i].isOpen = true;
                 advert.fullTalkMessages[firstMessage.id][i].isParentOpen = true;
-                advert.fullTalkMessages[firstMessage.id][i].createdEdit = getTiming(advert.fullTalkMessages[firstMessage.id][i].created);
-                advert.fullTalkMessages[firstMessage.id][i].answerMessage = TEXT_DEFAULT_2;
+                advert.fullTalkMessages[firstMessage.id][i].createdEdit = $c.getTiming(advert.fullTalkMessages[firstMessage.id][i].created);
+                advert.fullTalkMessages[firstMessage.id][i].answerMessage = $c.TEXT_DEFAULT_2;
 
             }
 
@@ -164,7 +164,7 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
         advert.toggleTree = function(event,message,firstMessage){
             event.preventDefault();
 
-            if(!advert.fullTalkMessages[firstMessage.id]) advert.fullTalkMessages[firstMessage.id] = messageClient.getMessages(advertId,advert.selectedGroup.id,1,firstMessage.id,0,1000).messages;
+            if(!advert.fullTalkMessages[firstMessage.id]) advert.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(advertId,advert.selectedGroup.id,1,firstMessage.id,0,1000).messages;
             var fullTalkMessagesLength = advert.fullTalkMessages[firstMessage.id].length;
 
             message.isTreeOpen ?
@@ -236,7 +236,7 @@ var advertsSingleCtrl = function($rootScope,$stateParams) {
 
         var buff,lastLoadedIdFF;
         advert.addMoreItems = function(){
-            var temp = messageClient.getFirstLevelMessages(advertId,advert.selectedGroup.id,1,$rootScope.base.lastLoadedId,0,10),
+            var temp = $c.messageClient.getFirstLevelMessages(advertId,advert.selectedGroup.id,1,$rootScope.base.lastLoadedId,0,10),
                 buff = temp.messages;
             if(buff) {
                 var buffLength = buff.length;

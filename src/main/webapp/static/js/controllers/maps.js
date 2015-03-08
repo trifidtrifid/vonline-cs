@@ -1,5 +1,5 @@
 
-var mapsCtrl = function($rootScope) {
+var mapsCtrl = function($rootScope,$c) {
         var maps = this;
 
         $rootScope.currentPage = "maps";
@@ -8,22 +8,22 @@ var mapsCtrl = function($rootScope) {
         $rootScope.leftbar.tab = 0;
         $rootScope.base.pageTitle = "Карты";
 
-        resetPages($rootScope.base);
+        $c.resetPages($rootScope.base);
         $rootScope.base.mapsIsActive = true;
 
-        resetAceNavBtns($rootScope.navbar);
+        $c.resetAceNavBtns($rootScope.navbar);
         $rootScope.navbar.mapsBtnStatus = "active";
 
         $rootScope.base.mapsLoadStatus = "isLoaded";
 
-        showGroupOverBuilding($rootScope.groups);
+        $c.showGroupOverBuilding($rootScope.groups);
         //$rootScope.groups[0].isShow = false;
         //$rootScope.groups[1].selected = true;
 
         /*if($rootScope.currentGroup.id == $rootScope.groups[0].id){
             $rootScope.currentGroup = $rootScope.groups[1];
         }*/
-    $rootScope.currentGroup = userClientGroups[3];
+    $rootScope.currentGroup = $c.userClientGroups[3];
 
         $rootScope.base.isFooterBottom = true;
 
@@ -32,11 +32,11 @@ var mapsCtrl = function($rootScope) {
             yaMap = nMap;
         };
 
-        maps.color = MAP_COLOR;
+        maps.color = $c.MAP_COLOR;
 
-        //maps.url = userClient.getGroupMap($rootScope.currentGroup.id,MAP_COLOR);
+        //maps.url = $c.userClient.getGroupMap($rootScope.currentGroup.id,MAP_COLOR);
 
-        var location = userClient.getGroupView($rootScope.currentGroup.id);
+        var location = $c.userClient.getGroupView($rootScope.currentGroup.id);
 
         var setMap = function(location){
 
@@ -77,14 +77,14 @@ var mapsCtrl = function($rootScope) {
         setMap(location);
 
         $rootScope.mapsChangeGroup = function(groupId){
-            var location = userClient.getGroupView(groupId);
+            var location = $c.userClient.getGroupView(groupId);
 
             setMap(location);
         };
-        //$rootScope.selectGroup(getBuildingGroup($rootScope.currentGroup));
+        //$rootScope.selectGroup($c.getBuildingGroup($rootScope.currentGroup));
 
         angular.element($('.maps.page')).css({'min-height': $(window).height()-175}); 
 
     };
 
-module.exports = [ '$rootScope', mapsCtrl ];
+module.exports = [ '$rootScope','$c', mapsCtrl ];

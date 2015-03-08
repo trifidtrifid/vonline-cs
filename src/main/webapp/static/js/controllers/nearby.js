@@ -1,24 +1,24 @@
 
-var nearbyCtrl = function($rootScope) {
+var nearbyCtrl = function($rootScope,$c) {
     var nearby = this;
 
     var groupType = com.vmesteonline.be.thrift.GroupType.NEIGHBORS;
-    nearby.businessList = businessClient.getBusinessList(groupType,0);
+    nearby.businessList = $c.businessClient.getBusinessList(groupType,0);
 
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.pageTitle = "Рядом";
     $rootScope.base.talksIsActive = $rootScope.base.advertsIsActive = false;
-    showGroupOverBuilding($rootScope.groups);
+    $c.showGroupOverBuilding($rootScope.groups);
     $rootScope.currentRubric = null;
 
-    nearby.isAuth = authClient.checkIfAuthorized();
+    nearby.isAuth = $c.authClient.checkIfAuthorized();
 
     if(nearby.isAuth){
-        //me = userClient.getUserProfile();
+        //me = $c.userClient.getUserProfile();
         //$('.anonName').removeClass('hidden');
     }
 
-    nearby.posts = messageClient.getBusinessTopics(0,1000);
+    nearby.posts = $c.messageClient.getBusinessTopics(0,1000);
 
     if(nearby.posts.topics) {
         var len = nearby.posts.topics.length;
@@ -35,4 +35,4 @@ var nearbyCtrl = function($rootScope) {
 
 };
 
-module.exports = [ '$rootScope', nearbyCtrl ];
+module.exports = [ '$rootScope','$c', nearbyCtrl ];

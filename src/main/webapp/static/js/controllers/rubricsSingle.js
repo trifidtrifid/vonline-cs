@@ -1,5 +1,5 @@
 
-var rubricsSingleCtrl = function($rootScope,$stateParams){
+var rubricsSingleCtrl = function($rootScope,$stateParams,$c){
 
         $rootScope.base.isFooterBottom = false;
 
@@ -15,14 +15,14 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
         talk.selectedGroup = $rootScope.currentGroup;
 
         /*if(!$rootScope.importantIsLoadedFromTop)
-            $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
+            $rootScope.importantTopics = $c.messageClient.getImportantNews($rootScope.currentGroup.id);
         $rootScope.importantIsLoadedFromTop = false;*/
 
-        talk.topics = messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
+        talk.topics = $c.messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
         talk.fullTalkTopic = {};
         talk.fullTalkMessages = {};
         talk.fullTalkFirstMessages = [];
-        talk.groups = userClientGroups;
+        talk.groups = $c.userClientGroups;
 
         talk.isTalk = true;
 
@@ -30,7 +30,7 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
 
         var showFullTalk = function(talk,talkOutsideId){
 
-            initFancyBox($('.talks-single'));
+            $c.initFancyBox($('.talks-single'));
             var topicLength;
             talk.topics ? topicLength = talk.topics.length : topicLength = 0;
 
@@ -42,9 +42,9 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
                     $rootScope.base.initStartParamsForCreateTopic(talk.fullTalkTopic);
 
                     talk.fullTalkTopic.isTalk = true;
-                    talk.fullTalkTopic.message.createdEdit = getTiming(talk.fullTalkTopic.message.created);
-                    talk.fullTalkTopic.label = getLabel(talk.groups,talk.fullTalkTopic.groupType);
-                    talk.fullTalkTopic.tagColor = getTagColor(talk.fullTalkTopic.label);
+                    talk.fullTalkTopic.message.createdEdit = $c.getTiming(talk.fullTalkTopic.message.created);
+                    talk.fullTalkTopic.label = $c.getLabel(talk.groups,talk.fullTalkTopic.groupType);
+                    talk.fullTalkTopic.tagColor = $c.getTagColor(talk.fullTalkTopic.label);
 
                     if(talk.fullTalkTopic.message.important == 1){
                         talk.fullTalkTopic.message.importantText = 'Снять метку "Важное"';
@@ -55,13 +55,13 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
             }
 
             if (talk.fullTalkTopic.poll != null) {
-                setPollEditNames(talk.fullTalkTopic.poll);
+                $c.setPollEditNames(talk.fullTalkTopic.poll);
                 talk.fullTalkTopic.metaType = "poll";
             } else {
                 talk.fullTalkTopic.metaType = "message";
             }
 
-            talk.fullTalkFirstMessages = messageClient.getFirstLevelMessages(talkId, talk.selectedGroup.id, 1, $rootScope.base.lastLoadedId, 0, 10).messages;
+            talk.fullTalkFirstMessages = $c.messageClient.getFirstLevelMessages(talkId, talk.selectedGroup.id, 1, $rootScope.base.lastLoadedId, 0, 10).messages;
 
             $rootScope.base.lastLoadedId = $rootScope.base.initFirstMessages(talk.fullTalkFirstMessages);
 
@@ -100,7 +100,7 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
 
                 attachId = fullTalkTopic.id+'-'+firstMessage.id;
 
-                if(!talk.fullTalkFirstMessages) talk.fullTalkFirstMessages = messageClient.getFirstLevelMessages(talkId,talk.selectedGroup.id,1,0,0,1000).messages;
+                if(!talk.fullTalkFirstMessages) talk.fullTalkFirstMessages = $c.messageClient.getFirstLevelMessages(talkId,talk.selectedGroup.id,1,0,0,1000).messages;
                 var fullTalkFirstMessagesLength = talk.fullTalkFirstMessages.length;
 
                 $rootScope.base.initStartParamsForCreateMessage(firstMessage);
@@ -117,7 +117,7 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
 
                 attachId = fullTalkTopic.id+'-'+message.id;
 
-                if(!talk.fullTalkMessages[firstMessage.id]) talk.fullTalkMessages[firstMessage.id] = messageClient.getMessages(talkId,talk.selectedGroup.id,1,firstMessage.id,0,1000).messages;
+                if(!talk.fullTalkMessages[firstMessage.id]) talk.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(talkId,talk.selectedGroup.id,1,firstMessage.id,0,1000).messages;
                 var  fullTalkMessagesLength = talk.fullTalkMessages[firstMessage.id].length;
 
                 $rootScope.base.initStartParamsForCreateMessage(message);
@@ -145,7 +145,7 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
 
             // --------
 
-            talk.fullTalkMessages[firstMessage.id] = messageClient.getMessages(talkId,talk.selectedGroup.id,1,firstMessage.id,0,1000).messages;
+            talk.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(talkId,talk.selectedGroup.id,1,firstMessage.id,0,1000).messages;
             talk.fullTalkMessages[firstMessage.id] ?
                 fullTalkMessagesLength = talk.fullTalkMessages[firstMessage.id].length:
                 fullTalkMessagesLength = 0;
@@ -156,8 +156,8 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
                 talk.fullTalkMessages[firstMessage.id][i].isTreeOpen = true;
                 talk.fullTalkMessages[firstMessage.id][i].isOpen = true;
                 talk.fullTalkMessages[firstMessage.id][i].isParentOpen = true;
-                talk.fullTalkMessages[firstMessage.id][i].createdEdit = getTiming(talk.fullTalkMessages[firstMessage.id][i].created);
-                talk.fullTalkMessages[firstMessage.id][i].commentText = TEXT_DEFAULT_2;
+                talk.fullTalkMessages[firstMessage.id][i].createdEdit = $c.getTiming(talk.fullTalkMessages[firstMessage.id][i].created);
+                talk.fullTalkMessages[firstMessage.id][i].commentText = $c.TEXT_DEFAULT_2;
 
             }
 
@@ -166,7 +166,7 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
         talk.toggleTree = function(event,message,firstMessage){
             event.preventDefault();
 
-            if(!talk.fullTalkMessages[firstMessage.id]) talk.fullTalkMessages[firstMessage.id] = messageClient.getMessages(talkId,talk.selectedGroup.id,1,firstMessage.id,0,1000).messages;
+            if(!talk.fullTalkMessages[firstMessage.id]) talk.fullTalkMessages[firstMessage.id] = $c.messageClient.getMessages(talkId,talk.selectedGroup.id,1,firstMessage.id,0,1000).messages;
             var fullTalkMessagesLength = talk.fullTalkMessages[firstMessage.id].length;
 
             message.isTreeOpen ?
@@ -239,7 +239,7 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
         var buff,
             lastLoadedIdFF;
         talk.addMoreItems = function(){
-            var temp = messageClient.getFirstLevelMessages(talkId,talk.selectedGroup.id,1,$rootScope.base.lastLoadedId,0,10),
+            var temp = $c.messageClient.getFirstLevelMessages(talkId,talk.selectedGroup.id,1,$rootScope.base.lastLoadedId,0,10),
                 buff = temp.messages;
             if(buff) {
                 var buffLength = buff.length;
@@ -266,4 +266,4 @@ var rubricsSingleCtrl = function($rootScope,$stateParams){
 
     };
 
-module.exports = [ '$rootScope','$stateParams', rubricsSingleCtrl ];
+module.exports = [ '$rootScope','$stateParams','$c', rubricsSingleCtrl ];

@@ -1,5 +1,5 @@
 
-var talksCtrl = function($rootScope) {
+var talksCtrl = function($rootScope,$c) {
         /*
         * при работе с обсждениями нужно учесть следующее:
         * есть три типа сообщения :
@@ -34,7 +34,7 @@ var talksCtrl = function($rootScope) {
             var talk = this;
 
             talk.attachId = "00";
-            initFancyBox($('.talks'));
+            $c.initFancyBox($('.talks'));
 
             $rootScope.base.showAllGroups();
             $rootScope.base.isFooterBottom = false;
@@ -42,14 +42,14 @@ var talksCtrl = function($rootScope) {
             $rootScope.base.createTopicIsHide = true;
 
             talk.isTalksLoaded = false;
-            talk.groups = userClientGroups;
+            talk.groups = $c.userClientGroups;
 
             talk.message = {};
-            talk.message.content = talk.message.default = TEXT_DEFAULT_3;
-            talk.subject = TEXT_DEFAULT_4;
+            talk.message.content = talk.message.default = $c.TEXT_DEFAULT_3;
+            talk.subject = $c.TEXT_DEFAULT_4;
 
             $rootScope.base.bufferSelectedGroup = talk.selectedGroup =
-            $rootScope.currentGroup = userClientGroups[3];
+            $rootScope.currentGroup = $c.userClientGroups[3];
 
             $rootScope.currentRubric = null;
 
@@ -62,22 +62,22 @@ var talksCtrl = function($rootScope) {
             talk.fullTalkMessages = [];
             talk.fullTalkFirstMessages = [];
 
-            talk.commentText = TEXT_DEFAULT_2;
+            talk.commentText = $c.TEXT_DEFAULT_2;
             var fullTalkFirstMessagesLength,
                 talkId;
 
             /*if(!$rootScope.importantIsLoadedFromTop)
-            $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
+            $rootScope.importantTopics = $c.messageClient.getImportantNews($rootScope.currentGroup.id);
             $rootScope.importantIsLoadedFromTop = false;*/
 
-            talk.topics = messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
+            talk.topics = $c.messageClient.getTopics(talk.selectedGroup.id, 0, 0, 0, 1000).topics;
 
             initTalks();
 
             if (!talk.topics) talk.topics = [];
 
             $rootScope.selectGroupInDropdown_talks = function(groupId){
-                talk.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+                talk.selectedGroup = $rootScope.base.bufferSelectedGroup = $c.selectGroupInDropdown(groupId);
             };
 
         function initTalks(){
@@ -85,9 +85,9 @@ var talksCtrl = function($rootScope) {
             talk.topics ? topicLength = talk.topics.length : topicLength = 0;
 
             for(var i = 0; i < topicLength;i++){
-                talk.topics[i].lastUpdateEdit = getTiming(talk.topics[i].lastUpdate);
-                talk.topics[i].label = getLabel(talk.groups,talk.topics[i].groupType);
-                talk.topics[i].tagColor = getTagColor(talk.topics[i].label);
+                talk.topics[i].lastUpdateEdit = $c.getTiming(talk.topics[i].lastUpdate);
+                talk.topics[i].label = $c.getLabel(talk.groups,talk.topics[i].groupType);
+                talk.topics[i].tagColor = $c.getTagColor(talk.topics[i].label);
 
                 if(talk.topics[i].message.important == 1){
                     talk.topics[i].message.importantText = 'Снять метку "Важное"';
@@ -99,7 +99,7 @@ var talksCtrl = function($rootScope) {
 
         $rootScope.talksChangeGroup = function(groupId){
 
-            talk.topics = messageClient.getTopics(groupId,0,0,0,1000).topics;
+            talk.topics = $c.messageClient.getTopics(groupId,0,0,0,1000).topics;
 
             if(talk.topics) {
                 initTalks();
@@ -117,11 +117,11 @@ var talksCtrl = function($rootScope) {
             $rootScope.currentRubric.id = 0;
         }
 
-        var rubricsLength = userClientRubrics.length;
+        var rubricsLength = $c.userClientRubrics.length;
 
         for(var i = 0; i < rubricsLength; i++){
-            if(rubric.id == userClientRubrics[i].id){
-                $rootScope.currentRubric = userClientRubrics[i];
+            if(rubric.id == $c.userClientRubrics[i].id){
+                $rootScope.currentRubric = $c.userClientRubrics[i];
             }
         }
 
@@ -131,4 +131,4 @@ var talksCtrl = function($rootScope) {
 
     };
 
-module.exports = [ '$rootScope', talksCtrl ];
+module.exports = [ '$rootScope','$c', talksCtrl ];

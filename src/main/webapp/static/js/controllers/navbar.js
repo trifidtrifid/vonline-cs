@@ -1,5 +1,5 @@
 
-var navbarCtrl = function($rootScope) {
+var navbarCtrl = function($rootScope,$c) {
 
         this.privateMessagesBtnStatus = "";
         $rootScope.navbar = this;
@@ -9,7 +9,7 @@ var navbarCtrl = function($rootScope) {
 
             localStorage.removeItem('groupId');
             localStorage.removeItem('VO_is_business');
-            authClient.logout();
+            $c.authClient.logout();
 
             document.location.replace("/login");
 
@@ -19,4 +19,4 @@ var navbarCtrl = function($rootScope) {
 
   };
 
-module.exports = [ '$rootScope', navbarCtrl ];
+module.exports = [ '$rootScope','$c', navbarCtrl ];

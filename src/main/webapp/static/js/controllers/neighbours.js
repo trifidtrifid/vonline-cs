@@ -1,28 +1,28 @@
 
-var neighboursCtrl = function($rootScope,$state) {
+var neighboursCtrl = function($rootScope,$state,$c) {
         $rootScope.currentPage = "neighbours";
         $rootScope.isTopSearchShow = false;
         $rootScope.leftbar.tab = 0;
         $rootScope.base.showAllGroups();
         $rootScope.base.isFooterBottom = false;
 
-        resetPages($rootScope.base);
+        $c.resetPages($rootScope.base);
         $rootScope.base.mainContentTopIsHide = false;
         $rootScope.base.neighboursIsActive = true;
 
-        resetAceNavBtns($rootScope.navbar);
+        $c.resetAceNavBtns($rootScope.navbar);
         $rootScope.navbar.neighboursBtnStatus = "active";
         $rootScope.base.pageTitle = "";
 
-        $rootScope.currentGroup = userClientGroups[3];
+        $rootScope.currentGroup = $c.userClientGroups[3];
 
         $rootScope.base.neighboursLoadStatus = "isLoaded";
 
         var neighbours = this;
-        neighbours.neighboors = userClient.getNeighboursByGroup($rootScope.currentGroup.id);
+        neighbours.neighboors = $c.userClient.getNeighboursByGroup($rootScope.currentGroup.id);
 
         $rootScope.neighboursChangeGroup = function(groupId){
-            neighbours.neighboors = userClient.getNeighboursByGroup(groupId);
+            neighbours.neighboors = $c.userClient.getNeighboursByGroup(groupId);
             initAutoFill();
         };
 
@@ -52,4 +52,4 @@ var neighboursCtrl = function($rootScope,$state) {
 
     };
 
-module.exports = [ '$rootScope','$state', neighboursCtrl ];
+module.exports = [ '$rootScope','$state','$c', neighboursCtrl ];

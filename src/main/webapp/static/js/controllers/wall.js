@@ -1,5 +1,5 @@
 
-var wallCtrl = function($rootScope,$state) {
+var wallCtrl = function($rootScope,$state,$c) {
 
     var lenta = this;
 
@@ -37,13 +37,13 @@ var wallCtrl = function($rootScope,$state) {
             $rootScope.currentRubric.id = 0;
         }
         //$rootScope.base.selectRubricInDropdown(rubric.id,lenta);
-        var rubricsLength = userClientRubrics.length,
+        var rubricsLength = $c.userClientRubrics.length,
             selectedRubric;
 
         //if(!ctrl.isEdit) {
             for (var i = 0; i < rubricsLength; i++) {
-                if (rubric.id == userClientRubrics[i].id) {
-                    $rootScope.currentRubric = userClientRubrics[i];
+                if (rubric.id == $c.userClientRubrics[i].id) {
+                    $rootScope.currentRubric = $c.userClientRubrics[i];
                 }
             }
         //}
@@ -68,7 +68,7 @@ var wallCtrl = function($rootScope,$state) {
         lenta.isGroupsInMessShow = false;
         lenta.isRubricsInMessShow = false;
         lenta.selectedGroup = lenta.selGroupName = $rootScope.selRubricName = $rootScope.currentRubric = null;
-        lenta.message.content = TEXT_DEFAULT_1;
+        lenta.message.content = $c.TEXT_DEFAULT_1;
     };
 
     lenta.isCreateMessageError = true;
@@ -84,22 +84,22 @@ var wallCtrl = function($rootScope,$state) {
         var lastLoadedId = 0,
             loadedLength = 10;
 
-        var len = userClientGroups.length;
+        var len = $c.userClientGroups.length;
         lenta.isCreateNewsShow = [];
         for(var i = 0; i < len; i++){
-            lenta.isCreateNewsShow[userClientGroups[i].id] = false;
+            lenta.isCreateNewsShow[$c.userClientGroups[i].id] = false;
         }
         //lenta.isCreateNewsShow[] = false;
         $rootScope.COMMENTS_DEFAULT_COUNT = 3;
 
         var ls_setInfo_groupId = localStorage.getItem('VO_setInfo_groupId'),
-            currentGroup = userClientGroups[3];
+            currentGroup = $c.userClientGroups[3];
 
         if(ls_setInfo_groupId){
-            var groupsLength = userClientGroups.length;
+            var groupsLength = $c.userClientGroups.length;
             for (var i = 0; i < groupsLength; i++) {
-                if (userClientGroups[i].id == ls_setInfo_groupId) {
-                    currentGroup = userClientGroups[i];
+                if ($c.userClientGroups[i].id == ls_setInfo_groupId) {
+                    currentGroup = $c.userClientGroups[i];
                 }
             }
             localStorage.removeItem('VO_setInfo_groupId');
@@ -110,7 +110,7 @@ var wallCtrl = function($rootScope,$state) {
     //console.log('lenta',$rootScope.currentGroup.id);
 
         /*if(!$rootScope.importantIsLoadedFromTop)
-        $rootScope.importantTopics = messageClient.getImportantNews($rootScope.currentGroup.id);
+        $rootScope.importantTopics = c.messageClient.getImportantNews($rootScope.currentGroup.id);
         $rootScope.importantIsLoadedFromTop = false;*/
 
         lenta.attachId = "0";
@@ -119,11 +119,11 @@ var wallCtrl = function($rootScope,$state) {
 
         lenta.message = {};
 
-        lenta.message.content = lenta.message.default = TEXT_DEFAULT_1;
+        lenta.message.content = lenta.message.default = $c.TEXT_DEFAULT_1;
 
         $rootScope.wallChangeRubric = function(rubricId){
 
-            lenta.wallItems = messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
+            lenta.wallItems = $c.messageClient.getWallItems(currentGroup.id, rubricId,0, loadedLength);
 
             if(lenta.wallItems.length) {
                 initWallItem(lenta.wallItems);
@@ -141,7 +141,7 @@ var wallCtrl = function($rootScope,$state) {
             $rootScope.currentRubric = {};
         }
 
-        lenta.wallItems = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id,0,loadedLength);
+        lenta.wallItems = $c.messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id,0,loadedLength);
 
         var wallItemsLength;
         lenta.wallItems ? wallItemsLength = lenta.wallItems.length :
@@ -153,7 +153,7 @@ var wallCtrl = function($rootScope,$state) {
 
         $rootScope.selectGroupInDropdown_lenta = function(groupId){
             //lenta.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
-            $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            $rootScope.base.bufferSelectedGroup = $c.selectGroupInDropdown(groupId);
         };
 
         lenta.goToAnswerInput = function(event){
@@ -188,7 +188,7 @@ var wallCtrl = function($rootScope,$state) {
 
         $rootScope.wallChangeGroup = function(groupId){
 
-            lenta.wallItems = messageClient.getWallItems(groupId, $rootScope.currentRubric.id,0, loadedLength);
+            lenta.wallItems = $c.messageClient.getWallItems(groupId, $rootScope.currentRubric.id,0, loadedLength);
 
             if(lenta.wallItems.length) {
                 initWallItem(lenta.wallItems);
@@ -208,9 +208,9 @@ var wallCtrl = function($rootScope,$state) {
                 $rootScope.base.initStartParamsForCreateTopic(wallItems[i].topic);
 
                 //  wallItems[i].topic.message.groupId сейчас не задана почему-то
-                wallItems[i].label = getLabel($rootScope.base.groups,wallItems[i].topic.groupType);
+                wallItems[i].label = $c.getLabel($rootScope.base.groups,wallItems[i].topic.groupType);
 
-                wallItems[i].tagColor = getTagColor(wallItems[i].label);
+                wallItems[i].tagColor = $c.getTagColor(wallItems[i].label);
 
                 wallItems[i].isOpen = false;
 
@@ -222,14 +222,14 @@ var wallCtrl = function($rootScope,$state) {
 
                 if(wallItems[i].topic.message.type == 1){
 
-                    wallItems[i].topic.lastUpdateEdit = getTiming(wallItems[i].topic.lastUpdate);
+                    wallItems[i].topic.lastUpdateEdit = $c.getTiming(wallItems[i].topic.lastUpdate);
 
                 }else if(wallItems[i].topic.message.type == 5){
 
-                    wallItems[i].topic.message.createdEdit = getTiming(wallItems[i].topic.message.created);
-                    wallItems[i].topic.authorName = getAuthorName(wallItems[i].topic.userInfo);
+                    wallItems[i].topic.message.createdEdit = $c.getTiming(wallItems[i].topic.message.created);
+                    wallItems[i].topic.authorName = $c.getAuthorName(wallItems[i].topic.userInfo);
                     wallItems[i].topic.metaType = "message";
-                    wallItems[i].topic.rubric = getTopicRubric(wallItems[i].topic);
+                    wallItems[i].topic.rubric = $c.getTopicRubric(wallItems[i].topic);
 
                     var mesLen;
                     wallItems[i].messages ?
@@ -237,8 +237,8 @@ var wallCtrl = function($rootScope,$state) {
                         mesLen = 0;
 
                     for(var j = 0; j < mesLen; j++){
-                        wallItems[i].messages[j].createdEdit = getTiming(wallItems[i].messages[j].created);
-                        wallItems[i].messages[j].authorName = getAuthorName(wallItems[i].messages[j].userInfo);
+                        wallItems[i].messages[j].createdEdit = $c.getTiming(wallItems[i].messages[j].created);
+                        wallItems[i].messages[j].authorName = $c.getAuthorName(wallItems[i].messages[j].userInfo);
                         wallItems[i].messages[j].isEdit = false;
 
                         $rootScope.base.initStartParamsForCreateMessage(wallItems[i].messages[j]);
@@ -250,7 +250,7 @@ var wallCtrl = function($rootScope,$state) {
 
                     if(wallItems[i].topic.poll != null){
                         //значит это опрос
-                        setPollEditNames(wallItems[i].topic.poll);
+                        $c.setPollEditNames(wallItems[i].topic.poll);
 
                         wallItems[i].topic.metaType = "poll";
                     }
@@ -282,7 +282,7 @@ var wallCtrl = function($rootScope,$state) {
             //lastLoadedIdFF = lastLoadedId;
             console.log('addMoreItems',lastLoadedId,loadedLength,$rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric);
             if(wallItemsLength == 10) {
-                var buff = messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id, lastLoadedId, loadedLength);
+                var buff = $c.messageClient.getWallItems($rootScope.base.bufferSelectedGroup.id,$rootScope.currentRubric.id, lastLoadedId, loadedLength);
                 if (buff) {
 
                     var buffLength = buff.length;
@@ -306,8 +306,8 @@ var wallCtrl = function($rootScope,$state) {
 
     $rootScope.initCreateTopic(lenta);
 
-        initFancyBox($('.forum'));
+        $c.initFancyBox($('.forum'));
 
     };
 
-module.exports = [ '$rootScope','$state', wallCtrl ];
+module.exports = [ '$rootScope','$state','$c', wallCtrl ];

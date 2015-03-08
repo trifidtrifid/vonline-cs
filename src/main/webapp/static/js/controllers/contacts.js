@@ -1,15 +1,15 @@
 
-var contactsCtrl = function($rootScope) {
+var contactsCtrl = function($rootScope,$c) {
     var ctrl = this;
 
     $rootScope.base.isFooterBottom = true;
 
-    ctrl.isAuth = authClient.checkIfAuthorized();
+    ctrl.isAuth = $c.authClient.checkIfAuthorized();
 
     if (ctrl.isAuth){
-        ctrl.user = userClient.getShortUserInfo();
+        ctrl.user = $c.userClient.getShortUserInfo();
         ctrl.user_name = ctrl.user.firstName+" "+ctrl.user.lastName;
-        ctrl.contacts = userClient.getUserContacts();
+        ctrl.contacts = $c.userClient.getUserContacts();
     }
 
     ctrl.send = function($event){
@@ -25,7 +25,7 @@ var contactsCtrl = function($rootScope) {
             name = ctrl.name;
         }
 
-        messageClient.sendInfoEmail(email,name,content);
+        $c.messageClient.sendInfoEmail(email,name,content);
         ctrl.isSend = true;
         ctrl.content = "";
         //console.log(email,name,content);
@@ -86,4 +86,4 @@ var contactsCtrl = function($rootScope) {
 
 };
 
-module.exports = [ '$rootScope', contactsCtrl ];
+module.exports = [ '$rootScope','$c', contactsCtrl ];

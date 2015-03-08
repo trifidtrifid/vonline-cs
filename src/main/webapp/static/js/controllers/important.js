@@ -1,5 +1,5 @@
 
-var importantCtrl = function($rootScope) {
+var importantCtrl = function($rootScope,$c) {
 
         $rootScope.setTab(4);
         $rootScope.base.showAllGroups();
@@ -16,22 +16,22 @@ var importantCtrl = function($rootScope) {
         important.selectedGroupInTop = $rootScope.currentGroup;
 
         /*if(!$rootScope.importantIsLoadedFromTop)
-            $rootScope.importantTopics = messageClient.getImportantTopics($rootScope.currentGroup.id);
+            $rootScope.importantTopics = c.messageClient.getImportantTopics($rootScope.currentGroup.id);
         $rootScope.importantIsLoadedFromTop = false;*/
 
-        //important.topics = messageClient.getImportantTopics($rootScope.currentGroup.id);
-        important.wallItems = messageClient.getImportantNews($rootScope.currentGroup.id,0,0,0);
+        //important.topics = c.messageClient.getImportantTopics($rootScope.currentGroup.id);
+        important.wallItems = $c.messageClient.getImportantNews($rootScope.currentGroup.id,0,0,0);
 
         important.attachId = "0";
         //$rootScope.base.initStartParamsForCreateTopic(important);
 
         important.message = {};
 
-        important.message.content = important.message.default = TEXT_DEFAULT_1;
+        important.message.content = important.message.default = $c.TEXT_DEFAULT_1;
 
         $rootScope.importantChangeGroup = function(groupId){
 
-            important.wallItems = messageClient.getImportantNews(groupId, 0, loadedLength);
+            important.wallItems = $c.messageClient.getImportantNews(groupId, 0, loadedLength);
 
             if(important.wallItems.length) {
                 initWallItem(important.wallItems);
@@ -52,7 +52,7 @@ var importantCtrl = function($rootScope) {
         initWallItem(important.wallItems);
 
         $rootScope.selectGroupInDropdown_important = function(groupId){
-            important.selectedGroup = $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(groupId);
+            important.selectedGroup = $rootScope.base.bufferSelectedGroup = $c.selectGroupInDropdown(groupId);
         };
 
         important.goToAnswerInput = function(event){
@@ -87,7 +87,7 @@ var importantCtrl = function($rootScope) {
 
         $rootScope.wallChangeGroup = function(groupId){
 
-            important.wallItems = messageClient.getWallItems(groupId, 0, loadedLength);
+            important.wallItems = $c.messageClient.getWallItems(groupId, 0, loadedLength);
 
             if(important.wallItems.length) {
                 initWallItem(important.wallItems);
@@ -106,9 +106,9 @@ var importantCtrl = function($rootScope) {
                 $rootScope.base.initStartParamsForCreateTopic(wallItems[i].topic);
 
                 //  wallItems[i].topic.message.groupId сейчас не задана почему-то
-                wallItems[i].label = getLabel($rootScope.base.groups,wallItems[i].topic.groupType);
+                wallItems[i].label = $c.getLabel($rootScope.base.groups,wallItems[i].topic.groupType);
 
-                wallItems[i].tagColor = getTagColor(wallItems[i].label);
+                wallItems[i].tagColor = $c.getTagColor(wallItems[i].label);
 
                 wallItems[i].isOpen = false;
 
@@ -120,12 +120,12 @@ var importantCtrl = function($rootScope) {
 
                 if(wallItems[i].topic.message.type == 1){
 
-                    wallItems[i].topic.lastUpdateEdit = getTiming(wallItems[i].topic.lastUpdate);
+                    wallItems[i].topic.lastUpdateEdit = $c.getTiming(wallItems[i].topic.lastUpdate);
 
                 }else if(wallItems[i].topic.message.type == 5){
 
-                    wallItems[i].topic.message.createdEdit = getTiming(wallItems[i].topic.message.created);
-                    wallItems[i].topic.authorName = getAuthorName(wallItems[i].topic.userInfo);
+                    wallItems[i].topic.message.createdEdit = $c.getTiming(wallItems[i].topic.message.created);
+                    wallItems[i].topic.authorName = $c.getAuthorName(wallItems[i].topic.userInfo);
                     wallItems[i].topic.metaType = "message";
 
                     var mesLen;
@@ -134,8 +134,8 @@ var importantCtrl = function($rootScope) {
                         mesLen = 0;
 
                     for(var j = 0; j < mesLen; j++){
-                        wallItems[i].messages[j].createdEdit = getTiming(wallItems[i].messages[j].created);
-                        wallItems[i].messages[j].authorName = getAuthorName(wallItems[i].messages[j].userInfo);
+                        wallItems[i].messages[j].createdEdit = $c.getTiming(wallItems[i].messages[j].created);
+                        wallItems[i].messages[j].authorName = $c.getAuthorName(wallItems[i].messages[j].userInfo);
                         wallItems[i].messages[j].isEdit = false;
 
                         $rootScope.base.initStartParamsForCreateMessage(wallItems[i].messages[j]);
@@ -149,7 +149,7 @@ var importantCtrl = function($rootScope) {
 
                     if(wallItems[i].topic.poll != null){
                         //значит это опрос
-                        setPollEditNames(wallItems[i].topic.poll);
+                        $c.setPollEditNames(wallItems[i].topic.poll);
 
                         wallItems[i].topic.metaType = "poll";
                     }
@@ -176,10 +176,10 @@ var importantCtrl = function($rootScope) {
             }
         };
 
-        initFancyBox($('.forum'));
+        $c.initFancyBox($('.forum'));
 
         $('.ng-cloak').removeClass('ng-cloak');
 
     };
 
-module.exports = [ '$rootScope', importantCtrl ];
+module.exports = [ '$rootScope','$c', importantCtrl ];

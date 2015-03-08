@@ -1,14 +1,14 @@
 
-var profileCtrl = function($rootScope, $stateParams) {
+var profileCtrl = function($rootScope, $stateParams,$c) {
 
         $rootScope.isTopSearchShow = false;
         $rootScope.leftbar.tab = 0;
 
-        resetPages($rootScope.base);
+        $c.resetPages($rootScope.base);
         $rootScope.base.profileIsActive = true;
         $rootScope.base.isFooterBottom = true;
 
-        resetAceNavBtns($rootScope.navbar);
+        $c.resetAceNavBtns($rootScope.navbar);
         $rootScope.base.mainContentTopIsHide = true;
         $rootScope.base.profileLoadStatus = "isLoaded";
 
@@ -17,15 +17,15 @@ var profileCtrl = function($rootScope, $stateParams) {
 
         $("#dialog-message").addClass('hide');
 
-        if ($stateParams.userId && $stateParams.userId != 0 && $stateParams.userId != shortUserInfo.id){
+        if ($stateParams.userId && $stateParams.userId != 0 && $stateParams.userId != $c.shortUserInfo.id){
             userId = $stateParams.userId;
-            //profile.userContacts = userClient.getUserContactsExt(userId);
+            //profile.userContacts = $c.userClient.getUserContactsExt(userId);
         }else{
             userId = 0;
             profile.isMayEdit = true;
 
             try {
-                var location = userClient.getGroupView($rootScope.groups[0].id);
+                var location = $c.userClient.getGroupView($rootScope.groups[0].id);
 
                 profile.map = {};
                 profile.map.zoom = 17;
@@ -46,11 +46,10 @@ var profileCtrl = function($rootScope, $stateParams) {
                 };
             }catch(err){
             }
-            //profile.map = userClient.getGroupMap($rootScope.groups[0].id, MAP_COLOR);
-            //profile.userContacts = userClient.getUserContacts();
+            //profile.userContacts = $c.userClient.getUserContacts();
         }
 
-        profile.userProfile = userClient.getUserProfile(userId);
+        profile.userProfile = $c.userClient.getUserProfile(userId);
 
         var isEmptyContacts = false,
             isEmptyFamily = false,
@@ -129,4 +128,4 @@ var profileCtrl = function($rootScope, $stateParams) {
 
 };
 
-module.exports = [ '$rootScope','$stateParams', profileCtrl ];
+module.exports = [ '$rootScope','$stateParams','$c', profileCtrl ];

@@ -1,5 +1,5 @@
 
-var dialogsCtrl =  function($rootScope,$state){
+var dialogsCtrl =  function($rootScope,$state,$c){
         $rootScope.isTopSearchShow = false;
         $rootScope.base.mainContentTopIsHide = true;
         $rootScope.leftbar.tab = 0;
@@ -7,11 +7,11 @@ var dialogsCtrl =  function($rootScope,$state){
         $rootScope.currentPage = "dialogs";
         $rootScope.currentRubric = null;
 
-        resetPages($rootScope.base);
+        $c.resetPages($rootScope.base);
         $rootScope.base.privateMessagesIsActive = true;
         $rootScope.base.pageTitle = "Личные сообщения";
 
-        resetAceNavBtns($rootScope.navbar);
+        $c.resetAceNavBtns($rootScope.navbar);
         $rootScope.navbar.privateMessagesBtnStatus = "active";
 
         $rootScope.base.privateMessagesLoadStatus = "isLoaded";
@@ -20,7 +20,7 @@ var dialogsCtrl =  function($rootScope,$state){
 
         var dialogs = this;
 
-        dialogs.dialogsList = dialogClient.getDialogs(0);
+        dialogs.dialogsList = $c.dialogClient.getDialogs(0);
         var dialogsListLength = dialogs.dialogsList.length;
         for(var i = 0; i < dialogsListLength; i++){
             (dialogs.dialogsList[i].users[0].id != $rootScope.base.me.id) ?
@@ -54,7 +54,7 @@ var dialogsCtrl =  function($rootScope,$state){
                     usersId[i] = usersInfoArray[i].id
                 }
             }
-            //$rootScope.currentDialog = dialogClient.getDialog(usersId);
+            //$rootScope.currentDialog = $c.dialogClient.getDialog(usersId);
             $state.go('dialog-single',{ dialogId : dialogId});
         };
 
@@ -62,4 +62,4 @@ var dialogsCtrl =  function($rootScope,$state){
 
     };
 
-module.exports = [ '$rootScope','$state', dialogsCtrl ];
+module.exports = [ '$rootScope','$state','$c', dialogsCtrl ];

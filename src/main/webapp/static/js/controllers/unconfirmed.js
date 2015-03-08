@@ -1,16 +1,16 @@
 
-var unconfirmedCtrl =  function($rootScope) {
+var unconfirmedCtrl =  function($rootScope,$c) {
     $rootScope.base.isFooterBottom = true;
     $rootScope.base.mainContentTopIsHide = true;
     $rootScope.base.hideSidebar = true;
 
     var ctrl = this;
-    ctrl.user = userClient.getShortUserInfo();
+    ctrl.user = $c.userClient.getShortUserInfo();
     ctrl.isErrorConfirm = false;
 
     ctrl.unconfLogin = function(){
 
-        var isConfirm = userClient.confirmUserAddress(ctrl.code);
+        var isConfirm = $c.userClient.confirmUserAddress(ctrl.code);
         console.log(isConfirm);
         if(isConfirm){
             $rootScope.base.me.addressConfirmed = true;
@@ -26,4 +26,4 @@ var unconfirmedCtrl =  function($rootScope) {
 
 };
 
-module.exports = [ '$rootScope', unconfirmedCtrl ];
+module.exports = [ '$rootScope','$c', unconfirmedCtrl ];

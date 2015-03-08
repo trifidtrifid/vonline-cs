@@ -1,9 +1,9 @@
 
-var mainContentTopCtrl = function($rootScope, $state) {
+var mainContentTopCtrl = function($rootScope, $state,$c) {
 
         var topCtrl = this;
 
-        topCtrl.groups = userClientGroups;// ? userClientGroups.reverse() : userClient.getUserGroups().reverse();
+        topCtrl.groups = $c.userClientGroups;// ? userClientGroups.reverse() : userClient.getUserGroups().reverse();
         var groups = $rootScope.groups = topCtrl.groups,
             groupsLength = groups.length;
 
@@ -36,9 +36,9 @@ var mainContentTopCtrl = function($rootScope, $state) {
                 group.selected = true;
 
                 $rootScope.currentGroup = group;
-                $rootScope.base.bufferSelectedGroup = selectGroupInDropdown(group.id);
+                $rootScope.base.bufferSelectedGroup = $c.selectGroupInDropdown(group.id);
 
-                //$rootScope.importantTopics = messageClient.getImportantNews(group.id);
+                //$rootScope.importantTopics = $c.messageClient.getImportantNews(group.id);
 
                 if ($rootScope.currentPage == 'lenta') {
                     $rootScope.wallChangeGroup(group.id);
@@ -72,4 +72,4 @@ var mainContentTopCtrl = function($rootScope, $state) {
         $('.ng-cloak').removeClass('ng-cloak');
     };
 
-module.exports = [ '$rootScope','$state', mainContentTopCtrl ];
+module.exports = [ '$rootScope','$state','$c', mainContentTopCtrl ];

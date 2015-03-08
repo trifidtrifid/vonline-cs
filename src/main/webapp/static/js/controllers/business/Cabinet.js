@@ -1,5 +1,5 @@
 
-var cabinetCtrl = function($rootScope) {
+var cabinetCtrl = function($rootScope,$c) {
     var nearby = this,
         postId;
 
@@ -15,7 +15,7 @@ var cabinetCtrl = function($rootScope) {
 
     //console.log('business created');
 
-    nearby.info = businessClient.getMyBusinessInfo();
+    nearby.info = $c.businessClient.getMyBusinessInfo();
     nearby.info.fullInfo = nearby.info.fullInfo.replace('\n','<br>');
 
     /*if ($stateParams.nearbyId && $stateParams.nearbyId != 0){
@@ -46,7 +46,7 @@ var cabinetCtrl = function($rootScope) {
 
     };
 
-    nearby.wallItem = businessClient.getWallItem(nearby.info.id);
+    nearby.wallItem = $c.businessClient.getWallItem(nearby.info.id);
     console.log('1',nearby.wallItem);
 
     nearby.sendComm = function($event,post){
@@ -70,8 +70,8 @@ var cabinetCtrl = function($rootScope) {
         };
 
         console.log('post',message);
-        //var returnComment = messageClient.postBusinessTopics(message);
-        var returnComment = messageClient.postMessage(message);
+        //var returnComment = c.messageClient.postBusinessTopics(message);
+        var returnComment = $c.messageClient.postMessage(message);
         console.log('post2',returnComment);
 
 
@@ -132,4 +132,4 @@ var cabinetCtrl = function($rootScope) {
 
 };
 
-module.exports = [ '$rootScope', cabinetCtrl ];
+module.exports = [ '$rootScope','$c', cabinetCtrl ];

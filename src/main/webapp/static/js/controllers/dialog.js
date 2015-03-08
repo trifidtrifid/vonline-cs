@@ -1,7 +1,7 @@
 
-var dialogCtrl = function($rootScope,$stateParams,$state) {
+var dialogCtrl = function($rootScope,$stateParams,$state,$c) {
 
-        initFancyBox($('.dialog'));
+        $c.initFancyBox($('.dialog'));
         $rootScope.base.mainContentTopIsHide = true;
         $rootScope.base.isFooterBottom = false;
         $rootScope.base.lastLoadedId = 0;
@@ -14,7 +14,7 @@ var dialogCtrl = function($rootScope,$stateParams,$state) {
             loadedLength = 20;
 
         try {
-            var currentDialog = dialogClient.getDialogById($stateParams.dialogId);
+            var currentDialog = $c.dialogClient.getDialogById($stateParams.dialogId);
 
             var currentDialogLength = currentDialog.length;
 
@@ -37,7 +37,7 @@ var dialogCtrl = function($rootScope,$stateParams,$state) {
                 dialog.privateMessages = $rootScope.base.privateMessages;
             }
 
-            //dialog.messageText = TEXT_DEFAULT_1;
+            //dialog.messageText = $c.TEXT_DEFAULT_1;
             $rootScope.base.initStartParamsForCreateMessage(dialog);
 
         }catch(e){
@@ -46,7 +46,7 @@ var dialogCtrl = function($rootScope,$stateParams,$state) {
 
         var lastLoadedIdFF;
         dialog.addMoreItems = function(){
-            var buff = dialogClient.getDialogMessages($stateParams.dialogId,0,loadedLength,$rootScope.base.lastLoadedId);
+            var buff = $c.dialogClient.getDialogMessages($stateParams.dialogId,0,loadedLength,$rootScope.base.lastLoadedId);
             if(buff) {
                 var buffLength = buff.length;
 
@@ -56,7 +56,7 @@ var dialogCtrl = function($rootScope,$stateParams,$state) {
 
                     if(lastLoadedIdFF != $rootScope.base.lastLoadedId) {
                         for (var i = 0; i < buffLength; i++) {
-                            buff[i].authorProfile = userClient.getUserProfile(buff[i].author);
+                            buff[i].authorProfile = $c.userClient.getUserProfile(buff[i].author);
                         }
                         dialog.privateMessages =
                             $rootScope.base.privateMessages = $rootScope.base.privateMessages.concat(buff);
@@ -72,4 +72,4 @@ var dialogCtrl = function($rootScope,$stateParams,$state) {
 
     };
 
-module.exports = [ '$rootScope','$stateParams','$state', dialogCtrl ];
+module.exports = [ '$rootScope','$stateParams','$state','$c', dialogCtrl ];

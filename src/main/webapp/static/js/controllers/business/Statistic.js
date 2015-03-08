@@ -1,12 +1,12 @@
 
-var statisticCtrl = function($rootScope) {
+var statisticCtrl = function($rootScope,$c) {
 
     var maps = this,
         businessDescription;
 
     ($rootScope.businessDescription) ?
     businessDescription = $rootScope.businessDescription :
-    businessDescription = businessClient.getMyBusinessInfo() ;
+    businessDescription = $c.businessClient.getMyBusinessInfo() ;
 
     var yaMap;
     maps.afterMapInit=function(nMap){
@@ -17,7 +17,7 @@ var statisticCtrl = function($rootScope) {
     maps.center = [businessDescription.longitude,businessDescription.latitude];
     maps.zoom = 16;
     maps.radius = businessDescription.radius;
-    maps.color = MAP_COLOR;
+    maps.color = $c.MAP_COLOR;
 
     maps.baloon = {
         geometry: {
@@ -32,4 +32,4 @@ var statisticCtrl = function($rootScope) {
 
 };
 
-module.exports = [ '$rootScope', statisticCtrl ];
+module.exports = [ '$rootScope','$c', statisticCtrl ];

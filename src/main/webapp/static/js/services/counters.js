@@ -1,13 +1,8 @@
 'use strict';
 
-/* Services */
-
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('forum.services', []).
-    factory( '$counters', function() {
+var counters = function($c){
         return {
-            getCounters : utilityClient.getCounters(),
+            getCounters : $c.utilityClient.getCounters(),
             getTypeString : function (type){
                 var typeString;
 
@@ -38,4 +33,6 @@ angular.module('forum.services', []).
                 return typeString;
             }
         }
-    });
+};
+
+module.exports = ['$c',counters];
