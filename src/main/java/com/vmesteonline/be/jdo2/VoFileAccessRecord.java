@@ -23,6 +23,7 @@ public class VoFileAccessRecord {
 		this.contentType = contentType;
 		this.createdAt = (int)(System.currentTimeMillis() / 1000L );
 		if( null != parent ) parent.setVersion(versionKey, this);
+		this.versions = new HashMap<String, VoFileAccessRecord>();
 	}
 	
 	public VoFileAccessRecord( long userId, boolean isPublic, String fileName, String contentType) {
@@ -91,8 +92,8 @@ public class VoFileAccessRecord {
 	@Persistent(table="fileaccessrecordversions")
     @Key(types = String.class)
     @Value(types=VoFileAccessRecord.class, dependent="true")
-    @Join(column = "query")
     @Element(column = "version")
+		@Join(column="id")
 	Map<String,VoFileAccessRecord> versions;
 
     public void setData(byte[] data) {

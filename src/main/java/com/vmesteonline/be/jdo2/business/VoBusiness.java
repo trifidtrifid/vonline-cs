@@ -1,7 +1,10 @@
 package com.vmesteonline.be.jdo2.business;
 
+import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
+
+import org.apache.log4j.Logger;
 
 import com.vmesteonline.be.MessageServiceImpl;
 import com.vmesteonline.be.jdo2.GeoLocation;
@@ -23,6 +26,7 @@ import java.util.*;
 @Inheritance(strategy = InheritanceStrategy.NEW_TABLE)
 public class VoBusiness extends VoUser  {
 	
+	private static Logger logger = Logger.getLogger(VoBusiness.class);
 	private VoBusiness(String name, String lastName, String email, String password) {
 		super(name, lastName, email, password);	
 		setEmailConfirmed(true);
@@ -105,8 +109,15 @@ public class VoBusiness extends VoUser  {
         }
     
 		Attach logoAttach = null;
-		if( null != logo)
-			logoAttach = pm.getObjectById(VoFileAccessRecord.class,logo).getAttach();
+		if( null != logo){
+			try {
+				logoAttach = pm.getObjectById(VoFileAccessRecord.class,logo).getAttach();
+			} catch (JDOObjectNotFoundException e) {
+				logo = null;
+				logger.error("ID of logo is incorrect, so set it to undefined.",e);
+			}
+			
+		}
 		return new BusinessDescription(id, shortName, fullName, shortInfo, fullInfo, 
 				logoAttach,
 				imgs, addressLine, longitude, latitude, radius);
@@ -142,14 +153,14 @@ public class VoBusiness extends VoUser  {
 		}
 		
 		vb.setImages( MessageServiceImpl.updateAttachments(vb.getImages(), bd.getImages(), vb.getId(), pm));
-		if( bd.logo != null ) {
+		if( bd.logo != null && bd.logo.URL != null) {
 			boolean logoChanged = true;
 			if( vb.logo != null ){
 				VoFileAccessRecord logoFCAR = pm.getObjectById(VoFileAccessRecord.class, vb.logo );
 				if( logoFCAR.getURL().equalsIgnoreCase( bd.logo.URL) )
 					logoChanged = false;
 				else {
-					pm.deletePersistent(logoFCAR);
+					// TODO pm.deletePersistent(logoFCAR); Should be used but generate a NullPointerException on delete 'versions' field that equals null
 				}
 			}
 			if(logoChanged){

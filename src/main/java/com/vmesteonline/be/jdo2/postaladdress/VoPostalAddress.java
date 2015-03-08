@@ -128,13 +128,14 @@ public class VoPostalAddress implements Comparable<VoPostalAddress> {
 
 		PersistenceManager pm = null == _pm ? PMF.getPm() : _pm;
 		VoBuilding building = pm.getObjectById(VoBuilding.class, buildingId);
+		String flatStr = flatNo == 0 ? "" : " кв. " + flatNo;
 		if (null == building.getAddressString() || building.getAddressString().trim().length() == 0) {
 
 			PostalAddress pa = getPostalAddress(pm);
-			building.setAddressString(pa.getCity().getName() + " " + pa.getStreet().getName() + " д." + building.getFullNo() + " кв. " + flatNo);
+			building.setAddressString(pa.getCity().getName() + " " + pa.getStreet().getName() + " д." + building.getFullNo() + flatStr);
 			return building.getAddressString();
 		} else {
-			return building.getAddressString() + " кв. " + flatNo/* + " [этаж " + floor + " подъезд "+ staircase + "]" */;
+			return building.getAddressString() + flatStr/* + " [этаж " + floor + " подъезд "+ staircase + "]" */;
 		}
 	}
 
