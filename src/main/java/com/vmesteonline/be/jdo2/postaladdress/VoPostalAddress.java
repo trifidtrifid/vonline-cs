@@ -128,7 +128,9 @@ public class VoPostalAddress implements Comparable<VoPostalAddress> {
 
 		PersistenceManager pm = null == _pm ? PMF.getPm() : _pm;
 		VoBuilding building = pm.getObjectById(VoBuilding.class, buildingId);
-		String flatStr = flatNo == 0 ? "" : " кв. " + flatNo;
+		//String flatStr = flatNo == 0 ? "" : " кв. " + flatNo;
+		String flatStr = ""; // don't show that we know the flat number
+		
 		if (null == building.getAddressString() || building.getAddressString().trim().length() == 0) {
 
 			PostalAddress pa = getPostalAddress(pm);
