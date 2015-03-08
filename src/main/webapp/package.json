@@ -6,18 +6,143 @@
   "scripts": {
     "build": "browserify static/js/app.js -o static/js/app-build.js",
     "watch": "watchify static/js/app.js -o static/js/app-build.js --debug --verbose",
+    "uglify": "uglifyjs2 static/js/app-build.js -o static/js/app-prebuild.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+    "browser":{
+        "jcrop" : "./static/js/lib/jquery.Jcrop.min.js",
+        "bootstrap" : "./static/js/lib/bootstrap.min.js",
+        "jquery-ui" : "./static/js/lib/jquery-ui-1.10.3.full.min.js",
+        "datepicker" : "./static/js/lib/jquery.ui.datepicker-ru.js",
+        "ace-extra" : "./static/js/lib/ace-extra.min.js",
+        "ace-elements" : "./static/js/ace-elements.js",
+        "fancybox" : "./static/js/lib/jquery.fancybox.js",
+        "bootbox" : "./static/js/bootbox.min.js",
+        "ace" : "./static/js/lib/ace.min.js",
+        "thrift" : "./static/js/thrift.js",
+        "bedata_types" : "./gen-js/bedata_types.js",
+        "messageservice_types" : "./gen-js/messageservice_types.js",
+        "MessageService" : "./gen-js/MessageService.js",
+        "DialogService" : "./gen-js/DialogService.js",
+        "userservice_types" : "./gen-js/userservice_types.js",
+        "UserService" : "./gen-js/UserService.js",
+        "authservice_types" : "./gen-js/authservice_types.js",
+        "AuthService" : "./gen-js/AuthService.js",
+        "utilityservces_types" : "./gen-js/utilityservces_types.js",
+        "UtilityService" : "./gen-js/UtilityService.js",
+        "fileutils_types" : "./gen-js/fileutils_types.js",
+        "FileService" : "./gen-js/FileService.js",
+        "business_types" : "./gen-js/business_types.js",
+        "BusinessService" : "./gen-js/BusinessService.js"
+    },
   "browserify": {
     "transform": [
       "browserify-shim"
     ]
   },
   "browserify-shim": {
-    "angular": {
-      "depends": "jquery",
-      "exports": "angular"
-    }
+      "jquery": {
+          "exports": "$"
+      },
+      "angular": {
+          "exports": "angular",
+          "depends": "jquery"
+      },
+      "jcrop" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "bootstrap" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "jquery-ui" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "datepicker" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "ace-extra" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "ace-elements" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "fancybox" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "bootbox" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "ace" : {
+          "exports": null,
+          "depends": "jquery"
+      },
+      "thrift" : {
+          "exports": "Thrift"
+      },
+      "bedata_types" : {
+          "exports": null,
+          "depends": "thrift"
+      },
+      "messageservice_types" : {
+          "exports": null,
+          "depends": "bedata_types"
+      },
+      "MessageService" : {
+          "exports": null,
+          "depends": "messageservice_types"
+      },
+      "DialogService" : {
+          "exports": null,
+          "depends": "messageservice_types"
+      },
+      "userservice_types" : {
+          "exports": null,
+          "depends": "bedata_types"
+      },
+      "UserService" : {
+          "exports": null,
+          "depends": "userservice_types"
+      },
+      "authservice_types" : {
+          "exports": null,
+          "depends": "bedata_types"
+      },
+      "AuthService" : {
+          "exports": null,
+          "depends": "authservice_types"
+      },
+      "utilityservces_types" : {
+          "exports": null,
+          "depends": "bedata_types"
+      },
+      "UtilityService" : {
+          "exports": null,
+          "depends": "utilityservces_types"
+      },
+      "fileutils_types" : {
+          "exports": null,
+          "depends": "bedata_types"
+      },
+      "FileService" : {
+          "exports": null,
+          "depends": "fileutils_types"
+      },
+      "business_types" : {
+          "exports": null,
+          "depends": "bedata_types"
+      },
+      "BusinessService" : {
+          "exports": null,
+          "depends": "business_types"
+      }
   },
   "author": "VO",
   "license": "Commercial",

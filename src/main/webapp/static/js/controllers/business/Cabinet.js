@@ -1,5 +1,7 @@
 
+console.log('cabinet-0');
 var cabinetCtrl = function($rootScope,$c) {
+    console.log('cabinet-1');
     var nearby = this,
         postId;
 

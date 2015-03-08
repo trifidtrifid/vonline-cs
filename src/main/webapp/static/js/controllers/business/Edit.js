@@ -1,6 +1,8 @@
 
+console.log('edit-1');
 var editCtrl = function($rootScope,$scope,$c,FileUploader) {
 
+    console.log('edit',$c,FileUploader);
     var edit = this;
 
     var attach = new com.vmesteonline.be.thrift.messageservice.Attach(),

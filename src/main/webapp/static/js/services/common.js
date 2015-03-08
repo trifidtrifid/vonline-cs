@@ -1,4 +1,6 @@
 
+console.log('common');
+
 module.exports = function() {
     var c = {};
 

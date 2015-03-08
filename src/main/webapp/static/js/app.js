@@ -1,23 +1,55 @@
 'use strict';
 
-/*require('./thrift.js');
-require('../../gen-js/bedata_types.js');
-require('../../gen-js/messageservice_types.js');
-require('../../gen-js/MessageService.js');
-require('../../gen-js/DialogService.js');
-require('../../gen-js/userservice_types.js');
-require('../../gen-js/UserService.js');
-require('../../gen-js/authservice_types.js');
-require('../../gen-js/AuthService.js');
-require('../../gen-js/utilityservces_types.js');
-require('../../gen-js/UtilityService.js');
-require('../../gen-js/fileutils_types.js');
-require('../../gen-js/FileService.js');
-require('../../gen-js/business_types.js');
-require('../../gen-js/BusinessService.js');*/
+var $ = require('jquery');
+// Чтобы Angular испольщовал нормальный jQuery
+global.jQuery = global.$ = $;
+
+var angular = require('angular');
+if (!angular.version) {
+    // эта версия Angular не работает с require
+    angular = global.angular;
+}
+
+require('jcrop');
+require('bootstrap');
+require('jquery-ui');
+require('datepicker');
+require('ace-extra');
+require('ace-elements');
+require('ace');
+require('fancybox');
+require('bootbox');
+
+var Thrift = require('thrift');
+global.Thrift = Thrift;
+
+console.log('2',Thrift,global.Thrift);
+
+require('bedata_types');
+require('messageservice_types');
+require('MessageService');
+require('DialogService');
+require('userservice_types');
+require('UserService');
+require('authservice_types');
+require('AuthService');
+require('utilityservces_types');
+require('UtilityService');
+require('fileutils_types');
+require('FileService');
+require('business_types');
+require('BusinessService');
+
+require('./angular/sanitize.js');
+require('./angular/linky-custom.js');
+require('./angular/angular-file-upload.js');
+require('./angular/ya-map-2.1.min.js');
+require('./bower_components/select2/select2.min.js');
+require('./bower_components/angular-ui-select2/src/select2.js');
+require('./angular/ng-infinite-scroll.js');
 
 require('angular-ui-router');
-require('angular-file-upload');
+require('angular-bootstrap');
 
 require('./directives.js');
 require('./services');
