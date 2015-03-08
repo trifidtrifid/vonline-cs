@@ -5,9 +5,8 @@
   "main": "static/js/app.js",
   "scripts": {
     "build": "browserify static/js/app.js -o static/js/app-build.js",
-    "watch": "watchify static/js/app.js -o static/js/app-build.js --debug --verbose",
-    "uglify": "uglifyjs2 static/js/app-build.js -o static/js/app-prebuild.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "uglify": "uglifyjs static/js/app-build.js -o static/js/app-build.js",
+    "watch": "watchify static/js/app.js -o static/js/app-build.js --debug --verbose"
   },
     "browser":{
         "jcrop" : "./static/js/lib/jquery.Jcrop.min.js",
