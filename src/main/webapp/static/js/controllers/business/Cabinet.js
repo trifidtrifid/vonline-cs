@@ -1,7 +1,5 @@
 
-console.log('cabinet-0');
 var cabinetCtrl = function($rootScope,$c) {
-    console.log('cabinet-1');
     var nearby = this,
         postId;
 
@@ -49,7 +47,6 @@ var cabinetCtrl = function($rootScope,$c) {
     };
 
     nearby.wallItem = $c.businessClient.getWallItem(nearby.info.id);
-    console.log('1',nearby.wallItem);
 
     nearby.sendComm = function($event,post){
         $event.preventDefault();
