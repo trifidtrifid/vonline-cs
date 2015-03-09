@@ -230,6 +230,7 @@
                     </div>
 
                     <button class="btn btn-sm btn-primary no-border save-cabinet">Сохранить</button>
+                    <span class="created-business-result"></span>
 
                 </div>
 			</div>
@@ -472,9 +473,6 @@
                 countersList[ind++] = parseInt($(this).find('option:selected').val());
             });
 
-            console.log(buildingId+" "+startDate+" "+endDate);
-            console.log(countersList);
-
             utilityClient.createCounterService(buildingId,startDate,endDate,countersList);
 
             $('.counter-init-status').addClass('info-good').text('Успешно');
@@ -501,15 +499,21 @@
 
             businessDescription.images = business_images;
 
-            console.log('save',businessDescription.images);
-
             //var svc = fileClient.saveFileContent(fileBase64, true);
 
-            console.log('save',businessDescription,username);
+            var newBusiness = businessClient.createBusinessDescription(businessDescription,username,pass),
+                createdResultText, createdResultClass;
 
-            businessClient.createBusinessDescription(businessDescription,username,pass);
+            if(newBusiness.id == 0){
+                createdResultText = newBusiness.fullInfo;
+                createdResultClass = 'error-info';
+            }else{
+                createdResultText = "Создан";
+                createdResultClass = 'info-good';
+            }
 
-            console.log('save fin');
+            $('.created-business-result').removeClass('error-info info-good').addClass(createdResultClass).text(createdResultText);
+
         });
 
     });

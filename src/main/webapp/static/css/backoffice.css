@@ -23,3 +23,8 @@
 .backoffice .cabinet-edit h2 {
   margin-top: 0;
 }
+.created-business-result {
+  display: inline-block;
+  vertical-align: middle;
+  width: 600px;
+}
