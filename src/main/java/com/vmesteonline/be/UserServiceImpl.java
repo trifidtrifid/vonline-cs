@@ -1,6 +1,7 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
@@ -17,6 +18,7 @@ import com.vmesteonline.be.utils.VoHelper;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.log4j.Logger;
 import org.apache.thrift.TException;
 
 import javax.jdo.Extent;
@@ -29,7 +31,6 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractCrop;
 import static com.vmesteonline.be.utils.ImageConverterVersionCreator.extractScale;
@@ -97,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			return voUser.getShortUserInfo( cuser, pm);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.warning("request short user info for absent user " + userId);
+			logger.warn("request short user info for absent user " + userId);
 		} 
 		return null;
 	}
@@ -123,7 +124,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 
 			List<Long> uGroups = user.getGroups();
 			if (uGroups == null) {
-				logger.warning("user with id " + Long.toString(userId) + " has no any groups");
+				logger.warn("user with id " + Long.toString(userId) + " has no any groups");
 				throw new InvalidOperation(VoError.GeneralError, "can't find user bu id");
 			}
 			List<Group> groups = new ArrayList<Group>();
@@ -523,7 +524,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
                     "&h="+ (int)(scale.y * k)+
                     "&s="+ (int)(crop.Xlt * k)+"," + (int)(crop.Ylt * k)+","+(int)(crop.Xrb * k)+","+(int)(crop.Yrb * k);
 		} catch (Exception e) {
-			logger.warning("Failed to create thumb for the avatar '"+url+"'"+e.getMessage());
+			logger.warn("Failed to create thumb for the avatar '"+url+"'"+e.getMessage());
 		}
 		return smallPicUrl;
 	}
@@ -732,16 +733,17 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	}
 
 	public ArrayList<ShortUserInfo> getNeighborsByGroupDo(Long groupId) throws InvalidOperation {
+		logger.debug("getNeighborsByGroupDo: groupID="+groupId);
 		PersistenceManager pm = PMF.getPm();
 		VoUserGroup ug = pm.getObjectById(VoUserGroup.class, groupId);
-		List<VoUser> users = getUsersByLocation( ug, pm);
+		List<VoUser> users = groupId==0 ? new ArrayList<VoUser>() : getUsersByLocation( ug, pm); 
 		ArrayList<ShortUserInfo> sug = shortInfoForGroup( GroupType.findByValue(ug.getGroupType()), users, pm);
 		Collections.sort( sug, new Comparator<ShortUserInfo>(){
 			@Override
 			public int compare(ShortUserInfo o1, ShortUserInfo o2) {
 				return (o1.lastName + o1.firstName).compareTo(o2.lastName+o2.firstName);
 			}
-		} );
+		});
 		return sug;
 	}
 
@@ -764,7 +766,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			BigDecimal longitudeMax = VoHelper.getLongitudeMax(group.getLongitude(), group.getLatitude(), radius);
 			BigDecimal longitudeMin = VoHelper.getLongitudeMin(group.getLongitude(), group.getLatitude(), radius);
 			ufilter += "longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax +
-					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"'";
+					"' && latitude >= '" + latitudeMin + "' && latitude <= '" + latitudeMax+"' && address!=0";
 			List<VoUser> ulist = executeQuery(pm.newQuery(VoUser.class, ufilter));
 			users = new ArrayList<>(ulist);
 			
@@ -773,7 +775,6 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			
 			if( pgids.size() > 0 )
 				users.removeAll( getUsersByLocation( pm.getObjectById(VoUserGroup.class, pgids.get(0)), pm));
-			
 		}
 		Collections.sort(users,uIdCOmp);
 		return users;
@@ -910,7 +911,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			if( newAddresses.size() == 0 ){
 				newAddr = VoPostalAddress.createVoPostalAddress(
 						pm.getObjectById(VoBuilding.class, oldBuilding), (byte)staircase, (byte)floor, flatNo, "", pm );
-				logger.warning("No address found by query '"+query+"' new one created");
+				logger.warn("No address found by query '"+query+"' new one created");
 			} else {
 				newAddr = newAddresses.get(0);
 			}
@@ -932,7 +933,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			pm.makePersistent(currentUser);
 				
 		} else {
-			logger.warning("Address of user does not changed.");
+			logger.warn("Address of user does not changed.");
 		}
 	}
 
@@ -967,7 +968,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			user.setAddressConfirmed(addrConfirmed);
 			return addrConfirmed;
 		} catch (Exception e) {
-			logger.warning("Address not confirmed by code "+code+" for "+user+" Exception: "+e.getMessage());
+			logger.warn("Address not confirmed by code "+code+" for "+user+" Exception: "+e.getMessage());
 			e.printStackTrace();
 		}
 		return false;
@@ -1022,7 +1023,9 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 				try {
 					VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
 					String streetName = vs.getName();
-					objects.add(streetName + " " + b.getFullNo());
+					String shortName = streetName + " " + b.getFullNo();
+					//objects.add(shortName) ;
+					objects.add(shortName + " " + VoHelper.calculateRadius( group, new GeoLocation( b.getLongitude().toPlainString(), b.getLatitude().toPlainString()))+"m") ;
 				} catch (Exception e) {					
 					e.printStackTrace();
 				}

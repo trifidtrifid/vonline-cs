@@ -116,7 +116,7 @@ var editCtrl = function($rootScope,$scope,$c,FileUploader) {
             edit.status = 0;
         }
 
-        console.log('after save',edit.businessDescription);
+        console.log('after save',edit.businessDescription.fullInfo);
 
     }
 
