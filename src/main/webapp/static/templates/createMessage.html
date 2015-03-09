@@ -13,7 +13,7 @@
             <div id="attach-doc-area-{{ctrlId}}" class="attach-area attach-area-doc"></div>
 
 
-    <span class="input-group-btn" ng-show="ctrlMessage.answerShow">
+    <div class="input-group-btn" ng-show="ctrlMessage.answerShow">
         <!--
          параметры
 
@@ -24,12 +24,12 @@
          используются только для создания сообщений НЕ первого уровня в обсуждении
          -->
         <div class="btn-group attach-dropdown pull-right">
-            <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+            <button data-toggle="dropdown"  ng-click="base.toggleAttachDropdown($event,null,ctrlId)" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
                 <span class="btn-group-text">Прикрепить</span>
                 <span class="icon-caret-down icon-on-right"></span>
             </button>
 
-            <ul class="dropdown-menu dropdown-blue">
+            <ul class="dropdown-menu dropdown-blue" ng-show="base.isAttachDropdownShow[ctrlId]">
                 <li><input id="attachImage-{{ctrlId}}" type="file"/></li>
                 <li><input id="attachDoc-{{ctrlId}}" type="file"/></li>
             </ul>
@@ -41,5 +41,5 @@
         </button>
         <span class="error-info" ng-show="ctrlMessage.isCreateCommentError" ng-click>{{ctrlMessage.createCommentErrorText}}</span>
 
-    </span>
+    </div>
 </div>

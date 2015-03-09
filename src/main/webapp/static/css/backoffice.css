@@ -1,3 +1,9 @@
+.backoffice {
+  text-align: left;
+}
+.backoffice .broadcast textarea {
+  width: 100%;
+}
 .bo-counter-item {
   width: 200px;
   display: inline-block;
@@ -8,4 +14,12 @@
 }
 .bo-counter-select {
   margin-bottom: 10px;
+}
+.backoffice .cabinet-edit {
+  background-color: #bfddde;
+  padding: 15px;
+  margin: 15px 0;
+}
+.backoffice .cabinet-edit h2 {
+  margin-top: 0;
 }

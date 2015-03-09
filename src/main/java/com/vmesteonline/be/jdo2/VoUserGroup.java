@@ -6,10 +6,13 @@ import com.vmesteonline.be.thrift.Group;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
+import com.vmesteonline.be.utils.Defaults;
+
 import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,6 +40,9 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 		
 		if( gType <= GroupType.FLOOR.getValue() )
 			queryStr += " && floor==" + floor;
+		
+		if( gType == GroupType.NOBODY.getValue() )
+			queryStr += " && name=='" + name + "'";
 		
 		List<VoUserGroup> ugl =  executeQuery(pm.newQuery(VoUserGroup.class, queryStr));
 		
@@ -96,18 +102,25 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 			List<VoBuilding> bgs = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='" + getLongitude() + "' && latitude=='" + getLatitude()+"'"));
 			if( 1!=bgs.size()){
 				logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
-			} else {
-				description = bgs.get(0).getAddressString() + "GT:"+GroupType.findByValue(groupType);
-				pm.makePersistent(this);
 			}
+			description = bgs.get(0).getAddressString();
+			pm.makePersistent(this);
 		}
 		return description;
+	}
+
+	public String getBuildingAddressString(PersistenceManager pm) {
+		List<VoBuilding> bgs = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='" + getLongitude() + "' && latitude=='" + getLatitude()+"'"));
+		if( 1!=bgs.size()){
+			logger.error("There is "+bgs.size()+" buildings with longitude==" + getLongitude() + " && latitude==" + getLatitude());
+		}
+		String addressString = bgs.get(0).getAddressString();
+		return addressString;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	@Persistent
 	private String description;
@@ -156,4 +169,21 @@ public class VoUserGroup extends GeoLocation implements Comparable<VoUserGroup> 
 	public byte getStaircase() {
 		return staircase;
 	}
+
+	public static Long getDefaultGroup(String latitude, String longitude, int userGroupType, PersistenceManager pm) throws InvalidOperation {
+		if( userGroupType <= GroupType.BUILDING.getValue() ){
+
+			List<VoBuilding> nearestBuildings = executeQuery(pm.newQuery(VoBuilding.class, "longitude=='"+longitude+"' && latitude=='"+latitude+"'"));
+			if( null==nearestBuildings || 0==nearestBuildings.size() )
+				throw new InvalidOperation( VoError.IncorrectParametrs, "No BUILDING found at  " + longitude+":"+latitude+" There is NO GROUP could be created!");
+			
+			VoGroup defGroup = Defaults.getDefaultGroups().get(userGroupType - Defaults.FIRST_USERS_GROUP);
+			return VoUserGroup.createVoUserGroup( new BigDecimal(longitude), new BigDecimal(latitude), Defaults.radiusByType[userGroupType],
+					(byte)0, (byte)0, defGroup.getVisibleName(), defGroup.getImportantScore(), userGroupType, pm).getId();
+		} else { 
+			return 0L;//does not matter
+		}
+	}
+	
+	
 }

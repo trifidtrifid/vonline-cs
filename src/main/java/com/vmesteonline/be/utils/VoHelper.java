@@ -9,6 +9,7 @@ import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.MatrixAsList;
 import com.vmesteonline.be.thrift.VoError;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import javax.jdo.Extent;
@@ -506,7 +507,33 @@ public class VoHelper {
 		if (null!=usedCodeSet) 
 			usedCodeSet.add(passCode);
 		VoInviteCode ic = new VoInviteCode(passCode, pa.getId());
-		pm.makePersistent(ic);
+		//pm.makePersistent(ic);
 		return ic;
 	}
+	
+	public static String getShortMessageForm(String message, int minLength, int maxLength){
+		if(null==message) return "";
+		String msg = message.replaceAll("[\t \r\n]", " ").replaceAll("<[/]?br[/]?>", " ");
+		if( msg.length()<minLength) return msg;
+		int trimPOs = msg.indexOf(" ", minLength);
+		if( trimPOs > maxLength )
+			while(trimPOs>minLength && ' ' != msg.charAt(trimPOs));
+		else if (trimPOs == -1 ) 
+			trimPOs = Math.min(maxLength, msg.length());
+		return msg.substring(0, trimPOs)+"...";
+	}
+
+	public static String createFilterByLocation(GeoLocation ug, int radius) {
+		BigDecimal latitude = ug.getLatitude();
+		BigDecimal longitude = ug.getLongitude();
+		BigDecimal latitudeMax = getLatitudeMax(latitude, radius);
+		BigDecimal latitudeMin = getLatitudeMin(latitude, radius);
+		BigDecimal longitudeMax = getLongitudeMax(longitude, latitude, radius);
+		BigDecimal longitudeMin = getLongitudeMin(longitude, latitude, radius);
+		String locFilter = "(longitude >= '" + longitudeMin + "' && longitude <= '" + longitudeMax + "' && latitude >= '" + latitudeMin
+				+ "' && latitude <= '" + latitudeMax + "')";
+		return locFilter;
+	}
 }
+
+

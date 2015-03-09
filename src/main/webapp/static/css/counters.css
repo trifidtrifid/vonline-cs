@@ -1,0 +1,68 @@
+.counters {
+  min-height: 300px;
+}
+.counters h3 {
+  margin-top: 0;
+  padding-top: 10px;
+}
+.counters .counters-menu {
+  padding-left: 0;
+  margin: 0;
+}
+.counters .counters-menu li {
+  list-style: none;
+  display: inline-block;
+}
+.counters .counters-table {
+  width: 100%;
+  margin: 10px 0;
+}
+.counters .counters-table td {
+  padding: 5px 0 5px 10px;
+  vertical-align: top;
+}
+.counters .counters-table td input,
+.counters .counters-table td select {
+  width: 100%;
+}
+.counters .counters-table thead {
+  font-weight: bold;
+}
+.counters .counters-table .remove-counter {
+  color: #f00;
+  font-size: 22px;
+}
+.counters .counters-table .remove-counter:hover {
+  text-decoration: none;
+}
+.counters .counters-table .fa-pencil {
+  font-size: 18px;
+}
+.counters .counter-input {
+  width: 70px !important;
+  display: inline-block;
+}
+.counters .fa-clock-o {
+  font-size: 18px;
+  margin-left: 10px;
+}
+.counters .error-info {
+  position: relative;
+  left: 10px;
+  top: 3px;
+}
+.counters-no-period {
+  font-size: 16px;
+  text-align: center;
+  color: #f00;
+  padding-top: 25px;
+}
+.modal-remove-counter .modal-dialog {
+  width: 330px !important;
+  text-align: center;
+  padding: 10px;
+  margin-top: 100px;
+}
+.modal-remove-counter .btn {
+  display: inline-block;
+}

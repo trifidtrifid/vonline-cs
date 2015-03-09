@@ -89,6 +89,7 @@
             <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.save()" ng-if="counters.state == 1">Отправить</button>
             <span class="error-info">{{counters.errorText}}</span>
             <button class="btn btn-sm btn-primary no-border pull-left" ng-click="counters.cancel()" ng-if="counters.state == 2">Отмена</button>
+            <div class="counters-no-period" ng-if="counters.state == 0">Показания принимаются с {{counters.startDateOfMonth}} по {{counters.endDateOfMonth}} число текущего месяца</div>
         </div>
         <br/>
 

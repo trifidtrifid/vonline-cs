@@ -5,7 +5,9 @@ import com.vmesteonline.be.jdo2.VoInviteCode;
 import com.vmesteonline.be.jdo2.VoSession;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
+import com.vmesteonline.be.jdo2.business.VoBusiness;
 import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.jdo2.utility.VoCounterService;
 import com.vmesteonline.be.notifications.Notification;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
@@ -16,6 +18,7 @@ import com.vmesteonline.be.thrift.authservice.LoginResult;
 import com.vmesteonline.be.thrift.messageservice.Dialog;
 import com.vmesteonline.be.thrift.messageservice.MessageService.AsyncProcessor.getTopics;
 import com.vmesteonline.be.thrift.messageservice.WallItem;
+import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.VoHelper;
@@ -31,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +72,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 					return LoginResult.EMAIL_NOT_CONFIRMED;
 				logger.info("save session '" + getCurrentSession().getId() + "' userId " + u.getId());
 				saveUserInSession(getCurrentSession(), pm, u);
-				return LoginResult.SUCCESS;
+				return u instanceof VoBusiness ? LoginResult.USER_IS_COMERC : LoginResult.SUCCESS;
 			} else
 				logger.info("incorrect password " + email + " pass " + pwd);
 
@@ -105,12 +109,16 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		PersistenceManager pm = PMF.getPm();
 		try {
 			MessageServiceImpl msi = new MessageServiceImpl(this);
-			List<WallItem> importantNews = msi.getImportantNews(sess.getUser().getGroup(GroupType.NEIGHBORS, pm).getId(), 0, 0, 100);
-			int count = 0;
-			for (WallItem wi : importantNews)
-				if (wi.getTopic().lastUpdate > lastActivityTs)
-					count++;
-			sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+			VoUser user = sess.getUser();
+			VoUserGroup nbgroup = user.getGroup(GroupType.NEIGHBORS, pm);
+			if(null!=nbgroup){
+				List<WallItem> importantNews = msi.getImportantNews(nbgroup.getId(), 0, 0, 100);
+				int count = 0;
+				for (WallItem wi : importantNews)
+					if (wi.getTopic().lastUpdate > lastActivityTs)
+						count++;
+				sess.setNewImportantMessages(count + lastSess.getNewImportantMessages());
+			}
 		} catch (InvalidOperation e) {
 			e.printStackTrace();
 		}
@@ -250,6 +258,18 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		if (needConfirmEmail) {
 			Notification.welcomeMessageNotification(user, pm);
 		}
+		
+		List<VoCounterService> cs = executeQuery( pm.newQuery(VoCounterService.class, "buildingId=="+uaddress.getBuilding()));
+		if( null != cs && cs.size() > 0){ //enable counter for the user
+			ArrayList<CounterType> defaultCounterTypes = new ArrayList<CounterType>();
+			defaultCounterTypes.add(CounterType.COLD_WATER);
+			defaultCounterTypes.add(CounterType.HOT_WATER);
+			defaultCounterTypes.add(CounterType.COLD_WATER);
+			defaultCounterTypes.add(CounterType.HOT_WATER);
+			defaultCounterTypes.add(CounterType.ELECTRICITY_DAY);
+			defaultCounterTypes.add(CounterType.ELECTRICITY_NIGHT);
+			user.enableCountersFor(defaultCounterTypes, pm);			
+		}
 
 		return user.getId();
 	}
@@ -258,11 +278,13 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 	public long registerNewUserByAddress(String firstname, String lastname, String password, String email, String addressString, short gender)
 			throws InvalidOperation {
 
+		if( null==addressString || -1==addressString.indexOf(','))
+			throw new InvalidOperation(VoError.IncorrectParametrs, "Incorrect address '"+addressString+"'");
 		VoUser userByEmail = getUserByEmail(email);
 		if (userByEmail != null && userByEmail.isEmailConfirmed())
 			throw new InvalidOperation(VoError.RegistrationAlreadyExist, "registration exsist for user with email " + email);
 
-		AddressInfo addressInfo = VoGeocoder.resolveAddressString(addressString);
+		AddressInfo addressInfo = VoGeocoder.resolveAddressString(addressString.substring(0,addressString.lastIndexOf(',')));
 		if (!addressInfo.isExact() || !addressInfo.isKindHouse()) {
 			logger.warn("Failed to resolve address '" + addressString + "'");
 			throw new InvalidOperation(VoError.IncorrectParametrs, "Failed to resolve address '" + addressString + "'");
@@ -274,7 +296,8 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		VoStreet voStreet = VoStreet.createVoStreet(voCity, addressInfo.getStreetName(), pm);
 		VoBuilding voBuilding = VoBuilding.createVoBuilding(addressInfo.getZipCode(), voStreet, addressInfo.getBuildingNo(), addressInfo.getLongitude(),
 				addressInfo.getLattitude(), pm);
-		VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(voBuilding, (byte) 0, (byte) 0, 0, "", pm);
+		String flatNo =  addressString.substring( addressString.lastIndexOf(',') + 1).replaceAll("[^0-9]*", "").trim();
+		VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(voBuilding, (byte) 0, (byte) 0, Integer.parseInt(flatNo), "", pm);
 
 		final VoUser user = null == userByEmail ? new VoUser(firstname.trim(), lastname.trim(), email.toLowerCase().trim(), password) : userByEmail;
 		user.setGender(gender);
@@ -282,6 +305,7 @@ public class AuthServiceImpl extends ServiceImpl implements AuthService.Iface {
 		user.setCurrentPostalAddress(pa, pm);
 		user.setAddressConfirmed(false);
 		VoInviteCode ic = VoHelper.createNewInviteCode(3, 3, pa, null, pm);
+		pm.makePersistent(ic);
 		pm.makePersistent(user);
 
 		try {

@@ -7,49 +7,48 @@ import com.vmesteonline.be.thrift.messageservice.Message;
 import com.vmesteonline.be.thrift.messageservice.MessageType;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.StorageHelper.FileSource;
+
 import org.apache.log4j.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.*;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
-@Indices({
-        @Index(name="typeIdx", members = {"type"}),
-        @Index(name="lastUpdateIdx", members = {"lastUpdate"}),
-        @Index(name="importantScoreIdx", members = {"importantScore"})
-})
+@Indices({ @Index(name = "typeIdx", members = { "type" }), @Index(name = "lastUpdateIdx", members = { "lastUpdate" }),
+		@Index(name = "importantScoreIdx", members = { "importantScore" }) })
 public abstract class VoBaseMessage extends GeoLocation {
 
-	public static final Charset STRING_CHARSET=Charset.forName("UTF-8");
-	
+	public static final Charset STRING_CHARSET = Charset.forName("UTF-8");
+
 	public VoBaseMessage(Message msg, PersistenceManager pm) throws IOException, InvalidOperation {
 		// super(msg.getLikesNum(), msg.getUnlikesNum());
 		setContent(msg.getContent());
 		type = msg.getType();
 		authorId = msg.getAuthorId();
 		createdAt = msg.getCreated();
-		
+
 		images = new ArrayList<Long>();
 		documents = new ArrayList<Long>();
-		
+
 		importantNotificationSentDate = 0;
 		importantScore = 0;
 		popularityScore = 0;
-		lastUpdate = (int) (System.currentTimeMillis()/1000L);
-		
+		lastUpdate = (int) (System.currentTimeMillis() / 1000L);
+
 		if (msg.images != null) {
 			List<Attach> savedImages = new ArrayList<Attach>();
 			for (Attach img : msg.images) {
 				VoFileAccessRecord cfar = StorageHelper.loadAttach(pm, msg.getAuthorId(), img);
-				images.add( cfar.getId());
+				images.add(cfar.getId());
 				savedImages.add(cfar.getAttach());
 			}
 			msg.images = savedImages;
@@ -58,22 +57,22 @@ public abstract class VoBaseMessage extends GeoLocation {
 		if (msg.documents != null) {
 			List<Attach> savedDocs = new ArrayList<Attach>();
 			for (Attach doc : msg.documents) {
-				FileSource fs = StorageHelper.createFileSource( doc );
+				FileSource fs = StorageHelper.createFileSource(doc);
 				VoFileAccessRecord cfar;
-				if( fs == null ){
+				if (fs == null) {
 					cfar = pm.getObjectById(VoFileAccessRecord.class, StorageHelper.getFileId(doc.getURL()));
 					cfar.updateContentParams(doc.contentType, doc.fileName);
-				}	else {	
-					cfar = StorageHelper.saveAttach( fs.fname, fs.contentType, authorId, true, fs.is, pm);
+				} else {
+					cfar = StorageHelper.saveAttach(fs.fname, fs.contentType, authorId, true, fs.is, pm);
 				}
-				documents.add( cfar.getId());
+				documents.add(cfar.getId());
 				savedDocs.add(cfar.getAttach());
 			}
 			msg.documents = savedDocs;
 		}
-        content = msg.getContent().getBytes(STRING_CHARSET);
-    }
-	
+		content = msg.getContent().getBytes(STRING_CHARSET);
+	}
+
 	public int getLastUpdate() {
 		return lastUpdate;
 	}
@@ -81,10 +80,9 @@ public abstract class VoBaseMessage extends GeoLocation {
 	public void setLastUpdate(int lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-	
+
 	@Persistent
 	protected int lastUpdate;
-	
 
 	public void setCreatedAt(int createdAt) {
 		this.createdAt = createdAt;
@@ -95,6 +93,30 @@ public abstract class VoBaseMessage extends GeoLocation {
 	}
 
 	public VoBaseMessage() {
+	}
+	protected VoBaseMessage(VoBaseMessage m){
+		
+		setContent(m.getContent());
+		type = m.getType();
+		authorId = m.getAuthorId();
+		createdAt = m.getCreatedAt();
+
+		images = new ArrayList<Long>();
+		documents = new ArrayList<Long>();
+
+		importantNotificationSentDate = 0;
+		importantScore = 0;
+		popularityScore = 0;
+		lastUpdate = (int) (System.currentTimeMillis() / 1000L);
+
+		if (m.images != null) {
+			images = new ArrayList<>(m.images);
+		}
+
+		if (m.documents != null) {
+			documents = new ArrayList<>(m.documents);
+		}
+		
 	}
 
 	/*
@@ -116,12 +138,13 @@ public abstract class VoBaseMessage extends GeoLocation {
 	 * public void setId(Key key) { this.id = key; }
 	 */
 	public String getContent() {
-        if( null==content) return "";
-		return new String( content );
+		if (null == content)
+			return "";
+		return new String(content);
 	}
 
 	public void setContent(String content) {
-        this.content = content.getBytes(STRING_CHARSET);
+		this.content = content.getBytes(STRING_CHARSET);
 	}
 
 	public int getCreatedAt() {
@@ -139,7 +162,7 @@ public abstract class VoBaseMessage extends GeoLocation {
 	public void incrementChildMessageNum(int deltaNum) {
 		this.childMessageNum += deltaNum;
 	}
-	
+
 	public int getEditedAt() {
 		return editedAt;
 	}
@@ -148,13 +171,9 @@ public abstract class VoBaseMessage extends GeoLocation {
 		this.editedAt = editedAt;
 	}
 
-	/*
-	 * public VoUserAttitude(int likes, int unlikes) { likesNum = likes; unlikesNum = unlikes; }
-	 */
 	public int getLikes() {
-		return null==likes ? 0 : likes.size();
+		return null == likes ? 0 : likes.size();
 	}
-
 
 	public void setImages(List<Long> images) {
 		this.images = images;
@@ -164,67 +183,74 @@ public abstract class VoBaseMessage extends GeoLocation {
 		this.documents = documents;
 	}
 
-	public int markLikes( VoUser user, VoUser author, PersistenceManager pm) {
-		if( null == likes ) likes = new HashSet<Long>();
-		if( !likes.contains(user.getId())) {
+	public int markLikes(VoUser user, VoUser author, PersistenceManager pm) {
+		if (null == likes)
+			likes = new HashSet<Long>();
+		if (!likes.contains(user.getId())) {
 			int up = user.getPopularuty();
-			if( up == 0 ) author.setPopularuty( up = VoUser.BASE_USER_SCORE );
-			
+			if (up == 0)
+				author.setPopularuty(up = VoUser.BASE_USER_SCORE);
+
 			popularityScore += up;
 			likes.add(user.getId());
-			try{
-				if( null==author && 0!=authorId )
-					author = pm.getObjectById(VoUser.class,authorId);
+			try {
+				if (null == author && 0 != authorId)
+					author = pm.getObjectById(VoUser.class, authorId);
 				int ap = author.getPopularuty();
-				if( ap == 0 ) author.setImportancy( ap = VoUser.BASE_USER_SCORE );
-				int pDelta = (int) (Math.min( 100, (Math.max(1, up / 10)))); 
-				author.setPopularuty( ap + pDelta );
-			} catch(Exception e){ 
+				if (ap == 0)
+					author.setImportancy(ap = VoUser.BASE_USER_SCORE);
+				int pDelta = (int) (Math.min(100, (Math.max(1, up / 10))));
+				author.setPopularuty(ap + pDelta);
+			} catch (Exception e) {
 			}
 		}
 		pm.makePersistent(this);
 		return popularityScore;
 	}
 
-	public int markImportant( VoUser user, VoUser author, boolean isImportant, PersistenceManager pm) {
-		if( null == important ) important = new HashSet<Long>();
-		if( null == unimportant ) unimportant = new HashSet<Long>();
-		
+	public int markImportant(VoUser user, VoUser author, boolean isImportant, PersistenceManager pm) {
+		if (null == important)
+			important = new HashSet<Long>();
+		if (null == unimportant)
+			unimportant = new HashSet<Long>();
+
 		long userId = user.getId();
 		int ui = user.getImportancy();
-		if( ui == 0 ) user.setImportancy( ui = VoUser.BASE_USER_SCORE );
-		
+		if (ui == 0)
+			user.setImportancy(ui = VoUser.BASE_USER_SCORE);
+
 		int importancyK = 1;
-		
-		//switch important to unimportant or vice versa
-		if( important.contains( userId) && !isImportant){
+
+		// switch important to unimportant or vice versa
+		if (important.contains(userId) && !isImportant) {
 			importantScore -= ui;
 			important.remove(userId);
 			importancyK = 2;
-		} else 	if( unimportant.contains( userId ) && isImportant){
+		} else if (unimportant.contains(userId) && isImportant) {
 			importantScore += ui;
 			unimportant.remove(userId);
 			importancyK = 2;
 		}
-		
-		if( !important.contains(userId) && !unimportant.contains(userId)) {
-			
-			importantScore += ui * ( isImportant ? 1 : -1 ) ;
-			
-			if( isImportant ) 
+
+		if (!important.contains(userId) && !unimportant.contains(userId)) {
+
+			importantScore += ui * (isImportant ? 1 : -1);
+
+			if (isImportant)
 				important.add(userId);
-			else 
-				unimportant.add( userId);
-			
-			try{
-				if( null != author || 0!=authorId && null!= (author = pm.getObjectById(VoUser.class,authorId)) )
-					if( author.getId() != user.getId() ){
+			else
+				unimportant.add(userId);
+
+			try {
+				if (null != author || 0 != authorId && null != (author = pm.getObjectById(VoUser.class, authorId)))
+					if (author.getId() != user.getId()) {
 						int ai = author.getImportancy();
-						if( ai == 0 ) author.setImportancy( ai = VoUser.BASE_USER_SCORE );
-						int importancyDelta = importancyK * Math.min( 100, (Math.max (1, ui / 10 ))) * ( isImportant ? 1 : -1 );
-						author.setImportancy( ai + importancyDelta );
+						if (ai == 0)
+							author.setImportancy(ai = VoUser.BASE_USER_SCORE);
+						int importancyDelta = importancyK * Math.min(100, (Math.max(1, ui / 10))) * (isImportant ? 1 : -1);
+						author.setImportancy(ai + importancyDelta);
 					}
-			} catch(Exception e){
+			} catch (Exception e) {
 				Logger.getLogger(VoBaseMessage.class).error("Failed to change importancy.", e);
 			}
 		}
@@ -232,8 +258,6 @@ public abstract class VoBaseMessage extends GeoLocation {
 		return importantScore;
 	}
 
-
-	
 	public int getImportantScore() {
 		return importantScore;
 	}
@@ -242,14 +266,15 @@ public abstract class VoBaseMessage extends GeoLocation {
 		return popularityScore;
 	}
 
-	public Mark isImportant( long userId ){
-		return important!=null && important.contains( userId ) ? Mark.POSITIVE : unimportant !=null && unimportant.contains( userId ) ? Mark.NEGATIVE : Mark.NOTMARKED;
+	public Mark isImportant(long userId) {
+		return important != null && important.contains(userId) ? Mark.POSITIVE : unimportant != null && unimportant.contains(userId) ? Mark.NEGATIVE
+				: Mark.NOTMARKED;
 	}
 
-	public Mark isLiked( long userId ){
-		return likes != null && likes.contains( userId ) ? Mark.POSITIVE : Mark.NOTMARKED;
+	public Mark isLiked(long userId) {
+		return likes != null && likes.contains(userId) ? Mark.POSITIVE : Mark.NOTMARKED;
 	}
-	
+
 	public int getImportantNotificationSentDate() {
 		return importantNotificationSentDate;
 	}
@@ -258,20 +283,16 @@ public abstract class VoBaseMessage extends GeoLocation {
 		this.importantNotificationSentDate = importantNotificationSentDate;
 	}
 
-/*
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id =id;
-	}
-
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
-	protected long id;
-*/
-
+	/*
+	 * public long getId() { return id; }
+	 * 
+	 * public void setId(long id) { this.id =id; }
+	 * 
+	 * @PrimaryKey
+	 * 
+	 * @Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT) protected long
+	 * id;
+	 */
 
 	@Persistent
 	protected byte[] content;
@@ -279,15 +300,15 @@ public abstract class VoBaseMessage extends GeoLocation {
 	@Persistent
 	protected MessageType type;
 
-    @Persistent(table="vomsgimages")
-    @Join(column = "msgid")
-    @Element(column = "imageid")
+	@Persistent(table = "vomsgimages")
+	@Join(column = "msgid")
+	@Element(column = "imageid")
 	protected List<Long> images;
 
-    @Persistent(table="vomsgdocuments")
-    @Join(column = "msgid")
-    @Element(column = "documentid")
-    protected List<Long> documents;
+	@Persistent(table = "vomsgdocuments")
+	@Join(column = "msgid")
+	@Element(column = "documentid")
+	protected List<Long> documents;
 
 	@Persistent
 	protected long authorId;
@@ -299,24 +320,24 @@ public abstract class VoBaseMessage extends GeoLocation {
 	protected int editedAt;
 
 	protected int childMessageNum;
-	
+
 	@Persistent
-    @Serialized
+	@Serialized
 	protected Set<Long> likes;
-	
+
 	@Persistent
-    @Serialized
+	@Serialized
 	protected Set<Long> important;
 	@Persistent
-    @Serialized
+	@Serialized
 	protected Set<Long> unimportant;
-	
+
 	@Persistent
 	protected int importantScore;
-	
+
 	@Persistent
 	protected int popularityScore;
-	
+
 	@Persistent
 	protected int importantNotificationSentDate;
 

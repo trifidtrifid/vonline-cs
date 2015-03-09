@@ -1,135 +1,69 @@
 'use strict';
 
+var $ = require('jquery');
+// Чтобы Angular испольщовал нормальный jQuery
+global.jQuery = global.$ = $;
+
+var angular = require('angular');
+if (!angular.version) {
+    // эта версия Angular не работает с require
+    angular = global.angular;
+}
+
+require('jcrop');
+require('bootstrap');
+require('jquery-ui');
+require('datepicker');
+require('ace-extra');
+require('ace-elements');
+require('ace');
+require('fancybox');
+require('bootbox');
+
+var Thrift = require('thrift');
+global.Thrift = Thrift;
+
+console.log('2',Thrift,global.Thrift);
+
+require('bedata_types');
+require('messageservice_types');
+require('MessageService');
+require('DialogService');
+require('userservice_types');
+require('UserService');
+require('authservice_types');
+require('AuthService');
+require('utilityservces_types');
+require('UtilityService');
+require('fileutils_types');
+require('FileService');
+require('business_types');
+require('BusinessService');
+
+require('./angular/sanitize.js');
+require('./angular/linky-custom.js');
+require('./angular/angular-file-upload.js');
+require('./angular/ya-map-2.1.min.js');
+require('./bower_components/select2/select2.min.js');
+require('./bower_components/angular-ui-select2/src/select2.js');
+require('./angular/ng-infinite-scroll.js');
+
+require('angular-ui-router');
+require('angular-bootstrap');
+
+require('./directives.js');
+require('./services');
+require('./controllers');
+
 var main = angular.module('forum', [
   //'ngRoute',
   'ui.router',
+  'angularFileUpload',
  /* 'forum.filters',*/
   'forum.services',
   'forum.directives',
-  'forum.controllers'
-]);
+  //'forum.controllers',
+  'VOControllers'
+])
+    .config(require('./config'));
 
-main.config(function($stateProvider, $urlRouterProvider) {
-
-    $urlRouterProvider.otherwise("/main");
-
-    $stateProvider
-        .state('main', {
-            url: "/main",
-            templateUrl: "/static/partials/main.html",
-            controller: 'LentaController as lenta'
-        })
-        .state('wall-single', {
-            url: "/wall-single/:topicId",
-            templateUrl: "/static/partials/wall-single.html",
-            controller: 'WallSingleController as wallSingle'
-        })
-        .state('talks', {
-            url: "/talks",
-            templateUrl: "/static/partials/talks.html",
-            controller: 'TalksController as talks'
-        })
-        .state('talks-single', {
-            url: "/talks-single/:talkId",
-            templateUrl: "/static/partials/talks-single.html",
-            controller: 'TalksSingleController as talks'
-        })
-        .state('profit', {
-            url: "/profit",
-            templateUrl: "/static/partials/profit.html",
-            controller: 'AdvertsController as adverts'
-        })
-        .state('profit-single', {
-            url: "/profit-single/:advertId",
-            templateUrl: "/static/partials/profit-single.html",
-            controller: 'AdvertsSingleController as adverts'
-        })
-        .state('dialogs', {
-            url: "/dialogs",
-            templateUrl: "/static/partials/dialogs.html",
-            controller: 'dialogsController as dialogs'
-        })
-        .state('dialog-single', {
-            url: "/dialog-single/:dialogId",
-            templateUrl: "/static/partials/dialog-single.html",
-            controller: 'dialogController as dialog'
-        })
-        .state('neighbours', {
-            url: "/neighbours",
-            templateUrl: "/static/partials/neighbours.html",
-            controller: 'neighboursController as neighbours'
-        })
-        .state('profile', {
-            url: "/profile/:userId",
-            templateUrl: "/static/partials/profile.html",
-            controller: 'ProfileController as profile'
-        })
-        .state('profile.change-avatar', {
-            url: "/change-avatar",
-            templateUrl: "/static/partials/profile.changeAvatar.html",
-            controller: 'changeAvatarController as changeAvatar'
-        })
-        .state('settings', {
-            url: "/settings",
-            templateUrl: "/static/partials/settings.html",
-            controller: 'SettingsController as settings'
-        })
-        .state('maps', {
-            url: "/maps",
-            templateUrl: "/static/partials/maps.html",
-            controller: 'MapsController as maps'
-        })
-        .state('set-info', {
-            url: "/set-info",
-            templateUrl: "/static/partials/set-info.html",
-            controller: 'SetInfoController as setInfo'
-        })
-        .state('counters', {
-            url: "/counters",
-            templateUrl: "/static/partials/counters.html",
-            controller: 'CountersController as counters'
-        })
-        .state('counters-history', {
-            url: "/counters-history/:counterId",
-            templateUrl: "/static/partials/counters-history.html",
-            controller: 'CountersHistoryController as countersHistory'
-        })
-        .state('important', {
-            url: "/important",
-            templateUrl: "/static/partials/important.html",
-            controller: 'importantController as important'
-        })
-        .state('nearby', {
-            url: "/nearby",
-            templateUrl: "/static/partials/nearby.html",
-            controller: 'nearbyCtrl as nearby'
-        })
-        .state('nearby-single', {
-            url: "/nearby-single/:nearbyId",
-            templateUrl: "/static/partials/nearby-single.html",
-            controller: 'nearbySingleCtrl as nearby'
-        })
-        .state('rubrics', {
-            url: "/rubrics/:rubricId",
-            templateUrl: "/static/partials/rubrics.html",
-            controller: 'rubrics as talks'
-        })
-        .state('rubrics-single', {
-            url: "/rubric-single/:rubricId",
-            templateUrl: "/static/partials/rubrics-single.html",
-            controller: 'nearbySingleCtrl as nearby'
-        })
-        .state('blog', {
-            url: "/blog"
-        })
-        .state('about', {
-            url: "/about"
-        })
-        .state('contacts', {
-            url: "/contacts"
-        })
-});
-
-main.config(function($locationProvider){
-    $locationProvider.html5Mode(true);
-});

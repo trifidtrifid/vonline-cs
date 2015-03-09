@@ -2,6 +2,7 @@ package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
 import com.vmesteonline.be.jdo2.VoInviteCode;
+import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.VoUser;
 import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.postaladdress.*;
@@ -962,7 +963,7 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 			VoInviteCode inviteCode = VoInviteCode.getInviteCode(code, pm);
 			boolean addrConfirmed = (inviteCode.getPostalAddressId() == user.getAddress());
 			logger.info("User address ID="+user.getAddress()+" InviteCode address=" + inviteCode.getPostalAddressId() 
-					+" So adress confirmed=" + addrConfirmed);
+					+" So address confirmed=" + addrConfirmed);
 			user.setAddressConfirmed(addrConfirmed);
 			return addrConfirmed;
 		} catch (Exception e) {
@@ -1002,5 +1003,61 @@ public class UserServiceImpl extends ServiceImpl implements UserService.Iface {
 	private static int getUsersCountByGroup(long groupId, PersistenceManager pm) {
 		List<Long> results = executeQuery(  pm.newQuery("SQL","SELECT count(*) FROM `USERGROUPS` as g JOIN VOUSER as u ON u.ID=g.ID WHERE `GROUP`="+groupId +" AND u.emailConfirmed=true") );
 		return results.get(0).intValue();
+	}
+
+	@Override
+	public List<String> getAddressListByGroupId(long groupId) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+		return getVIsibleNamesByGroup(groupId, pm);
+	}
+
+	public static List<String> getVIsibleNamesByGroup(long groupId, PersistenceManager pm) {
+		Set<String> objects = new HashSet<String>();
+		VoUserGroup group = pm.getObjectById(VoUserGroup.class, groupId);
+
+		if (group.getGroupType() > GroupType.BUILDING.getValue()) {
+			String filter = VoHelper.createFilterByLocation(group, group.getRadius());
+			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class, filter).execute();
+			for (VoBuilding b : bgs) {
+				try {
+					VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
+					String streetName = vs.getName();
+					objects.add(streetName + " " + b.getFullNo());
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
+			}
+		} else if (group.getGroupType() == GroupType.BUILDING.getValue()) {
+			List<VoBuilding> bgs = (List<VoBuilding>) pm.newQuery(VoBuilding.class,
+					"longitude=='" + group.getLongitude() + "' && latitude=='" + group.getLatitude() + "'").execute();
+			for (VoBuilding b : bgs) {
+				try {
+					VoStreet vs = pm.getObjectById(VoStreet.class, b.getStreet());
+					String streetName = vs.getName();
+					objects.add(streetName + " " + b.getFullNo());
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
+			}
+		} else if (group.getGroupType() == GroupType.STAIRCASE.getValue()) {
+			objects.add("Прадная №" + group.getStaircase());
+
+		} else if (group.getGroupType() == GroupType.FLOOR.getValue()) {
+			objects.add( group.getFloor() + " этаж");
+		}
+		ArrayList<String> addressesList = new ArrayList<String>(objects);
+		Collections.sort(addressesList);
+		return addressesList;
+	}
+
+	@Override
+	public List<String> getAddressListByMessageId(long msgId) throws InvalidOperation, TException {
+		PersistenceManager pm = PMF.getPm();
+		try {
+			return getVIsibleNamesByGroup( pm.getObjectById(VoTopic.class, msgId).getUserGroupId(), pm);
+		} catch(Exception e){
+			e.printStackTrace();
+			return new ArrayList<String>();
+		}
 	}
 }

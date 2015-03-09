@@ -55,8 +55,7 @@ service UserService {
 	void updateContacts(1:bedata.UserContacts contacts) throws (1:error.InvalidOperation exc),
 	void updateFamily(1:bedata.UserFamily family) throws (1:error.InvalidOperation exc),
 	void updateInterests(1:bedata.UserInterests interests) throws (1:error.InvalidOperation exc),
-	void updateNotifications(1:bedata.Notifications notifications) throws (1:error.InvalidOperation exc),
-		
+	void updateNotifications(1:bedata.Notifications notifications) throws (1:error.InvalidOperation exc),		
 	
 	list<bedata.Country> getCounties() throws (1:error.InvalidOperation exc),
 	list<bedata.City> getCities(1:i64 countryId) throws (1:error.InvalidOperation exc),
@@ -78,4 +77,7 @@ service UserService {
 	void updateUserAddress( 1:i32 staircase, 2:i32 floor, 3:i32 flatNo) throws (1:error.InvalidOperation exc),
 	
 	void updateUserServices( 1:map<bedata.ServiceType,bool> newServiceStauses ) throws (1:error.InvalidOperation exc),
+	
+	list<string> getAddressListByGroupId( 1:i64 groupId ) throws (1:error.InvalidOperation exc),
+	list<string> getAddressListByMessageId( 1:i64 msgId ) throws (1:error.InvalidOperation exc),		
 }

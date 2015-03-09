@@ -1,7 +1,7 @@
 
 .user-descr
   font-size 14px
-  .ava-area
+  /*.ava-area
     float left
     width 200px
     padding 10px 0 0 0
@@ -11,14 +11,14 @@
       font-size 24px
     .user-rating
       text-align center
-      margin 10px 0 10px 0
-  .soc-accounts
+      margin 10px 0 10px 0*/
+  /*.soc-accounts
     float right
     width 180px
     padding 10px 0 0 0
     .fa
       font-size 34px
-      margin 10px 5px 0 5px
+      margin 10px 5px 0 5px*/
   .text-area
     //margin 0 0 0 10px
     .user-head
@@ -27,63 +27,138 @@
         margin-bottom 0
       a
         color #CCCCCC
-      .confirm-alert
+      /*.confirm-alert
         float right
         font-weight bold
-        margin 17px 10px 0 0
-    .account-no-confirm
+        margin 17px 10px 0 0*/
+    /*.account-no-confirm
       margin-top 20px
       input[type="text"]
         width 200px
+        display inline-block*/
+
+
+.user-body
+  margin 15px 0 0 0
+  line-height 26px
+  .profile-item
+    border-bottom 1px solid #cecece
+    padding-bottom 10px
+    margin-bottom 10px
+    &.last
+      border-bottom 0
+  h3
+    font-size 20px
+    margin-top 0
+  h4
+    font-size 16px
+  span
+    display inline-block
+  /*.user-addresses
+    padding-bottom 30px
+    span
+      display inline-block
+      margin-right 15px
+      width auto
+      padding 3px 0
+    a
+      font-size 12px
+    .add-user-address
+      margin 10px 0
+    .edit-user-addr
+      vertical-align middle
+      display inline-block
+    .remove-user-addr
+      color #ff0000
+      vertical-align middle
+      margin-left 5px
+      text-decoration none
+      display inline-block
+      font-size 18px*/
+  /*.form-edit
+    display none
+    .ui-helper-hidden-accessible
+      display none
+    input
+      margin-bottom 10px*/
+  .user-body-left
+    .btn
+      padding 4px 8px
+    .logo-container
+      position relative
+      width 150px
+      height 150px
+      .change-avatar-link
+        background rgba(0,0,0,.3)
+        text-align center
+        color #fff
+        display block
+        position relative
+        top -26px
+        &:hover
+          text-decoration none
+    .ace-file-input
+      position absolute
+      top 0
+      bottom 0
+      left 0
+      right 0
+      input
+        height 0
+      .file-label
+        height 150px
+        width 150px
+        background rgba(255,255,255,.1)
+        line-height 100px
+        border none
+        &:before
+          background rgba(0,0,0,.4)
+          color #fff
+          bottom 0
+          top auto
+          height 30px
+          margin 0
+          font-size 14px
+          font-weight bold
+          position absolute
+      .file-name
         display inline-block
-    .user-body
-      margin 15px 0 0 0
-      line-height 26px
-      .user-body-left .btn
-        padding 4px 8px
-      .profile-item
-        border-bottom 1px solid #cecece
-        padding-bottom 10px
-        margin-bottom 10px
-        &.last
-          border-bottom 0
-      h3
-        font-size 20px
-        margin-top 0
-      h4
-        font-size 16px
-      span
+        vertical-align middle //
+    .rating
+      text-align center
+      /*margin-top -20px
+      position relative
+      z-index 2*/
+      .rating-item
         display inline-block
-      .user-addresses
-        padding-bottom 30px
+        margin 0 10px
+        a
+          display inline-block
+          margin-right 5px
+          font-size 18px
         span
           display inline-block
-          margin-right 15px
-          width auto
-          padding 3px 0
-        a
-          font-size 12px
-        .add-user-address
-          margin 10px 0
-        .edit-user-addr
-          vertical-align middle
-          display inline-block
-        .remove-user-addr
+        .fa-star
+          color #ffea4a
+        .fa-heart
           color #ff0000
-          vertical-align middle
-          margin-left 5px
-          text-decoration none
-          display inline-block
-          font-size 18px
-      .form-edit
-        display none
-        .ui-helper-hidden-accessible
-          display none
-        input
-          margin-bottom 10px
+    img
+      max-width 150px
+      max-height 150px
+      display block
+      margin 0 auto
+      &.new
+        width 150px
+        height 150px
+        background-position center center
+  .user-body-right
+    margin-left 170px
+    .home-map
+      padding 0 10px 10px 0
+      img
+        width 100%
+        display block
 
-/*.short.form-control
-  width 75px !important*/
 
 .datepicker-simple
   width 470px !important
@@ -107,6 +182,91 @@
 
 .loading
   width 40px
+
+.fa-star
+.fa-heart
+  color #CCCCCC
+  font-size 16px
+  margin-right 3px
+  margin-top 4px
+
+/* change-avatar */
+.ui-dialog .ui-dialog-titlebar
+  background #fff
+
+.ui-dialog .ui-dialog-titlebar-close
+  float right
+
+.ui-dialog .ui-dialog-content
+  padding 0
+
+.loadAvatar-area
+  h2
+    margin-top 0
+    margin-bottom 30px
+
+.load-avatar
+  display block
+  width 150px
+  margin 0 auto
+  padding 0
+  border-width 0
+  border 0
+  &:active
+  &:focus
+    border 0
+    outline none
+  //background inherit !important
+  .ace-file-input
+  .file-label
+    margin-bottom 0
+  .file-label
+    font-weight normal
+    color #fff
+    background-color inherit
+    margin 0
+    border 0
+    &:before
+      color #fff
+      background-color inherit
+      font-weight normal
+      border 0
+      margin 0
+      font-size 16px
+  img
+    max-width 500px
+    max-height 500px
+
+.btn-back
+  margin 10px 0
+
+.ui-dialog-content
+  text-align center
+
+#image-for-crop
+  min-width 200px
+  min-height 200px
+//width auto !important
+//height auto !important
+
+.preview-container
+  overflow hidden
+  width 150px
+  height 150px
+  margin 0 auto
+
+.jcrop-holder
+  background transparent !important
+  overflow hidden
+  margin 0 auto
+
+.load-avatar-error
+  padding 0 10px
+
+.crop-area .loading
+  width 30px !important
+  height auto
+  padding 0
 
 @media all and (max-width: 1024px)
   .user-descr

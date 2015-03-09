@@ -74,18 +74,18 @@
                     </div>
 
                     <div class="btn-group attach-dropdown pull-left">
-                        <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
+                        <button data-toggle="dropdown" ng-click="base.toggleAttachDropdown($event,lenta)" class="btn btn-info btn-sm dropdown-toggle no-border" data-producerid="0">
                             <span class="btn-group-text">Прикрепить</span>
                             <span class="icon-caret-down icon-on-right"></span>
                         </button>
 
-                        <ul class="dropdown-menu dropdown-blue" ng-show="lenta.isEdit">
+                        <ul class="dropdown-menu dropdown-blue" ng-show="lenta.isEdit && base.isAttachDropdownShow[lenta.id]">
                             <li><input id="attachImage-edit-{{lenta.id}}" type="file"/></li>
                             <li><input id="attachDoc-edit-{{lenta.id}}" type="file"/></li>
                             <li><a href="#" ng-click="base.showPoll($event,lenta)" ng-show="lenta.isPollAvailable">Опрос</a></li>
                         </ul>
 
-                        <ul class="dropdown-menu dropdown-blue" ng-hide="lenta.isEdit">
+                        <ul class="dropdown-menu dropdown-blue" ng-hide="lenta.isEdit || !base.isAttachDropdownShow[lenta.attachId]">
                             <li><input id="attachImage-{{lenta.attachId}}" type="file"/></li>
                             <li><input id="attachDoc-{{lenta.attachId}}" type="file"/></li>
                             <li><a href="#" ng-click="base.showPoll($event,lenta)" ng-show="lenta.isPollAvailable">Опрос</a></li>
@@ -129,23 +129,33 @@
                                     <a href="#" title="Редактировать" ng-click="base.setEdit($event,wallItem.topic,false)" class="fa fa-pencil pull-right"></a>
                                 </div>
 
-                                <span class="label label-lg arrowed lenta-item-hashtag pull-right"
-                                        ng-class="wallItem.tagColor">{{wallItem.label}}</span>
+                                <span ng-mouseenter="base.showGroupAdressesList(wallItem.topic.message.id)" ng-mouseleave="base.hideGroupAdressesList(wallItem.topic.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
+                                        ng-class="wallItem.tagColor">
+                                    {{wallItem.label}}
+                                </span>
+                                <ul ng-show="base.isAddresesListShow[wallItem.topic.message.id]" class="pull-right group-addresses-list group-addresses-list-type2">
+                                    <li ng-repeat="item in base.groupAddresesList[wallItem.topic.message.id]">{{item}}</li>
+                                </ul>
+
                                 <div class="name">
                                     <a ui-sref="profile({userId: {{ wallItem.topic.userInfo.id }} })">{{wallItem.topic.authorName}}</a>
                                 </div>
 
                                 <div ng-hide="wallItem.topic.isEdit">
 
-                                    <div ng-class="{folding:!wallItem.topic.isFullText}" class="text" ng-bind-html="wallItem.topic.message.content"></div>
+                                    <!--<div ng-class="{folding:!wallItem.topic.isFullText}" class="text" ng-bind-html="wallItem.topic.message.content"></div>
 
                                     <div ng-if="wallItem.topic.message.content.length >= base.contentLength">
                                         <a href="#" ng-click="base.toggleFullText(wallItem.topic)">
                                             <span ng-hide="wallItem.topic.isFullText">читать далее...</span>
                                             <span ng-show="wallItem.topic.isFullText">свернуть</span>
                                         </a>
+                                    </div>-->
+                                    <div ng-if="wallItem.topic.message.content.length < base.contentLength">
+
+                                        <div class="text" ng-bind-html="wallItem.topic.message.content"></div>
                                     </div>
-                                    <!--<div ng-if="wallItem.topic.message.content.length >= base.contentLength">
+                                    <div ng-if="wallItem.topic.message.content.length >= base.contentLength">
                                         <div class="text" ng-hide="wallItem.topic.isFullText">
                                             <div ng-bind-html="wallItem.topic.message.content.slice(0,base.contentLength-1)"></div>
                                             <div><a href="#" ng-click="base.toggleFullText(wallItem.topic)">читать далее...</a></div>
@@ -155,7 +165,7 @@
 
                                             <div><a href="#" ng-click="base.toggleFullText(wallItem.topic)">свернуть</a></div>
                                         </div>
-                                    </div>-->
+                                    </div>
 
                                     <div class="attached" ng-show="wallItem.topic.message.images.length || wallItem.topic.message.documents.length">
                                         <div class="attached-img-wrap" ng-class="{foldingImg : !wallItem.topic.isFullText}">
@@ -252,23 +262,22 @@
 
                                     <div ng-hide="wallMessage.isEdit">
 
-                                        <div ng-class="{folding:!wallMessage.isFullText}" class="text" ng-bind-html="wallMessage.content"></div>
+                                        <!--<div ng-class="{folding:!wallMessage.isFullText}" class="text" ng-bind-html="wallMessage.content"></div>
 
                                         <div ng-if="wallMessage.content.length >= base.contentLength">
                                             <a href="#" ng-click="base.toggleFullText(wallMessage)">
                                                 <span ng-hide="wallMessage.isFullText">читать далее...</span>
                                                 <span ng-show="wallMessage.isFullText">свернуть</span>
                                             </a>
-                                        </div>
+                                        </div>-->
 
-                                        <!--<div ng-if="wallMessage.content.length < base.contentLength">
+                                        <div ng-if="wallMessage.content.length < base.contentLength">
 
                                             <div class="text" ng-bind-html="wallMessage.content"></div>
                                         </div>
                                         <div ng-if="wallMessage.content.length >= base.contentLength">
                                             <div class="text" ng-hide="wallMessage.isFullText">
-                                                <!-- .slice(0,base.contentLength-1)
-                                                <div class="folding" ng-bind-html="wallMessage.content"></div>
+                                                <div ng-bind-html="wallMessage.content.slice(0,base.contentLength-1)"></div>
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">читать далее...</a></div>
                                             </div>
                                             <div class="text" ng-show="wallMessage.isFullText">
@@ -276,7 +285,7 @@
 
                                                 <div><a href="#" ng-click="base.toggleFullText(wallMessage)">свернуть</a></div>
                                             </div>
-                                        </div>-->
+                                        </div>
 
                                         <div class="attached" ng-show="wallMessage.images.length || wallMessage.documents.length">
                                             <div class="attached-img-wrap" ng-class="{foldingImg : !wallMessage.isFullText}">
@@ -310,8 +319,14 @@
                     <div class="wallitem-topic" ng-switch-when="1">
                         <div class="talks-title">
                             <div class="talks-title-right">
-                                <span class="label label-lg arrowed lenta-item-hashtag pull-right"
-                                      ng-class="wallItem.tagColor">{{wallItem.label}}</span>
+                                <span ng-mouseenter="base.showGroupAdressesList(wallItem.topic.message.id)" ng-mouseleave="base.hideGroupAdressesList(wallItem.topic.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
+                                      ng-class="wallItem.tagColor">
+                                    {{wallItem.label}}
+                                </span>
+                                <ul ng-show="base.isAddresesListShow[wallItem.topic.message.id]" class="pull-right group-addresses-list">
+                                    <li ng-repeat="item in base.groupAddresesList[wallItem.topic.message.id]">{{item}}</li>
+                                </ul>
+
 
                                 <a class="pull-right important-status" ng-class="{'important' : wallItem.topic.message.important == 1}" title='{{ wallItem.topic.message.importantText }}' href="#" ng-click="base.markImportant($event,wallItem.topic.message)"><i class="fa fa-star"></i></a>
                                 <a class="pull-right like-status" ng-class="{'isLike' : wallItem.topic.message.like == 1}" title='Нравится' href="#" ng-click="base.markLike($event,wallItem.topic.message)"><i class="fa fa-heart"></i></a>

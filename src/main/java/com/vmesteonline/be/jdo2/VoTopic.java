@@ -12,7 +12,9 @@ import javax.jdo.annotations.Index;
 import javax.jdo.annotations.Indices;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import java.util.List;
         @Index(name="lastUp_IDX", members={"lastUpdate"}),
         @Index(name="userGroupId_IDX", members={"userGroupId"}),
         @Index(name="type_vg_idx", members={"type"}),
+        @Index(name="original_idx", members={"original"}),
         @Index(name="type_vg_idx", members={"type", "isImportant", "lastUpdate"}),
 		@Index(name="location_and_gtype", members={"userGroupType", "latitude", "longitude"}),
 		@Index(name="createDate_IDX", members={"createDate"})
@@ -42,10 +45,13 @@ public class VoTopic extends VoBaseMessage {
 		rubricId = topic.getRubricId();
 		userGroupId = topic.getMessage().getGroupId();
 		createDate = lastUpdate = (int) (System.currentTimeMillis() / 1000);
-		userGroupType = pm.getObjectById(VoUserGroup.class, userGroupId ).getGroupType();
+		userGroupType =  null == topic.groupType ?  
+				pm.getObjectById(VoUserGroup.class, userGroupId ).getGroupType() : 
+					topic.groupType.getValue();;
 		latitude = author.getLatitude().toPlainString();
 		longitude = author.getLongitude().toPlainString();
 		authorId = author.getId();
+		original = 0;
 	}
 
 
@@ -80,13 +86,40 @@ public class VoTopic extends VoBaseMessage {
 			try {
 				VoPoll voPoll = pm.getObjectById(VoPoll.class, pollId);
 				tpc.poll = voPoll.getPoll(userId);
-			} catch (Exception e) {
+			} catch (RuntimeException e) {
+				tpc.poll = null;
+				e.printStackTrace();
+		  } catch (Exception e) {
+		  	tpc.poll = null;
+		  	e.printStackTrace();
 			}
 		}
 		tpc.setRubricId( rubricId );
 		return tpc;
 	}
 
+	private VoTopic( VoTopic t, String latitude, String longitude, GroupType gt, PersistenceManager pm) throws InvalidOperation{
+		super(t);
+		//coptTopic
+		subject = t.getSubject();
+		messageNum = 0;
+		usersNum = 1;
+		viewers = 1;
+		rubricId = t.getRubricId();
+		userGroupId = t.getUserGroupId();
+		createDate = lastUpdate = (int) (System.currentTimeMillis() / 1000);
+		userGroupType =  null == gt ? t.getUserGroupType() : gt.getValue();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		authorId = t.authorId;
+		this.original = t.getId();
+		userGroupId = VoUserGroup.getDefaultGroup( latitude, longitude, userGroupType, pm );
+		
+	}
+	
+	public VoTopic createCopy(BigDecimal lat, BigDecimal lon, GroupType gt, PersistenceManager pm) throws InvalidOperation {		
+		return new VoTopic( this, lat.toPlainString(), lon.toPlainString(), gt, pm);
+	}
 	public GroupType getGroupType(){
 		return GroupType.findByValue( userGroupType );
 	}
@@ -190,4 +223,8 @@ public class VoTopic extends VoBaseMessage {
 
 	@Persistent
 	private int userGroupType;
+
+	@Persistent
+	private long original;
+
 }

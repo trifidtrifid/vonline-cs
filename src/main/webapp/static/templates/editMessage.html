@@ -35,12 +35,12 @@
          используются только для создания сообщений НЕ первого уровня в обсуждении
          -->
         <div class="btn-group attach-dropdown pull-right">
-            <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle no-border">
+            <button data-toggle="dropdown" ng-click="base.toggleAttachDropdown($event,null,ctrlId)" class="btn btn-info btn-sm dropdown-toggle no-border">
                 <span class="btn-group-text">Прикрепить</span>
                 <span class="icon-caret-down icon-on-right"></span>
             </button>
 
-            <ul class="dropdown-menu dropdown-blue">
+            <ul class="dropdown-menu dropdown-blue" ng-show="base.isAttachDropdownShow[ctrlId]">
                 <li><input id="attachImage-edit-{{ctrlId}}" type="file"/></li>
                 <li><input id="attachDoc-edit-{{ctrlId}}" type="file"/></li>
             </ul>

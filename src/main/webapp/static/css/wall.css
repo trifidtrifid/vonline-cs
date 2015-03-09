@@ -1,0 +1,83 @@
+.lenta-item .wallitem-message,
+.lenta-item .wallitem-topic {
+  margin: 0 10px;
+}
+.lenta-item .wallitem-message {
+  padding-top: 10px;
+  border-top: 1px solid #5090c1;
+}
+.lenta-item .wallitem-message.wall-single {
+  border: 0;
+}
+.lenta-item .wallitem-message .input-group {
+  display: block;
+}
+.lenta-item .wallitem-message .input-group .input-group-btn {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.lenta-item .first-message {
+  border: 1px solid #d7dbdd;
+  position: relative;
+  padding: 5px;
+}
+.lenta-item .first-message .user {
+  float: left;
+}
+.lenta-item .first-message .user img {
+  width: 100px;
+}
+.lenta-item .first-message .body {
+  margin-left: 90px;
+  padding-bottom: 25px;
+}
+.lenta-item .first-message .body .time {
+  float: right;
+}
+.lenta-item .first-message .body .tools {
+  position: absolute;
+  right: 5px;
+}
+.lenta-item .first-message .poll {
+  padding-bottom: 20px;
+}
+.lenta-item .first-message .poll .lbl:before {
+  margin-right: 10px;
+}
+.lenta-item .first-message .poll h5 {
+  font-family: tahoma, arial;
+}
+.lenta-item .dialogs {
+  clear: left;
+  margin: 0 0 0 30px;
+  padding-top: 11px;
+  padding-right: 0;
+}
+.lenta-item .lenta-item-bottom {
+  position: absolute;
+  bottom: 3px;
+  width: 100%;
+  margin-left: -95px;
+  padding-left: 95px;
+  padding-right: 15px;
+  font-size: 12px;
+}
+.lenta-item:last-child .wallitem-message {
+  border-bottom: 1px solid #5090c1;
+}
+.lenta-item .wallitem-topic .talks-title {
+  border-bottom: 0;
+}
+.lenta-item .show-all-comments {
+  text-align: center;
+  padding: 5px 0;
+  margin-top: -9px;
+  font-size: 13px;
+}
+.lenta .bottom-border-line {
+  height: 1px;
+  background: #5090c1;
+  margin: 0 10px;
+}

@@ -1,29 +1,42 @@
 package com.vmesteonline.be.notifications;
 
+import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
 import com.vmesteonline.be.UserServiceImpl;
 import com.vmesteonline.be.data.PMF;
-import com.vmesteonline.be.jdo2.*;
+import com.vmesteonline.be.jdo2.VoBaseMessage;
+import com.vmesteonline.be.jdo2.VoMessage;
+import com.vmesteonline.be.jdo2.VoSession;
+import com.vmesteonline.be.jdo2.VoTopic;
+import com.vmesteonline.be.jdo2.VoUser;
+import com.vmesteonline.be.jdo2.VoUserGroup;
 import com.vmesteonline.be.jdo2.dialog.VoDialog;
 import com.vmesteonline.be.jdo2.dialog.VoDialogMessage;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.NotificationFreq;
 import com.vmesteonline.be.utils.EMailHelper;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.log4j.Logger;
-
-import javax.jdo.Extent;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import javax.management.PersistentMBean;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.*;
-
-import static com.vmesteonline.be.utils.VoHelper.executeQuery;
+import com.vmesteonline.be.utils.VoHelper;
 
 public abstract class Notification {
 
@@ -44,11 +57,11 @@ public abstract class Notification {
 
 	public abstract void makeNotification(Set<VoUser> users, PersistenceManager pm);
 
-	protected Map<VoUser, List<NotificationMessage>> messagesToSend = new HashMap<VoUser, List<NotificationMessage>>();
+	protected Map<VoUser, List<NotificationMessage>> messagesToSend = new TreeMap<VoUser, List<NotificationMessage>>();
 
 	protected Set<VoUser> createRecipientsList(PersistenceManager pm) {
 
-		Set<VoUser> userSet = new HashSet<VoUser>();
+		Set<VoUser> userSet = new TreeSet<VoUser>();
 
 		int now = (int) (System.currentTimeMillis() / 1000L);
 		int dayAgo = (int) now - 86400;
@@ -58,7 +71,7 @@ public abstract class Notification {
 		Query q = pm.newQuery("SQL","SELECT ID FROM VOUSER WHERE emailConfirmed=true AND notificationsFreq<>"+NotificationFreq.NEVER.getValue()+" AND ("
 				+ "notificationsFreq = "+NotificationFreq.DAYLY.getValue()+" AND lastNotified<"+dayAgo
 				+ " OR notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+threeDaysAgo
-				+ " OR notificationsFreq = "+NotificationFreq.TWICEAWEEK.getValue()+" AND lastNotified<"+weekAgo+")");
+				+ " OR notificationsFreq = "+NotificationFreq.WEEKLY.getValue()+" AND lastNotified<"+weekAgo+")");
 		
 		List<Long> userIdList = executeQuery(q);
 		for( Long uid : userIdList){
@@ -79,6 +92,11 @@ public abstract class Notification {
 			uns = new ArrayList<NotificationMessage>();
 		uns.add(mn);
 		messagesToSend.put(u, uns);
+	}
+
+	public static String createContactHref(VoUser nn) {
+		String contactTxt = "<a href=\"https://"+host+"/profile/"+nn.getId()+"\">"+StringEscapeUtils.escapeHtml4(nn.getName() + " " + nn.getLastName())+"</a>";
+		return contactTxt;
 	}
 
 	protected static Map<Long, Set<VoUser>> arrangeUsersInGroups(Set<VoUser> users) {
@@ -125,7 +143,7 @@ public abstract class Notification {
 		try {
 			body += "Адрес: "+pm.getObjectById(VoPostalAddress.class, author.getAddress()).getAddressText(pm)+"<br/>";
 		} catch (Exception e) {
-			body += "Адрес: пользовтеля не существует address="+author.getAddress()+"<br/>";
+			body += "Адрес: пользовтеля не существует address="+author.getAddress() +"<br/>";
 		}
 		body += "Тип: "+msg.getType()+"<br/>";
 		body += msg instanceof VoTopic ? ("Топик в группе: "+((VoTopic) msg).getGroupType().toString()) :
@@ -239,5 +257,20 @@ public abstract class Notification {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static void sendMessageResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
+		PersistenceManager pm = PMF.getPm();
+		String subj = topic.getSubject();
+		String shortMsg = subj != null && subj.length() > 0 ? VoHelper.getShortMessageForm(subj, 32, 50) : VoHelper.getShortMessageForm(topic.getContent(), 32, 50);
+		String subject = "новый комментарий в обсуждении: " + shortMsg ;
+		VoUser author = pm.getObjectById(VoUser.class, authorId);
+		String body = author.getName()+", <br/><p>Пользователь " + Notification.createContactHref(responder) + ", в обсуждении темы '<i>"+subject+"</i>' оставил комментарий:</p>";
+		body += "<p><i>" + msg.getContent() + "</i></p>";
+		decorateAndSendMessage(author, subject, body);							
+	}
+
+	public static void sendTopicResponse(VoTopic topic, VoUser responder, VoMessage msg, Long authorId) {
+		sendMessageResponse(topic, responder, msg, authorId);
 	}
 }

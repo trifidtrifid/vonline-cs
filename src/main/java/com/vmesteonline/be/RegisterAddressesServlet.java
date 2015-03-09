@@ -1,11 +1,16 @@
 package com.vmesteonline.be;
 
 import com.vmesteonline.be.data.PMF;
+import com.vmesteonline.be.jdo2.GeoLocation;
 import com.vmesteonline.be.jdo2.VoInviteCode;
+import com.vmesteonline.be.jdo2.VoTopic;
 import com.vmesteonline.be.jdo2.postaladdress.*;
+import com.vmesteonline.be.thrift.GroupType;
 import com.vmesteonline.be.thrift.InvalidOperation;
 import com.vmesteonline.be.thrift.VoError;
+import com.vmesteonline.be.thrift.userservice.UserService;
 import com.vmesteonline.be.utils.CSVHelper;
+import com.vmesteonline.be.utils.Defaults;
 import com.vmesteonline.be.utils.EMailHelper;
 import com.vmesteonline.be.utils.StorageHelper;
 import com.vmesteonline.be.utils.VoHelper;
@@ -56,6 +61,8 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 
 	private void processReq(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		String fileLink = req.getParameter("file");
+		String l4n = req.getParameter("l4n");
+		String topicsToCreate = req.getParameter("topics");
 		if (null == fileLink) {
 			resp.getOutputStream().write("Error: Parameter 'file' must be set".getBytes());
 			return;
@@ -88,6 +95,16 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 			int currentPos = 0;
 
 			Set<String> codeSet = new HashSet<>();
+			VoBuilding lastVB = null;
+			
+			List<VoTopic> topicsToCopy = null;
+			if( null!=topicsToCreate){
+				topicsToCopy = new ArrayList<VoTopic>();
+				for( String tiS : topicsToCreate.split(",")){
+					topicsToCopy.add(pm.getObjectById(VoTopic.class, Long.parseLong(tiS.trim())));
+				}
+			}
+			
 			do {
 				List<String> firstLine = csvData.get(currentPos);
 
@@ -98,11 +115,25 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 				String fullNo = null == korp || 0 == korp.trim().length() || korp.trim().equals("0") ? firstLine.get(5) : firstLine.get(5)
 						+ (korp.matches("[1-9]+") ? "к" + korp : korp);
 				vb = VoBuilding.createVoBuilding(firstLine.get(1), cs, fullNo, null, null, pm);
+				
+				if( vb != lastVB && topicsToCopy!=null){
+					List<VoTopic> createdTopics = new ArrayList<VoTopic>();
+					for( VoTopic topic: topicsToCopy){
+						createdTopics.add(topic.createCopy(vb.getLatitude(), vb.getLongitude(), GroupType.BUILDING, pm));
+					}
+					pm.makePersistentAll(createdTopics);
+				}
+				lastVB = vb;
 
 				// insert Building address
-				csvData.add(Arrays.asList(new String[] { firstLine.get(0), firstLine.get(1), firstLine.get(2), firstLine.get(3), firstLine.get(4),
-						firstLine.get(5), firstLine.get(6), "0", "0", "0" }));
-				currentPos = initPostalAddresses(csvData, pm, vb, currentPos, codeSet);
+				csvData.add(new ArrayList<String>(Arrays.asList(new String[] { firstLine.get(0), firstLine.get(1), firstLine.get(2), firstLine.get(3), firstLine.get(4),
+						firstLine.get(5), firstLine.get(6), "0", "0", "0"  })));
+				try {
+					currentPos = initPostalAddresses(csvData, pm, vb, currentPos, codeSet, 
+							null!=l4n ? new UserServiceImpl() : null);
+				} catch (Exception e) {					
+					e.printStackTrace();
+				}
 			} while (currentPos != -1);
 			baos = new ByteArrayOutputStream();
 			List<List<String>> fullcsvData = new ArrayList<>();
@@ -125,7 +156,7 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 		return;
 	}
 
-	private int initPostalAddresses(List<List<String>> rows, PersistenceManager pm, VoBuilding vb, int offset, Set<String> codeSet)
+	private int initPostalAddresses(List<List<String>> rows, PersistenceManager pm, VoBuilding vb, int offset, Set<String> codeSet, UserServiceImpl usi)
 			throws InvalidOperation {
 
 		if (rows.size() < offset)
@@ -133,25 +164,58 @@ public class RegisterAddressesServlet extends QueuedServletWithKeyHelper {
 
 		List<String> nextItem = rows.get(offset);
 		String addrLIneToCheck = nextItem.get(2) + nextItem.get(3) + nextItem.get(4) + nextItem.get(5) + nextItem.get(6);
-
-		for (int index = offset; index < rows.size(); index++) {
-
-			List<String> items = rows.get(index);
-			if (addrLIneToCheck.equalsIgnoreCase(nextItem.get(2) + nextItem.get(3) + nextItem.get(4) + nextItem.get(5) + nextItem.get(6))) {
-
-				VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(vb, Byte.parseByte(items.get(7)), (byte) Integer.parseInt(items.get(9)),
-						Integer.parseInt(items.get(8)), null, pm);
-				pm.makePersistent(pa);
-
-				VoInviteCode ic = VoHelper.createNewInviteCode(2, 4, pa, codeSet, pm);
-
-				pm.makePersistent(ic);
-				items.set(0, ic.getCode());
-			} else {
-				return offset;
-			}
+		
+		long neibCount = 0;
+		
+		if( null!=usi ){
+			GeoLocation buildingLoc = new GeoLocation();
+			buildingLoc.setLatitude( vb.getLatitude());
+			buildingLoc.setLongitude(vb.getLongitude());
+			
+			List<Long> neibCountL = VoHelper.executeQuery( pm.newQuery("SQL", "SELECT count(*) from VOUSER WHERE emailConfirmed AND "+VoHelper.createFilterByLocation(buildingLoc, Defaults.radiusNeighbors).replace("&&", "AND")));
+			neibCount = neibCountL.get(0);
 		}
+		List<VoInviteCode> codeGenerated = new ArrayList<>();
+		try {
+			for (int index = offset; index < rows.size(); index++) {
+
+				List<String> items = rows.get(index);
+				if (addrLIneToCheck.equalsIgnoreCase(nextItem.get(2) + nextItem.get(3) + nextItem.get(4) + nextItem.get(5) + nextItem.get(6))) {
+
+					VoPostalAddress pa = VoPostalAddress.createVoPostalAddress(vb, Byte.parseByte(items.get(7)), (byte) Integer.parseInt(items.get(9)),
+							Integer.parseInt(items.get(8)), null, pm);
+					pm.makePersistent(pa);
+
+					VoInviteCode ic;
+					codeGenerated.add( ic = VoHelper.createNewInviteCode(2, 4, pa, codeSet, pm));
+					if( null!=usi ){
+						//request returns number of users registered on floor, staircase and building
+						while( items.size()<=13 ) items.add("");
+						items.set(10,""+neibCount); //10,11,12,13
+						String query = "select groupType,COUNT(*) "
+								+ " FROM USERGROUPS ugs LEFT JOIN VOUSERGROUP ug ON ug.ID=ugs.GROUP"
+								+ " WHERE longitude='"+vb.getLongitude()+"' AND latitude='"+vb.getLatitude()+"' AND ("
+								+ "groupType=4 OR staircase="+pa.getStaircase()+" AND (groupType=3 OR floor="+pa.getFloor()+" AND groupType=2)) "
+										+ "GROUP BY `GROUP`";
+						List<Object[]> neidbsL = VoHelper.executeQuery( pm.newQuery( "SQL", query));
+						logger.debug("Next address: "+pa);
+						for( Object[] line : neidbsL ){
+							logger.debug("GroupType: " + (Integer)line[0] + " counter: " +(Long)line[1]);
+							if( null!=line[0])
+								items.set( (int) (15 - (Integer)line[0]), ""+(Long)line[1]);
+						}						
+					}
+					items.set(0, ic.getCode());
+				} else {					
+					return index;
+				}
+			}
+		} catch( Exception e){
+			e.printStackTrace();
+		}finally {
+			if( codeGenerated.size() > 0 ) 
+				pm.makePersistentAll(codeGenerated);
+		}		
 		return -1;
 	}
-
 }

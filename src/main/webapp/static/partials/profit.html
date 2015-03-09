@@ -15,8 +15,12 @@
             <div class="talks-title" ng-repeat="advert in adverts.topics" id="{{advert.id}}">
 
                 <div class="talks-title-right">
-                    <span class="label label-lg arrowed lenta-item-hashtag pull-right"
+                    <span ng-mouseenter="base.showGroupAdressesList(advert.message.id)" ng-mouseleave="base.hideGroupAdressesList(advert.message.id)" class="label label-lg arrowed lenta-item-hashtag pull-right"
                           ng-class="advert.tagColor">{{advert.label}}</span>
+                    <ul ng-show="base.isAddresesListShow[advert.message.id]" class="pull-right group-addresses-list">
+                        <li ng-repeat="item in base.groupAddresesList[advert.message.id]">{{item}}</li>
+                    </ul>
+
                     <div class="clearfix"></div>
 
                 </div>

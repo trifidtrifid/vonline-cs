@@ -6,7 +6,9 @@ import com.vmesteonline.be.jdo2.postaladdress.VoBuilding;
 import com.vmesteonline.be.jdo2.postaladdress.VoGeocoder;
 import com.vmesteonline.be.jdo2.postaladdress.VoPostalAddress;
 import com.vmesteonline.be.jdo2.postaladdress.VoStreet;
+import com.vmesteonline.be.jdo2.utility.VoCounter;
 import com.vmesteonline.be.thrift.*;
+import com.vmesteonline.be.thrift.utilityservice.CounterType;
 import com.vmesteonline.be.utils.Defaults;
 
 import javax.jdo.JDOObjectNotFoundException;
@@ -21,8 +23,8 @@ import java.util.*;
         @Index(name="VOUSER_EML_IDX", members={"email"}),
         @Index(name="VOUSER_registered_IDX", members={"registered"}),
         @Index(name="VOUSER_GROUPS_IDX", members={"groups","emailConfirmed"})})
-
-public class VoUser extends GeoLocation {
+@Discriminator(strategy=DiscriminatorStrategy.CLASS_NAME)
+public class VoUser extends GeoLocation implements Comparable<VoUser> {
 
 	public static int BASE_USER_SCORE = 100;
 
@@ -200,7 +202,7 @@ public class VoUser extends GeoLocation {
 	}
 
 	public long getAddress() {
-		return address;
+		return null==address ? 0 : address;
 	}
 	
 	public void setAddress( long addr) {
@@ -268,7 +270,7 @@ public class VoUser extends GeoLocation {
 			}
 		}
 
-        setAddress(userAddress.getId());
+    setAddress(userAddress.getId());
 		longitude = building.getLongitude().toPlainString();
 		latitude = building.getLatitude().toPlainString();
 
@@ -283,7 +285,7 @@ public class VoUser extends GeoLocation {
 			groups.add(ug.getId());
 		}
 		Collections.reverse(groups);
-        setGroups( groups );
+    setGroups( groups );
 		pm.makePersistent(this);
 	}
 
@@ -347,6 +349,11 @@ public class VoUser extends GeoLocation {
 /*	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.INCREMENT)
 	protected long id;*/
+
+	public void setAddressStringsByGroupType(Map<Integer, String> addressStringsByGroupType) {
+		this.addressStringsByGroupType = addressStringsByGroupType;
+	}
+
 
 	@Persistent
 	private Long address;
@@ -694,5 +701,33 @@ public class VoUser extends GeoLocation {
 
 	public boolean isTheBigBro() {
 		return isHeTheBigBro(this);
+	}
+
+	@Override
+	public int compareTo(VoUser that) {
+		return Long.compare(this.id, that.id);
+	}
+
+	public String enableCountersFor(ArrayList<CounterType> defaultCounterTypes, PersistenceManager pm) {
+		String resultText = "";
+		Set<ServiceType> services = getServices();
+		if (null == services)
+			services = new HashSet<>();
+		else
+			services = new HashSet<>(services);
+		
+		if (!services.contains(ServiceType.CountersEnabled)) {
+			services.add(ServiceType.CountersEnabled);
+			setServices(services);
+			pm.makePersistent(this);
+			resultText += "<br/> Enabled for: " + getName() + " " + getLastName();
+			long address = getAddress();
+			for( CounterType ct : defaultCounterTypes)
+				pm.makePersistent(new VoCounter(ct, "", "", address));
+			
+		} else {
+			resultText += "<br/> " + getName() + " " + getLastName() + "Already has Counters enables";
+		}		
+		return resultText;
 	}
 }
