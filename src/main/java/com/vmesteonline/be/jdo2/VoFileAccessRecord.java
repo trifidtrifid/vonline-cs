@@ -93,7 +93,7 @@ public class VoFileAccessRecord {
     @Key(types = String.class)
     @Value(types=VoFileAccessRecord.class, dependent="true")
     @Element(column = "version")
-		@Join(column="id")
+		@Join(column = "query")
 	Map<String,VoFileAccessRecord> versions;
 
     public void setData(byte[] data) {
