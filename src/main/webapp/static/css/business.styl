@@ -7,13 +7,22 @@
     color #fff
 
 .cabinet-left
+.carousel-inner
   width 350px
+  height 260px
+  line-height 260px
+  text-align center
   img
-    width 100%
+    max-width 100%
+    max-height 100%
+    display inline-block !important
+    vertical-align middle
 .cabinet-right
   margin-left 360px
   font-size 16px
 
+.cabinet-left .carousel-control
+  background-image none
 .carousel-control .glyphicon
   font-family Arial, sans-serif
 .carousel-control span
@@ -32,6 +41,9 @@
   content "\f053"
 .carousel-control.right span:before
   content "\f054"
+.carousel-indicators
+  line-height 20px
+  bottom 0
 
 .cabinet-edit
   font-size 14px
